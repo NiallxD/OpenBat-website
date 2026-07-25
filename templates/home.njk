@@ -1,0 +1,19 @@
+---
+layout: base.njk
+---
+<div class="hero-plain">
+  {% if heroImage %}
+  <img src="{{ heroImage }}" alt="" class="hero-plain-bg">
+  {% endif %}
+  <div class="hero-plain-inner">
+    <h1 class="hero-plain-title">{{ heroTitle | default(title) }}</h1>
+    {% if heroText %}<p class="hero-plain-text">{{ heroText }}</p>{% endif %}
+    {% if heroCtaUrl %}
+    <a class="hero-plain-cta" href="{{ heroCtaUrl | url }}">{{ heroCtaLabel | default("Learn more") }}</a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="standard-page">
+  <div class="post-content">{{ content | safe }}</div>
+</div>

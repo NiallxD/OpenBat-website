@@ -1,0 +1,11 @@
+.obsidian/
+.claude/
+node_modules/
+96 - Hidden Notes/
+97 - Drafts/
+98 - Media/
+99 - Not For Publish/
+*.heic
+*.afdesign
+*.zip
+README.md

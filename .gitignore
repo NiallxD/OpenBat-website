@@ -1,0 +1,10 @@
+.obsidian/
+node_modules/
+_site/
+.env
+.DS_Store
+*.heic
+*.afdesign
+*.zip
+CLAUDE.md
+.claude/
