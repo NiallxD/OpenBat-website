@@ -5,7 +5,7 @@ permalink: /openbat/
 publish: true
 ---
 
-## Overview
+#Overview
 
 The full description of the project goes here — what problem it solves, how it
 works, what's in the box.
