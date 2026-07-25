@@ -13,7 +13,8 @@
   <meta property="og:title" content="Privacy — OpenBat">
   <meta property="og:description" content="What data this site and the OpenBat software collect.">
   
-  <link rel="stylesheet" href="/static/css/style.css?v=1.2">
+  <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/css/style.css?v=2.4">
   <script>
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
@@ -23,16 +24,12 @@
   
 </head>
 <body>
-  <header class="site-header">
+  <header class="site-header transparent-header">
     <div class="site-header-inner">
       <a class="site-title" href="/">
         <img class="site-logo" src="/static/images/logo.png" alt="OpenBat">
       </a>
       <nav class="nav-menu">
-        
-        <a href="/">Home</a>
-        
-        <a href="/openbat/">OpenBat</a>
         
         <a href="/help/">Help</a>
         
@@ -89,7 +86,9 @@ off-device.</p>
   <footer class="site-footer">
     <div class="site-footer-inner">
       <div class="footer-col brand">
-        <a class="footer-wordmark" href="/">OpenBat</a>
+        <a class="footer-logo-link" href="/">
+          <img class="footer-logo" src="/static/images/logo.png" alt="OpenBat">
+        </a>
         <p class="footer-web-address">openbat.app</p>
         <div class="footer-contact">
           <div class="contact-item">
@@ -97,31 +96,10 @@ off-device.</p>
             <span class="reveal-email" data-u="hello" data-d="openbat.app" style="cursor:pointer;">Click to reveal email</span>
           </div>
         </div>
-      </div>
-
-      <div class="footer-col sitemap">
-        <p class="section-label">Site Map</p>
-        <div class="footer-links-list">
-          
-          <a href="/">Home</a>
-          
-          <a href="/openbat/">OpenBat</a>
-          
-          <a href="/help/">Help</a>
-          
-          <a href="/privacy/">Privacy</a>
-          
-          <a href="/contact/">Contact</a>
-          
-        </div>
-      </div>
-
-      <div class="footer-col legal">
-        <p class="section-label">Legal</p>
-        <p class="copyright">© 2026 OpenBat</p>
-        <p class="copyright-notice">See the <a href="/privacy/">Privacy</a> page for how this site handles data.</p>
+        <p class="footer-privacy-link"><a href="/privacy/">Privacy</a></p>
       </div>
     </div>
+    <p class="footer-copyright">© 2026 Niall Bell (OpenBat)</p>
   </footer>
 
   <script>
