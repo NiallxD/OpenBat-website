@@ -13,7 +13,7 @@
   <meta property="og:title" content="{% if title and page.url != '/' %}{{ title }} — {% endif %}{{ site.name }}">
   {% if description %}<meta property="og:description" content="{{ description }}">{% endif %}
   {% if coverImage %}<meta property="og:image" content="{{ coverImage }}">{% endif %}
-  <link rel="stylesheet" href="{{ '/static/css/style.css?v=1.0' | url }}">
+  <link rel="stylesheet" href="{{ '/static/css/style.css?v=1.2' | url }}">
   <script>
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
@@ -26,7 +26,7 @@
   <header class="site-header{% if heroImage or heroTitle %} transparent-header{% endif %}">
     <div class="site-header-inner">
       <a class="site-title" href="{{ '/' | url }}">
-        <span class="site-wordmark">{{ site.name }}</span>
+        <img class="site-logo" src="{{ '/static/images/logo.png' | url }}" alt="{{ site.name }}">
       </a>
       <nav class="nav-menu">
         {% for item in site.nav %}
