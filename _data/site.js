@@ -13,10 +13,8 @@ export default {
     domain: "openbat.app",
   },
 
-  // Header nav + footer site map. Order here is the order shown.
+  // Header nav. Order here is the order shown. The logo already links home.
   nav: [
-    { label: "Home", url: "/" },
-    { label: "OpenBat", url: "/openbat/" },
     { label: "Help", url: "/help/" },
     { label: "Privacy", url: "/privacy/" },
     { label: "Contact", url: "/contact/" },

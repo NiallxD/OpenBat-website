@@ -13,7 +13,8 @@
   <meta property="og:title" content="{% if title and page.url != '/' %}{{ title }} — {% endif %}{{ site.name }}">
   {% if description %}<meta property="og:description" content="{{ description }}">{% endif %}
   {% if coverImage %}<meta property="og:image" content="{{ coverImage }}">{% endif %}
-  <link rel="stylesheet" href="{{ '/static/css/style.css?v=1.2' | url }}">
+  <link rel="preload" href="{{ '/static/fonts/jersey10.woff2' | url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ '/static/css/style.css?v=2.4' | url }}">
   <script>
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
@@ -23,7 +24,7 @@
   {% block head %}{% endblock %}
 </head>
 <body>
-  <header class="site-header{% if heroImage or heroTitle %} transparent-header{% endif %}">
+  <header class="site-header transparent-header">
     <div class="site-header-inner">
       <a class="site-title" href="{{ '/' | url }}">
         <img class="site-logo" src="{{ '/static/images/logo.png' | url }}" alt="{{ site.name }}">
@@ -54,7 +55,9 @@
   <footer class="site-footer">
     <div class="site-footer-inner">
       <div class="footer-col brand">
-        <a class="footer-wordmark" href="{{ '/' | url }}">{{ site.name }}</a>
+        <a class="footer-logo-link" href="{{ '/' | url }}">
+          <img class="footer-logo" src="{{ '/static/images/logo.png' | url }}" alt="{{ site.name }}">
+        </a>
         <p class="footer-web-address">{{ site.domain }}</p>
         <div class="footer-contact">
           <div class="contact-item">
@@ -62,23 +65,10 @@
             <span class="reveal-email" data-u="{{ site.email.user }}" data-d="{{ site.email.domain }}" style="cursor:pointer;">Click to reveal email</span>
           </div>
         </div>
-      </div>
-
-      <div class="footer-col sitemap">
-        <p class="section-label">Site Map</p>
-        <div class="footer-links-list">
-          {% for item in site.nav %}
-          <a href="{{ item.url | url }}">{{ item.label }}</a>
-          {% endfor %}
-        </div>
-      </div>
-
-      <div class="footer-col legal">
-        <p class="section-label">Legal</p>
-        <p class="copyright">© {{ "" | year }} {{ site.name }}</p>
-        <p class="copyright-notice">See the <a href="{{ '/privacy/' | url }}">Privacy</a> page for how this site handles data.</p>
+        <p class="footer-privacy-link"><a href="{{ '/privacy/' | url }}">Privacy</a></p>
       </div>
     </div>
+    <p class="footer-copyright">© {{ "" | year }} Niall Bell ({{ site.name }})</p>
   </footer>
 
   <script>
