@@ -4,10 +4,6 @@ description: Open source bat detection.
 permalink: /
 layout: home.njk
 publish: true
-heroTitle: OpenBat
-heroText: Open source bat detection.
-heroCtaLabel: What is OpenBat?
-heroCtaUrl: /openbat/
 ---
 
 ## What it is
