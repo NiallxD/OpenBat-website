@@ -12,6 +12,8 @@ heroCtaUrl: /openbat/
 
 ## What it is
 
+Welcome to OpenBat!
+
 Write the short version here — a paragraph or two on what OpenBat is and who
 it's for. This is the first thing a visitor reads, so keep it plain.
 
