@@ -15,8 +15,10 @@ export default {
 
   // Header nav. Order here is the order shown. The logo already links home.
   nav: [
+    { label: "Our Project", url: "/our-project/" },
+    {label: "Contribute", url: "/contribute/"},
     { label: "Help", url: "/help/" },
     { label: "Privacy", url: "/privacy/" },
-    { label: "Contact", url: "/contact/" },
+    { label: "Contact", url: "/contact/" }
   ],
 };
