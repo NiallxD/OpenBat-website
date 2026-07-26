@@ -9,10 +9,9 @@ publish: true
 
 Welcome to OpenBat!
 
-Write the short version here — a paragraph or two on what OpenBat is and who
-it's for. This is the first thing a visitor reads, so keep it plain.
+OpenBat is an iOS app that turns a compatible ultrasonic USB microphone into a live bat detector. It captures audio at up to 384 kHz, shows a real-time spectrogram, detects individual echolocation pulses, and, where an openly available model exists for the region, identifies the species on-device (currently for North America and Canada only but working on UK/Europe).
 
-## Where to go next
+## Our Story
 
-- [[Help]] — setup, troubleshooting and FAQs
-- [[Contact]] — get in touch
+Most tools for identifying bat calls are expensive, proprietary, and hard to get hold of, which puts the experience out of reach for a lot of people who'd genuinely enjoy it. Free apps that work with ultrasonic microphones already exist, but as far as we know, none of them use the open-source machine learning models that have been trained on bat echolocation calls. By building that identification directly into the app, OpenBat helps people put a name to the call they just heard, a small moment of recognition that builds a real connection with bats, and a bit more respect for them too.
+
