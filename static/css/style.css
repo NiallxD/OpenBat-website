@@ -25,13 +25,13 @@
 
   /* Day/night page backdrop — spills behind the nav and footer.
      Placeholder stops; swap for final palette. */
-  --page-gradient: linear-gradient(180deg, #15498A 0%, #414675 45%, #5E4468 100%);
+  --page-gradient: linear-gradient(0deg, #5E4468 0%, #33375B 45%, #081E37 100%);
   --footer-bg-image: url('/static/images/footer-bg-light.webp');
   --footer-overlay: rgba(0, 0, 0, 0.00);
 
   --max-prose: 720px;
   --max-wide:  1200px;
-  --nav-height: 76px;
+  --nav-height: 90px;
 
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -418,9 +418,9 @@ main {
 
 .listing-header {
   padding-top: 3.5rem;
-  padding-bottom: 2.5rem;
+  padding-bottom: 0rem;
   border-bottom: 0px solid var(--color-border);
-  margin-bottom: 3rem;
+  margin-bottom: 0rem;
   color: var(--color-accent)
 }
 
