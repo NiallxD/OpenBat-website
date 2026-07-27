@@ -4,11 +4,21 @@
   font-weight: 400;
   font-display: swap;
   src: url('/static/fonts/jersey10.woff2') format('woff2');
-  size-adjust: 118%;
+  size-adjust: 125%;
+}
+
+@font-face {
+  font-family: 'Geist Pixel';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/static/fonts/geist-pixel.woff2') format('woff2');
+  size-adjust: 92%;
 }
 
 :root {
   --font-sans: 'Jersey 10', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Geist Pixel', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-serif: Georgia, 'Times New Roman', serif;
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
 
@@ -55,6 +65,20 @@
   --footer-overlay: rgba(0, 0, 0, 0.0);
 }
 
+/* ── Theme transition (sunrise/sunset crossfade) ─────────────── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 900ms;
+  animation-timing-function: ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
 /* ── Reset ────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html {
@@ -76,7 +100,7 @@ img {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   background: transparent;
   color: var(--color-text);
   line-height: 1.6;
@@ -162,6 +186,7 @@ p {
 }
 
 .nav-menu a {
+  font-family: var(--font-sans);
   font-size: 1.25rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.9);
@@ -408,7 +433,7 @@ main {
    PAGE CONTENT (standard pages, prose)
    ══════════════════════════════════════════════════════════ */
 .page-lead {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.1rem;
   line-height: 1.7;
   color: var(--color-text);
@@ -425,9 +450,9 @@ main {
 }
 
 .listing-header h1 {
+  font-family: var(--font-sans);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 700;
-  letter-spacing: 0.015em;
   margin-bottom: 0.5rem;
 }
 
@@ -455,7 +480,6 @@ main {
   font-family: var(--font-sans);
   font-weight: 600;
   line-height: 1.25;
-  letter-spacing: 0.02em;
   color: var(--color-accent);
 }
 
@@ -464,7 +488,7 @@ main {
 .post-content h3 { font-size: 1.1rem; margin: 1.75rem 0 0.5rem; }
 
 .post-content p {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.08rem;
   line-height: 1.8;
   color: var(--color-text);
@@ -485,7 +509,7 @@ main {
 
 .post-content ul,
 .post-content ol {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.05rem;
   line-height: 1.8;
   color: var(--color-secondary);
@@ -506,7 +530,7 @@ main {
   border-left: 3px solid var(--color-accent);
   padding: 0.5rem 0 0.5rem 1.25rem;
   margin: 2rem 0;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.08rem;
   font-style: italic;
   color: var(--color-muted);
@@ -548,7 +572,7 @@ main {
 .post-content table {
   width: 100%;
   border-collapse: collapse;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.95rem;
   margin: 2rem 0;
   overflow-x: auto;
@@ -637,12 +661,21 @@ span.wikilink { color: var(--color-secondary); }
   max-width: 46rem;
 }
 
+.hero-plain-title,
+.listing-header h1,
+.not-found-heading,
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  letter-spacing: 0.09em;
+}
+
 .hero-plain-title {
   margin: 0;
   font-family: var(--font-sans);
   font-size: clamp(2.75rem, 8vw, 5rem);
   font-weight: 800;
-  letter-spacing: 0.01em;
   line-height: 1.05;
   color: #fff;
 }
@@ -685,6 +718,7 @@ span.wikilink { color: var(--color-secondary); }
 }
 
 .not-found-heading {
+  font-family: var(--font-sans);
   font-size: clamp(1.8rem, 4vw, 2.5rem);
   font-weight: 700;
   color: var(--color-link);

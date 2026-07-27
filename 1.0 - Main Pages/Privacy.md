@@ -5,46 +5,103 @@ permalink: /privacy/
 publish: true
 ---
 
-Last updated: July 2026
+# How OpenBat protects your privacy
 
-OpenBat is an iOS app developed by Niall Bell as part of the OpenBat Project. This policy explains what data the app handles, how it is used, and your rights.
+OpenBat is a bat detector. It records ultrasound, works out which species is calling and, if you want, lets you contribute recordings to research.
 
-If you wish to get in touch with questions or comments, please email privacy@openbat.app. 
+Recording anything with a microphone raises obvious questions. This page answers them directly.
 
-Our full Privacy Policy can be found [here](https://openbat.app/privacy-policy)
+## Nothing leaves your phone unless you send it
 
-## The Short Version
+The app records and identifies species entirely on your device. There's no background upload, no sync, no "phoning home."
 
-### What Data Is Used
+If you never tap to contribute a recording, we never see it. It stays in your storage and, if you use iCloud, your own iCloud account — which we have no access to.
 
-**🦇 Bat Recordings** When you record bat calls in the app, the audio stays on your device. It's only sent to our servers if you choose to upload it to our community science project. Before upload, we strip out everything below 12kHz, the range human voices sit in, so we can't hear you, only the bats.
+**There is no automatic upload.** Not a setting that's off by default — no setting at all. The app has no code that can send a recording without you choosing it, one recording at a time.
 
-**🔑 Device ID** The app generates a random ID (a UUID) the first time you open it, so we can recognise your uploads and let you manage or delete them later. It's not linked to your name, email, or any account.
+## What you keep and what you send are different files
 
-**📍 Location** If you record in Session mode, your location (as precise or fuzzy as you like) is saved to that recording so it can be mapped. This stays on your device unless you upload the recording, at which point it travels with it. On app launch, we briefly check your location to suggest a local AutoID model — this is never stored.
+When you do contribute, we don't get your recording. The app builds a separate, stripped-down copy and sends that. Your original never leaves the phone and is never altered.
 
-**👤 Name (optional)** You can add a name or handle to get credit on your uploaded recordings. Skip it, and your device ID is used instead.
+Before that copy is sent, on your phone:
 
-### What We Don't Do
+**Every identifier is removed.** No device ID, no account, no name, no filename, no session label. There's no "recordist" field — the app doesn't have one.
 
-**🚫 No Marketing** We don't collect contact details and we don't do targeted marketing, ever.
+**The location is rounded** to a grid of about 100 metres. Everyone in the same square gets the same coordinate.
 
-**🍪 No Cookies** openbat.app doesn't use cookies or collect any data. Everything in this policy relates to the app.
+**The time is rounded** down to the nearest five minutes.
 
-**👤 No Account Required** No sign-up, no email, no password. Just the app.
+**Human speech is filtered out.** An irreversible filter strips the low frequencies voices occupy. Bats call far above that range, so the calls themselves are untouched — but conversation is gone before the file is sent.
 
-### Where Your Data Lives
+**Everything else is discarded.** Only a short list of scientific fields survives: species, confidence, length, sample rate, microphone model, app version. Anything not on that list is dropped by default, including fields added in future.
 
-We store data (UUIDs and uploaded recordings) using Cloudflare's cloud services. Since Cloudflare runs a global network, this may mean your data is processed outside your own country.
+**The file gets a random name** that isn't derived from anything, and your phone doesn't keep a copy of it.
 
-### Third-Party Services
+## The honest consequence
 
-**🔬 Community Science Platforms** If you upload a recording, it may be shared with community science and conservation platforms so researchers can put it to use. Their own privacy policies apply once your data reaches them.
+Because nothing connects a contributed recording to you, nobody can trace one back. That includes us.
 
-### Data Deletion
+Which means: **once you contribute a recording, we can't delete it, because we can't find it.**
 
-**🗑️ Deleting Your Data** You can request deletion any time from the Privacy page in Settings. We keep a note that a deletion happened (tied to your device ID) for 365 days for audit purposes, but it isn't linked to anything else once your data is gone.
+That isn't a policy we could choose to relax. There's no hidden lookup table, no internal process, no "ask nicely and we'll check." The information needed to answer *"which of these came from this person"* doesn't exist anywhere.
 
-### Contact
+It's a genuine trade-off and we'd rather you knew about it before you tap than after. The app tells you the same thing on the consent screen.
 
-**✉️ Questions?** Email [privacy@openbat.app](mailto:privacy@openbat.app) with anything about this policy.
+## Where 100 metres helps, and where it doesn't
+
+We'd rather be straight about this than let a number do work it can't.
+
+In a town, a 100-metre square holds a lot of buildings, plenty of cover. In open countryside it might hold one property, and rounding conceals very little.
+
+If you're recording somewhere you'd rather not have associated even roughly with a contribution, decide before you send it. Everything stays on your phone by default, so there's no rush.
+
+## About other people
+
+Most bat recording happens away from home: footpaths, parks, survey routes. So the location on a contribution usually describes somewhere you were passing, not where you live. Sometimes that's near a house belonging to someone who never agreed to anything.
+
+The speech filter protects them as much as you. A conversation indoors (why are you looking for bats indoors???), or in a garden you walk past, doesn't survive it.
+
+Beyond that, we ask you to use the same judgement you'd apply to any recording made in a public place.
+
+## What we do keep
+
+One thing: a record that your device agreed to contribute.
+
+That's a device identifier the app generates, which version of the terms you agreed to, whether consent is currently on or off, and the date and hour you decided. Not the minute or second, the hour is enough to show you agreed, and being vaguer makes it harder to line up against anything else.
+
+It exists so you can withdraw. It's stored in your phone's secure keychain, stays on that physical device rather than following your Apple account, and is never attached to anything you contribute.
+
+It is not an advertising identifier. There are no advertising networks, no analytics SDKs, and no tracking of any kind in this app.
+
+You can delete that record from Settings whenever you like. It happens immediately, no queue, no review, no email. Your device also gets a fresh identifier, so nothing afterwards connects to it.
+
+We are designing privacy IN, not designing risk OUT.
+
+## What contributions are used for
+
+Building a reference library of bat calls, training species-identification models, and supporting conservation research.
+
+They may be published in open datasets, and may be licensed (this means sold) to ecological consultancies and researchers to help fund the project. Since they contain no personal data, nothing personal appears in anything published, trained on, or licensed.
+
+They're never put on a public live map, and never used or sold for anything unrelated to bats.
+
+## The short version
+
+|                                            |                                    |
+| ------------------------------------------ | ---------------------------------- |
+| Recordings you don't contribute            | Never leave your phone             |
+| Automatic uploads                          | Don't exist                        |
+| Identifiers on contributions               | None                               |
+| Location on contributions                  | Rounded to ~100 m, always          |
+| Time on contributions                      | Rounded to 5 minutes, always       |
+| Human speech in contributions              | Filtered out, irreversibly         |
+| Can you be identified from a contribution? | No — by us or anyone else          |
+| Can we delete a contribution on request?   | No, for the same reason            |
+| Personal data we hold                      | A consent record, deletable in-app |
+| Trackers, ads, analytics                   | None                               |
+
+## Questions
+
+privacy@openbat.app — that reaches Niall Bell, who created this app and is responsible for privacy at OpenBat (which is just me). Trust me, I went far down this rabbit-hole in order to protect your privacy, it's important to me!
+
+The full [Privacy Policy](https://openbat.app/privacy-policy) has the formal detail, including your legal rights and who hosts the service.

@@ -14,6 +14,7 @@
   {% if description %}<meta property="og:description" content="{{ description }}">{% endif %}
   {% if coverImage %}<meta property="og:image" content="{{ coverImage }}">{% endif %}
   <link rel="preload" href="{{ '/static/fonts/jersey10.woff2' | url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ '/static/fonts/geist-pixel.woff2' | url }}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ '/static/css/style.css?v=2.4' | url }}">
   <script>
     const savedTheme = localStorage.getItem('theme');
@@ -76,8 +77,15 @@
     themeToggle.addEventListener('click', () => {
       const current = document.documentElement.getAttribute('data-theme');
       const target = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', target);
-      localStorage.setItem('theme', target);
+      const applyTheme = () => {
+        document.documentElement.setAttribute('data-theme', target);
+        localStorage.setItem('theme', target);
+      };
+      if (document.startViewTransition) {
+        document.startViewTransition(applyTheme);
+      } else {
+        applyTheme();
+      }
     });
 
     const menuToggle = document.getElementById('menu-toggle');
