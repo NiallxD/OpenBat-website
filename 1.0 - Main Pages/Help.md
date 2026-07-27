@@ -15,7 +15,7 @@ OpenBat will work with the built-in microphone on your iPhone, but that only hea
 2. Open OpenBat. The status indicator at the top of the screen turns green once the microphone is detected, and the app shows the sample rate it's receiving (e.g. "384 kHz, capturing ultrasound up to 192 kHz").
 3. Point the microphone at the sky and wait. When a bat calls nearby, you'll see a pulse appear on the spectrogram.
 
-> No microphone plugged in? OpenBat still runs on the built-in mic so you can explore the interface, but it won't pick up bat echolocation calls. Let us know if you need a microphone and we can help!
+> No microphone plugged in? OpenBat still runs on the built-in mic so you can explore the interface, but it won't pick up bat echolocation calls.
 
 ### Listening to bats
 
