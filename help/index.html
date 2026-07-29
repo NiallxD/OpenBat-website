@@ -58,7 +58,10 @@
   <div class="nav-overlay"></div>
 
   <main>
-    <div class="standard-page">
+    
+
+
+<div class="standard-page">
   
 
   
@@ -82,16 +85,17 @@
 <h3>Listening to bats</h3>
 <p>Bat calls are ultrasonic, so you can’t hear them directly. OpenBat gives you two ways to bring them into human hearing range using the mode button in the control bar:</p>
 <ul>
-<li><strong>Heterodyne</strong>: shifts a narrow band around a tunable frequency down into the audible range in real time, so you hear a “chirp” or “click” as each call passes through. Good for scanning while you’re out in the field but doesn’t represent the character of bat calls.</li>
-<li><strong>Frequency Division:</strong> takes the input audio stream and divides the frequencies by a factor (in our case 10) and plays that sound. This brings ultrasonic into the audible range.</li>
+<li><strong>Heterodyne</strong>: shifts a narrow band around a tunable frequency down into the audible range in real time, so you hear a “chirp” or “click” as each call passes through. Never stops listening, but doesn’t represent the true character of a call.</li>
+<li><strong>Time expansion</strong>: slows detected calls down 8× so they land in both audible range and audible duration, turning a call too short and too high to make sense of into a few hundred milliseconds you can actually hear the shape of. The trade-off: while a stretched call is playing back, the microphone isn’t listening, so calls arriving in that window are missed. A pill above the stats shows how many calls have been stretched and, in red once it’s non-zero, how many were missed — tap it for a plain-language explanation.</li>
 </ul>
-<p>Switch between Off, Heterodyne and Frequency Division with the mode button.</p>
+<p>Switch between Off, Heterodyne and Time Expansion with the mode button.</p>
 <blockquote>
 <p><strong>Note:</strong> When the sound of a bat is repeated by your phone, the microphone may pick that call up again and reproduce it again. Wear earphones for best performance or dial the volume down a bit.</p>
 </blockquote>
 <blockquote>
-<p><strong>Note:</strong> Another technique is time expansion. Wildlife Acoustics pioneered a technology they call “Real Time Expansion” for which they received a patent. For this reason we do not include and form of time expansion which operates on real-time principles.</p>
+<p><strong>Note on time expansion:</strong> Wildlife Acoustics holds a patent covering one particular way of doing real-time time expansion — continuously capturing while selectively discarding samples to keep up with playback. OpenBat’s implementation is deliberately different: it captures every sample of a detected call without ever discarding any of it, and it stops listening entirely while a call plays back rather than capturing behind the scenes. That’s a real trade-off (see above), not a technicality — it’s the same trade classic tape-based bat detectors always made.</p>
 </blockquote>
+<p>Recordings can also be replayed in full time expansion from the Playback screen after the fact, with nothing missed, since the whole file already exists on disk.</p>
 <h2>Detecting and capturing pulses</h2>
 <p>OpenBat’s pulse detector watches the incoming audio and triggers automatically when it sees a call-shaped pulse, drawing it on screen and (if you’ve armed recording) saving it.</p>
 <p>In <strong>Pulse Settings</strong> you can tune:</p>
@@ -119,19 +123,17 @@
 <p>Every suggestion comes with a confidence level. Some species are acoustically very similar to close relatives. When that happens, OpenBat flags the result as part of a <strong>species complex</strong> rather than guessing at a single name, so you’re not given false confidence in a call that genuinely could be either.</p>
 <h3>Field guide</h3>
 <p>The built-in field guide covers species profiles: measurements, echolocation characteristics, distribution and conservation status. It’s searchable and browsable by region. It’s community-contributed; see the <a href="/contribute/">Contribute</a> page if you’d like to help expand it.</p>
-<h2>Contributing recordings</h2>
-<p>With OpenBat, you can optionally help build an open reference library of bat calls, but <strong>nothing is ever uploaded automatically</strong>. If you choose to contribute:</p>
-<ol>
-<li>Turn on contribution from Settings, or when prompted after a recording.</li>
-<li>From the playback screen, tap the upload icon on the specific recording you want to send.</li>
-<li>Your phone builds a stripped, anonymised copy of that recording, with location rounded to roughly 100 m, time rounded to the nearest 5 minutes, human speech filtered out, and no identifying information at all, and sends only that copy.</li>
-</ol>
-<p>You can turn contribution off at any time in Settings, and you can permanently erase your consent record (and get a fresh, disconnected device identifier) with <strong>Erase My Consent Record</strong>. Because contributed recordings carry no identifier, we can’t trace one back to a device — see our <a href="/privacy/">Privacy</a> page for the full explanation, including why that means we can’t delete an individual contribution after the fact.</p>
+<h2>Contributing recordings to community science</h2>
+<p>iNaturalist is a global community science platform which allows members of the public to contribute biological observations to a global database of observations which can be used by researchers. In fact, we use this exact database <a href="https://www.gbif.org">gbif.org</a> in OpenBat to power our range maps found in the Bat Field Guide!</p>
+<p>To get started, head out and record some bats. Then select high quality recordings and export them via the Playback section in the app. Then upload the spectrogram image and .wav file to iNaturalist. In time, experts will help ID the species recorded where possible, which contributes to the dataset.</p>
+<blockquote>
+<p>Note: We are working on a feature to make creating iNaturalist observations easier than ever! Our tool will give you everything you need to submit to iNaturalist, and ensures it includes everything a potential ID’er will need to make an ID.</p>
+</blockquote>
 <h2>Troubleshooting</h2>
 <p><strong>The status indicator is red / “no ultrasonic microphone detected”</strong>
 Check the USB connection to your microphone and adapter. Unplug and replug if needed — OpenBat detects the microphone through a route change and should pick it up within a second or two. If you’re only using the built-in mic, this is expected — it can’t hear ultrasound. You will need to use a USB ultrasonic microphone.</p>
 <p><strong>The sample rate shown looks lower than expected</strong>
-OpenBat displays the actual sample rate your microphone is delivering. If it’s not what you expect for your device, check the microphone itself is set to its native/maximum rate, and that no other app has claimed the audio session.</p>
+OpenBat displays the actual sample rate your microphone is delivering. If it’s not what you expect for your device (should be 384 khz), check the microphone itself is set to its native/maximum rate, and that no other app has claimed the audio session.</p>
 <p><strong>No pulses are triggering even though I can see activity on the spectrogram</strong>
 Open Pulse Settings and check your amplitude threshold isn’t set too high, and that the frequency gate (if enabled) covers the range you’re seeing activity in.</p>
 <p><strong>I can’t find my recordings</strong>
@@ -139,6 +141,7 @@ Recordings are saved on-device and are visible in the Files app, under OpenBat�
 <h2>Still stuck?</h2>
 <p>Get in touch on the <a href="/contact/">Contact</a> page — we’re happy to help.</p>
 </div>
+  
 </div>
 
   </main>

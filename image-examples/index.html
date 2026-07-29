@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Examples — OpenBat</title>
+  <meta name="description" content="Reference examples for the floated image and gallery patterns.">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Privacy & Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta name="referrer" content="no-referrer">
+  <meta property="og:site_name" content="OpenBat">
+  <meta property="og:title" content="Image Examples — OpenBat">
+  <meta property="og:description" content="Reference examples for the floated image and gallery patterns.">
+  
+  <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/css/style.css?v=2.4">
+  <script>
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme !== 'light') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+  
+</head>
+<body>
+  <header class="site-header transparent-header">
+    <div class="site-header-inner">
+      <a class="site-title" href="/">
+        <img class="site-logo" src="/static/images/logo.png" alt="OpenBat">
+      </a>
+      <nav class="nav-menu">
+        
+        <a href="/our-project/">Our Project</a>
+        
+        <a href="/contribute/">Contribute</a>
+        
+        <a href="/help/">Help</a>
+        
+        <a href="/privacy/">Privacy</a>
+        
+        <a href="/contact/">Contact</a>
+        
+      </nav>
+      <div class="header-controls">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
+          <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-overlay"></div>
+
+  <main>
+    
+<link rel="stylesheet" href="/static/css/swiper-bundle.min.css"/>
+
+<div class="standard-page">
+  
+
+  
+  <div class="listing-header">
+    <h1>Image Examples</h1>
+    <p class="page-lead">Reference examples for the floated image and gallery patterns.</p>
+  </div>
+  
+
+  <div class="post-content"><h2>Floated Image (right)</h2>
+<figure class="image-float-right">
+<img src="/static/images/logo.png" alt="Describe the image for accessibility"><figcaption>Caption text goes here, describing the image.</figcaption>
+</figure>
+<p>Paragraph text sits next to the image and wraps below it once it runs past the image’s height. Use <code>image-float-right</code> to put the image on the right of the text, or <code>image-float-left</code> to put it on the left. Swap the <code>src</code> and <code>alt</code>, and edit or remove the <code>figcaption</code>.</p>
+<pre><code class="language-html">&lt;figure class=&quot;image-float-right&quot;&gt;
+&lt;img src=&quot;/static/images/your-image.webp&quot; alt=&quot;Describe the image for accessibility&quot;&gt;&lt;figcaption&gt;Caption text goes here.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+Paragraph text goes here.
+</code></pre>
+<h2>Floated Image (left)</h2>
+<figure class="image-float-left">
+<img src="/static/images/logo.png" alt="Describe the image for accessibility"><figcaption>Caption text goes here, describing the image.</figcaption>
+</figure>
+<p>Same as above but floated to the left instead, so the text flows down the right-hand side of the image.</p>
+<pre><code class="language-html">&lt;figure class=&quot;image-float-left&quot;&gt;
+&lt;img src=&quot;/static/images/your-image.webp&quot; alt=&quot;Describe the image for accessibility&quot;&gt;&lt;figcaption&gt;Caption text goes here.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+Paragraph text goes here.
+</code></pre>
+<h2>Floated Image (custom width)</h2>
+<figure class="image-float-right" style="width:75%">
+<img src="/static/images/logo.png" alt="Describe the image for accessibility"><figcaption>Caption text goes here, describing the image.</figcaption>
+</figure>
+<p>Add an inline <code>style=&quot;width:75%&quot;</code> to override the default 45% split — the text fills whatever’s left. Works with <code>image-float-left</code> too.</p>
+<pre><code class="language-html">&lt;figure class=&quot;image-float-right&quot; style=&quot;width:75%&quot;&gt;
+&lt;img src=&quot;/static/images/your-image.webp&quot; alt=&quot;Describe the image for accessibility&quot;&gt;&lt;figcaption&gt;Caption text goes here.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+Paragraph text goes here.
+</code></pre>
+<h2>Block Image (own line, no wrap)</h2>
+<figure>
+<img src="/static/images/logo.png" alt="Describe the image for accessibility"><figcaption>Caption text goes here, describing the image.</figcaption>
+</figure>
+<p>Full-width image on its own line, with text starting below it rather than wrapping alongside. Just leave off the <code>image-float-*</code> class. Drop the <code>&lt;figcaption&gt;</code> (and the <code>&lt;figure&gt;</code> wrapper entirely) if you don’t need a caption — a plain <code>![alt](/path.webp)</code> works too.</p>
+<pre><code class="language-html">&lt;figure&gt;
+&lt;img src=&quot;/static/images/your-image.webp&quot; alt=&quot;Describe the image for accessibility&quot;&gt;&lt;figcaption&gt;Caption text goes here.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+Paragraph text goes here.
+</code></pre>
+<h2>Block Image (custom width, centered)</h2>
+<figure>
+<img src="/static/images/logo.png" alt="Describe the image for accessibility" style="width:60%;margin:0 auto;"><figcaption>Caption text goes here, describing the image.</figcaption>
+</figure>
+<p>Add an inline <code>style=&quot;width:60%;margin:0 auto;&quot;</code> to the <code>&lt;img&gt;</code> to narrow it and center it within the block. Drop the <code>margin:0 auto</code> to left-align instead.</p>
+<pre><code class="language-html">&lt;figure&gt;
+&lt;img src=&quot;/static/images/your-image.webp&quot; alt=&quot;Describe the image for accessibility&quot; style=&quot;width:60%;margin:0 auto;&quot;&gt;&lt;figcaption&gt;Caption text goes here.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+Paragraph text goes here.
+</code></pre>
+<h2>Image Pair</h2>
+<div class="image-pair">
+<figure class="image-float-right">
+<img src="/static/images/logo.png" alt="First image description"><figcaption>Caption for the first image.</figcaption>
+</figure>
+<figure class="image-float-right">
+<img src="/static/images/logo.png" alt="Second image description"><figcaption>Caption for the second image.</figcaption>
+</figure>
+</div>
+<p>Two images placed side by side, each at half width, useful for before/after or paired shots.</p>
+<pre><code class="language-html">&lt;div class=&quot;image-pair&quot;&gt;
+&lt;figure class=&quot;image-float-right&quot;&gt;
+&lt;img src=&quot;/static/images/your-image-1.webp&quot; alt=&quot;First image description&quot;&gt;&lt;figcaption&gt;Caption for the first image.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure class=&quot;image-float-right&quot;&gt;
+&lt;img src=&quot;/static/images/your-image-2.webp&quot; alt=&quot;Second image description&quot;&gt;&lt;figcaption&gt;Caption for the second image.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Gallery (Swiper carousel)</h2>
+<div class="gallery-body" style="margin-top:2rem;margin-bottom:2rem;"><div class="gallery-slideshow-container desktop-only"><div class="swiper gallery-swiper" id="post-swiper-0"><div class="swiper-wrapper"><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/logo.png" alt="First Slide" loading="lazy" onload="this.classList.add(this.naturalWidth>this.naturalHeight?'is-landscape':'is-portrait')"></div></div><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/logo.png" alt="Second Slide" loading="lazy" onload="this.classList.add(this.naturalWidth>this.naturalHeight?'is-landscape':'is-portrait')"></div></div></div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div></div><div class="gallery-pagination swiper-pagination" id="post-pagination-0"></div><div id="post-caption-0" class="gallery-caption-external" style="display:none;"><h3 id="post-slide-title-0"></h3><p id="post-slide-desc-0"></p></div></div><div class="gallery-mobile-grid mobile-only"><div class="mobile-grid-item"><div class="mobile-grid-media"><img src="/static/images/logo.png" alt="First Slide" loading="lazy"></div><div class="mobile-grid-content"><h4 class="mobile-grid-title">First Slide</h4><div class="mobile-grid-caption"><p>Caption for the first slide goes here.
+</p></div></div></div><div class="mobile-grid-item"><div class="mobile-grid-media"><img src="/static/images/logo.png" alt="Second Slide" loading="lazy"></div><div class="mobile-grid-content"><h4 class="mobile-grid-title">Second Slide</h4><div class="mobile-grid-caption"><p>Caption for the second slide goes here.
+</p></div></div></div></div><script>(function(){var postGalleryData0=[{"type":"image","src":"/static/images/logo.png","title":"First Slide","nativeAspect":false,"caption":"<p>Caption for the first slide goes here.\n</p>"},{"type":"image","src":"/static/images/logo.png","title":"Second Slide","nativeAspect":false,"caption":"<p>Caption for the second slide goes here.\n</p>"}];document.addEventListener('DOMContentLoaded',function(){var tEl=document.getElementById('post-slide-title-0');var dEl=document.getElementById('post-slide-desc-0');var cArea=document.getElementById('post-caption-0');function upd(i){var d=postGalleryData0[i];if(!d)return;tEl.textContent=d.title||'';dEl.innerHTML=d.caption||'';cArea.style.display=(d.title||d.caption)?'block':'none';}new Swiper('#post-swiper-0',{loop:true,keyboard:{enabled:true},speed:600,autoHeight:false,pagination:{el:'#post-pagination-0',type:'fraction',renderFraction:function(c,t){return'<span class="'+c+'"></span> <span class="fraction-sep">of</span> <span class="'+t+'"></span>';}},navigation:{nextEl:'#post-swiper-0 .swiper-button-next',prevEl:'#post-swiper-0 .swiper-button-prev'},on:{init:function(){upd(this.realIndex);},slideChange:function(){upd(this.realIndex);}}});});}());</script></div>
+<p>A scrollable/swipeable carousel on desktop, and a stacked grid on mobile. Each <code>## Title</code> inside the block becomes one slide — put the image URL on its own line directly under the title, and any text above the image URL becomes that slide’s caption (only the first slide’s caption is shown by default as you swipe between slides). Add <code>[AR]</code> to a title (e.g. <code>## My Title [AR]</code>) to show that slide at its native aspect ratio instead of the default crop.</p>
+<pre><code class="language-markdown">## gallery-start
+
+## First Slide
+Caption for the first slide goes here.
+/static/images/your-image-1.webp
+
+## Second Slide
+Caption for the second slide goes here.
+/static/images/your-image-2.webp
+
+## gallery-end
+</code></pre>
+<h2>Gallery (native aspect ratio, no crop)</h2>
+<div class="gallery-body" style="margin-top:2rem;margin-bottom:2rem;"><div class="gallery-slideshow-container desktop-only"><div class="swiper gallery-swiper native-ar" id="post-swiper-1"><div class="swiper-wrapper"><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/logo.png" alt="First Slide" loading="lazy" onload="this.classList.add('is-native-ar')"></div></div><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/logo.png" alt="Second Slide" loading="lazy" onload="this.classList.add('is-native-ar')"></div></div></div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div></div><div class="gallery-pagination swiper-pagination" id="post-pagination-1"></div><div id="post-caption-1" class="gallery-caption-external" style="display:none;"><h3 id="post-slide-title-1"></h3><p id="post-slide-desc-1"></p></div></div><div class="gallery-mobile-grid mobile-only"><div class="mobile-grid-item"><div class="mobile-grid-media"><img src="/static/images/logo.png" alt="First Slide" loading="lazy"></div><div class="mobile-grid-content"><h4 class="mobile-grid-title">First Slide</h4><div class="mobile-grid-caption"><p>Caption for the first slide goes here.
+</p></div></div></div><div class="mobile-grid-item"><div class="mobile-grid-media"><img src="/static/images/logo.png" alt="Second Slide" loading="lazy"></div><div class="mobile-grid-content"><h4 class="mobile-grid-title">Second Slide</h4><div class="mobile-grid-caption"><p>Caption for the second slide goes here.
+</p></div></div></div></div><script>(function(){var postGalleryData1=[{"type":"image","src":"/static/images/logo.png","title":"First Slide","nativeAspect":true,"caption":"<p>Caption for the first slide goes here.\n</p>"},{"type":"image","src":"/static/images/logo.png","title":"Second Slide","nativeAspect":true,"caption":"<p>Caption for the second slide goes here.\n</p>"}];document.addEventListener('DOMContentLoaded',function(){var tEl=document.getElementById('post-slide-title-1');var dEl=document.getElementById('post-slide-desc-1');var cArea=document.getElementById('post-caption-1');function upd(i){var d=postGalleryData1[i];if(!d)return;tEl.textContent=d.title||'';dEl.innerHTML=d.caption||'';cArea.style.display=(d.title||d.caption)?'block':'none';}new Swiper('#post-swiper-1',{loop:true,keyboard:{enabled:true},speed:600,autoHeight:true,pagination:{el:'#post-pagination-1',type:'fraction',renderFraction:function(c,t){return'<span class="'+c+'"></span> <span class="fraction-sep">of</span> <span class="'+t+'"></span>';}},navigation:{nextEl:'#post-swiper-1 .swiper-button-next',prevEl:'#post-swiper-1 .swiper-button-prev'},on:{init:function(){upd(this.realIndex);},slideChange:function(){upd(this.realIndex);}}});});}());</script></div>
+<p>Add <code>[AR]</code> to a slide’s title (e.g. <code>## My Title [AR]</code>) to show that image uncropped at its own aspect ratio, instead of the default landscape/portrait crop. <strong>If every slide in the gallery has <code>[AR]</code></strong>, the carousel also drops its fixed 3:2 box and sizes itself to the image automatically (capped at 80vh) — this avoids large empty margins around tall/narrow images like phone screenshots. Mixing some <code>[AR]</code> slides with some non-<code>[AR]</code> slides in the same gallery keeps the fixed box for all of them, so it’s best to tag either all slides or none.</p>
+<pre><code class="language-markdown">## gallery-start
+
+## First Slide [AR]
+Caption for the first slide goes here.
+/static/images/your-image-1.webp
+
+## Second Slide [AR]
+Caption for the second slide goes here.
+/static/images/your-image-2.webp
+
+## gallery-end
+</code></pre>
+<h2>Gallery (floated and scaled)</h2>
+<div class="gallery-float-right" style="width:50%">
+<div class="gallery-body" style="margin-top:2rem;margin-bottom:2rem;"><div class="gallery-slideshow-container desktop-only"><div class="swiper gallery-swiper" id="post-swiper-2"><div class="swiper-wrapper"><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/logo.png" alt="First Slide" loading="lazy" onload="this.classList.add(this.naturalWidth>this.naturalHeight?'is-landscape':'is-portrait')"></div></div><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/logo.png" alt="Second Slide" loading="lazy" onload="this.classList.add(this.naturalWidth>this.naturalHeight?'is-landscape':'is-portrait')"></div></div></div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div></div><div class="gallery-pagination swiper-pagination" id="post-pagination-2"></div><div id="post-caption-2" class="gallery-caption-external" style="display:none;"><h3 id="post-slide-title-2"></h3><p id="post-slide-desc-2"></p></div></div><div class="gallery-mobile-grid mobile-only"><div class="mobile-grid-item"><div class="mobile-grid-media"><img src="/static/images/logo.png" alt="First Slide" loading="lazy"></div><div class="mobile-grid-content"><h4 class="mobile-grid-title">First Slide</h4><div class="mobile-grid-caption"><p>Caption for the first slide goes here.
+</p></div></div></div><div class="mobile-grid-item"><div class="mobile-grid-media"><img src="/static/images/logo.png" alt="Second Slide" loading="lazy"></div><div class="mobile-grid-content"><h4 class="mobile-grid-title">Second Slide</h4><div class="mobile-grid-caption"><p>Caption for the second slide goes here.
+</p></div></div></div></div><script>(function(){var postGalleryData2=[{"type":"image","src":"/static/images/logo.png","title":"First Slide","nativeAspect":false,"caption":"<p>Caption for the first slide goes here.\n</p>"},{"type":"image","src":"/static/images/logo.png","title":"Second Slide","nativeAspect":false,"caption":"<p>Caption for the second slide goes here.\n</p>"}];document.addEventListener('DOMContentLoaded',function(){var tEl=document.getElementById('post-slide-title-2');var dEl=document.getElementById('post-slide-desc-2');var cArea=document.getElementById('post-caption-2');function upd(i){var d=postGalleryData2[i];if(!d)return;tEl.textContent=d.title||'';dEl.innerHTML=d.caption||'';cArea.style.display=(d.title||d.caption)?'block':'none';}new Swiper('#post-swiper-2',{loop:true,keyboard:{enabled:true},speed:600,autoHeight:false,pagination:{el:'#post-pagination-2',type:'fraction',renderFraction:function(c,t){return'<span class="'+c+'"></span> <span class="fraction-sep">of</span> <span class="'+t+'"></span>';}},navigation:{nextEl:'#post-swiper-2 .swiper-button-next',prevEl:'#post-swiper-2 .swiper-button-prev'},on:{init:function(){upd(this.realIndex);},slideChange:function(){upd(this.realIndex);}}});});}());</script></div>
+</div>
+<p>Wrap the whole <code>gallery-start</code>/<code>gallery-end</code> block in a <code>&lt;div class=&quot;gallery-float-right&quot; style=&quot;width:50%&quot;&gt;…&lt;/div&gt;</code> (or <code>gallery-float-left</code>) to float and scale the carousel next to text, exactly like the single-image float pattern. <strong>Important:</strong> leave a blank line right after the opening <code>&lt;div&gt;</code> and right before the closing <code>&lt;/div&gt;</code> — without them the <code>## gallery-start</code>/<code>## gallery-end</code> headings won’t be parsed as markdown. On narrow screens it drops the float and goes full width automatically. If text follows after the gallery, add <code>&lt;div style=&quot;clear:both&quot;&gt;&lt;/div&gt;</code> (with blank lines around it) once the float’s wrapped content ends, so later content isn’t squeezed into the leftover space.</p>
+<pre><code class="language-html">&lt;div class=&quot;gallery-float-right&quot; style=&quot;width:50%&quot;&gt;
+
+## gallery-start
+
+## First Slide
+Caption for the first slide goes here.
+/static/images/your-image-1.webp
+
+## Second Slide
+Caption for the second slide goes here.
+/static/images/your-image-2.webp
+
+## gallery-end
+
+&lt;/div&gt;
+
+Paragraph text goes here, wrapping beside the floated gallery.
+</code></pre>
+<h2>Quick Reference</h2>
+<ul>
+<li><strong><code>image-float-right</code> / <code>image-float-left</code></strong> — class on a <code>&lt;figure&gt;</code>, floats a single image beside text (default 45% width).</li>
+<li><strong><code>style=&quot;width:NN%&quot;</code></strong> — on the <code>&lt;figure&gt;</code> (float images) or <code>&lt;div class=&quot;gallery-float-*&quot;&gt;</code> (galleries), overrides the default width.</li>
+<li><strong><code>style=&quot;width:NN%;margin:0 auto;&quot;</code></strong> — on an <code>&lt;img&gt;</code> inside a plain (non-floated) <code>&lt;figure&gt;</code>, narrows and centers a block image.</li>
+<li><strong>No <code>image-float-*</code> class</strong> — a plain <code>&lt;figure&gt;</code> (or bare <code>![alt](/path)</code>) renders as a full-width block image on its own line.</li>
+<li><strong><code>&lt;div class=&quot;image-pair&quot;&gt;…&lt;/div&gt;</code></strong> — wraps two <code>image-float-right</code> figures to sit side by side at half width each.</li>
+<li><strong><code>## gallery-start</code> … <code>## gallery-end</code></strong> — H2 markers that turn everything between them into a Swiper carousel; each <code>## Title</code> inside is one slide, with the image path on its own line and any preceding text as the caption.</li>
+<li><strong><code>[AR]</code> on a slide title</strong> — shows that slide uncropped at native aspect ratio; if <em>all</em> slides in a gallery use it, the carousel also auto-sizes its height to the image instead of a fixed 3:2 box.</li>
+<li><strong><code>&lt;div class=&quot;gallery-float-right&quot;&gt;…&lt;/div&gt;</code> / <code>gallery-float-left</code></strong> — wraps a whole <code>gallery-start</code>/<code>gallery-end</code> block to float and scale the carousel like a single image. Needs blank lines directly inside the opening/closing <code>&lt;div&gt;</code> tags so the <code>##</code> headings still parse as markdown.</li>
+<li><strong><code>&lt;div style=&quot;clear:both&quot;&gt;&lt;/div&gt;</code></strong> — drop this (with blank lines around it) after any floated image/gallery once you want later content to stop wrapping around it and resume full width.</li>
+</ul>
+</div>
+  <script src="/static/js/swiper-bundle.min.js"></script>
+</div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-col brand">
+        <a class="footer-logo-link" href="/">
+          <img class="footer-logo" src="/static/images/logo.png" alt="OpenBat">
+        </a>
+        <p class="footer-web-address">openbat.app</p>
+        <div class="footer-contact">
+          <div class="contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span class="reveal-email" data-u="hello" data-d="openbat.app" style="cursor:pointer;">Click to reveal email</span>
+          </div>
+        </div>
+        <p class="footer-privacy-link"><a href="/privacy/">Privacy</a></p>
+      </div>
+    </div>
+    <p class="footer-copyright">© 2026 Niall Bell (OpenBat)</p>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      const applyTheme = () => {
+        document.documentElement.setAttribute('data-theme', target);
+        localStorage.setItem('theme', target);
+      };
+      if (document.startViewTransition) {
+        document.startViewTransition(applyTheme);
+      } else {
+        applyTheme();
+      }
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const body = document.body;
+
+    const toggleMenu = () => {
+      const isOpen = body.classList.toggle('menu-open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    };
+
+    menuToggle.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', toggleMenu);
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (body.classList.contains('menu-open')) toggleMenu();
+      });
+    });
+
+    const header = document.querySelector('.site-header');
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Assemble obfuscated email addresses on click
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.reveal-email').forEach(el => {
+        el.addEventListener('click', () => {
+          const email = el.dataset.u + '@' + el.dataset.d;
+          const cls = el.className.replace('reveal-email', '').trim();
+          const inner = el.querySelector('svg')
+            ? el.querySelector('svg').outerHTML + email
+            : email;
+          const style = el.getAttribute('style') || '';
+          el.outerHTML = `<a href="mailto:${email}" class="${cls}" style="${style}">${inner}</a>`;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

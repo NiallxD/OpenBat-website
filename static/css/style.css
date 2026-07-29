@@ -738,3 +738,344 @@ span.wikilink { color: var(--color-secondary); }
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* ── Block Image (full width, own line, no float) ───────────── */
+.post-content figure:not(.image-float-right):not(.image-float-left) {
+  margin: 1.5rem 0;
+  clear: both;
+}
+
+.post-content figure:not(.image-float-right):not(.image-float-left) img {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-md);
+}
+
+.post-content figure:not(.image-float-right):not(.image-float-left) figcaption {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* ── Float Images (text wraps around and below) ────────────── */
+.image-float-right {
+  float: right;
+  width: 45%;
+  margin-left: 2.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radius-md);
+}
+
+.image-float-left {
+  float: left;
+  width: 45%;
+  margin-right: 2.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radius-md);
+}
+
+figure.image-float-right,
+figure.image-float-left {
+  border-radius: 0;
+}
+
+figure.image-float-right img,
+figure.image-float-left img {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-md);
+}
+
+figure.image-float-right figcaption,
+figure.image-float-left figcaption {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  line-height: 1.4;
+}
+
+.image-pair {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  clear: both;
+}
+
+.image-pair figure.image-float-right {
+  float: none;
+  width: 100%;
+  margin: 0;
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  .image-float-right, .image-float-left {
+    float: none;
+    width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 2rem;
+  }
+}
+
+/* ── Floated Gallery Wrapper (scale/float a gallery-start block) ── */
+.gallery-float-right {
+  float: right;
+  width: 45%;
+  margin-left: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.gallery-float-left {
+  float: left;
+  width: 45%;
+  margin-right: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.gallery-float-right .gallery-body,
+.gallery-float-left .gallery-body {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .gallery-float-right, .gallery-float-left {
+    float: none;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 2rem;
+  }
+}
+
+/* ── Inline Gallery (gallery-start / gallery-end blocks) ────── */
+.gallery-body {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  clear: both;
+}
+
+.desktop-only { display: block; }
+.mobile-only { display: none; }
+
+@media (max-width: 768px) {
+  .desktop-only { display: none !important; }
+  .mobile-only { display: block !important; }
+
+  .gallery-mobile-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    margin: 2.5rem 0 4rem;
+  }
+
+  .mobile-grid-item {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.25em;
+  }
+
+  .mobile-grid-media {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .mobile-grid-media img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .mobile-grid-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1.25rem 1rem;
+  }
+
+  .mobile-grid-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin: 0;
+  }
+
+  .mobile-grid-caption {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  .mobile-grid-caption p {
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+    text-align: left;
+    margin: 0;
+  }
+}
+
+.gallery-slideshow-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto 1rem;
+  background: transparent;
+}
+
+.gallery-swiper {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  background: transparent;
+}
+
+.gallery-swiper .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: transparent;
+}
+
+.slide-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide-inner img {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.slide-inner img.is-landscape {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 3 / 2;
+  opacity: 1;
+}
+
+.slide-inner img.is-portrait {
+  width: auto;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  opacity: 1;
+}
+
+.slide-inner img.is-square {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  opacity: 1;
+}
+
+.slide-inner img.is-native-ar {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 1;
+}
+
+/* When every slide in a gallery is [AR], size the container to the image
+   instead of forcing the fixed 3:2 box (avoids empty space around portrait
+   screenshots). Paired with Swiper's autoHeight option. */
+.gallery-swiper.native-ar {
+  aspect-ratio: unset;
+}
+
+.gallery-swiper.native-ar .swiper-slide {
+  height: auto;
+}
+
+.gallery-swiper.native-ar .slide-inner {
+  height: auto;
+}
+
+.gallery-swiper.native-ar .slide-inner img.is-native-ar {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+}
+
+.gallery-caption-external {
+  width: 100%;
+  padding: 0.25rem 0 1rem;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.gallery-caption-external h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.gallery-caption-external p {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-secondary);
+  margin: 0 auto;
+  max-width: 600px;
+  text-align: center;
+}
+
+.gallery-pagination.swiper-pagination {
+  position: relative !important;
+  bottom: 0 !important;
+  margin-top: 1.5rem;
+}
+
+.gallery-pagination .swiper-pagination-bullet {
+  background: var(--color-muted);
+  opacity: 0.5;
+}
+
+.gallery-pagination .swiper-pagination-bullet-active {
+  background: var(--color-link);
+  opacity: 1;
+}
+
+.gallery-swiper .swiper-button-prev,
+.gallery-swiper .swiper-button-next {
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.gallery-swiper .swiper-button-prev::after,
+.gallery-swiper .swiper-button-next::after {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.gallery-swiper .swiper-button-prev:hover,
+.gallery-swiper .swiper-button-next:hover {
+  transform: scale(1.1);
+  color: var(--color-accent);
+}

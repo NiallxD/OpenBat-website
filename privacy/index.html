@@ -58,7 +58,10 @@
   <div class="nav-overlay"></div>
 
   <main>
-    <div class="standard-page">
+    
+
+
+<div class="standard-page">
   
 
   
@@ -73,92 +76,6 @@
 <p>Recording anything with a microphone raises obvious questions. This page answers them directly.</p>
 <h2>Nothing leaves your phone unless you send it</h2>
 <p>The app records and identifies species entirely on your device. There’s no background upload, no sync, no “phoning home.”</p>
-<p>If you never tap to contribute a recording, we never see it. It stays in your storage and, if you use iCloud, your own iCloud account — which we have no access to.</p>
-<p><strong>There is no automatic upload.</strong> Not a setting that’s off by default — no setting at all. The app has no code that can send a recording without you choosing it, one recording at a time.</p>
-<h2>What you keep and what you send are different files</h2>
-<p>When you do contribute, we don’t get your recording. The app builds a separate, stripped-down copy and sends that. Your original never leaves the phone and is never altered.</p>
-<p>Before that copy is sent, on your phone:</p>
-<p><strong>Every identifier is removed.</strong> No device ID, no account, no name, no filename, no session label. There’s no “recordist” field — the app doesn’t have one.</p>
-<p><strong>The location is rounded</strong> to a grid of about 100 metres. Everyone in the same square gets the same coordinate.</p>
-<p><strong>The time is rounded</strong> down to the nearest five minutes.</p>
-<p><strong>Human speech is filtered out.</strong> An irreversible filter strips the low frequencies voices occupy. Bats call far above that range, so the calls themselves are untouched — but conversation is gone before the file is sent.</p>
-<p><strong>Everything else is discarded.</strong> Only a short list of scientific fields survives: species, confidence, length, sample rate, microphone model, app version. Anything not on that list is dropped by default, including fields added in future.</p>
-<p><strong>The file gets a random name</strong> that isn’t derived from anything, and your phone doesn’t keep a copy of it.</p>
-<h2>The honest consequence</h2>
-<p>Because nothing connects a contributed recording to you, nobody can trace one back. That includes us.</p>
-<p>Which means: <strong>once you contribute a recording, we can’t delete it, because we can’t find it.</strong></p>
-<p>That isn’t a policy we could choose to relax. There’s no hidden lookup table, no internal process, no “ask nicely and we’ll check.” The information needed to answer <em>“which of these came from this person”</em> doesn’t exist anywhere.</p>
-<p>It’s a genuine trade-off and we’d rather you knew about it before you tap than after. The app tells you the same thing on the consent screen.</p>
-<h2>Where 100 metres helps, and where it doesn’t</h2>
-<p>We’d rather be straight about this than let a number do work it can’t.</p>
-<p>In a town, a 100-metre square holds a lot of buildings, plenty of cover. In open countryside it might hold one property, and rounding conceals very little.</p>
-<p>If you’re recording somewhere you’d rather not have associated even roughly with a contribution, decide before you send it. Everything stays on your phone by default, so there’s no rush.</p>
-<h2>About other people</h2>
-<p>Most bat recording happens away from home: footpaths, parks, survey routes. So the location on a contribution usually describes somewhere you were passing, not where you live. Sometimes that’s near a house belonging to someone who never agreed to anything.</p>
-<p>The speech filter protects them as much as you. A conversation indoors (why are you looking for bats indoors???), or in a garden you walk past, doesn’t survive it.</p>
-<p>Beyond that, we ask you to use the same judgement you’d apply to any recording made in a public place.</p>
-<h2>What we do keep</h2>
-<p>One thing: a record that your device agreed to contribute.</p>
-<p>That’s a device identifier the app generates, which version of the terms you agreed to, whether consent is currently on or off, and the date and hour you decided. Not the minute or second, the hour is enough to show you agreed, and being vaguer makes it harder to line up against anything else.</p>
-<p>It exists so you can withdraw. It’s stored in your phone’s secure keychain, stays on that physical device rather than following your Apple account, and is never attached to anything you contribute.</p>
-<p>It is not an advertising identifier. There are no advertising networks, no analytics SDKs, and no tracking of any kind in this app.</p>
-<p>You can delete that record from Settings whenever you like. It happens immediately, no queue, no review, no email. Your device also gets a fresh identifier, so nothing afterwards connects to it.</p>
-<p>We are designing privacy IN, not designing risk OUT.</p>
-<h2>What contributions are used for</h2>
-<p>Building a reference library of bat calls, training species-identification models, and supporting conservation research.</p>
-<p>They may be published in open datasets, and may be licensed (this means sold) to ecological consultancies and researchers to help fund the project. Since they contain no personal data, nothing personal appears in anything published, trained on, or licensed.</p>
-<p>They’re never put on a public live map, and never used or sold for anything unrelated to bats.</p>
-<h2>The short version</h2>
-<table>
-<thead>
-<tr>
-<th>Privacy Concern</th>
-<th>What OpenBat Does</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Recordings you don’t contribute</td>
-<td>Never leave your phone</td>
-</tr>
-<tr>
-<td>Automatic uploads</td>
-<td>Don’t exist</td>
-</tr>
-<tr>
-<td>Identifiers on contributions</td>
-<td>None</td>
-</tr>
-<tr>
-<td>Location on contributions</td>
-<td>Rounded to ~100 m, always</td>
-</tr>
-<tr>
-<td>Time on contributions</td>
-<td>Rounded to 5 minutes, always</td>
-</tr>
-<tr>
-<td>Human speech in contributions</td>
-<td>Filtered out, irreversibly</td>
-</tr>
-<tr>
-<td>Can you be identified from a contribution?</td>
-<td>No — by us or anyone else</td>
-</tr>
-<tr>
-<td>Can we delete a contribution on request?</td>
-<td>No, for the same reason</td>
-</tr>
-<tr>
-<td>Personal data we hold</td>
-<td>A consent record, deletable in-app</td>
-</tr>
-<tr>
-<td>Trackers, ads, analytics</td>
-<td>None</td>
-</tr>
-</tbody>
-</table>
 <h2>Questions</h2>
 <p>privacy@openbat.app — that reaches Niall Bell, who created this app and is responsible for privacy at OpenBat (which is just me). Trust me, I went far down this rabbit-hole in order to protect your privacy, it’s important to me!</p>
 <p>The full <a href="https://openbat.app/privacy-policy">Privacy Policy</a> has the formal detail, including your legal rights and who hosts the service.</p>
@@ -168,6 +85,7 @@
 <p>Know that when I build an app, I am the one in control. I design the systems, choose the libraries and dependencies, structure the database tables, and decide what happens, when, and how. These generative coding tools just write the code and help my debug. If you want to learn more, lets chat! You can reach me at <a href="mailto:niall@niallbell.com">niall@niallbell.com</a></p>
 </blockquote>
 </div>
+  
 </div>
 
   </main>

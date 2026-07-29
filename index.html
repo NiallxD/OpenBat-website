@@ -58,7 +58,10 @@
   <div class="nav-overlay"></div>
 
   <main>
-    <div class="standard-page">
+    
+<link rel="stylesheet" href="/static/css/swiper-bundle.min.css"/>
+
+<div class="standard-page">
   
 
   
@@ -68,12 +71,27 @@
   </div>
   
 
-  <div class="post-content"><h2>What is OpenBat?</h2>
+  <div class="post-content"><div class="gallery-float-right" style="width:50%">
+<div class="gallery-body" style="margin-top:2rem;margin-bottom:2rem;"><div class="gallery-slideshow-container desktop-only"><div class="swiper gallery-swiper native-ar" id="post-swiper-0"><div class="swiper-wrapper"><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/openbat-detector-screen.webp" alt="Listen to Bats" loading="lazy" onload="this.classList.add('is-native-ar')"></div></div><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/live-id-screenshot.webp" alt="Live ID Suggestions" loading="lazy" onload="this.classList.add('is-native-ar')"></div></div><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/field-guide-sceenshot.webp" alt="Explore the Globe!" loading="lazy" onload="this.classList.add('is-native-ar')"></div></div><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/species-profile-screenshot.webp" alt="Learn About Bats" loading="lazy" onload="this.classList.add('is-native-ar')"></div></div><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/playback-analysis-screenshot.webp" alt="Analyse Bat Calls" loading="lazy" onload="this.classList.add('is-native-ar')"></div></div></div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div></div><div class="gallery-pagination swiper-pagination" id="post-pagination-0"></div><div id="post-caption-0" class="gallery-caption-external" style="display:none;"><h3 id="post-slide-title-0"></h3><p id="post-slide-desc-0"></p></div></div><div class="gallery-mobile-grid mobile-only"><div class="mobile-grid-item"><div class="mobile-grid-media"><img src="/static/images/openbat-detector-screen.webp" alt="Listen to Bats" loading="lazy"></div><div class="mobile-grid-content"><h4 class="mobile-grid-title">Listen to Bats</h4><div class="mobile-grid-caption"><p>OpenBat detecting bats in real time!
+</p></div></div></div><div class="mobile-grid-item"><div class="mobile-grid-media"><img src="/static/images/live-id-screenshot.webp" alt="Live ID Suggestions" loading="lazy"></div><div class="mobile-grid-content"><h4 class="mobile-grid-title">Live ID Suggestions</h4><div class="mobile-grid-caption"><p>Learn who is flying around you at night!
+</p></div></div></div><div class="mobile-grid-item"><div class="mobile-grid-media"><img src="/static/images/field-guide-sceenshot.webp" alt="Explore the Globe!" loading="lazy"></div><div class="mobile-grid-content"><h4 class="mobile-grid-title">Explore the Globe!</h4><div class="mobile-grid-caption"><p>Global Field Guide powered by the community!
+</p></div></div></div><div class="mobile-grid-item"><div class="mobile-grid-media"><img src="/static/images/species-profile-screenshot.webp" alt="Learn About Bats" loading="lazy"></div><div class="mobile-grid-content"><h4 class="mobile-grid-title">Learn About Bats</h4><div class="mobile-grid-caption"><p>Detailed information about bats in your area!
+</p></div></div></div><div class="mobile-grid-item"><div class="mobile-grid-media"><img src="/static/images/playback-analysis-screenshot.webp" alt="Analyse Bat Calls" loading="lazy"></div><div class="mobile-grid-content"><h4 class="mobile-grid-title">Analyse Bat Calls</h4><div class="mobile-grid-caption"><p>Analyse bat calls after the fact to learn about echolocation!
+</p></div></div></div></div><script>(function(){var postGalleryData0=[{"type":"image","src":"/static/images/openbat-detector-screen.webp","title":"Listen to Bats","nativeAspect":true,"caption":"<p>OpenBat detecting bats in real time!\n</p>"},{"type":"image","src":"/static/images/live-id-screenshot.webp","title":"Live ID Suggestions","nativeAspect":true,"caption":"<p>Learn who is flying around you at night!\n</p>"},{"type":"image","src":"/static/images/field-guide-sceenshot.webp","title":"Explore the Globe!","nativeAspect":true,"caption":"<p>Global Field Guide powered by the community!\n</p>"},{"type":"image","src":"/static/images/species-profile-screenshot.webp","title":"Learn About Bats","nativeAspect":true,"caption":"<p>Detailed information about bats in your area!\n</p>"},{"type":"image","src":"/static/images/playback-analysis-screenshot.webp","title":"Analyse Bat Calls","nativeAspect":true,"caption":"<p>Analyse bat calls after the fact to learn about echolocation!\n</p>"}];document.addEventListener('DOMContentLoaded',function(){var tEl=document.getElementById('post-slide-title-0');var dEl=document.getElementById('post-slide-desc-0');var cArea=document.getElementById('post-caption-0');function upd(i){var d=postGalleryData0[i];if(!d)return;tEl.textContent=d.title||'';dEl.innerHTML=d.caption||'';cArea.style.display=(d.title||d.caption)?'block':'none';}new Swiper('#post-swiper-0',{loop:true,keyboard:{enabled:true},speed:600,autoHeight:true,pagination:{el:'#post-pagination-0',type:'fraction',renderFraction:function(c,t){return'<span class="'+c+'"></span> <span class="fraction-sep">of</span> <span class="'+t+'"></span>';}},navigation:{nextEl:'#post-swiper-0 .swiper-button-next',prevEl:'#post-swiper-0 .swiper-button-prev'},on:{init:function(){upd(this.realIndex);},slideChange:function(){upd(this.realIndex);}}});});}());</script></div>
+</div>
+<h2>What is OpenBat?</h2>
 <p>OpenBat is a free iOS app that turns a compatible ultrasonic USB microphone into a live bat detector! It captures audio at up to 384 kHz, shows a real-time spectrogram, detects individual echolocation pulses and, where an available open-source machine learning model exists for the region, suggests species IDs for the bats you are hearing, all on-device (currently for North America and Canada with UK/Europe in beta).</p>
+<p>In addition to allowing you to hear flying bats in real time, OpenBat includes an expansive and details Species Field Guide to that you can learn all about bats near to where you live, or around the globe! Our Field Guide is community driven so if you have knowledge about the bats in your area, why not contribute?!</p>
 <h2>Our Story</h2>
 <p>During a research project to use passive acoustics to document bat species presence in the Squamish Estuary, our team built an audio processing pipeline around the NABat ML2 model in order to process the large volumes of audio being collected. At the same time, the project lead was tinkering with self-build, low cost, bat detectors and was curious to see if it was possible to integrate this open-source machine learning model into an iOS app for the purposes of suggesting IDs for bat species.</p>
 <p>The OpenBat app emerged from this curiosity.</p>
-</div>
+<div style="clear:both"></div>
+<h2>Download on the App Store</h2>
+<p>Scan the QR code to download on the App Store, or search ‘OpenBat’.</p>
+<figure>
+<img src="/static/images/qr-code-demo.webp" alt="QR linking to the App Store to download the app." style="width:25%">
+</figure></div>
+  <script src="/static/js/swiper-bundle.min.js"></script>
 </div>
 
   </main>
