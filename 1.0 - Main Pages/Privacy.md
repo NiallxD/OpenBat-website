@@ -25,4 +25,4 @@ The full [Privacy Policy](https://openbat.app/privacy-policy) has the formal det
 
 I'm one guy developing this app and as such, moving with the times, I use generative 'AI' to help write the code. I have principles which I follow when it comes to 'AI' and I've written these in a blog post on my main website - take a look [here](https://niallbell.com/blog/acceptable-use-of-ai/).
 
-> Know that when I build an app, I am the one in control. I design the systems, choose the libraries and dependencies, structure the database tables, and decide what happens, when, and how. These generative coding tools just write the code and help my debug. If you want to learn more, lets chat! You can reach me at niall@niallbell.com
+Learn more about my use of AI in the development of OpenBat [here](/generative-ai-use/).
