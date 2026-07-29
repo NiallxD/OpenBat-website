@@ -1,3 +1,12 @@
+
+# OpenBat
+
+This repo is one of three related to this project:
+
+[OpenBat-App](https://github.com/NiallxD/OpenBat-App)
+[OpenBat-FieldGuide](https://github.com/NiallxD/OpenBat-FieldGuide/tree/main)
+[OpenBat-Website](https://github.com/NiallxD/OpenBat-website)
+
 # OpenBat website
 
 Static site for [openbat.app](https://openbat.app), built with [Eleventy](https://www.11ty.dev/)
