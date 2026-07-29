@@ -82,6 +82,75 @@ function wikilinkPlugin(md, wikilinkMap) {
   });
 }
 
+function parseSlidesFromBlock(blockHtml) {
+  const slides = [];
+  if (!blockHtml.trim()) return slides;
+  const blocks = blockHtml.split(/(?=<h2)/i);
+  for (const block of blocks) {
+    if (!block.trim()) continue;
+    const titleMatch = block.match(/<h2[^>]*>([\s\S]*?)<\/h2>/i);
+    if (!titleMatch) continue;
+    let rawTitle = titleMatch[1].replace(/<[^>]+>/g, '').trim()
+      .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+    if (!rawTitle || /gallery-(start|end)/i.test(rawTitle)) continue;
+    let nativeAspect = false;
+    if (/\[AR\]/i.test(rawTitle)) {
+      nativeAspect = true;
+      rawTitle = rawTitle.replace(/\[AR\]/i, '').trim();
+    }
+    const blockTitle = rawTitle;
+    const contentWithoutTitle = block.replace(/<h2[^>]*>[\s\S]*?<\/h2>/i, '');
+    const imgRegex = /<img[^>]+src="([^"]+)"/gi;
+    const imgsFound = [];
+    let igm;
+    while ((igm = imgRegex.exec(contentWithoutTitle)) !== null) imgsFound.push(igm[1]);
+    const urlRegex = /((?:https?:\/\/|\/)[^\s<"']+\.(?:jpg|jpeg|png|gif|webp|avif|JPG|JPEG|PNG|GIF|WEBP|AVIF))/gi;
+    const rawUrls = [];
+    let um;
+    while ((um = urlRegex.exec(contentWithoutTitle)) !== null) {
+      if (!imgsFound.includes(um[1])) rawUrls.push(um[1]);
+    }
+    const uniqueRawUrls = [...new Set(rawUrls)];
+    let pureCaption = contentWithoutTitle
+      .replace(/<img[^>]+>/gi, '')
+      .replace(/<a[^>]+>https?:\/\/[^<]+<\/a>/gi, '')
+      .replace(/(?:https?:\/\/|\/)[^\s<"']+\.(?:jpg|jpeg|png|gif|webp|avif|JPG|JPEG|PNG|GIF|WEBP|AVIF)/gi, '')
+      .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+      .replace(/<p>\s*<\/p>/gi, '')
+      .trim();
+    const srcList = imgsFound.length > 0 ? imgsFound : uniqueRawUrls;
+    srcList.forEach((src, idx) => {
+      slides.push({ type: 'image', src, title: blockTitle, nativeAspect, caption: idx === 0 ? pureCaption : '' });
+    });
+  }
+  return slides;
+}
+
+function buildInlineGallery(uid, slides) {
+  const swiperId = `post-swiper-${uid}`;
+  const paginationId = `post-pagination-${uid}`;
+  const captionAreaId = `post-caption-${uid}`;
+  const titleId = `post-slide-title-${uid}`;
+  const descId = `post-slide-desc-${uid}`;
+  const dataVar = `postGalleryData${uid}`;
+  const esc = (s) => (s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const desktopSlides = slides.map(img => {
+    const onload = img.nativeAspect
+      ? `onload="this.classList.add('is-native-ar')"`
+      : `onload="this.classList.add(this.naturalWidth>this.naturalHeight?'is-landscape':'is-portrait')"`;
+    return `<div class="swiper-slide"><div class="slide-inner"><img src="${esc(img.src)}" alt="${esc(img.title)}" loading="lazy" ${onload}></div></div>`;
+  }).join('');
+  const mobileItems = slides.map(img => {
+    const hasContent = img.title || img.caption;
+    return `<div class="mobile-grid-item"><div class="mobile-grid-media"><img src="${esc(img.src)}" alt="${esc(img.title)}" loading="lazy"></div>${hasContent ? `<div class="mobile-grid-content">${img.title ? `<h4 class="mobile-grid-title">${img.title}</h4>` : ''}${img.caption ? `<div class="mobile-grid-caption">${img.caption}</div>` : ''}</div>` : ''}</div>`;
+  }).join('');
+  const allNativeAspect = slides.every(img => img.nativeAspect);
+  const slidesJson = JSON.stringify(slides).replace(/<\/script>/gi, '<\\/script>');
+  return `<div class="gallery-body" style="margin-top:2rem;margin-bottom:2rem;"><div class="gallery-slideshow-container desktop-only"><div class="swiper gallery-swiper${allNativeAspect ? ' native-ar' : ''}" id="${swiperId}"><div class="swiper-wrapper">${desktopSlides}</div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div></div><div class="gallery-pagination swiper-pagination" id="${paginationId}"></div><div id="${captionAreaId}" class="gallery-caption-external" style="display:none;"><h3 id="${titleId}"></h3><p id="${descId}"></p></div></div><div class="gallery-mobile-grid mobile-only">${mobileItems}</div><script>(function(){var ${dataVar}=${slidesJson};document.addEventListener('DOMContentLoaded',function(){var tEl=document.getElementById('${titleId}');var dEl=document.getElementById('${descId}');var cArea=document.getElementById('${captionAreaId}');function upd(i){var d=${dataVar}[i];if(!d)return;tEl.textContent=d.title||'';dEl.innerHTML=d.caption||'';cArea.style.display=(d.title||d.caption)?'block':'none';}new Swiper('#${swiperId}',{loop:true,keyboard:{enabled:true},speed:600,autoHeight:${allNativeAspect ? 'true' : 'false'},pagination:{el:'#${paginationId}',type:'fraction',renderFraction:function(c,t){return'<span class="'+c+'"></span> <span class="fraction-sep">of</span> <span class="'+t+'"></span>';}},navigation:{nextEl:'#${swiperId} .swiper-button-next',prevEl:'#${swiperId} .swiper-button-prev'},on:{init:function(){upd(this.realIndex);},slideChange:function(){upd(this.realIndex);}}});});}());</script></div>`;
+}
+
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("static");
   eleventyConfig.addPassthroughCopy("robots.txt");
@@ -118,6 +187,20 @@ export default function (eleventyConfig) {
           body = body.replace(/^<\/p>\s*/, "").trim();
         }
         return `<div class="callout callout-${t}"><div class="callout-title">${title}</div><div class="callout-body">${body}</div></div>`;
+      }
+    );
+  });
+
+  eleventyConfig.addTransform("inlineGalleries", (content, outputPath) => {
+    if (typeof outputPath !== "string" || !outputPath.endsWith(".html")) return content;
+    if (!content.includes("gallery-start")) return content;
+    let uid = 0;
+    return content.replace(
+      /<h2[^>]*>\s*gallery-start\s*<\/h2>([\s\S]*?)<h2[^>]*>\s*gallery-end\s*<\/h2>/gi,
+      (_, inner) => {
+        const slides = parseSlidesFromBlock(inner);
+        if (!slides.length) return '';
+        return buildInlineGallery(uid++, slides);
       }
     );
   });

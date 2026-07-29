@@ -1,6 +1,9 @@
 ---
 layout: base.njk
 ---
+{% block head %}
+{% if 'gallery-start' in content %}<link rel="stylesheet" href="{{ '/static/css/swiper-bundle.min.css' | url }}"/>{% endif %}
+{% endblock %}
 <div class="standard-page">
   {% if sectionLabel %}
   <p class="section-label">{{ sectionLabel }}</p>
@@ -14,4 +17,5 @@ layout: base.njk
   {% endif %}
 
   <div class="post-content">{{ content | safe }}</div>
+  {% if 'gallery-start' in content %}<script src="{{ '/static/js/swiper-bundle.min.js' | url }}"></script>{% endif %}
 </div>
