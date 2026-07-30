@@ -124,7 +124,7 @@ Caption for the second slide goes here.
 
 ## gallery-end
 
-A scrollable/swipeable carousel on desktop, and a stacked grid on mobile. Each `## Title` inside the block becomes one slide — put the image URL on its own line directly under the title, and any text above the image URL becomes that slide's caption (only the first slide's caption is shown by default as you swipe between slides). Add `[AR]` to a title (e.g. `## My Title [AR]`) to show that slide at its native aspect ratio instead of the default crop.
+A swipeable carousel at any screen size. Each `## Title` inside the block becomes one slide — put the image URL on its own line directly under the title, and any text above the image URL becomes that slide's caption (only the first slide's caption is shown by default as you swipe between slides). Add `[AR]` to a title (e.g. `## My Title [AR]`) to show that slide at its native aspect ratio instead of the default crop.
 
 ```markdown
 ## gallery-start
