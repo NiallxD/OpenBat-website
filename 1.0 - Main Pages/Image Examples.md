@@ -140,6 +140,42 @@ Caption for the second slide goes here.
 ## gallery-end
 ```
 
+## Gallery (mobile/web only)
+
+## gallery-start [HIDEM]
+
+## Web-only Slide
+This gallery only shows on screens wider than 768px.
+/static/images/logo.png
+
+## gallery-end
+
+## gallery-start [HIDEW]
+
+## Mobile-only Slide
+This gallery only shows on screens 768px and narrower.
+/static/images/logo.png
+
+## gallery-end
+
+Add `[HIDEM]` or `[HIDEW]` right after `gallery-start` (e.g. `## gallery-start [HIDEM]`) to hide that whole gallery on mobile or on web/desktop respectively. Useful for running two versions of the same gallery side by side in the markdown — one tuned for mobile, one for desktop — and letting CSS pick the right one instead of writing separate pages. The tag only affects the gallery it's attached to, not the whole page. (You won't see both of the examples above at once — resize your browser or view on a phone to see the other one appear.)
+
+```markdown
+## gallery-start [HIDEM]
+
+## Web-only Slide
+/static/images/your-image.webp
+
+## gallery-end
+
+## gallery-start [HIDEW]
+
+## Mobile-only Slide
+/static/images/your-image.webp
+
+## gallery-end
+```
+
 ## Gallery (native aspect ratio, no crop)
 
 ## gallery-start
@@ -219,5 +255,6 @@ Paragraph text goes here, wrapping beside the floated gallery.
 - **`<div class="image-pair">…</div>`** — wraps two `image-float-right` figures to sit side by side at half width each.
 - **`## gallery-start` … `## gallery-end`** — H2 markers that turn everything between them into a Swiper carousel; each `## Title` inside is one slide, with the image path on its own line and any preceding text as the caption.
 - **`[AR]` on a slide title** — shows that slide uncropped at native aspect ratio; if *all* slides in a gallery use it, the carousel also auto-sizes its height to the image instead of a fixed 3:2 box.
+- **`[HIDEM]` / `[HIDEW]` on `gallery-start`** — hides that whole gallery on mobile (≤768px) or web (>768px) respectively, so you can run two versions of the same gallery for different screen sizes.
 - **`<div class="gallery-float-right">…</div>` / `gallery-float-left`** — wraps a whole `gallery-start`/`gallery-end` block to float and scale the carousel like a single image. Needs blank lines directly inside the opening/closing `<div>` tags so the `##` headings still parse as markdown.
 - **`<div style="clear:both"></div>`** — drop this (with blank lines around it) after any floated image/gallery once you want later content to stop wrapping around it and resume full width.

@@ -128,7 +128,7 @@ function parseSlidesFromBlock(blockHtml) {
   return slides;
 }
 
-function buildInlineGallery(uid, slides) {
+function buildInlineGallery(uid, slides, hideClass = '') {
   const swiperId = `post-swiper-${uid}`;
   const paginationId = `post-pagination-${uid}`;
   const captionAreaId = `post-caption-${uid}`;
@@ -144,7 +144,7 @@ function buildInlineGallery(uid, slides) {
   }).join('');
   const allNativeAspect = slides.every(img => img.nativeAspect);
   const slidesJson = JSON.stringify(slides).replace(/<\/script>/gi, '<\\/script>');
-  return `<div class="gallery-body" style="margin-top:2rem;margin-bottom:2rem;"><div class="gallery-slideshow-container"><div class="swiper gallery-swiper${allNativeAspect ? ' native-ar' : ''}" id="${swiperId}"><div class="swiper-wrapper">${desktopSlides}</div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div></div><div class="gallery-pagination swiper-pagination" id="${paginationId}"></div><div id="${captionAreaId}" class="gallery-caption-external" style="display:none;"><h3 id="${titleId}"></h3><p id="${descId}"></p></div></div><script>(function(){var ${dataVar}=${slidesJson};document.addEventListener('DOMContentLoaded',function(){var tEl=document.getElementById('${titleId}');var dEl=document.getElementById('${descId}');var cArea=document.getElementById('${captionAreaId}');function upd(i){var d=${dataVar}[i];if(!d)return;tEl.textContent=d.title||'';dEl.innerHTML=d.caption||'';cArea.style.display=(d.title||d.caption)?'block':'none';}new Swiper('#${swiperId}',{loop:true,keyboard:{enabled:true},speed:600,autoHeight:${allNativeAspect ? 'true' : 'false'},pagination:{el:'#${paginationId}',type:'fraction',renderFraction:function(c,t){return'<span class="'+c+'"></span> <span class="fraction-sep">of</span> <span class="'+t+'"></span>';}},navigation:{nextEl:'#${swiperId} .swiper-button-next',prevEl:'#${swiperId} .swiper-button-prev'},on:{init:function(){upd(this.realIndex);},slideChange:function(){upd(this.realIndex);}}});});}());</script></div>`;
+  return `<div class="gallery-body${hideClass}" style="margin-top:2rem;margin-bottom:2rem;"><div class="gallery-slideshow-container"><div class="swiper gallery-swiper${allNativeAspect ? ' native-ar' : ''}" id="${swiperId}"><div class="swiper-wrapper">${desktopSlides}</div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div></div><div class="gallery-pagination swiper-pagination" id="${paginationId}"></div><div id="${captionAreaId}" class="gallery-caption-external" style="display:none;"><h3 id="${titleId}"></h3><p id="${descId}"></p></div></div><script>(function(){var ${dataVar}=${slidesJson};document.addEventListener('DOMContentLoaded',function(){var tEl=document.getElementById('${titleId}');var dEl=document.getElementById('${descId}');var cArea=document.getElementById('${captionAreaId}');function upd(i){var d=${dataVar}[i];if(!d)return;tEl.textContent=d.title||'';dEl.innerHTML=d.caption||'';cArea.style.display=(d.title||d.caption)?'block':'none';}new Swiper('#${swiperId}',{loop:true,keyboard:{enabled:true},speed:600,autoHeight:${allNativeAspect ? 'true' : 'false'},pagination:{el:'#${paginationId}',type:'fraction',renderFraction:function(c,t){return'<span class="'+c+'"></span> <span class="fraction-sep">of</span> <span class="'+t+'"></span>';}},navigation:{nextEl:'#${swiperId} .swiper-button-next',prevEl:'#${swiperId} .swiper-button-prev'},on:{init:function(){upd(this.realIndex);},slideChange:function(){upd(this.realIndex);}}});});}());</script></div>`;
 }
 
 export default function (eleventyConfig) {
@@ -192,11 +192,12 @@ export default function (eleventyConfig) {
     if (!content.includes("gallery-start")) return content;
     let uid = 0;
     return content.replace(
-      /<h2[^>]*>\s*gallery-start\s*<\/h2>([\s\S]*?)<h2[^>]*>\s*gallery-end\s*<\/h2>/gi,
-      (_, inner) => {
+      /<h2[^>]*>\s*gallery-start(\s*\[(HIDEM|HIDEW)\])?\s*<\/h2>([\s\S]*?)<h2[^>]*>\s*gallery-end\s*<\/h2>/gi,
+      (_, __, hideTag, inner) => {
         const slides = parseSlidesFromBlock(inner);
         if (!slides.length) return '';
-        return buildInlineGallery(uid++, slides);
+        const hideClass = hideTag === 'HIDEM' ? ' hide-mobile' : hideTag === 'HIDEW' ? ' hide-web' : '';
+        return buildInlineGallery(uid++, slides, hideClass);
       }
     );
   });
