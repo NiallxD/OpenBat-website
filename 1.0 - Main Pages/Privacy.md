@@ -7,13 +7,17 @@ publish: true
 
 # How OpenBat protects your privacy
 
-OpenBat is a bat detector. It records ultrasound, works out which species is calling and, if you want, lets you contribute recordings to research.
+OpenBat is a bat detector. It records ultrasound and works out which species is calling, entirely on your phone.
 
 Recording anything with a microphone raises obvious questions. This page answers them directly.
 
-## Nothing leaves your phone unless you send it
+## Nothing leaves your phone
 
-The app records and identifies species entirely on your device. There's no background upload, no sync, no "phoning home."
+The app records and identifies species entirely on your device. There's no account, no background upload, no "phoning home." The app does look up species reference data from a couple of public services (to show you images and nearby records), but nothing that identifies you is ever sent.
+
+## Newsletter
+
+If you sign up for the newsletter, that's a Google Form — your email goes to Niall's own Google Drive, used only to send the newsletter, never shared.
 
 ## Questions
 
