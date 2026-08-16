@@ -35,9 +35,9 @@ Analyse bat calls after the fact to learn about echolocation!
 
 ## What is OpenBat?
 
-OpenBat is a free iOS app that turns a compatible ultrasonic USB microphone into a live bat detector! It captures audio at up to 384 kHz, shows a real-time spectrogram, detects individual echolocation pulses and, where an available open-source machine learning model exists for the region, suggests species IDs for the bats you are hearing, all on-device (currently for North America and Canada with UK/Europe in beta).
+OpenBat is a free iOS app that turns a compatible ultrasonic USB microphone into a live bat detector! It captures audio at up to 384 kHz, shows a real-time spectrogram, detects individual echolocation pulses and, where an available open-source machine learning model exists for the region, suggests species IDs for the bats you are hearing, all on-device (currently North America, with the UK in beta).
 
-In addition to allowing you to hear flying bats in real time, OpenBat includes an expansive and details Species Field Guide to that you can learn all about bats near to where you live, or around the globe! Our Field Guide is community driven so if you have knowledge about the bats in your area, why not contribute?!
+In addition to allowing you to hear flying bats in real time, OpenBat includes an expansive and detailed Species Field Guide so that you can learn all about bats near to where you live, or around the globe! Our Field Guide is community driven so if you have knowledge about the bats in your area, why not contribute?!
 
 ## Our Story
 
@@ -47,9 +47,6 @@ The OpenBat app emerged from this curiosity.
 
 <div style="clear:both"></div>
 
-## Download on the App Store
+## Coming soon to the App Store
 
-Scan the QR code to download on the App Store, or search 'OpenBat'.
-<figure>
-<img src="/static/images/qr-code-demo.webp" alt="QR linking to the App Store to download the app." style="width:25%">
-</figure>
+OpenBat isn't on the App Store just yet — see the [Download](/download-openbat/) page and check back shortly.

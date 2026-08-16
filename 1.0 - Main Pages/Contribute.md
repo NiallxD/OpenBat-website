@@ -31,6 +31,6 @@ The OpenBat app contains a global bat field guide. With just over 1,400 bat spec
 
 We are calling on bat experts and nerds from around the world to contribute their knowledge of local bat species to our database, directly building the field guide. Contributing is fairly straight forward and we are working on ways to improve further.
 
-Visit our [GitHub Repo](https://github.com/NiallxD/OpenBat-Fieldguide) to learn more.
+Visit our [GitHub Repo](https://github.com/NiallxD/OpenBat-FieldGuide) to learn more.
 
 

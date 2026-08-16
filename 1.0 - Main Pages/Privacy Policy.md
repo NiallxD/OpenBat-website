@@ -46,18 +46,18 @@ If you sign up for the OpenBat newsletter, you'll be taken to a Google Form, hos
 
 Responses go into a Google Sheet in Niall's personal Google Drive — subject to Google's own privacy terms, not ours. Your email is used only to send you the newsletter, is never shared or sold, and you can ask to be removed at any time by emailing privacy@openbat.app.
 
-## 6. What we don't do
+## 5. What we don't do
 
 - We don't operate a server that receives your recordings, location, or audio.
 - We don't have accounts, sign-in, or device identifiers tied to you.
 - We don't use analytics, crash reporting, advertising, or tracking SDKs of any kind.
 - Outside of the newsletter form above, we don't collect, sell, or share anything.
 
-## 7. Children
+## 6. Children
 
 OpenBat is not directed at children under 13, and we do not knowingly collect personal data from anyone, regardless of age.
 
-## 8. Changes
+## 7. Changes
 
 If this changes — for example, if a future version of the app adds a way to contribute recordings to research — we'll update this notice first and be explicit about what's new.
 

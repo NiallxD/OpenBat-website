@@ -8,7 +8,7 @@ publish: true
 ## Get started
 
 1. **Plug in an ultrasonic USB microphone.** The built-in iPhone mic only hears up to about 24 kHz, and most bat calls happen well above that, so you need something like the [Griff Mini](https://www.pippyg.com/griff.html). Any USB ultrasonic mic that runs at 384 kHz should work fine, plugged in via a USB-C or Lightning adapter depending on your device.
-2. **Open OpenBat and allow microphone and location access.** Location is used to tag recordings and to pick the right species model for your area, nothing more.
+2. **Open OpenBat and allow microphone and location access.** Location is used to tag your recordings, to suggest the right species model for your area, to look up which species occur near you, and — if you start a Session — to record that session's GPS track. It never leaves your phone except as an approximate position sent to GBIF for that species lookup; see the [Privacy Policy](/privacy-policy).
 3. **Calibrate your microphone** when the app asks. It only takes a moment and it's what keeps the amplitude readings meaningful.
 4. **Point the mic at the sky and wait.** Once the status indicator up top turns green, you're receiving audio. When a bat calls nearby you'll see a pulse land on the spectrogram.
 
@@ -20,7 +20,7 @@ Bat calls are ultrasonic, so you can't hear them directly. OpenBat gives you a f
 
 - **Off**: no audio output, just detection and the spectrogram.
 - **Heterodyne**: shifts a narrow band around a tunable frequency down into the audible range in real time, so you hear a "chirp" or "click" as each call passes through. Never stops listening, but it's a rough translation rather than a faithful one, more like a Geiger counter than a recording.
-- **Slow replay**: captures a short window of audio around a detected call and plays it back slowed right down, so a call that was too short and too high to make sense of turns into something you can actually hear the shape of. While a snippet is replaying, the mic isn't listening for the next one, so there's a brief window where a call could be missed. You can also mix Heterodyne in underneath Slow replay so you never lose track of what's happening between snippets.
+- **Slow replay**: captures a short window of audio around a detected call (1.5 seconds by default) and plays it back eight times slower, so a call that was too short and too high to make sense of turns into something you can actually hear the shape of. While a snippet is replaying, the mic isn't listening for the next one, so there's a brief window where a call could be missed — that trade is the whole point of the mode, and it's how dedicated time-expansion detectors have always worked. By default Heterodyne keeps running underneath so you never lose track of what's happening between snippets; you can set it to replay only, or heterodyne only, in the tuning panel.
 
 A small pill above the spectrogram shows what Slow replay is doing at any moment: an ear when it's listening, a red dot while it's capturing a snippet, and a tortoise with a filling ring while it plays that snippet back. Tap the pill for a plain-language explanation.
 
