@@ -24,7 +24,11 @@ For privacy questions, contact privacy@openbat.app.
 
 ## 2. What stays on your phone
 
-Recordings, session tracks, and species identifications are stored locally on your device. Species identification runs entirely on-device — nothing is sent anywhere to work out what you recorded.
+Recordings, sessions, and species identifications are stored locally on your device. Species identification runs entirely on-device — nothing is sent anywhere to work out what you recorded.
+
+**Your location never leaves your phone.** It is used on-device to tag detections, to suggest the right species model for your region, to work out which species are plausible where you are, to name a session after the place it happened, and to calculate your local sunset and sunrise for the detector's sun clock. Earlier versions sent an approximate position to GBIF for that species lookup; that no longer happens — the range data now ships inside the app.
+
+**OpenBat does not record a GPS track.** Sessions used to record a continuous course while detecting. That was removed: each detection already carries a coordinate and a timestamp, so a track can be rebuilt from your own exported data without the app keeping a second, denser record of your movements. The app never requests "Always" location access and never uses location in the background.
 
 If you enable iCloud sync in Settings, your recordings and sessions are backed up to **your own** iCloud account under Apple's terms. We have no access to it.
 
@@ -34,9 +38,8 @@ OpenBat queries a small number of public, third-party reference services to show
 
 | Service | What's sent | Why |
 |---|---|---|
-| GBIF (the Global Biodiversity Information Facility) | Your approximate current location | To look up which species have been recorded near you |
 | Wikipedia | A species name | To fetch a reference image |
-| GitHub | Nothing (static file download) | To fetch the built-in species guide data |
+| GitHub | Nothing (static file download) | To fetch the built-in species guide and species range data |
 
 These are ordinary, read-only lookups against public reference data — the same kind of request any app makes to show you information from the internet. No device identifier, account, or recording is ever attached to them, and we don't operate or control these services.
 

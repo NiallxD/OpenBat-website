@@ -21,7 +21,7 @@ By spending time listening to bats you will start to (hopefully) gain an appreci
 
 iNaturalist is a global community science platform which allows members of the public to contribute biological observations to a global database of observations which can be used by researchers. In fact, we use this exact database [gbif.org](https://www.gbif.org) in OpenBat to power our range maps found in the Bat Field Guide!
 
-To get started, head out and record some bats. Then select high quality recordings and export them via the Playback section in the app. Then upload the spectrogram image and .wav file to iNaturalist. In time, experts will help ID the species recorded where possible, which contributes to the dataset.
+To get started, head out and record some bats. Then select high quality recordings and export them from the player in the app (open a session, then tap the recording). Then upload the spectrogram image and .wav file to iNaturalist. In time, experts will help ID the species recorded where possible, which contributes to the dataset.
 
 > Note: We are working on a feature to make creating iNaturalist observations easier than ever! Our tool will give you everything you need to submit to iNaturalist, and ensures it includes everything a potential ID'er will need to make an ID.
 

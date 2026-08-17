@@ -13,7 +13,7 @@ Recording anything with a microphone raises obvious questions. This page answers
 
 ## Nothing leaves your phone
 
-The app records and identifies species entirely on your device. There's no account, no background upload, no "phoning home." The app does look up species reference data from a couple of public services (to show you images and nearby records), but nothing that identifies you is ever sent.
+The app records and identifies species entirely on your device. There's no account, no background upload, no "phoning home." Your location never leaves your phone — it's used on-device to work out which bats are plausible where you are (the range data that decides it ships with the app) and to calculate your local sunset and sunrise times. OpenBat does fetch species reference data and images from a couple of public services, but nothing that identifies you, and no location, is ever sent.
 
 ## Newsletter
 
