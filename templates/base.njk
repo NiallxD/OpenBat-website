@@ -15,6 +15,13 @@
   {% if coverImage %}<meta property="og:image" content="{{ coverImage }}">{% endif %}
   <link rel="preload" href="{{ '/static/fonts/jersey10.woff2' | url }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ '/static/fonts/geist-pixel.woff2' | url }}" as="font" type="font/woff2" crossorigin>
+  <!-- Favicons -->
+  <link rel="icon" href="{{ '/favicon.ico' | url }}" sizes="32x32">
+  <link rel="icon" href="{{ '/static/images/favicon-32.png' | url }}" type="image/png" sizes="32x32">
+  <link rel="icon" href="{{ '/static/images/favicon-16.png' | url }}" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="{{ '/static/images/apple-touch-icon.png' | url }}">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
   <link rel="stylesheet" href="{{ '/static/css/style.css?v=2.5' | url }}">
   <script>
     const savedTheme = localStorage.getItem('theme');

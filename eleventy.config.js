@@ -150,6 +150,7 @@ function buildInlineGallery(uid, slides, hideClass = '') {
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("static");
   eleventyConfig.addPassthroughCopy("robots.txt");
+  eleventyConfig.addPassthroughCopy({ "static/images/favicon.ico": "favicon.ico" });
 
   // Markdown-it with HTML enabled + Obsidian-style wikilinks
   const wikilinkMap = buildWikilinkMap(".");
