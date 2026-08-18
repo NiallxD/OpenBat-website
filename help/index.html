@@ -139,7 +139,7 @@
 <p><strong>Tap the pill</strong> for tonight’s sunset and sunrise times, how long each window lasts tonight, and a reminder of why those hours are the ones to be out in. It’s worked out on your phone from your latitude and the date, so it’s right whether or not you have signal — and it needs location access to know where the sun is.</p>
 <h2>Simplified and full views</h2>
 <p>OpenBat starts in <strong>simplified view</strong>, which shows a running list of every species identified, the input level and the spectrogram. That’s deliberately most of what a first night needs, and it keeps the screen readable while you’re outside in the dark.</p>
-<p>Turn it off — it’s the first switch in <strong>Settings &gt; General</strong> — and the detector fills in the rest: peak frequency, bandwidth, duration and pulse rate for the last call, a zoomable close-up of the pulse itself, controls for the timeline, the colour palette and the frequency band, and the ability to drag the spectrogram back through the last minute of history. You’re asked which you’d prefer when you first set the app up, and switching between them costs nothing: anything you’ve adjusted is kept and comes back.</p>
+<p>Turn on <strong>Advanced mode</strong> — it’s the first switch in <strong>Settings &gt; General</strong> — and the detector fills in the rest: peak frequency, bandwidth, duration and pulse rate for the last call, a zoomable close-up of the pulse itself, controls for the timeline, the colour palette and the frequency band, and the ability to drag the spectrogram back through the last minute of history. You’re asked which you’d prefer when you first set the app up, and switching between them costs nothing: anything you’ve adjusted is kept and comes back.</p>
 <p>The rest of this page describes the full view, so if a control it mentions isn’t on your screen, that’s why.</p>
 <h2>Listening to bats</h2>
 <p>Bat calls are ultrasonic, so you can’t hear them directly. OpenBat gives you a few ways to bring them into human hearing range, all from a single mode button. Start a session with the round button beside the tab bar, then tap that button again to open the session controls — Listen is the middle one. Tapping it cycles through:</p>
@@ -155,13 +155,17 @@
 <p>Recordings can also be played back in full time expansion after the fact — tap the recording in its session — with nothing missed and nothing sped past, since the whole file already exists on disk by then.</p>
 <h2>Detecting and capturing pulses</h2>
 <p>OpenBat’s pulse detector watches the incoming audio and triggers automatically when it sees a call-shaped pulse, drawing it on screen and, if you’ve armed recording, saving it.</p>
-<p>Open <strong>Settings &gt; Audio</strong> to tune:</p>
+<p>Open <strong>Settings &gt; Detecting</strong> to tune it. Under <strong>What counts as a call</strong>:</p>
 <ul>
-<li><strong>Trigger mode</strong>: “Amplitude only” fires on any loud sound in the analysis band, handy for testing but easily set off by wind or handling noise. “Frequency + Amplitude” also requires the peak frequency to be above a minimum you set, which rejects most low-frequency noise.</li>
-<li><strong>Amplitude threshold</strong>: how loud a signal needs to be, as a normalised 0 to 1 value, before it counts as a pulse.</li>
-<li><strong>Frequency gate</strong>: sets the minimum peak frequency a pulse needs to hit, when you’re in Frequency + Amplitude mode. 15 to 20 kHz is enough to reject wind and handling noise; push it up to 30 to 40 kHz to target common pipistrelle-range calls specifically.</li>
-<li><strong>Minimum duration</strong> and <strong>bridge gaps</strong>: filter out very short blips and stitch together a call’s internal gaps so one pass gives you one capture instead of a handful of fragments.</li>
-<li><strong>Hold-off</strong>: a short cooldown after each trigger, by default 50 ms, so a single call’s echoes don’t set off several detections in a row.</li>
+<li><strong>Mode</strong>: “Loudness” counts anything loud enough, whatever its pitch — useful for testing, but wind and handling noise will set it off. “Loudness + pitch” requires the sound to be high-pitched too, and is normally the one to use.</li>
+<li><strong>Loudness</strong>: matches the brightness scale on the spectrogram, so anything that looks brighter than this will trigger. Lower it for faint, distant bats — and more noise with them.</li>
+<li><strong>Lowest pitch</strong>: anything below this is ignored however loud it is, when you’re in “Loudness + pitch” mode. 15 to 20 kHz clears wind and handling noise; raise it to 30 to 40 kHz to target only the higher-pitched species.</li>
+</ul>
+<p>Under <strong>Telling calls apart</strong> (advanced mode only, since these are best set with a spectrogram in front of you):</p>
+<ul>
+<li><strong>Shortest call</strong>: how long a sound must last to count as a call, which rejects clicks and pops.</li>
+<li><strong>Join gaps up to</strong>: a call can dip quiet partway through, and quiet patches shorter than this stay part of the same call — raise it if one call is being counted as several.</li>
+<li><strong>Wait after a call</strong>: the shortest gap accepted between two separate calls, 30 ms by default, so echoes aren’t counted as extra calls.</li>
 </ul>
 <p><strong>Triggered display mode</strong> (the icon next to the spectrogram controls) compresses the view so only pulses are shown back to back with the silent gaps skipped, which makes scanning a long quiet session much faster.</p>
 <h3>Recording</h3>
@@ -191,7 +195,7 @@ Check the USB connection to your microphone and adapter. Unplug and replug if ne
 <p><strong>The sample rate shown looks lower than expected</strong>
 OpenBat displays the actual sample rate your microphone is delivering. If it’s not what you expect for your device (should be 384 kHz), check the microphone itself is set to its native or maximum rate, and that no other app has claimed the audio session.</p>
 <p><strong>No pulses are triggering even though I can see activity on the spectrogram</strong>
-Open Pulse Settings and check your amplitude threshold isn’t set too high, and that the frequency gate (if you’re using it) covers the range you’re actually seeing activity in.</p>
+Open <strong>Settings &gt; Detecting</strong> and check <strong>Loudness</strong> isn’t set too high, and that <strong>Lowest pitch</strong> (if you’re in “Loudness + pitch” mode) is below the range you’re actually seeing activity in.</p>
 <p><strong>I can’t find my recordings</strong>
 Recordings are saved on-device and are visible in the Files app, under OpenBat’s own folder. Recordings are kept with the session they were made in; older recordings made outside a session appear in the “Not in a session” group at the bottom of the Sessions list.</p>
 <h2>Still stuck?</h2>
