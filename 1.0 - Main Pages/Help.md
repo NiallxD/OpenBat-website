@@ -59,7 +59,7 @@ Each window is the first and last **15% of that night**, rather than a fixed num
 
 OpenBat starts in **simplified view**, which shows a running list of every species identified, the input level and the spectrogram. That's deliberately most of what a first night needs, and it keeps the screen readable while you're outside in the dark.
 
-Turn it off — it's the first switch in **Settings > General** — and the detector fills in the rest: peak frequency, bandwidth, duration and pulse rate for the last call, a zoomable close-up of the pulse itself, controls for the timeline, the colour palette and the frequency band, and the ability to drag the spectrogram back through the last minute of history. You're asked which you'd prefer when you first set the app up, and switching between them costs nothing: anything you've adjusted is kept and comes back.
+Turn on **Advanced mode** — it's the first switch in **Settings > General** — and the detector fills in the rest: peak frequency, bandwidth, duration and pulse rate for the last call, a zoomable close-up of the pulse itself, controls for the timeline, the colour palette and the frequency band, and the ability to drag the spectrogram back through the last minute of history. You're asked which you'd prefer when you first set the app up, and switching between them costs nothing: anything you've adjusted is kept and comes back.
 
 The rest of this page describes the full view, so if a control it mentions isn't on your screen, that's why.
 
@@ -81,13 +81,17 @@ Recordings can also be played back in full time expansion after the fact — tap
 
 OpenBat's pulse detector watches the incoming audio and triggers automatically when it sees a call-shaped pulse, drawing it on screen and, if you've armed recording, saving it.
 
-Open **Settings > Audio** to tune:
+Open **Settings > Detecting** to tune it. Under **What counts as a call**:
 
-- **Trigger mode**: "Amplitude only" fires on any loud sound in the analysis band, handy for testing but easily set off by wind or handling noise. "Frequency + Amplitude" also requires the peak frequency to be above a minimum you set, which rejects most low-frequency noise.
-- **Amplitude threshold**: how loud a signal needs to be, as a normalised 0 to 1 value, before it counts as a pulse.
-- **Frequency gate**: sets the minimum peak frequency a pulse needs to hit, when you're in Frequency + Amplitude mode. 15 to 20 kHz is enough to reject wind and handling noise; push it up to 30 to 40 kHz to target common pipistrelle-range calls specifically.
-- **Minimum duration** and **bridge gaps**: filter out very short blips and stitch together a call's internal gaps so one pass gives you one capture instead of a handful of fragments.
-- **Hold-off**: a short cooldown after each trigger, by default 50 ms, so a single call's echoes don't set off several detections in a row.
+- **Mode**: "Loudness" counts anything loud enough, whatever its pitch — useful for testing, but wind and handling noise will set it off. "Loudness + pitch" requires the sound to be high-pitched too, and is normally the one to use.
+- **Loudness**: matches the brightness scale on the spectrogram, so anything that looks brighter than this will trigger. Lower it for faint, distant bats — and more noise with them.
+- **Lowest pitch**: anything below this is ignored however loud it is, when you're in "Loudness + pitch" mode. 15 to 20 kHz clears wind and handling noise; raise it to 30 to 40 kHz to target only the higher-pitched species.
+
+Under **Telling calls apart** (advanced mode only, since these are best set with a spectrogram in front of you):
+
+- **Shortest call**: how long a sound must last to count as a call, which rejects clicks and pops.
+- **Join gaps up to**: a call can dip quiet partway through, and quiet patches shorter than this stay part of the same call — raise it if one call is being counted as several.
+- **Wait after a call**: the shortest gap accepted between two separate calls, 30 ms by default, so echoes aren't counted as extra calls.
 
 **Triggered display mode** (the icon next to the spectrogram controls) compresses the view so only pulses are shown back to back with the silent gaps skipped, which makes scanning a long quiet session much faster.
 
@@ -133,7 +137,7 @@ Check the USB connection to your microphone and adapter. Unplug and replug if ne
 OpenBat displays the actual sample rate your microphone is delivering. If it's not what you expect for your device (should be 384 kHz), check the microphone itself is set to its native or maximum rate, and that no other app has claimed the audio session.
 
 **No pulses are triggering even though I can see activity on the spectrogram**
-Open Pulse Settings and check your amplitude threshold isn't set too high, and that the frequency gate (if you're using it) covers the range you're actually seeing activity in.
+Open **Settings > Detecting** and check **Loudness** isn't set too high, and that **Lowest pitch** (if you're in "Loudness + pitch" mode) is below the range you're actually seeing activity in.
 
 **I can't find my recordings**
 Recordings are saved on-device and are visible in the Files app, under OpenBat's own folder. Recordings are kept with the session they were made in; older recordings made outside a session appear in the "Not in a session" group at the bottom of the Sessions list.
