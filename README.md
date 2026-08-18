@@ -12,7 +12,7 @@ This repo is one of three related to this project:
 Static site for [openbat.app](https://openbat.app), built with [Eleventy](https://www.11ty.dev/)
 and deployed to GitHub Pages on every push to `main`.
 
-CLaude Code was used to copy my existing wesbite, strip it out of existing content, and produce a template to build on. I could have done this manually but that would have taken an age!
+Claude Code was used to copy my existing website, strip it out of existing content, and produce a template to build on. I could have done this manually but that would have taken an age!
 
 ## Local development
 
