@@ -5,6 +5,21 @@ permalink: /help/
 publish: true
 ---
 
+<div class="plat-toggle-wrap" role="tablist" aria-label="Platform">
+  <div class="plat-toggle">
+    <button type="button" class="plat-toggle-btn active" data-platform="ios" role="tab" aria-selected="true" aria-controls="plat-ios">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.72c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.42-.14-2.76.83-3.48.83-.72 0-1.82-.81-2.99-.79-1.54.02-2.96.89-3.75 2.26-1.6 2.78-.41 6.9 1.15 9.16.76 1.11 1.67 2.35 2.86 2.3 1.15-.04 1.58-.74 2.97-.74 1.39 0 1.78.74 2.99.72 1.23-.02 2.01-1.12 2.76-2.24.87-1.28 1.23-2.53 1.25-2.6-.03-.01-2.39-.92-2.4-3.64zM14.1 5.6c.63-.77 1.06-1.83.94-2.9-.91.04-2.01.61-2.67 1.37-.59.68-1.1 1.76-.96 2.8 1.01.08 2.05-.51 2.69-1.27z"/></svg>
+      iOS
+    </button>
+    <button type="button" class="plat-toggle-btn" data-platform="android" role="tab" aria-selected="false" aria-controls="plat-android">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 10 6.2 6.6M16 10l1.8-3.4"/><path d="M9.5 7.5h.01M14.5 7.5h.01"/></svg>
+      Android
+    </button>
+  </div>
+</div>
+
+<div class="plat-section" id="plat-ios" role="tabpanel">
+
 ## Get started
 
 1. **Plug in an ultrasonic USB microphone.** The built-in iPhone mic only hears up to about 24 kHz, and most bat calls happen well above that, so you need something like the [Griff Mini](https://www.pippyg.com/griff.html). Any USB ultrasonic mic that runs at 384 kHz should work fine, plugged in via a USB-C or Lightning adapter depending on your device.
@@ -126,3 +141,34 @@ Recordings are saved on-device and are visible in the Files app, under OpenBat's
 ## Still stuck?
 
 Get in touch on the [Contact](/contact/) page, we're happy to help.
+
+</div>
+
+<div class="plat-section plat-hidden" id="plat-android" role="tabpanel">
+
+## OpenBat on Android
+
+**There's no Android version of OpenBat yet.** Currently, the OpenBat app is only available on iPhone and iPad. This isn't a permanent decision, I just can't feasibly develop an app for two platforms at the same time, especially when one I am not familiar with. If you'd like to see OpenBat on Android, [Get in Touch](/contact/) and let me know.
+
+## What to use in the meantime
+
+The good news is that the hard part of bat detecting is the microphone, not the app. If you've already got an ultrasonic USB mic, these will get you listening on Android today:
+
+- **[Bat Recorder](https://play.google.com/store/apps/details?id=com.bkmicro.batrecorder)** — heterodyne and time-expansion listening, triggered recording and a live spectrogram, working with a range of USB ultrasonic microphones. The closest thing to OpenBat's feature set on Android.
+-**[Bat Gizmo](https://play.google.com/store/apps/details?id=uk.org.gimell.batgizmoapp) — Supports the Griff Mini microphones and allows visualisation of bat calls with heterodyne playback. Note you have to manually tune the heterodyne. Read below for a brief guide on how to tune for bats in BC.
+
+Neither app is ours and neither is open source, so we can't vouch for what they do with your recordings or your location. Check their own privacy terms before you rely on them.
+
+## What still applies
+
+Most of what's on the iOS tab is about bats rather than about the app, and travels perfectly well to whatever you end up using:
+
+- **When to go out** — the hours after sunset and before sunrise are the ones that matter, whatever's in your hand.
+- **What the listening modes do** — heterodyne and time expansion work the same way in any detector, and the trade-off in time expansion (the mic stops listening while a snippet plays back) is a property of the technique, not of OpenBat.
+- **Contributing to community science** — a spectrogram and a WAV file are all iNaturalist wants, and any detector that exports recordings can supply both. See the iOS tab for how that upload works.
+
+## Something else?
+
+If you're on Android and stuck on any of this, which microphone to buy, which adapter, where to point it, [Get in Touch](/contact/). The OpenBat project is about more than just our app and we are happy to help.
+
+</div>
