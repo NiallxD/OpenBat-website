@@ -81,7 +81,9 @@
 <p>OpenBat is developed by <strong>Niall Bell</strong>. OpenBat is not a registered entity.</p>
 <p>For privacy questions, contact privacy@openbat.app.</p>
 <h2>2. What stays on your phone</h2>
-<p>Recordings, session tracks, and species identifications are stored locally on your device. Species identification runs entirely on-device — nothing is sent anywhere to work out what you recorded.</p>
+<p>Recordings, sessions, and species identifications are stored locally on your device. Species identification runs entirely on-device — nothing is sent anywhere to work out what you recorded.</p>
+<p><strong>Your location never leaves your phone.</strong> It is used on-device to tag detections, to suggest the right species model for your region, to work out which species are plausible where you are, to name a session after the place it happened, and to calculate your local sunset and sunrise for the detector’s sun clock. Earlier versions sent an approximate position to GBIF for that species lookup; that no longer happens — the range data now ships inside the app.</p>
+<p><strong>OpenBat does not record a GPS track.</strong> Sessions used to record a continuous course while detecting. That was removed: each detection already carries a coordinate and a timestamp, so a track can be rebuilt from your own exported data without the app keeping a second, denser record of your movements. The app never requests “Always” location access and never uses location in the background.</p>
 <p>If you enable iCloud sync in Settings, your recordings and sessions are backed up to <strong>your own</strong> iCloud account under Apple’s terms. We have no access to it.</p>
 <h2>3. What the app sends elsewhere, and why</h2>
 <p>OpenBat queries a small number of public, third-party reference services to show you information about species — it does not send them anything that identifies you:</p>
@@ -95,11 +97,6 @@
 </thead>
 <tbody>
 <tr>
-<td>GBIF (the Global Biodiversity Information Facility)</td>
-<td>Your approximate current location</td>
-<td>To look up which species have been recorded near you</td>
-</tr>
-<tr>
 <td>Wikipedia</td>
 <td>A species name</td>
 <td>To fetch a reference image</td>
@@ -107,7 +104,7 @@
 <tr>
 <td>GitHub</td>
 <td>Nothing (static file download)</td>
-<td>To fetch the built-in species guide data</td>
+<td>To fetch the built-in species guide and species range data</td>
 </tr>
 </tbody>
 </table>
