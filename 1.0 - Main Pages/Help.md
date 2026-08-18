@@ -159,6 +159,14 @@ The good news is that the hard part of bat detecting is the microphone, not the 
 
 Neither app is ours and neither is open source, so we can't vouch for what they do with your recordings or your location. Check their own privacy terms before you rely on them.
 
+## Tuning a heterodyne detector
+
+One of the easiest ways to hear bats is to use heterodyning. This is the process of 'turning' into a frequency such that simple signal processing can produce an audible sound. I'll skip the details, all you need to know is that the frequency you set needs to be near the frequency the bats call at. 
+
+Bat Gizmo app allows you to set two tuning frequencies at the same time, this is great for picking up more bats! As a rule of thumb, in North America, set one to 25 kHz and one to 47 kHz, this will help you pick up as many bats as possible without tweaking the settings all the time.
+
+For more, search up 'How to use a heterodyne bat detector'.
+
 ## What still applies
 
 Most of what's on the iOS tab is about bats rather than about the app, and travels perfectly well to whatever you end up using:
