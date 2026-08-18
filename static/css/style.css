@@ -1018,3 +1018,57 @@ figure.image-float-left figcaption {
   transform: scale(1.1);
   color: var(--color-accent);
 }
+
+/* =============================================
+   Platform toggle (Help page — iOS / Android)
+   ============================================= */
+
+.plat-toggle-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0 3rem;
+}
+.plat-toggle {
+  display: inline-flex;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 5px;
+  gap: 4px;
+}
+.plat-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-muted);
+  transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  white-space: nowrap;
+}
+.plat-toggle-btn.active {
+  background: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.plat-toggle-btn:not(.active):hover {
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+.plat-section {
+  transition: opacity 0.35s ease;
+}
+.plat-section.plat-hidden {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .plat-toggle-btn { padding: 0.6rem 1rem; font-size: 0.82rem; }
+}
