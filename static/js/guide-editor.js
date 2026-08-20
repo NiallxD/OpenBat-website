@@ -103,9 +103,7 @@
       { path: 'scientificName', label: 'Scientific name', type: 'text', required: true,
         hint: 'Genus is parsed from this automatically. Don’t add a separate genus field. Only the genus name should be capitalised.' },
       { path: 'order', label: 'Order', type: 'text', placeholder: 'Chiroptera' },
-      { path: 'family', label: 'Family', type: 'text', placeholder: 'Vespertilionidae' },
-      { path: 'code', label: 'Classifier code', type: 'text', placeholder: 'PIPPIP',
-        hint: 'Leave blank if a bundled ID model already names this species. Required if none does — without it there is no range map and it never appears in “bats near you”.' }
+      { path: 'family', label: 'Family', type: 'text', placeholder: 'Vespertilionidae' }
     ]},
     { title: 'Regions', fields: [
       { path: 'regions', label: 'Regions', type: 'regions', required: true }
@@ -619,6 +617,39 @@
     ui.edit.scrollIntoView({ block: 'start' });
   }
 
+  /// The crop of static/images/world-map.svg, in degrees. Antarctica is cut
+  /// off the bottom — no region sits there, and keeping it wasted a third of
+  /// the map's height on empty ice. Change either number and the SVG has to be
+  /// regenerated to match or every pin drifts.
+  var MAP_LAT_TOP = 84;
+  var MAP_LAT_BOTTOM = -58;
+
+  /// Which side of its pin each region's label sits on, so that neighbouring
+  /// labels — Eastern/Western US, UK & Ireland against Continental Europe —
+  /// fall away from each other instead of stacking up. Hand-placed because the
+  /// region set is fixed and small; anything the guide adds later defaults to
+  /// 's' and simply hangs below its pin, which is readable even if it is not
+  /// tuned. Directions are compass points: 'w' puts the label west of the pin.
+  var LABEL_DIR = {
+    'canada-west': 'w', 'canada-east': 'ne',
+    'america-west': 'w', 'america-east': 'e',
+    'mexico-central-america': 'w', 'caribbean': 'e',
+    'south-america-north': 'e', 'south-america-south': 'w',
+    'uk-ireland': 'w', 'continental-europe': 'e',
+    'north-africa-middle-east': 'w', 'west-africa': 'w',
+    'east-africa': 'e', 'southern-africa': 'w',
+    'central-asia': 'e', 'east-asia': 'e',
+    'south-asia': 'e', 'southeast-asia': 'e',
+    'australia-west': 'nw', 'australia-east': 'w',
+    'new-zealand-pacific': 'sw'
+  };
+
+  function hasCoords(region) {
+    return typeof region.latitude === 'number' && isFinite(region.latitude) &&
+           typeof region.longitude === 'number' && isFinite(region.longitude) &&
+           region.latitude <= MAP_LAT_TOP && region.latitude >= MAP_LAT_BOTTOM;
+  }
+
   function fieldControl(field) {
     var value = getPath(editing, field.path);
     var id = 'f-' + field.path.replace(/\./g, '-');
@@ -664,7 +695,12 @@
     }
 
     if (field.type === 'regions') {
-      var box = el('div', { class: 'ge-regions' });
+      // `ge-regions--map` only goes on when every region carries a usable
+      // latitude/longitude. Half a map — some regions pinned, the rest piled in
+      // one corner — is worse than the plain chip list, so it is all or nothing
+      // and the guide's own data decides. Mobile ignores the class entirely.
+      var mappable = guide.regions.length > 0 && guide.regions.every(hasCoords);
+      var box = el('div', { class: 'ge-regions' + (mappable ? ' ge-regions--map' : '') });
       guide.regions.forEach(function (region) {
         var checked = (editing.regions || []).indexOf(region.id) !== -1;
         var cb = el('input', { type: 'checkbox', id: id + '-' + region.id });
@@ -685,6 +721,16 @@
         var chip = el('label', { class: 'ge-region', title: region.id }, [
           cb, el('span', { class: 'ge-region-name', text: region.name })
         ]);
+        if (mappable) {
+          // Equirectangular, matching static/images/world-map.svg: x is
+          // longitude across the full 360°, y is latitude over the band the
+          // map is cropped to. Percentages rather than pixels so the map keeps
+          // its pins aligned at any width the column happens to be.
+          chip.style.setProperty('--x', ((region.longitude + 180) / 360 * 100).toFixed(3) + '%');
+          chip.style.setProperty('--y', ((MAP_LAT_TOP - region.latitude) /
+                                         (MAP_LAT_TOP - MAP_LAT_BOTTOM) * 100).toFixed(3) + '%');
+          chip.setAttribute('data-label-dir', LABEL_DIR[region.id] || 's');
+        }
         box.appendChild(chip);
       });
       return box;
