@@ -1,6 +1,6 @@
 ---
 title: Field Guide Editor
-description: Edit the OpenBat field guide in proper fields instead of raw JSON, then open a pull request with the result.
+description: Contribute to the OpenBat Field Guide.
 permalink: /guide-editor/
 publish: true
 ---
