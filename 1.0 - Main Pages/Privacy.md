@@ -17,11 +17,13 @@ The app records and identifies species entirely on your device. There's no accou
 
 ## This website
 
-No analytics, no cookies, no tracking. The only thing stored in your browser is whether you chose light or dark mode.
+No analytics, no cookies, no tracking. Two things are stored in your browser, both of them yours and neither of them sent anywhere: whether you chose light or dark mode, and — if you are part-way through an edit in the field guide editor — a draft of that edit.
 
 One page is worth naming: the [field guide editor](/guide-editor/). It reads the field guide straight from our public GitHub repository when you open it, so you're always editing the current version — a read-only request that sends nothing about you.
 
-If you then choose to press Submit, your edit is sent to our own service, which opens a pull request on the field guide repository for you. Only what you typed into the form is sent. Whatever name you put in the contributors box becomes part of the public record of who wrote what, which is the point of it — so use whatever name you're happy to have published. Nothing is sent unless you press Submit, and nothing you type is stored anywhere until you do. No other page on this site contacts anything outside it.
+If you then choose to press Submit, your edit is sent to our own service, which opens a pull request on the field guide repository for you. Only what you typed into the form is sent. Whatever name you put in the contributors box becomes part of the public record of who wrote what, which is the point of it — so use whatever name you're happy to have published. Nothing is sent unless you press Submit. No other page on this site contacts anything outside it.
+
+While you are working on an entry, the editor keeps a draft of it in your own browser's storage, so that closing the tab, running out of battery or reloading by accident doesn't cost you the work. The draft stays on your device — it is never uploaded, and it is not a copy we can see. It is offered back the next time you open the editor, and it is deleted as soon as you submit the entry or press “Delete the saved draft”, whichever comes first. If you would rather it wasn't kept at all, delete it and finish the entry in one sitting; clearing your browser's site data removes it too.
 
 ## Newsletter
 

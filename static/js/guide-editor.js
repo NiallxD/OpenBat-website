@@ -17,8 +17,14 @@
  * Dropping a file in still works, and is the fallback whenever the fetch fails
  * — offline, GitHub down, or a network that blocks it.
  *
- * Nothing is persisted — no localStorage, no cookies. Reloading the page loses
- * the edit, which is why there is an unsaved-changes prompt.
+ * The one thing persisted is the edit in progress: a draft is kept in
+ * localStorage under DRAFT_KEY so a closed tab, a flat battery or a stray
+ * reload doesn't cost someone an evening's work. It never leaves the device,
+ * it is offered back on the next visit rather than reapplied silently, and it
+ * is cleared the moment the edit is submitted or discarded. There is no other
+ * storage and no cookies. The beforeunload prompt is still here, but it is the
+ * lesser guard — iOS Safari mostly ignores it, which is exactly the case the
+ * draft covers.
  *
  * ## What this is really for
  *
@@ -109,7 +115,9 @@
     ]},
     { title: 'Photo', fields: [
       { path: 'imageURL', label: 'Image URL', type: 'text',
-        hint: 'Must be a Creative Commons or public-domain image. Leave blank and the app falls back to an unpredictable Wikipedia lookup.' },
+        hint: ['Must be a Creative Commons or public-domain image. ',
+               { text: 'Wikimedia Commons', url: 'https://commons.wikimedia.org/wiki/Category:Chiroptera' },
+               ' is a great place to start.'] },
       { path: 'imageCredit', label: 'Image credit', type: 'text',
         placeholder: 'Jane Doe, Wikimedia Commons, CC BY-SA 4.0',
         hint: 'Required whenever an image URL is set.' }
@@ -171,6 +179,18 @@
 
   function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
 
+  /// A hint is plain text, except where one word in it should be a link. An
+  /// array of parts carries both without letting HTML into the schema: strings
+  /// become text nodes, { text, url } becomes an anchor. Anything a hint links
+  /// to is somewhere else entirely — a licence, a photo library — so it opens
+  /// in its own tab rather than throwing away a half-filled form.
+  function hintNodes(hint) {
+    return (typeof hint === 'string' ? [hint] : hint).map(function (part) {
+      if (typeof part === 'string') return document.createTextNode(part);
+      return el('a', { href: part.url, target: '_blank', rel: 'noopener noreferrer', text: part.text });
+    });
+  }
+
   function getPath(obj, path) {
     return path.split('.').reduce(function (o, k) {
       return (o === null || o === undefined) ? undefined : o[k];
@@ -221,7 +241,69 @@
       .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   }
 
-  function markDirty() { dirty = true; }
+  function markDirty() { dirty = true; saveDraft(); }
+
+  /* ----------------------------------------------------------- draft store */
+
+  // Bumped if the shape below ever changes, so an old draft is dropped rather
+  // than half-read into a form that no longer matches it.
+  var DRAFT_KEY = 'openbat.guide-editor.draft.v1';
+  var draftTimer = null;
+
+  /// localStorage throws rather than returning null in a few real situations —
+  /// Safari private browsing, storage disabled by policy, a full quota. None of
+  /// them should break the editor, so every access goes through these and a
+  /// failure just means the draft feature quietly isn't available.
+  function readDraft() {
+    try {
+      var raw = window.localStorage.getItem(DRAFT_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+
+  function writeDraft(obj) {
+    try { window.localStorage.setItem(DRAFT_KEY, JSON.stringify(obj)); } catch (e) { /* no draft, then */ }
+  }
+
+  function clearDraft() {
+    if (draftTimer) { clearTimeout(draftTimer); draftTimer = null; }
+    try { window.localStorage.removeItem(DRAFT_KEY); } catch (e) { /* nothing to do */ }
+    renderDraftNote();
+  }
+
+  /// Debounced: typing a summary fires on every keystroke, and there is no
+  /// reason to serialise the whole species that often.
+  function saveDraft() {
+    if (!editing) return;
+    if (draftTimer) clearTimeout(draftTimer);
+    draftTimer = setTimeout(writeDraftNow, 500);
+  }
+
+  function writeDraftNow() {
+    draftTimer = null;
+    if (!editing || !dirty) return;
+    writeDraft({
+      savedAt: new Date().toISOString(),
+      isNew: editingIndex < 0,
+      originalId: originalId,
+      // What it was called when they left, for the restore prompt — the id is
+      // what actually finds the species again.
+      label: editing.commonName || editing.id || 'a new species',
+      editing: editing,
+      lockedContributors: lockedContributors,
+      note: (ui && ui.note) ? ui.note.value : ''
+    });
+    renderDraftNote();
+  }
+
+  // The debounce means a draft can be up to half a second behind when the page
+  // goes away. `pagehide` fires on the paths `beforeunload` misses on iOS —
+  // swiping the app away, the tab being reclaimed in the background — so the
+  // last edit is flushed there rather than lost.
+  window.addEventListener('pagehide', writeDraftNow);
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') writeDraftNow();
+  });
 
   window.addEventListener('beforeunload', function (e) {
     if (!dirty) return;
@@ -256,7 +338,10 @@
     copyOne: root.querySelector('[data-copy-entry]'),
     submit:  root.querySelector('[data-submit]'),
     note:    root.querySelector('[data-note]'),
-    result:  root.querySelector('[data-result]')
+    result:  root.querySelector('[data-result]'),
+    submitSection: root.querySelector('[data-submit-section]'),
+    draftRestore: root.querySelector('[data-draft-restore]'),
+    draftNote: root.querySelector('[data-draft-note]')
   };
 
   /* ------------------------------------------------------------- load step */
@@ -291,7 +376,104 @@
     ui.browse.hidden = false;
     renderMeta();
     renderResults();
+    offerDraft();
     ui.search.focus();
+  }
+
+  /* --------------------------------------------------------- draft restore */
+
+  /// A saved draft is offered, never reapplied on its own. Someone who came
+  /// back for an unrelated species should not find last week's half-finished
+  /// entry loaded under a name they didn't pick.
+  function offerDraft() {
+    var draft = readDraft();
+    clear(ui.draftRestore);
+    ui.draftRestore.hidden = !draft;
+    if (!draft) return;
+
+    ui.draftRestore.appendChild(el('p', { class: 'ge-draft-title',
+      text: 'You have an unfinished edit to ' + (draft.label || 'a species') + '.' }));
+    ui.draftRestore.appendChild(el('p', { class: 'ge-hint',
+      text: 'Saved on this device ' + describeWhen(draft.savedAt) + '. It has never been sent anywhere.' }));
+    ui.draftRestore.appendChild(el('div', { class: 'ge-draft-actions' }, [
+      el('button', { class: 'ge-btn', type: 'button', text: 'Pick up where I left off',
+                     onclick: function () { restoreDraft(draft); } }),
+      el('button', { class: 'ge-btn ge-btn-quiet', type: 'button', text: 'Discard it',
+                     onclick: function () {
+                       if (!window.confirm('Delete the saved draft of ' + (draft.label || 'this species') + '? This can’t be undone.')) return;
+                       clearDraft();
+                       ui.draftRestore.hidden = true;
+                     } })
+    ]));
+  }
+
+  function restoreDraft(draft) {
+    // Find the species again by the id it had when the draft was made, not by
+    // the index: the guide is refetched on every visit and may well have moved
+    // or gained entries since.
+    var index = -1;
+    if (!draft.isNew && draft.originalId) {
+      index = guide.species.findIndex
+        ? guide.species.findIndex(function (sp) { return sp.id === draft.originalId; })
+        : -1;
+    }
+    var lost = !draft.isNew && index < 0;
+
+    openEditor(index);
+    editing = draft.editing || editing;
+    // The draft's own snapshot, not the loaded guide's: validation checks that
+    // the credits the editor started with came through untouched, and that
+    // test has to be against what was locked when the draft was written.
+    lockedContributors = draft.lockedContributors || [];
+    originalId = draft.isNew ? null : draft.originalId;
+    editingIndex = index;
+    if (ui.note) ui.note.value = draft.note || '';
+    ui.title.textContent = index >= 0
+      ? 'Editing ' + (editing.commonName || editing.id)
+      : (draft.isNew ? 'New species' : 'Restored draft');
+    dirty = true;
+    buildForm();
+    renderDraftNote();
+
+    if (lost) {
+      showProblems(['The species this draft was based on (' + draft.originalId +
+                    ') is no longer in the guide — it may have been renamed or merged since. ' +
+                    'Your work is here and can be submitted as a new entry, but check it against the current guide first.']);
+    }
+  }
+
+  /// Rough, and deliberately so: "yesterday" is what someone needs to decide
+  /// whether a draft is theirs, and an exact timestamp reads like a log entry.
+  function describeWhen(iso) {
+    var then = new Date(iso);
+    if (isNaN(then.getTime())) return 'earlier';
+    var mins = Math.round((Date.now() - then.getTime()) / 60000);
+    if (mins < 2) return 'a moment ago';
+    if (mins < 60) return mins + ' minutes ago';
+    if (mins < 120) return 'about an hour ago';
+    if (mins < 24 * 60) return 'about ' + Math.round(mins / 60) + ' hours ago';
+    if (mins < 48 * 60) return 'yesterday';
+    return 'on ' + then.toISOString().slice(0, 10);
+  }
+
+  /// The in-form counterpart: says a draft is being kept and gives the one
+  /// control that removes it. Storing someone's work without telling them, or
+  /// without a way to delete it, is the version of this feature to avoid.
+  function renderDraftNote() {
+    if (!ui.draftNote) return;
+    var draft = readDraft();
+    clear(ui.draftNote);
+    ui.draftNote.hidden = !draft;
+    if (!draft) return;
+    ui.draftNote.appendChild(el('span', {
+      text: 'Saved on this device ' + describeWhen(draft.savedAt) + ', so you can close this and come back. It stays in this browser until you submit or delete it. ' }));
+    ui.draftNote.appendChild(el('button', {
+      class: 'ge-linkbtn', type: 'button', text: 'Delete the saved draft',
+      onclick: function () {
+        if (!window.confirm('Delete the saved draft? Your edit stays open here, but it won’t survive closing the page.')) return;
+        clearDraft();
+      }
+    }));
   }
 
   // Read-only, and cache-busted: an editor that hands you a stale base is worse
@@ -419,11 +601,22 @@
     }
     ui.browse.hidden = true;
     ui.edit.hidden = false;
+    ui.draftRestore.hidden = true;
+    renderDraftNote();
     ui.title.textContent = index >= 0
       ? 'Editing ' + (editing.commonName || editing.id)
       : 'New species';
     buildForm();
-    window.scrollTo(0, 0);
+    // Not window.scrollTo(0, 0). On a phone the search box has usually just
+    // been focused, so the keyboard is up and Safari has zoomed in; sending the
+    // page to absolute 0,0 lands in the top-left corner of that zoomed viewport
+    // and reads as the page throwing you to the top and sideways at once.
+    // Dismiss the keyboard, then bring the editor's own top into view.
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    // Static markup, so unlike the generated sections it keeps whatever state
+    // the last species left it in. Start it closed like the rest.
+    ui.submitSection.open = false;
+    ui.edit.scrollIntoView({ block: 'start' });
   }
 
   function fieldControl(field) {
@@ -542,7 +735,7 @@
 
   function buildForm() {
     clear(ui.form);
-    SPEC.forEach(function (section) {
+    SPEC.forEach(function (section, index) {
       var body = el('div', { class: 'ge-fields' });
       section.fields.forEach(function (field) {
         var control = fieldControl(field);
@@ -552,7 +745,7 @@
             field.required ? el('span', { class: 'ge-req', text: 'required' }) : null
           ]),
           control,
-          field.hint ? el('p', { class: 'ge-hint', text: field.hint }) : null
+          field.hint ? el('p', { class: 'ge-hint' }, hintNodes(field.hint)) : null
         ]));
       });
       // A <details> rather than a hand-rolled toggle: it collapses without any
@@ -561,15 +754,13 @@
       // a match when someone uses in-page find, so Ctrl+F still works across
       // the whole form.
       //
-      // Open if it holds a required field, or already has content. The form is
-      // a dozen sections and most species fill in a handful, so opening
-      // everything buries what's required under a wall of empty boxes — but
-      // closing a REQUIRED section is worse: a new species would be told
-      // "at least one region is required" for a section it can't see. Hiding
-      // what someone already wrote is the other thing to avoid.
-      var isOpen = section.fields.some(function (f) { return f.required; })
-                || sectionHasContent(section);
-      ui.form.appendChild(el('details', { class: 'ge-section', open: isOpen ? '' : null }, [
+      // Only the first section is open. A dozen expanded groups is a wall of
+      // boxes to scroll past before you reach anything you meant to change,
+      // and every section's badge already says whether it holds anything — so
+      // closed is readable, not hidden. Validation is safe with the required
+      // fields collapsed because showProblems() opens every section before it
+      // lists the errors, so nothing is ever complained about out of sight.
+      ui.form.appendChild(el('details', { class: 'ge-section', open: index === 0 ? '' : null }, [
         el('summary', { class: 'ge-section-head' }, [
           el('span', { class: 'ge-section-title', text: section.title }),
           sectionBadge(section)
@@ -578,13 +769,6 @@
       ]));
     });
     ui.form.appendChild(contributorsSection());
-  }
-
-  /// Whether anything in this section is filled in on the species being edited.
-  function sectionHasContent(section) {
-    return section.fields.some(function (field) {
-      return prune(getPath(editing, field.path)) !== undefined;
-    });
   }
 
   /// A count of how many of a section's fields are filled, so a collapsed
@@ -660,20 +844,24 @@
 
     render();
 
-    // Open by default, unlike the field sections: adding yourself is the step
-    // people forget, and a closed section is a step nobody is prompted to take.
-    return el('details', { class: 'ge-section', open: '' }, [
+    // Closed like every section but the first, so the badge carries the whole
+    // message while it is shut. It counts what THIS edit added, not the total:
+    // a species with three existing credits and none from you still has a
+    // required section to fill, and a badge reading "3 people" would say the
+    // opposite.
+    var added = (editing.contributors || []).length - lockedContributors.length;
+    return el('details', { class: 'ge-section' }, [
       el('summary', { class: 'ge-section-head' }, [
         el('span', { class: 'ge-section-title', text: 'Contributors' }),
-        el('span', { class: 'ge-section-badge' + ((editing.contributors || []).length ? ' is-filled' : ''),
-                     text: (editing.contributors || []).length
-                       ? (editing.contributors.length + (editing.contributors.length === 1 ? ' person' : ' people'))
+        el('span', { class: 'ge-section-badge' + (added ? ' is-filled' : ' is-required'),
+                     text: added
+                       ? (added === 1 ? 'you’re credited' : added + ' added')
                        : 'add yourself' })
       ]),
       el('p', { class: 'ge-hint',
         text: editingIndex >= 0
-          ? 'Add yourself as an editor when you change a species you didn’t create. Existing credits are locked — they record other people’s work, and only an entry you add here can be removed again.'
-          : 'The first entry is treated as this page’s creator — that’s you.' }),
+          ? 'Add yourself as an editor — every edit needs one, so the guide records who wrote what. Existing credits are locked: they record other people’s work, and only an entry you add here can be removed again.'
+          : 'Add yourself — every entry needs one. The first name is treated as this species’ creator, which here is you.' }),
       list,
       el('div', { class: 'ge-contributor-add' }, [nameInput, noteInput, addBtn])
     ]);
@@ -689,6 +877,15 @@
     if (!s.commonName) problems.push('A common name is required.');
     if (!s.scientificName) problems.push('A scientific name is required.');
     if (!s.regions || !s.regions.length) problems.push('Pick at least one region.');
+
+    // Every edit has to carry a credit for the person making it. Locked
+    // entries don't count towards this — they belong to whoever wrote the
+    // species before — so the test is that the list grew during this session.
+    if ((s.contributors || []).length <= lockedContributors.length) {
+      problems.push(editingIndex >= 0
+        ? 'Add yourself under Contributors — every edit needs the name of the person who made it.'
+        : 'Add yourself under Contributors — a new species needs the name of the person who created it.');
+    }
 
     if (s.id && !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(s.id)) {
       problems.push('The ID should be lowercase words separated by hyphens, e.g. pipistrellus-pipistrellus.');
@@ -751,6 +948,7 @@
     Array.prototype.forEach.call(ui.form.querySelectorAll('details.ge-section'), function (d) {
       d.open = true;
     });
+    ui.submitSection.open = true;
 
     ui.errors.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
@@ -863,6 +1061,9 @@
             throw new Error(r.data.error || ('The server said ' + r.status + '.'));
           }
           dirty = false;
+          // It is out of the browser and in a pull request now; keeping a copy
+          // of it here would only be something to trip over next visit.
+          clearDraft();
           showResult('ok', [
             el('p', { class: 'ge-outcome-title', text: 'Thank you — that’s been sent for review.' }),
             el('p', {}, [
@@ -890,7 +1091,8 @@
   });
 
   ui.back.addEventListener('click', function () {
-    if (dirty && !window.confirm('Discard the changes to this species?')) return;
+    if (dirty && !window.confirm('Discard the changes to this species? The saved draft goes too.')) return;
+    if (dirty) clearDraft();
     dirty = false;
     editing = null;
     ui.edit.hidden = true;
@@ -903,5 +1105,9 @@
     ui.submit.disabled = false;
     ui.submit.textContent = 'Submit for review';
     renderResults();
+    // Coming back from the bottom of a long form would otherwise leave the
+    // list scrolled off the top of the screen.
+    offerDraft();
+    ui.browse.scrollIntoView({ block: 'start' });
   });
 })();
