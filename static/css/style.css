@@ -1318,6 +1318,169 @@ figure.image-float-left figcaption {
   .ge-region-name { white-space: normal; }
 }
 
+/* Region picker as a world map, desktop only.
+   ---------------------------------------------------------------------------
+   Same DOM as the chip list — every pin is still the same <label> wrapping the
+   same checkbox, so selection, keyboard access and validation are untouched and
+   there is no second copy of the state to keep in sync. All that changes is the
+   layout: guide-editor.js writes each region's --x/--y (equirectangular, from
+   the guide's own latitude/longitude) and a data-label-dir, and this block
+   turns the flex row into a positioned map.
+
+   1000px is where the editor column is wide enough (~900px) for the labels to
+   sit beside their pins without colliding. Below it nothing here applies and
+   the chip list is exactly what it always was — that is the whole point of
+   scoping this to a media query rather than branching in JS.
+
+   The land is a mask, not an image, so it takes its colour from CSS and needs
+   no light/dark variant. Regenerating static/images/world-map.svg means
+   matching the 84°/-58° crop in guide-editor.js or every pin drifts. */
+@media (min-width: 1000px) {
+  .ge-regions--map {
+    display: block;
+    position: relative;
+    aspect-ratio: 360 / 142;
+    /* `justify-self` rather than `margin: 0 auto` — .ge-field is a grid, and an
+       auto margin on a grid item shrink-wraps it to its content instead of
+       centring a stretched box. With only absolutely-positioned pins inside,
+       that content is nothing and the map collapses to a few pixels wide. */
+    width: 100%;
+    max-width: 1100px;
+    justify-self: center;
+    margin-top: 0.35rem;
+    border: 1px solid var(--ge-border);
+    border-radius: var(--radius-md);
+    background: var(--ge-input-bg);
+    overflow: hidden;
+  }
+
+  .ge-regions--map::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.17);
+    -webkit-mask: url(../images/world-map.svg) no-repeat 0 0 / 100% 100%;
+    mask: url(../images/world-map.svg) no-repeat 0 0 / 100% 100%;
+  }
+
+  /* The chip stops being a pill and becomes the pin itself: an 11px dot sitting
+     on its coordinate. The label moves out into its own positioned box below. */
+  .ge-regions--map .ge-region {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    box-sizing: border-box;
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    gap: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.55);
+    background: var(--color-secondary);
+    transition: background var(--ease), box-shadow var(--ease);
+  }
+
+  /* Still in the DOM, still focusable, still the thing that carries the value —
+     just invisible, with the dot standing in for it. Stretched over the dot so
+     a click anywhere on the pin lands on the control. */
+  .ge-regions--map .ge-region input {
+    position: absolute;
+    inset: -3px;
+    width: auto;
+    height: auto;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .ge-regions--map .ge-region-name {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 0.72rem;
+    line-height: 1;
+    padding: 0.3rem 0.45rem;
+    border-radius: 999px;
+    border: 1px solid var(--ge-border-strong);
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--color-secondary);
+    /* The label is part of the hit target, not decoration — a 12px dot is a
+       mean thing to ask anyone to hit. It sits inside the <label>, so a click
+       on it toggles the checkbox with no handler of our own. Where two labels
+       do sit close, the z-index bump on :hover below decides which one takes
+       the click, and it is the one under the cursor. */
+    cursor: pointer;
+    transition: background var(--ease), border-color var(--ease), color var(--ease);
+  }
+
+  /* Label placement around the dot. 's' is the default and the fallback for any
+     region the LABEL_DIR table in guide-editor.js doesn't name. */
+  .ge-regions--map .ge-region-name,
+  .ge-regions--map [data-label-dir="s"] .ge-region-name {
+    left: 50%; top: calc(100% + 7px); transform: translateX(-50%);
+  }
+  .ge-regions--map [data-label-dir="n"] .ge-region-name {
+    left: 50%; top: auto; bottom: calc(100% + 7px); transform: translateX(-50%);
+  }
+  .ge-regions--map [data-label-dir="e"] .ge-region-name {
+    left: calc(100% + 7px); top: 50%; transform: translateY(-50%);
+  }
+  .ge-regions--map [data-label-dir="w"] .ge-region-name {
+    left: auto; right: calc(100% + 7px); top: 50%; transform: translateY(-50%);
+  }
+  .ge-regions--map [data-label-dir="ne"] .ge-region-name {
+    left: calc(100% + 5px); top: auto; bottom: calc(100% - 2px); transform: none;
+  }
+  .ge-regions--map [data-label-dir="nw"] .ge-region-name {
+    left: auto; right: calc(100% + 5px); top: auto; bottom: calc(100% - 2px); transform: none;
+  }
+  .ge-regions--map [data-label-dir="se"] .ge-region-name {
+    left: calc(100% + 5px); top: calc(100% - 2px); transform: none;
+  }
+  .ge-regions--map [data-label-dir="sw"] .ge-region-name {
+    left: auto; right: calc(100% + 5px); top: calc(100% - 2px); transform: none;
+  }
+
+  /* Picked. The chip list says so with a fill; on the map the dot goes accent
+     and grows, and its label lights up with it — both, because a lone dot is
+     easy to miss among twenty and a lone label doesn't read as a location. */
+  .ge-regions--map .ge-region:has(input:checked) {
+    z-index: 2;
+    background: var(--color-accent);
+    border-color: rgba(0, 0, 0, 0.65);
+    /* A halo rather than a scale transform: the dot and its label share one
+       element, so scaling the pin would blow up the text with it and shift the
+       label off the placement this block just worked out. */
+    box-shadow: 0 0 0 4px rgba(255, 134, 13, 0.3);
+  }
+  .ge-regions--map .ge-region:has(input:checked) .ge-region-name {
+    background: rgba(255, 134, 13, 0.22);
+    border-color: var(--color-accent);
+    color: var(--color-text);
+  }
+
+  /* Hover and keyboard focus pull a pin to the front, which is what keeps the
+     few labels that do sit close together readable. */
+  .ge-regions--map .ge-region:hover,
+  .ge-regions--map .ge-region:has(input:focus-visible) {
+    z-index: 3;
+  }
+  .ge-regions--map .ge-region:hover .ge-region-name,
+  .ge-regions--map .ge-region:has(input:focus-visible) .ge-region-name {
+    background: rgba(0, 0, 0, 0.85);
+    border-color: var(--color-accent);
+    color: var(--color-text);
+  }
+  .ge-regions--map .ge-region:has(input:focus-visible) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ge-regions--map .ge-region { transition: none; }
+  }
+}
+
 /* --- contributors --- */
 .ge-contributors { display: grid; gap: 0.4rem; margin-bottom: 0.75rem; }
 .ge-contributor {
