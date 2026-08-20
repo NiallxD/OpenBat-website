@@ -7,7 +7,7 @@
   <meta name="description" content="What data this site and the OpenBat software collect.">
   
   <!-- Privacy & Security -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="OpenBat">
   <meta property="og:title" content="Privacy — OpenBat">
@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="/static/css/style.css?v=2.5">
+  <link rel="stylesheet" href="/static/css/style.css?v=2.7">
   <script>
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
@@ -83,6 +83,9 @@
 <p>Recording anything with a microphone raises obvious questions. This page answers them directly.</p>
 <h2>Nothing leaves your phone</h2>
 <p>The app records and identifies species entirely on your device. There’s no account, no background upload, no “phoning home.” Your location never leaves your phone — it’s used on-device to work out which bats are plausible where you are (the range data that decides it ships with the app) and to calculate your local sunset and sunrise times. OpenBat does fetch species reference data and images from a couple of public services, but nothing that identifies you, and no location, is ever sent.</p>
+<h2>This website</h2>
+<p>No analytics, no cookies, no tracking. The only thing stored in your browser is whether you chose light or dark mode.</p>
+<p>One page is worth naming: the <a href="/guide-editor/">field guide editor</a> reads the field guide straight from our public GitHub repository when you open it, so you’re always editing the current version. That’s a read-only request that sends nothing about you, and whatever you type there stays in your browser — it only goes anywhere if you choose to open a pull request yourself. No other page on this site contacts anything outside it.</p>
 <h2>Newsletter</h2>
 <p>If you sign up for the newsletter, that’s a Google Form — your email goes to Niall’s own Google Drive, used only to send the newsletter, never shared.</p>
 <h2>Questions</h2>

@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OpenBat</title>
-  <meta name="description" content="Affordable bat detection for all!">
+  <title>Field Guide Editor — OpenBat</title>
+  <meta name="description" content="Edit the OpenBat field guide in proper fields instead of raw JSON, then open a pull request with the result.">
   
   <!-- Privacy & Security -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="OpenBat">
-  <meta property="og:title" content="OpenBat">
-  <meta property="og:description" content="Affordable bat detection for all!">
+  <meta property="og:title" content="Field Guide Editor — OpenBat">
+  <meta property="og:description" content="Edit the OpenBat field guide in proper fields instead of raw JSON, then open a pull request with the result.">
   
   <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
@@ -66,32 +66,76 @@
 
   <main>
     
-<link rel="stylesheet" href="/static/css/swiper-bundle.min.css"/>
+
 
 <div class="standard-page">
   
 
   
   <div class="listing-header">
-    <h1>OpenBat</h1>
-    <p class="page-lead">Affordable bat detection for all!</p>
+    <h1>Field Guide Editor</h1>
+    <p class="page-lead">Edit the OpenBat field guide in proper fields instead of raw JSON, then open a pull request with the result.</p>
   </div>
   
 
-  <div class="post-content"><div class="gallery-float-right" style="width:50%">
-<div class="gallery-body" style="margin-top:2rem;margin-bottom:2rem;"><div class="gallery-slideshow-container"><div class="swiper gallery-swiper native-ar" id="post-swiper-0"><div class="swiper-wrapper"><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/openbat-detector-screen.webp" alt="Listen to Bats" loading="lazy" onload="this.classList.add('is-native-ar')"></div></div><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/live-id-screenshot.webp" alt="Live ID Suggestions" loading="lazy" onload="this.classList.add('is-native-ar')"></div></div><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/field-guide-sceenshot.webp" alt="Explore the Globe!" loading="lazy" onload="this.classList.add('is-native-ar')"></div></div><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/species-profile-screenshot.webp" alt="Learn About Bats" loading="lazy" onload="this.classList.add('is-native-ar')"></div></div><div class="swiper-slide"><div class="slide-inner"><img src="/static/images/playback-analysis-screenshot.webp" alt="Analyse Bat Calls" loading="lazy" onload="this.classList.add('is-native-ar')"></div></div></div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div></div><div class="gallery-pagination swiper-pagination" id="post-pagination-0"></div><div id="post-caption-0" class="gallery-caption-external" style="display:none;"><h3 id="post-slide-title-0"></h3><p id="post-slide-desc-0"></p></div></div><script>(function(){var postGalleryData0=[{"type":"image","src":"/static/images/openbat-detector-screen.webp","title":"Listen to Bats","nativeAspect":true,"caption":"<p>OpenBat detecting bats in real time!\n</p>"},{"type":"image","src":"/static/images/live-id-screenshot.webp","title":"Live ID Suggestions","nativeAspect":true,"caption":"<p>Learn who is flying around you at night!\n</p>"},{"type":"image","src":"/static/images/field-guide-sceenshot.webp","title":"Explore the Globe!","nativeAspect":true,"caption":"<p>Global Field Guide powered by the community!\n</p>"},{"type":"image","src":"/static/images/species-profile-screenshot.webp","title":"Learn About Bats","nativeAspect":true,"caption":"<p>Detailed information about bats in your area!\n</p>"},{"type":"image","src":"/static/images/playback-analysis-screenshot.webp","title":"Analyse Bat Calls","nativeAspect":true,"caption":"<p>Analyse bat calls after the fact to learn about echolocation!\n</p>"}];document.addEventListener('DOMContentLoaded',function(){var tEl=document.getElementById('post-slide-title-0');var dEl=document.getElementById('post-slide-desc-0');var cArea=document.getElementById('post-caption-0');function upd(i){var d=postGalleryData0[i];if(!d)return;tEl.textContent=d.title||'';dEl.innerHTML=d.caption||'';cArea.style.display=(d.title||d.caption)?'block':'none';}new Swiper('#post-swiper-0',{loop:true,keyboard:{enabled:true},speed:600,autoHeight:true,pagination:{el:'#post-pagination-0',type:'fraction',renderFraction:function(c,t){return'<span class="'+c+'"></span> <span class="fraction-sep">of</span> <span class="'+t+'"></span>';}},navigation:{nextEl:'#post-swiper-0 .swiper-button-next',prevEl:'#post-swiper-0 .swiper-button-prev'},on:{init:function(){upd(this.realIndex);},slideChange:function(){upd(this.realIndex);}}});});}());</script></div>
+  <div class="post-content"><h2>Field Guide Editor</h2>
+<p>The field guide is one file, <code>SpeciesGuideData.json</code>, and anyone can edit it. This page lets you do that in ordinary form fields instead of hand-editing JSON — and it fills in the fiddly bits that are easy to forget, like bumping the version number so your change actually reaches people’s phones.</p>
+<p>The current guide loads automatically, so you’re always editing the latest version. Your edits stay in your browser — nothing is uploaded, and the only request this page makes is reading the guide from GitHub.</p>
+<div class="ge-steps">
+  <p><strong>1.</strong> Find your species below, or add a new one, and edit it.</p>
+  <p><strong>2.</strong> Download the file it gives you back.</p>
+  <p><strong>3.</strong> <a href="https://github.com/NiallxD/OpenBat-FieldGuide">Open a pull request</a> with it.</p>
 </div>
-<h2>What is OpenBat?</h2>
-<p>OpenBat is a free iOS app that turns a compatible ultrasonic USB microphone into a live bat detector! It captures audio at up to 384 kHz, shows a real-time spectrogram, detects individual echolocation pulses and, where an available open-source machine learning model exists for the region, suggests species IDs for the bats you are hearing, all on-device (currently North America, with the UK in beta).</p>
-<p>In addition to allowing you to hear flying bats in real time, OpenBat includes an expansive and detailed Species Field Guide so that you can learn all about bats near to where you live, or around the globe! Our Field Guide is community driven so if you have knowledge about the bats in your area, why not contribute?!</p>
-<h2>Our Story</h2>
-<p>During a research project to use passive acoustics to document bat species presence in the Squamish Estuary, our team built an audio processing pipeline around the NABat ML2 model in order to process the large volumes of audio being collected. At the same time, the project lead was tinkering with self-build, low cost, bat detectors and was curious to see if it was possible to integrate this open-source machine learning model into an iOS app for the purposes of suggesting IDs for bat species.</p>
-<p>The OpenBat app emerged from this curiosity.</p>
-<div style="clear:both"></div>
-<h2>Coming soon to the App Store</h2>
-<p>OpenBat isn’t on the App Store just yet — see the <a href="/download-openbat/">Download</a> page and check back shortly.</p>
+<p>Before adding a photo or writing a description, please read the <a href="https://github.com/NiallxD/OpenBat-FieldGuide#contributing-a-species-or-region">contributor guide</a> — particularly the rules on image licensing and writing in your own words.</p>
+<div id="guide-editor">
+  <section data-step="load" class="ge-card">
+    <h3>Loading the guide</h3>
+<p><p class="ge-fetching" data-fetching>Fetching the latest guide from GitHub…</p></p>
+<p><div data-fallback hidden>
+<p class="ge-error" data-load-error hidden></p>
+<p>You can open the file yourself instead — <a href="https://github.com/NiallxD/OpenBat-FieldGuide/blob/main/SpeciesGuideData.json">download it from GitHub</a>, then:</p>
+<div class="ge-drop" data-drop>
+<p>Drop <code>SpeciesGuideData.json</code> here</p>
+<p class="ge-hint">or</p>
+<label class="ge-btn">
+Choose file
+<input type="file" accept="application/json,.json" data-file hidden>
+</label>
 </div>
-  <script src="/static/js/swiper-bundle.min.js"></script>
+<details class="ge-paste">
+<summary>Paste the JSON instead</summary>
+<textarea data-paste rows="6" placeholder="Paste the contents of SpeciesGuideData.json"></textarea>
+<button type="button" class="ge-btn ge-btn-quiet" data-paste-go>Load pasted JSON</button>
+</details>
+<p><button type="button" class="ge-btn ge-btn-quiet" data-retry>Try GitHub again</button></p>
+</div></p>
+  </section>
+  <section data-step="browse" class="ge-card" hidden>
+    <div class="ge-meta" data-meta></div>
+    <div class="ge-search-row">
+      <input type="search" data-search placeholder="Search by name, family or ID" aria-label="Search species">
+      <button type="button" class="ge-btn" data-add-new>Add a new species</button>
+    </div>
+    <div class="ge-results" data-results></div>
+  </section>
+  <section data-step="edit" class="ge-card" hidden>
+    <div class="ge-edit-head">
+      <h3 data-edit-title></h3>
+      <button type="button" class="ge-btn ge-btn-quiet" data-back>Back to list</button>
+    </div>
+<p><div class="ge-errors" data-errors hidden></div>
+<div data-form></div></p>
+<p><div class="ge-actions">
+<button type="button" class="ge-btn ge-btn-primary" data-download>Download updated guide</button>
+<button type="button" class="ge-btn ge-btn-quiet" data-copy>Copy whole file</button>
+<button type="button" class="ge-btn ge-btn-quiet" data-copy-entry>Copy this entry only</button>
+</div>
+<p class="ge-hint">The downloaded file is the complete guide with your entry changed, the version bumped and the date set — replace <code>SpeciesGuideData.json</code> with it in your pull request. Only your entry will show up in the diff.</p></p>
+  </section>
+</div>
+<script src="/static/js/guide-editor.js" defer></script>
+</div>
+  
 </div>
 
   </main>

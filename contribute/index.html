@@ -7,7 +7,7 @@
   <meta name="description" content="Learn how you can contribute">
   
   <!-- Privacy & Security -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="OpenBat">
   <meta property="og:title" content="Contribute — OpenBat">
@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="/static/css/style.css?v=2.5">
+  <link rel="stylesheet" href="/static/css/style.css?v=2.7">
   <script>
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
@@ -93,6 +93,7 @@
 <h3>3. Bat Field Guide</h3>
 <p>The OpenBat app contains a global bat field guide. With just over 1,400 bat species known globally, this is not an easy task, and definitely not something our project team can complete.</p>
 <p>We are calling on bat experts and nerds from around the world to contribute their knowledge of local bat species to our database, directly building the field guide. Contributing is fairly straight forward and we are working on ways to improve further.</p>
+<p>The easiest way in is our <a href="/guide-editor/" class="wikilink">Field Guide Editor</a> — it opens the guide in ordinary form fields, so you can search for a species and edit it, or add a new one, without touching raw JSON. It also handles the version bump your change needs in order to reach people’s phones.</p>
 <p>Visit our <a href="https://github.com/NiallxD/OpenBat-FieldGuide">GitHub Repo</a> to learn more.</p>
 </div>
   
