@@ -7,9 +7,9 @@ publish: true
 
 ## Field Guide Editor
 
-The field guide is one file, `SpeciesGuideData.json`, and anyone can edit it. This page lets you do that in ordinary form fields instead of hand-editing JSON — and it fills in the fiddly bits that are easy to forget, like bumping the version number so your change actually reaches people's phones.
+OpenBat stores all of it's Field Guide data in one place on GitHub. Each time someone opens the OpenBat Field Guide on their phone, the app checks to see if there is a new version and if their is, downloads it.
 
-The current guide loads automatically, so you're always editing the latest version. **You don't need a GitHub account** — we'll submit your change for review for you.
+The tool below allows anyone to suggest edits and additions to the Field Guide. The current guide loads automatically, so you're always editing the latest version. **You don't need a GitHub account** to suggest edits!
 
 <div class="ge-steps">
   <p><strong>1.</strong> Find your species below, or add a new one, and edit it.</p>
@@ -17,9 +17,9 @@ The current guide loads automatically, so you're always editing the latest versi
   <p><strong>3.</strong> Press Submit. Nothing goes live until it's been checked.</p>
 </div>
 
-Nothing is sent anywhere until you press Submit, and if you'd rather handle the pull request yourself you still can — the option is at the bottom of the form.
+Nothing is sent anywhere until you press Submit, and if you'd rather handle the pull request yourself you still can, the option is at the bottom of the form.
 
-Before adding a photo or writing a description, please read the [contributor guide](https://github.com/NiallxD/OpenBat-FieldGuide#contributing-a-species-or-region) — particularly the rules on image licensing and writing in your own words.
+Before adding a photo or writing a description, please read the [contributor guide](https://github.com/NiallxD/OpenBat-FieldGuide#contributing-a-species-or-region), particularly the rules on image licensing and writing in your own words.
 
 <div id="guide-editor">
 
