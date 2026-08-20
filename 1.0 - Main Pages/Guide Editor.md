@@ -64,12 +64,28 @@ Before adding a photo or writing a description, please read the [contributor gui
     <div class="ge-errors" data-errors hidden></div>
     <div data-form></div>
 
-    <div class="ge-actions">
-      <button type="button" class="ge-btn ge-btn-primary" data-download>Download updated guide</button>
-      <button type="button" class="ge-btn ge-btn-quiet" data-copy>Copy whole file</button>
-      <button type="button" class="ge-btn ge-btn-quiet" data-copy-entry>Copy this entry only</button>
+    <div class="ge-field ge-submit-note">
+      <label class="ge-label" for="ge-note"><span>Anything the reviewer should know?</span></label>
+      <textarea id="ge-note" data-note rows="2" placeholder="Optional — where your information came from, anything you're unsure about"></textarea>
     </div>
-    <p class="ge-hint">The downloaded file is the complete guide with your entry changed, the version bumped and the date set — replace <code>SpeciesGuideData.json</code> with it in your pull request. Only your entry will show up in the diff.</p>
+
+    <div class="ge-actions">
+      <button type="button" class="ge-btn ge-btn-primary" data-submit>Submit for review</button>
+    </div>
+    <p class="ge-hint">No GitHub account needed. Your entry is sent for review as a pull request — nothing goes live until it's checked and merged.</p>
+
+    <div class="ge-result" data-result hidden></div>
+
+    <details class="ge-manual">
+      <summary>Or do it yourself on GitHub</summary>
+      <p class="ge-hint">Prefer to open the pull request in your own name? Take the file and go through GitHub as normal.</p>
+      <div class="ge-actions">
+        <button type="button" class="ge-btn ge-btn-quiet" data-download>Download updated guide</button>
+        <button type="button" class="ge-btn ge-btn-quiet" data-copy>Copy whole file</button>
+        <button type="button" class="ge-btn ge-btn-quiet" data-copy-entry>Copy this entry only</button>
+      </div>
+      <p class="ge-hint">The downloaded file is the complete guide with your entry changed, the version bumped and the date set — replace <code>SpeciesGuideData.json</code> with it in your pull request. Only your entry will show up in the diff.</p>
+    </details>
   </section>
 
 </div>

@@ -1,0 +1,327 @@
+/*
+ * openbat-guide-submit — opens a field guide pull request on a contributor's
+ * behalf, so contributing doesn't require a GitHub account.
+ *
+ * The guide editor at openbat.app/guide-editor/ can read the guide directly
+ * from GitHub, but it can't write: that needs a token, and a static page can't
+ * hold one. This worker holds it instead. It is the only piece of the system
+ * with write access, so the rules it enforces are the real ones — the browser's
+ * identical checks are a convenience, not a control.
+ *
+ * ## What it will and won't do
+ *
+ * It ONLY ever opens a pull request on a fresh branch. It never pushes to the
+ * default branch, never merges, never touches any file but the guide. That is
+ * what makes an open, unauthenticated endpoint acceptable: the worst outcome of
+ * abuse is pull requests someone has to close, and human review stays the gate
+ * on everything that actually ships.
+ *
+ * ## Why it takes one species and not the whole file
+ *
+ * The browser sends only the entry that was edited. This worker fetches the
+ * current guide itself, splices that entry in, and bumps the version. So two
+ * contributors working hours apart on different species can't clobber one
+ * another, and a submission built against a guide that has since moved on still
+ * applies cleanly. It also means the version bump and the file's formatting are
+ * decided here, where they can't be got wrong, rather than in a browser.
+ *
+ * ## Setup
+ *
+ * See README.md — a fine-grained token limited to the one repo, a KV namespace
+ * for rate limiting, and two secrets.
+ */
+
+const REPO_OWNER = 'NiallxD';
+const REPO_NAME  = 'OpenBat-FieldGuide';
+const FILE_PATH  = 'SpeciesGuideData.json';
+const BASE_BRANCH = 'main';
+
+const ALLOWED_ORIGINS = ['https://openbat.app', 'http://localhost:8080'];
+
+// Generous for a real contributor, tight enough that a script is a nuisance
+// rather than a flood. Both windows apply.
+const MAX_PER_HOUR = 5;
+const MAX_PER_DAY  = 20;
+
+// The guide's own entries run to a couple of KB; this is far above any honest
+// submission and well below anything that would strain the worker.
+const MAX_BODY_BYTES = 64 * 1024;
+
+/* ------------------------------------------------------------------ helpers */
+
+function corsHeaders(origin) {
+  return {
+    'Access-Control-Allow-Origin': ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Max-Age': '86400',
+    'Vary': 'Origin'
+  };
+}
+
+function json(status, body, origin) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json', ...corsHeaders(origin) }
+  });
+}
+
+// btoa/atob are byte-oriented, and the guide is full of en-dashes, accented
+// contributor names and species text. Going through TextEncoder/TextDecoder is
+// what keeps those intact — a naive btoa(string) mangles anything non-ASCII.
+function b64encode(text) {
+  const bytes = new TextEncoder().encode(text);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  return btoa(binary);
+}
+
+function b64decode(b64) {
+  const binary = atob(b64.replace(/\s/g, ''));
+  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+  return new TextDecoder('utf-8').decode(bytes);
+}
+
+// Matches the editor's own pruning: the schema asks for absent fields rather
+// than empty ones, because the app renders a section whenever it is present.
+function prune(value) {
+  if (Array.isArray(value)) {
+    const arr = value.map(prune).filter((v) => v !== undefined);
+    return arr.length ? arr : undefined;
+  }
+  if (value && typeof value === 'object') {
+    const out = {};
+    for (const k of Object.keys(value)) {
+      const v = prune(value[k]);
+      if (v !== undefined) out[k] = v;
+    }
+    return Object.keys(out).length ? out : undefined;
+  }
+  if (typeof value === 'string') {
+    const t = value.trim();
+    return t.length ? t : undefined;
+  }
+  if (value === null || value === undefined) return undefined;
+  if (typeof value === 'number' && !isFinite(value)) return undefined;
+  return value;
+}
+
+function slugOK(id) { return /^[a-z0-9]+(-[a-z0-9]+)*$/.test(id); }
+
+/* ---------------------------------------------------------------- GitHub API */
+
+async function gh(env, path, init = {}) {
+  const res = await fetch(`https://api.github.com${path}`, {
+    ...init,
+    headers: {
+      'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+      // GitHub rejects API requests without one.
+      'User-Agent': 'openbat-guide-submit',
+      ...(init.body ? { 'Content-Type': 'application/json' } : {}),
+      ...(init.headers || {})
+    }
+  });
+  if (!res.ok) {
+    const detail = await res.text();
+    throw new Error(`GitHub ${path} -> ${res.status}: ${detail.slice(0, 300)}`);
+  }
+  return res.json();
+}
+
+/* ----------------------------------------------------------- rate limiting */
+
+// KV is eventually consistent, so this is a deterrent rather than a hard
+// guarantee — which is the right level for something whose worst case is a
+// pull request that needs closing.
+async function rateLimited(env, ip) {
+  if (!env.RATE) return false;             // unset in local dev; fail open
+  const now = new Date();
+  const hourKey = `rl:h:${ip}:${now.toISOString().slice(0, 13)}`;
+  const dayKey  = `rl:d:${ip}:${now.toISOString().slice(0, 10)}`;
+
+  const [h, d] = await Promise.all([env.RATE.get(hourKey), env.RATE.get(dayKey)]);
+  if (parseInt(h || '0', 10) >= MAX_PER_HOUR) return true;
+  if (parseInt(d || '0', 10) >= MAX_PER_DAY) return true;
+
+  await Promise.all([
+    env.RATE.put(hourKey, String(parseInt(h || '0', 10) + 1), { expirationTtl: 7200 }),
+    env.RATE.put(dayKey,  String(parseInt(d || '0', 10) + 1), { expirationTtl: 172800 })
+  ]);
+  return false;
+}
+
+/* ----------------------------------------------------------------- validate */
+
+// Deliberately a full re-check rather than trusting the page that called us.
+// Everything here mirrors the contributor guide's schema rules.
+function validate(species, guide) {
+  const problems = [];
+  if (!species || typeof species !== 'object' || Array.isArray(species)) {
+    return ['The submission didn’t include a species entry.'];
+  }
+
+  if (!species.id) problems.push('An ID is required.');
+  else if (!slugOK(species.id)) problems.push('The ID must be lowercase words separated by hyphens.');
+  if (!species.commonName) problems.push('A common name is required.');
+  if (!species.scientificName) problems.push('A scientific name is required.');
+  if (!Array.isArray(species.regions) || !species.regions.length) {
+    problems.push('At least one region is required.');
+  }
+
+  if (species.imageURL && !species.imageCredit) {
+    problems.push('An image credit is required whenever an image URL is set.');
+  }
+  // Only ordinary web images, and only over TLS — this URL ends up being
+  // fetched by every copy of the app.
+  if (species.imageURL && !/^https:\/\//i.test(species.imageURL)) {
+    problems.push('An image URL must start with https://.');
+  }
+
+  const knownRegions = new Set((guide.regions || []).map((r) => r.id));
+  for (const r of species.regions || []) {
+    if (!knownRegions.has(r)) problems.push(`Unknown region "${r}".`);
+  }
+
+  for (const [key, val] of Object.entries(species)) {
+    if (typeof val === 'string' && val.length > 8000) {
+      problems.push(`The "${key}" field is unreasonably long.`);
+    }
+  }
+
+  // The attribution rule, enforced where it actually counts. An existing
+  // species' contributor list may only be appended to: those entries record
+  // other people's work, and nothing submitted from a browser may rewrite or
+  // remove them.
+  const current = (guide.species || []).find((s) => s.id === species.id);
+  if (current) {
+    const locked = current.contributors || [];
+    const submitted = species.contributors || [];
+    const kept = submitted.slice(0, locked.length);
+    if (JSON.stringify(kept) !== JSON.stringify(locked)) {
+      problems.push('Existing contributor credits can’t be changed or removed.');
+    }
+  }
+
+  return problems;
+}
+
+/* --------------------------------------------------------------- the handler */
+
+export default {
+  async fetch(request, env) {
+    const origin = request.headers.get('Origin') || '';
+
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: corsHeaders(origin) });
+    }
+    if (request.method !== 'POST') {
+      return json(405, { error: 'Send a POST.' }, origin);
+    }
+    if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+      return json(403, { error: 'Not an allowed origin.' }, origin);
+    }
+    if (!env.GITHUB_TOKEN) {
+      return json(500, { error: 'The submission service isn’t configured.' }, origin);
+    }
+
+    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+    if (await rateLimited(env, ip)) {
+      return json(429, {
+        error: 'That’s a lot of submissions in a short time. Try again later, or open a pull request directly on GitHub.'
+      }, origin);
+    }
+
+    const raw = await request.text();
+    if (raw.length > MAX_BODY_BYTES) {
+      return json(413, { error: 'That submission is too large.' }, origin);
+    }
+
+    let payload;
+    try { payload = JSON.parse(raw); }
+    catch { return json(400, { error: 'The submission wasn’t valid JSON.' }, origin); }
+
+    const species = prune(payload.species);
+    const note = typeof payload.note === 'string' ? payload.note.slice(0, 500) : '';
+
+    try {
+      // 1. The guide as it is RIGHT NOW — not whatever the browser loaded.
+      const fileMeta = await gh(env, `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=${BASE_BRANCH}`);
+      const guide = JSON.parse(b64decode(fileMeta.content));
+
+      const problems = validate(species, guide);
+      if (problems.length) return json(400, { error: problems.join(' '), problems }, origin);
+
+      // 2. Splice the one entry in.
+      const index = guide.species.findIndex((s) => s.id === species.id);
+      const isNew = index < 0;
+      if (isNew) guide.species.push(species);
+      else guide.species[index] = species;
+
+      // 3. Version fields are decided here, never taken from the client — a
+      //    change that forgets this reaches nobody's device.
+      guide.dataVersion = (Number(guide.dataVersion) || 0) + 1;
+      guide.updatedAt = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
+
+      // 4. Canonical formatting, so the pull request diff is only the entry
+      //    that changed. The committed guide is kept in this exact shape.
+      const updated = JSON.stringify(guide, null, 2) + '\n';
+
+      // 5. Branch off the current head.
+      const baseRef = await gh(env, `/repos/${REPO_OWNER}/${REPO_NAME}/git/ref/heads/${BASE_BRANCH}`);
+      const branch = `guide/${species.id}-${Date.now().toString(36)}`;
+      await gh(env, `/repos/${REPO_OWNER}/${REPO_NAME}/git/refs`, {
+        method: 'POST',
+        body: JSON.stringify({ ref: `refs/heads/${branch}`, sha: baseRef.object.sha })
+      });
+
+      // 6. Commit onto it. `sha` is the file's blob sha, which is how GitHub
+      //    rejects the write if the file moved under us.
+      const who = (species.contributors || []).slice(-1)[0]?.name || 'an anonymous contributor';
+      await gh(env, `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          message: `${isNew ? 'Add' : 'Update'} ${species.commonName} in the field guide`,
+          content: b64encode(updated),
+          sha: fileMeta.sha,
+          branch
+        })
+      });
+
+      // 7. Open the pull request.
+      const pr = await gh(env, `/repos/${REPO_OWNER}/${REPO_NAME}/pulls`, {
+        method: 'POST',
+        body: JSON.stringify({
+          title: `${isNew ? 'Add' : 'Update'} ${species.commonName} (${species.scientificName})`,
+          head: branch,
+          base: BASE_BRANCH,
+          body: [
+            `Submitted through the [field guide editor](https://openbat.app/guide-editor/) by **${who}**.`,
+            '',
+            isNew ? `Adds a new species entry, \`${species.id}\`.`
+                  : `Updates the existing entry \`${species.id}\`.`,
+            `\`dataVersion\` bumped to **${guide.dataVersion}**.`,
+            note ? `\n**Note from the contributor:**\n\n> ${note.replace(/\n/g, '\n> ')}` : '',
+            '',
+            '---',
+            '*This came from a web form, so it has had no human review yet — ' +
+            'please check the wording is the contributor\'s own and that any ' +
+            'image is correctly licensed and credited before merging.*'
+          ].filter(Boolean).join('\n')
+        })
+      });
+
+      return json(200, { ok: true, url: pr.html_url, number: pr.number }, origin);
+
+    } catch (err) {
+      // The detail is useful in `wrangler tail` but says more about the repo
+      // than a submitter needs to see.
+      console.error(err.stack || String(err));
+      return json(502, {
+        error: 'Couldn’t open the pull request. Nothing was saved — please try again, ' +
+               'or download the file and open a pull request yourself.'
+      }, origin);
+    }
+  }
+};

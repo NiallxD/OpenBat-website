@@ -9,3 +9,4 @@ node_modules/
 *.afdesign
 *.zip
 README.md
+worker/

@@ -19,7 +19,9 @@ The app records and identifies species entirely on your device. There's no accou
 
 No analytics, no cookies, no tracking. The only thing stored in your browser is whether you chose light or dark mode.
 
-One page is worth naming: the [field guide editor](/guide-editor/) reads the field guide straight from our public GitHub repository when you open it, so you're always editing the current version. That's a read-only request that sends nothing about you, and whatever you type there stays in your browser — it only goes anywhere if you choose to open a pull request yourself. No other page on this site contacts anything outside it.
+One page is worth naming: the [field guide editor](/guide-editor/). It reads the field guide straight from our public GitHub repository when you open it, so you're always editing the current version — a read-only request that sends nothing about you.
+
+If you then choose to press Submit, your edit is sent to our own service, which opens a pull request on the field guide repository for you. Only what you typed into the form is sent. Whatever name you put in the contributors box becomes part of the public record of who wrote what, which is the point of it — so use whatever name you're happy to have published. Nothing is sent unless you press Submit, and nothing you type is stored anywhere until you do. No other page on this site contacts anything outside it.
 
 ## Newsletter
 

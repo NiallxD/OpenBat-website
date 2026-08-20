@@ -75,6 +75,14 @@
   // install is reading.
   var GUIDE_URL = 'https://raw.githubusercontent.com/NiallxD/OpenBat-FieldGuide/main/SpeciesGuideData.json';
 
+  // The worker that opens the pull request, so contributing needs no GitHub
+  // account (see worker/README.md). Only the ENTRY is sent — the worker fetches
+  // the current guide itself and splices it in, which is what stops two
+  // contributors working hours apart from clobbering one another. If this URL
+  // changes it must change in the CSP's `connect-src` too, or the request is
+  // blocked in production while still working on localhost.
+  var SUBMIT_URL = 'https://api.openbat.app/guide-submit';
+
   /* ----------------------------------------------------------- field spec */
 
   // Standard IUCN categories, offered as suggestions rather than enforced —
@@ -247,7 +255,10 @@
     back:    root.querySelector('[data-back]'),
     download:root.querySelector('[data-download]'),
     copy:    root.querySelector('[data-copy]'),
-    copyOne: root.querySelector('[data-copy-entry]')
+    copyOne: root.querySelector('[data-copy-entry]'),
+    submit:  root.querySelector('[data-submit]'),
+    note:    root.querySelector('[data-note]'),
+    result:  root.querySelector('[data-result]')
   };
 
   /* ------------------------------------------------------------- load step */
@@ -753,6 +764,68 @@
     });
   });
 
+  /* ---------------------------------------------------------------- submit */
+
+  function showResult(kind, nodes) {
+    clear(ui.result);
+    ui.result.hidden = false;
+    ui.result.className = 'ge-result is-' + kind;
+    nodes.forEach(function (n) { ui.result.appendChild(n); });
+    ui.result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  ui.submit.addEventListener('click', function () {
+    withValidated(function (species) {
+      // Deliberately sends the entry alone, never the assembled file. The
+      // worker rebuilds against whatever is current, so a submission can't
+      // carry a stale copy of everyone else's work back over the top of them.
+      var body = JSON.stringify({ species: species, note: ui.note.value.trim() });
+
+      ui.submit.disabled = true;
+      ui.submit.textContent = 'Submitting…';
+      showResult('working', [el('p', { text: 'Opening a pull request…' })]);
+
+      fetch(SUBMIT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: body
+      })
+        .then(function (res) {
+          return res.json().catch(function () { return {}; }).then(function (data) {
+            return { ok: res.ok, status: res.status, data: data };
+          });
+        })
+        .then(function (r) {
+          if (!r.ok || !r.data.url) {
+            throw new Error(r.data.error || ('The server said ' + r.status + '.'));
+          }
+          dirty = false;
+          showResult('ok', [
+            el('p', { class: 'ge-result-title', text: 'Thank you — that’s been sent for review.' }),
+            el('p', {}, [
+              el('span', { text: 'Nothing is live yet. You can follow it here: ' }),
+              el('a', { href: r.data.url, target: '_blank', rel: 'noopener',
+                        text: 'pull request #' + (r.data.number || '') })
+            ]),
+            el('p', { class: 'ge-hint', text: 'You can keep editing other species if you like — each one is sent separately.' })
+          ]);
+          ui.submit.textContent = 'Submitted';
+        })
+        .catch(function (err) {
+          // The manual route still works, and saying so matters more than the
+          // error itself — nobody should lose their work because a worker is
+          // down or a network blocked it.
+          showResult('error', [
+            el('p', { class: 'ge-result-title', text: 'That couldn’t be submitted.' }),
+            el('p', { text: err.message }),
+            el('p', { class: 'ge-hint', text: 'Nothing was lost. Open “Or do it yourself on GitHub” below to download your edit and submit it that way instead.' })
+          ]);
+          ui.submit.disabled = false;
+          ui.submit.textContent = 'Try submitting again';
+        });
+    });
+  });
+
   ui.back.addEventListener('click', function () {
     if (dirty && !window.confirm('Discard the changes to this species?')) return;
     dirty = false;
@@ -760,6 +833,12 @@
     ui.edit.hidden = true;
     ui.browse.hidden = false;
     showProblems([]);
+    // Reset the submit affordances, or the next species opens showing the last
+    // one's outcome and a disabled button.
+    ui.result.hidden = true;
+    ui.note.value = '';
+    ui.submit.disabled = false;
+    ui.submit.textContent = 'Submit for review';
     renderResults();
   });
 })();
