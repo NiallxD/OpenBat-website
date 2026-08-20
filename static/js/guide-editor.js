@@ -1,16 +1,24 @@
 /*
  * guide-editor.js — a form editor for the field guide's SpeciesGuideData.json.
  *
- * Everything happens in the browser. The file is opened with FileReader and
- * given back with a download; nothing is uploaded and no network request is
- * made at any point. That is not incidental — the site's CSP is
- * `connect-src 'self'` and /privacy/ promises no third-party requests, so
- * fetching the guide straight from GitHub would be blocked in production and
- * would make that promise untrue. The contributor is going to GitHub anyway to
- * open the pull request, so they download the file on the way past.
+ * The guide is read straight from the field guide repo on load, from the same
+ * raw URL the app itself fetches, so a contributor always starts from what is
+ * currently live rather than from whatever copy they downloaded last week. That
+ * matters for more than convenience: two people editing the same stale base is
+ * how one silently reverts the other.
  *
- * Nothing is persisted either — no localStorage, no cookies. Reloading the page
- * loses the edit, which is why there is an unsaved-changes prompt.
+ * This is the page's ONE outbound request, it is read-only, and it sends
+ * nothing about the visitor beyond what any HTTP request carries. It needs
+ * `https://raw.githubusercontent.com` in the CSP's `connect-src` (see
+ * templates/base.njk) — without it the fetch fails silently in production while
+ * working perfectly on localhost. Editing still happens entirely in the
+ * browser: the edited file is handed back as a download and never uploaded.
+ *
+ * Dropping a file in still works, and is the fallback whenever the fetch fails
+ * — offline, GitHub down, or a network that blocks it.
+ *
+ * Nothing is persisted — no localStorage, no cookies. Reloading the page loses
+ * the edit, which is why there is an unsaved-changes prompt.
  *
  * ## What this is really for
  *
@@ -54,6 +62,12 @@
   var editingIndex = -1;    // its index in guide.species, or -1 for a new one
   var originalId = null;    // to detect a rename, which needs its own PR
   var dirty = false;
+  var source = null;        // where the loaded guide came from, shown in the UI
+
+  // The same raw URL the app fetches the guide from, deliberately — if the two
+  // ever point at different branches, the editor would be editing something no
+  // install is reading.
+  var GUIDE_URL = 'https://raw.githubusercontent.com/NiallxD/OpenBat-FieldGuide/main/SpeciesGuideData.json';
 
   /* ----------------------------------------------------------- field spec */
 
@@ -214,6 +228,9 @@
     paste:   root.querySelector('[data-paste]'),
     pasteGo: root.querySelector('[data-paste-go]'),
     loadErr: root.querySelector('[data-load-error]'),
+    fetching: root.querySelector('[data-fetching]'),
+    fallback: root.querySelector('[data-fallback]'),
+    retry:   root.querySelector('[data-retry]'),
     meta:    root.querySelector('[data-meta]'),
     search:  root.querySelector('[data-search]'),
     results: root.querySelector('[data-results]'),
@@ -234,20 +251,27 @@
     ui.loadErr.hidden = !msg;
   }
 
-  function acceptText(text) {
+  function showFallback(message) {
+    ui.fetching.hidden = true;
+    ui.fallback.hidden = false;
+    showLoadError(message || '');
+  }
+
+  function acceptText(text, from) {
     var parsed;
     try {
       parsed = JSON.parse(text);
     } catch (err) {
-      showLoadError('That file isn’t valid JSON: ' + err.message);
+      showFallback('That file isn’t valid JSON: ' + err.message);
       return;
     }
     if (!parsed || !Array.isArray(parsed.species) || !Array.isArray(parsed.regions)) {
-      showLoadError('That JSON doesn’t look like SpeciesGuideData.json — it needs top-level "species" and "regions" lists.');
+      showFallback('That JSON doesn’t look like SpeciesGuideData.json — it needs top-level "species" and "regions" lists.');
       return;
     }
     showLoadError('');
     guide = parsed;
+    source = from || 'your file';
     ui.load.hidden = true;
     ui.browse.hidden = false;
     renderMeta();
@@ -255,12 +279,39 @@
     ui.search.focus();
   }
 
+  // Read-only, and cache-busted: an editor that hands you a stale base is worse
+  // than one that fails loudly, because the resulting pull request quietly
+  // reverts whatever landed in between.
+  function fetchGuide() {
+    ui.fetching.hidden = false;
+    ui.fallback.hidden = true;
+    showLoadError('');
+
+    if (typeof fetch !== 'function') {
+      showFallback('This browser can’t fetch the guide automatically.');
+      return;
+    }
+
+    fetch(GUIDE_URL, { cache: 'no-store', credentials: 'omit' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('GitHub returned ' + res.status);
+        return res.text();
+      })
+      .then(function (text) { acceptText(text, 'GitHub (main)'); })
+      .catch(function (err) {
+        showFallback('Couldn’t load the guide from GitHub (' + err.message + ').');
+      });
+  }
+
   function readFile(file) {
     var reader = new FileReader();
-    reader.onload = function () { acceptText(String(reader.result)); };
-    reader.onerror = function () { showLoadError('Couldn’t read that file.'); };
+    reader.onload = function () { acceptText(String(reader.result), 'your file'); };
+    reader.onerror = function () { showFallback('Couldn’t read that file.'); };
     reader.readAsText(file);
   }
+
+  ui.retry.addEventListener('click', fetchGuide);
+  fetchGuide();
 
   ui.file.addEventListener('change', function () {
     if (ui.file.files && ui.file.files[0]) readFile(ui.file.files[0]);
@@ -282,13 +333,14 @@
 
   ui.pasteGo.addEventListener('click', function () {
     var t = ui.paste.value.trim();
-    if (t) acceptText(t);
+    if (t) acceptText(t, 'pasted JSON');
   });
 
   /* ----------------------------------------------------------- browse step */
 
   function renderMeta() {
     clear(ui.meta);
+    ui.meta.appendChild(el('span', { text: 'Loaded from ' + source }));
     ui.meta.appendChild(el('span', { text: guide.species.length + ' species' }));
     ui.meta.appendChild(el('span', { text: guide.regions.length + ' regions' }));
     ui.meta.appendChild(el('span', { text: 'dataVersion ' + guide.dataVersion }));

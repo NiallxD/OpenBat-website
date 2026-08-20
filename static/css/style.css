@@ -1254,3 +1254,5 @@ figure.image-float-left figcaption {
   .ge-result { grid-template-columns: 1fr; }
   .ge-result-meta { grid-column: 1; grid-row: auto; }
 }
+
+.ge-fetching { color: var(--color-secondary); font-style: italic; margin: 0; }

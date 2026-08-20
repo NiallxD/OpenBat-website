@@ -9,12 +9,12 @@ publish: true
 
 The field guide is one file, `SpeciesGuideData.json`, and anyone can edit it. This page lets you do that in ordinary form fields instead of hand-editing JSON — and it fills in the fiddly bits that are easy to forget, like bumping the version number so your change actually reaches people's phones.
 
-Everything happens in your browser. Nothing is uploaded, and this page makes no network requests at all.
+The current guide loads automatically, so you're always editing the latest version. Your edits stay in your browser — nothing is uploaded, and the only request this page makes is reading the guide from GitHub.
 
 <div class="ge-steps">
-  <p><strong>1.</strong> <a href="https://github.com/NiallxD/OpenBat-FieldGuide/blob/main/SpeciesGuideData.json">Download the current guide from GitHub</a> (use the download button on that page).</p>
-  <p><strong>2.</strong> Open it below, find your species or add a new one, and edit it.</p>
-  <p><strong>3.</strong> Save the file it gives you back and <a href="https://github.com/NiallxD/OpenBat-FieldGuide">open a pull request</a> with it.</p>
+  <p><strong>1.</strong> Find your species below, or add a new one, and edit it.</p>
+  <p><strong>2.</strong> Download the file it gives you back.</p>
+  <p><strong>3.</strong> <a href="https://github.com/NiallxD/OpenBat-FieldGuide">Open a pull request</a> with it.</p>
 </div>
 
 Before adding a photo or writing a description, please read the [contributor guide](https://github.com/NiallxD/OpenBat-FieldGuide#contributing-a-species-or-region) — particularly the rules on image licensing and writing in your own words.
@@ -22,21 +22,28 @@ Before adding a photo or writing a description, please read the [contributor gui
 <div id="guide-editor">
 
   <section data-step="load" class="ge-card">
-    <h3>Open the guide file</h3>
-    <div class="ge-drop" data-drop>
-      <p>Drop <code>SpeciesGuideData.json</code> here</p>
-      <p class="ge-hint">or</p>
-      <label class="ge-btn">
-        Choose file
-        <input type="file" accept="application/json,.json" data-file hidden>
-      </label>
+    <h3>Loading the guide</h3>
+
+    <p class="ge-fetching" data-fetching>Fetching the latest guide from GitHub…</p>
+
+    <div data-fallback hidden>
+      <p class="ge-error" data-load-error hidden></p>
+      <p>You can open the file yourself instead — <a href="https://github.com/NiallxD/OpenBat-FieldGuide/blob/main/SpeciesGuideData.json">download it from GitHub</a>, then:</p>
+      <div class="ge-drop" data-drop>
+        <p>Drop <code>SpeciesGuideData.json</code> here</p>
+        <p class="ge-hint">or</p>
+        <label class="ge-btn">
+          Choose file
+          <input type="file" accept="application/json,.json" data-file hidden>
+        </label>
+      </div>
+      <details class="ge-paste">
+        <summary>Paste the JSON instead</summary>
+        <textarea data-paste rows="6" placeholder="Paste the contents of SpeciesGuideData.json"></textarea>
+        <button type="button" class="ge-btn ge-btn-quiet" data-paste-go>Load pasted JSON</button>
+      </details>
+      <p><button type="button" class="ge-btn ge-btn-quiet" data-retry>Try GitHub again</button></p>
     </div>
-    <details class="ge-paste">
-      <summary>Paste the JSON instead</summary>
-      <textarea data-paste rows="6" placeholder="Paste the contents of SpeciesGuideData.json"></textarea>
-      <button type="button" class="ge-btn ge-btn-quiet" data-paste-go>Load pasted JSON</button>
-    </details>
-    <p class="ge-error" data-load-error hidden></p>
   </section>
 
   <section data-step="browse" class="ge-card" hidden>

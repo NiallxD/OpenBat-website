@@ -15,6 +15,12 @@ Recording anything with a microphone raises obvious questions. This page answers
 
 The app records and identifies species entirely on your device. There's no account, no background upload, no "phoning home." Your location never leaves your phone — it's used on-device to work out which bats are plausible where you are (the range data that decides it ships with the app) and to calculate your local sunset and sunrise times. OpenBat does fetch species reference data and images from a couple of public services, but nothing that identifies you, and no location, is ever sent.
 
+## This website
+
+No analytics, no cookies, no tracking. The only thing stored in your browser is whether you chose light or dark mode.
+
+One page is worth naming: the [field guide editor](/guide-editor/) reads the field guide straight from our public GitHub repository when you open it, so you're always editing the current version. That's a read-only request that sends nothing about you, and whatever you type there stays in your browser — it only goes anywhere if you choose to open a pull request yourself. No other page on this site contacts anything outside it.
+
 ## Newsletter
 
 If you sign up for the newsletter, that's a Google Form — your email goes to Niall's own Google Drive, used only to send the newsletter, never shared.

@@ -7,7 +7,7 @@
   {% if description %}<meta name="description" content="{{ description }}">{% endif %}
   {% if noindex %}<meta name="robots" content="noindex, nofollow">{% endif %}
   <!-- Privacy & Security -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="{{ site.name }}">
   <meta property="og:title" content="{% if title and page.url != '/' %}{{ title }} — {% endif %}{{ site.name }}">
@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" href="{{ '/static/images/apple-touch-icon.png' | url }}">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="{{ '/static/css/style.css?v=2.6' | url }}">
+  <link rel="stylesheet" href="{{ '/static/css/style.css?v=2.7' | url }}">
   <script>
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
