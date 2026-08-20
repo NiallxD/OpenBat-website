@@ -6,16 +6,15 @@ compatibility_date = "2026-08-01"
 #   npx wrangler kv namespace create RATE
 [[kv_namespaces]]
 binding = "RATE"
-id = "PASTE_KV_NAMESPACE_ID_HERE"
+id = "cfd11b8a2b1448e8b56a7fb5ef27b995"
 
 # GITHUB_TOKEN is a SECRET and must never be written here — this file is
 # committed. Set it with:
 #   npx wrangler secret put GITHUB_TOKEN
 
-# Serve it from the site's own domain rather than *.workers.dev, so the CSP
-# entry and the privacy page both name openbat.app rather than a third party.
-# Requires openbat.app to be on Cloudflare DNS; delete this block if it isn't
-# and use the workers.dev URL instead (updating connect-src to match).
-# [[routes]]
-# pattern = "api.openbat.app/guide-submit"
-# custom_domain = true
+# Served from the site's own domain rather than *.workers.dev, so the CSP entry
+# and the privacy page both name openbat.app rather than a third party.
+# openbat.app is on Cloudflare DNS, so the DNS record is created automatically.
+[[routes]]
+pattern = "api.openbat.app"
+custom_domain = true

@@ -37,17 +37,15 @@
  *
  * Exported as `JSON.stringify(guide, null, 2)`, which is what keeps a pull
  * request reviewable: only the edited entry shows up in the diff. That relies
- * on the committed file already being in exactly that form, and as of writing
- * IT IS NOT — the guide mixes one-line contributor objects with expanded ones
- * and writes some numbers as `54.0`, which JavaScript renders as `54`. Measured
- * against the current file, a save from here rewrites 1461 lines and buries the
- * real change in the noise.
+ * on the committed guide already being in exactly that form, and it is — it was
+ * normalised for this reason on 2026-08-20, in a commit that changed no values.
  *
- * So the guide needs normalising ONCE — commit it as
- * `JSON.stringify(parsed, null, 2)` on its own, changing no values — and every
- * export after that is a clean, minimal diff. Until that happens, the first
- * pull request out of this page carries the reformatting with it. Nothing here
- * depends on it having been done; it only affects how reviewable the diff is.
+ * Before that it mixed one-line contributor objects with expanded ones and
+ * wrote some numbers as `54.0`, which JavaScript renders as `54`; a save from
+ * here rewrote 1461 lines and buried the real change in the noise. The same
+ * edit against the normalised file is two lines. If the guide is ever
+ * hand-edited back into a different shape that noise returns — the field guide
+ * README's "Formatting" section documents the layout and how to restore it.
  */
 (function () {
   'use strict';
@@ -97,7 +95,7 @@
         hint: 'Stable slug — genus-species, lowercase, hyphenated. Other entries and saved user data reference this.' },
       { path: 'commonName', label: 'Common name', type: 'text', required: true },
       { path: 'scientificName', label: 'Scientific name', type: 'text', required: true,
-        hint: 'Genus is parsed from this automatically. Don’t add a separate genus field.' },
+        hint: 'Genus is parsed from this automatically. Don’t add a separate genus field. Only the genus name should be capitalised.' },
       { path: 'order', label: 'Order', type: 'text', placeholder: 'Chiroptera' },
       { path: 'family', label: 'Family', type: 'text', placeholder: 'Vespertilionidae' },
       { path: 'code', label: 'Classifier code', type: 'text', placeholder: 'PIPPIP',
