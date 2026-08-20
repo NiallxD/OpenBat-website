@@ -125,7 +125,14 @@ async function gh(env, path, init = {}) {
   });
   if (!res.ok) {
     const detail = await res.text();
-    throw new Error(`GitHub ${path} -> ${res.status}: ${detail.slice(0, 300)}`);
+    const err = new Error(`GitHub ${path} -> ${res.status}: ${detail.slice(0, 300)}`);
+    // 401/403 from GitHub is the token being wrong or under-scoped, not a blip.
+    // Worth separating: telling someone to "try again" when the service is
+    // misconfigured wastes their time and hides the real problem. This happened
+    // for real on first deploy — the token had Contents:read but not write, so
+    // reads and validation succeeded and branch creation failed.
+    err.isConfig = res.status === 401 || res.status === 403;
+    throw err;
   }
   return res.json();
 }
@@ -135,21 +142,37 @@ async function gh(env, path, init = {}) {
 // KV is eventually consistent, so this is a deterrent rather than a hard
 // guarantee — which is the right level for something whose worst case is a
 // pull request that needs closing.
+//
+// Checking and counting are deliberately SEPARATE, and only a submission that
+// actually opened a pull request is counted. The first version counted every
+// attempt, and the effect was that a contributor whose submissions were being
+// rejected — by a validation error they were busy fixing, or by our own
+// misconfigured token — got locked out for an hour by the failures. The thing
+// worth limiting is pull requests created, and that is the only thing that now
+// increments.
+function rateKeys(ip) {
+  const now = new Date();
+  return {
+    hour: `rl:h:${ip}:${now.toISOString().slice(0, 13)}`,
+    day:  `rl:d:${ip}:${now.toISOString().slice(0, 10)}`
+  };
+}
+
 async function rateLimited(env, ip) {
   if (!env.RATE) return false;             // unset in local dev; fail open
-  const now = new Date();
-  const hourKey = `rl:h:${ip}:${now.toISOString().slice(0, 13)}`;
-  const dayKey  = `rl:d:${ip}:${now.toISOString().slice(0, 10)}`;
+  const k = rateKeys(ip);
+  const [h, d] = await Promise.all([env.RATE.get(k.hour), env.RATE.get(k.day)]);
+  return parseInt(h || '0', 10) >= MAX_PER_HOUR || parseInt(d || '0', 10) >= MAX_PER_DAY;
+}
 
-  const [h, d] = await Promise.all([env.RATE.get(hourKey), env.RATE.get(dayKey)]);
-  if (parseInt(h || '0', 10) >= MAX_PER_HOUR) return true;
-  if (parseInt(d || '0', 10) >= MAX_PER_DAY) return true;
-
+async function recordSubmission(env, ip) {
+  if (!env.RATE) return;
+  const k = rateKeys(ip);
+  const [h, d] = await Promise.all([env.RATE.get(k.hour), env.RATE.get(k.day)]);
   await Promise.all([
-    env.RATE.put(hourKey, String(parseInt(h || '0', 10) + 1), { expirationTtl: 7200 }),
-    env.RATE.put(dayKey,  String(parseInt(d || '0', 10) + 1), { expirationTtl: 172800 })
+    env.RATE.put(k.hour, String(parseInt(h || '0', 10) + 1), { expirationTtl: 7200 }),
+    env.RATE.put(k.day,  String(parseInt(d || '0', 10) + 1), { expirationTtl: 172800 })
   ]);
-  return false;
 }
 
 /* ----------------------------------------------------------------- validate */
@@ -312,12 +335,24 @@ export default {
         })
       });
 
+      // Counted here and nowhere else — a pull request exists now, which is the
+      // only thing the limit is protecting against.
+      await recordSubmission(env, ip);
+
       return json(200, { ok: true, url: pr.html_url, number: pr.number }, origin);
 
     } catch (err) {
       // The detail is useful in `wrangler tail` but says more about the repo
       // than a submitter needs to see.
       console.error(err.stack || String(err));
+      if (err.isConfig) {
+        return json(503, {
+          error: 'The submission service isn’t set up correctly at our end, so this can’t be ' +
+                 'sent right now — retrying won’t help. Nothing was lost: download your edit ' +
+                 'below and open a pull request yourself, or try again later once it’s fixed.',
+          configError: true
+        }, origin);
+      }
       return json(502, {
         error: 'Couldn’t open the pull request. Nothing was saved — please try again, ' +
                'or download the file and open a pull request yourself.'

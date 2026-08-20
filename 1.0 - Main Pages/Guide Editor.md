@@ -9,13 +9,15 @@ publish: true
 
 The field guide is one file, `SpeciesGuideData.json`, and anyone can edit it. This page lets you do that in ordinary form fields instead of hand-editing JSON — and it fills in the fiddly bits that are easy to forget, like bumping the version number so your change actually reaches people's phones.
 
-The current guide loads automatically, so you're always editing the latest version. Your edits stay in your browser — nothing is uploaded, and the only request this page makes is reading the guide from GitHub.
+The current guide loads automatically, so you're always editing the latest version. **You don't need a GitHub account** — we'll submit your change for review for you.
 
 <div class="ge-steps">
   <p><strong>1.</strong> Find your species below, or add a new one, and edit it.</p>
-  <p><strong>2.</strong> Download the file it gives you back.</p>
-  <p><strong>3.</strong> <a href="https://github.com/NiallxD/OpenBat-FieldGuide">Open a pull request</a> with it.</p>
+  <p><strong>2.</strong> Add your name under Contributors, so you get the credit.</p>
+  <p><strong>3.</strong> Press Submit. Nothing goes live until it's been checked.</p>
 </div>
+
+Nothing is sent anywhere until you press Submit, and if you'd rather handle the pull request yourself you still can — the option is at the bottom of the form.
 
 Before adding a photo or writing a description, please read the [contributor guide](https://github.com/NiallxD/OpenBat-FieldGuide#contributing-a-species-or-region) — particularly the rules on image licensing and writing in your own words.
 
@@ -74,7 +76,7 @@ Before adding a photo or writing a description, please read the [contributor gui
     </div>
     <p class="ge-hint">No GitHub account needed. Your entry is sent for review as a pull request — nothing goes live until it's checked and merged.</p>
 
-    <div class="ge-result" data-result hidden></div>
+    <div class="ge-outcome" data-result hidden></div>
 
     <details class="ge-manual">
       <summary>Or do it yourself on GitHub</summary>

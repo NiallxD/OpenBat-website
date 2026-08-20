@@ -1280,14 +1280,21 @@ figure.image-float-left figcaption {
 .ge-manual summary { cursor: pointer; color: var(--color-secondary); font-size: 0.9rem; }
 .ge-manual .ge-actions { margin-top: 0.75rem; padding-top: 0.75rem; }
 
-.ge-result {
+/* The submission outcome. Named `ge-outcome`, NOT `ge-result` — that belongs to
+   the species rows in the search list, which are a two-column grid, and reusing
+   the name laid this box's paragraphs out in those columns. */
+.ge-outcome {
+  display: block;
   border: 1px solid var(--ge-border-strong);
   border-radius: var(--radius-sm);
   padding: 0.85rem 1rem;
   margin-top: 1rem;
 }
-.ge-result.is-ok { border-color: var(--color-accent); background: rgba(255,134,13,0.10); }
-.ge-result.is-error { border-color: #ff6b6b; background: rgba(255,107,107,0.10); }
-.ge-result.is-working { color: var(--color-secondary); font-style: italic; }
-.ge-result-title { font-weight: 600; margin-bottom: 0.3rem; }
-.ge-result p { margin: 0.2rem 0; text-align: left; }
+.ge-outcome.is-ok { border-color: var(--color-accent); background: rgba(255,134,13,0.10); }
+.ge-outcome.is-error { border-color: #ff6b6b; background: rgba(255,107,107,0.10); }
+.ge-outcome.is-working { color: var(--color-secondary); font-style: italic; }
+.ge-outcome-title { font-weight: 600; margin-bottom: 0.3rem; }
+/* `text-align: left` overrides the site-wide `p { text-align: justify }`, which
+   stretches these short lines into gappy full-width text. */
+.ge-outcome p { margin: 0.25rem 0; text-align: left; }
+.ge-outcome p + p { margin-top: 0.4rem; }

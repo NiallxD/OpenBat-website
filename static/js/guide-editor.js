@@ -767,7 +767,7 @@
   function showResult(kind, nodes) {
     clear(ui.result);
     ui.result.hidden = false;
-    ui.result.className = 'ge-result is-' + kind;
+    ui.result.className = 'ge-outcome is-' + kind;
     nodes.forEach(function (n) { ui.result.appendChild(n); });
     ui.result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
@@ -799,7 +799,7 @@
           }
           dirty = false;
           showResult('ok', [
-            el('p', { class: 'ge-result-title', text: 'Thank you — that’s been sent for review.' }),
+            el('p', { class: 'ge-outcome-title', text: 'Thank you — that’s been sent for review.' }),
             el('p', {}, [
               el('span', { text: 'Nothing is live yet. You can follow it here: ' }),
               el('a', { href: r.data.url, target: '_blank', rel: 'noopener',
@@ -814,7 +814,7 @@
           // error itself — nobody should lose their work because a worker is
           // down or a network blocked it.
           showResult('error', [
-            el('p', { class: 'ge-result-title', text: 'That couldn’t be submitted.' }),
+            el('p', { class: 'ge-outcome-title', text: 'That couldn’t be submitted.' }),
             el('p', { text: err.message }),
             el('p', { class: 'ge-hint', text: 'Nothing was lost. Open “Or do it yourself on GitHub” below to download your edit and submit it that way instead.' })
           ]);
