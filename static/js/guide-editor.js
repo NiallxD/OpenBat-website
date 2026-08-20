@@ -483,9 +483,16 @@
           editing.regions = cur;
           markDirty();
         });
-        box.appendChild(el('label', { class: 'ge-region' }, [
-          cb, el('span', { text: region.name }), el('code', { text: region.id })
-        ]));
+        // The region's slug is deliberately NOT shown. It used to sit beside
+        // every name as a `<code>` chip, which doubled each row's height,
+        // wrapped half the names onto two lines and made the whole section
+        // read as debug output. Nobody picking regions needs the id — it is an
+        // internal key, and the name is what they are choosing by. It stays as
+        // the checkbox's `title` for the rare case someone wants it.
+        var chip = el('label', { class: 'ge-region', title: region.id }, [
+          cb, el('span', { class: 'ge-region-name', text: region.name })
+        ]);
+        box.appendChild(chip);
       });
       return box;
     }
@@ -548,11 +555,53 @@
           field.hint ? el('p', { class: 'ge-hint', text: field.hint }) : null
         ]));
       });
-      ui.form.appendChild(el('section', { class: 'ge-section' }, [
-        el('h3', { text: section.title }), body
+      // A <details> rather than a hand-rolled toggle: it collapses without any
+      // JavaScript, keyboard and screen-reader behaviour come free, and — the
+      // part that matters here — browsers open a collapsed <details> to reveal
+      // a match when someone uses in-page find, so Ctrl+F still works across
+      // the whole form.
+      //
+      // Open if it holds a required field, or already has content. The form is
+      // a dozen sections and most species fill in a handful, so opening
+      // everything buries what's required under a wall of empty boxes — but
+      // closing a REQUIRED section is worse: a new species would be told
+      // "at least one region is required" for a section it can't see. Hiding
+      // what someone already wrote is the other thing to avoid.
+      var isOpen = section.fields.some(function (f) { return f.required; })
+                || sectionHasContent(section);
+      ui.form.appendChild(el('details', { class: 'ge-section', open: isOpen ? '' : null }, [
+        el('summary', { class: 'ge-section-head' }, [
+          el('span', { class: 'ge-section-title', text: section.title }),
+          sectionBadge(section)
+        ]),
+        body
       ]));
     });
     ui.form.appendChild(contributorsSection());
+  }
+
+  /// Whether anything in this section is filled in on the species being edited.
+  function sectionHasContent(section) {
+    return section.fields.some(function (field) {
+      return prune(getPath(editing, field.path)) !== undefined;
+    });
+  }
+
+  /// A count of how many of a section's fields are filled, so a collapsed
+  /// section still says whether there is anything inside it. Without this the
+  /// closed state hides the difference between "empty" and "already written",
+  /// which is exactly what someone scanning the form wants to know.
+  function sectionBadge(section) {
+    var filled = section.fields.filter(function (field) {
+      return prune(getPath(editing, field.path)) !== undefined;
+    }).length;
+    var required = section.fields.some(function (f) { return f.required; });
+    if (!filled) {
+      return el('span', { class: 'ge-section-badge' + (required ? ' is-required' : ''),
+                          text: required ? 'needed' : 'empty' });
+    }
+    return el('span', { class: 'ge-section-badge is-filled',
+                        text: filled + ' of ' + section.fields.length });
   }
 
   /* --------------------------------------------------------- contributors */
@@ -611,8 +660,16 @@
 
     render();
 
-    return el('section', { class: 'ge-section' }, [
-      el('h3', { text: 'Contributors' }),
+    // Open by default, unlike the field sections: adding yourself is the step
+    // people forget, and a closed section is a step nobody is prompted to take.
+    return el('details', { class: 'ge-section', open: '' }, [
+      el('summary', { class: 'ge-section-head' }, [
+        el('span', { class: 'ge-section-title', text: 'Contributors' }),
+        el('span', { class: 'ge-section-badge' + ((editing.contributors || []).length ? ' is-filled' : ''),
+                     text: (editing.contributors || []).length
+                       ? (editing.contributors.length + (editing.contributors.length === 1 ? ' person' : ' people'))
+                       : 'add yourself' })
+      ]),
       el('p', { class: 'ge-hint',
         text: editingIndex >= 0
           ? 'Add yourself as an editor when you change a species you didn’t create. Existing credits are locked — they record other people’s work, and only an entry you add here can be removed again.'
@@ -687,6 +744,14 @@
     var ul = el('ul');
     problems.forEach(function (p) { ul.appendChild(el('li', { text: p })); });
     ui.errors.appendChild(ul);
+
+    // Open every section, or an error can name a field that is currently
+    // hidden inside a collapsed one — "an image credit is required" with no
+    // visible image credit box is a dead end.
+    Array.prototype.forEach.call(ui.form.querySelectorAll('details.ge-section'), function (d) {
+      d.open = true;
+    });
+
     ui.errors.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 

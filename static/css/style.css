@@ -1180,12 +1180,58 @@ figure.image-float-left figcaption {
 .ge-edit-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
 .ge-edit-head h3 { margin-bottom: 0.5rem; }
 
-.ge-section { margin-top: 1.75rem; }
-.ge-section h3 {
-  font-size: 1rem; text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--color-accent); margin-bottom: 0.75rem;
-  padding-bottom: 0.35rem; border-bottom: 1px solid var(--ge-border);
+/* Collapsible sections. The form is a dozen groups and most species fill in a
+   handful, so everything-open buries the required fields under empty ones. */
+.ge-section { margin-top: 0.6rem; border-bottom: 1px solid var(--ge-border); }
+
+.ge-section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
 }
+/* Safari draws its own disclosure triangle unless this is hidden too. */
+.ge-section-head::-webkit-details-marker { display: none; }
+
+/* Our own marker, so its rotation is ours to control. */
+.ge-section-head::before {
+  content: '';
+  width: 0; height: 0;
+  border-left: 5px solid currentColor;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  transition: transform var(--ease);
+  flex: none;
+}
+.ge-section[open] > .ge-section-head::before { transform: rotate(90deg); }
+.ge-section-head:hover { color: var(--color-link-hover); }
+.ge-section-title { flex: 1; }
+
+/* Says what is inside without opening it — otherwise a closed section hides
+   the difference between "empty" and "already written". */
+.ge-section-badge {
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--color-muted);
+  border: 1px solid var(--ge-border-strong);
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  flex: none;
+}
+.ge-section-badge.is-filled { color: var(--color-accent); border-color: var(--color-accent); }
+.ge-section-badge.is-required { color: #ffb37a; border-color: #ffb37a; }
+
+.ge-section > .ge-fields,
+.ge-section > .ge-contributors,
+.ge-section > .ge-hint,
+.ge-section > .ge-contributor-add { margin-bottom: 0.9rem; }
 .ge-fields { display: grid; gap: 1rem; }
 .ge-field { display: grid; gap: 0.3rem; }
 .ge-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 600; }
@@ -1219,9 +1265,50 @@ figure.image-float-left figcaption {
 .ge-range-dash { color: var(--color-muted); }
 .ge-unit { color: var(--color-muted); font-size: 0.85rem; }
 
-.ge-regions { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.35rem; }
-.ge-region { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
-.ge-region code { color: var(--color-muted); font-size: 0.75rem; }
+/* Selectable chips rather than a checkbox grid.
+
+   The grid version put each region's slug beside its name in a <code> chip,
+   which doubled every row's height, wrapped half the names onto two lines, and
+   left a ragged four-column layout with big holes in it. The slug was never
+   needed — it's an internal key, and people choose by name.
+
+   Chips flow to their natural width, so nothing wraps and the section reads as
+   a set of choices instead of a debug dump. The whole chip is the hit target,
+   and selection is carried by the chip's own fill so it's legible at a glance
+   without hunting for ticks. */
+.ge-regions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.ge-region {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  padding: 0.4rem 0.75rem 0.4rem 0.6rem;
+  border: 1px solid var(--ge-border-strong);
+  border-radius: 999px;
+  background: var(--ge-input-bg);
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--ease), border-color var(--ease);
+}
+.ge-region:hover { border-color: var(--color-accent); }
+
+/* Accent fill when picked. `:has()` is what lets the chip react to its own
+   checkbox; browsers without it still show the checkbox tick, so the control
+   degrades to exactly the old behaviour rather than becoming unreadable. */
+.ge-region:has(input:checked) {
+  background: rgba(255, 134, 13, 0.18);
+  border-color: var(--color-accent);
+}
+.ge-region:has(input:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+.ge-region input { accent-color: var(--color-accent); margin: 0; cursor: pointer; }
+.ge-region-name { white-space: nowrap; }
+
+@media (max-width: 600px) {
+  .ge-region-name { white-space: normal; }
+}
 
 /* --- contributors --- */
 .ge-contributors { display: grid; gap: 0.4rem; margin-bottom: 0.75rem; }
