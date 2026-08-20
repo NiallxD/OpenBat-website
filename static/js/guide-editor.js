@@ -61,6 +61,12 @@
   var editing = null;       // the species object being edited (a working copy)
   var editingIndex = -1;    // its index in guide.species, or -1 for a new one
   var originalId = null;    // to detect a rename, which needs its own PR
+  // The contributor entries this species already had when it was opened. They
+  // are an attribution record of other people's work, so they are read-only
+  // here: you may append yourself and remove what you appended, nothing else.
+  // Kept as a snapshot rather than just a count so export can prove they came
+  // through untouched.
+  var lockedContributors = [];
   var dirty = false;
   var source = null;        // where the loaded guide came from, shown in the UI
 
@@ -394,9 +400,13 @@
       // behind in the loaded guide.
       editing = JSON.parse(JSON.stringify(guide.species[index]));
       originalId = editing.id;
+      lockedContributors = JSON.parse(JSON.stringify(editing.contributors || []));
     } else {
       editing = { id: '', commonName: '', scientificName: '', regions: [] };
       originalId = null;
+      // A new species has no history to protect — the first person to add
+      // themselves becomes its creator.
+      lockedContributors = [];
     }
     ui.browse.hidden = true;
     ui.edit.hidden = false;
@@ -547,15 +557,24 @@
     function render() {
       clear(list);
       (editing.contributors || []).forEach(function (c, i) {
-        list.appendChild(el('div', { class: 'ge-contributor' }, [
+        // Only what you appended in this sitting can be taken back out. Entries
+        // that were already on the species are someone else's credit for work
+        // they did, and are shown as a record rather than as editable rows —
+        // there is no × on them and nothing in this form writes to them.
+        var isMine = i >= lockedContributors.length;
+        list.appendChild(el('div', { class: 'ge-contributor' + (isMine ? ' is-mine' : '') }, [
           el('span', { class: 'ge-contributor-role', text: i === 0 ? 'Creator' : 'Editor' }),
           el('span', { class: 'ge-contributor-name', text: c.name || '(no name)' }),
           el('span', { class: 'ge-contributor-date', text: (c.date || '').slice(0, 10) }),
           el('span', { class: 'ge-contributor-note', text: c.note || '' }),
-          el('button', { class: 'ge-remove', type: 'button', title: 'Remove this entry',
-            text: '×', onclick: function () {
-              editing.contributors.splice(i, 1); markDirty(); render();
-            }})
+          isMine
+            ? el('button', { class: 'ge-remove', type: 'button',
+                title: 'Remove the entry you just added', 'aria-label': 'Remove the entry you just added',
+                text: '×', onclick: function () {
+                  editing.contributors.splice(i, 1); markDirty(); render();
+                }})
+            : el('span', { class: 'ge-locked', title: 'Existing credit — can’t be changed here',
+                'aria-label': 'Existing credit, can’t be changed here', text: '🔒' })
         ]));
       });
       if (!(editing.contributors || []).length) {
@@ -587,7 +606,7 @@
       el('h3', { text: 'Contributors' }),
       el('p', { class: 'ge-hint',
         text: editingIndex >= 0
-          ? 'Add yourself as an editor when you change a species you didn’t create. The first entry is the creator and shouldn’t be edited.'
+          ? 'Add yourself as an editor when you change a species you didn’t create. Existing credits are locked — they record other people’s work, and only an entry you add here can be removed again.'
           : 'The first entry is treated as this page’s creator — that’s you.' }),
       list,
       el('div', { class: 'ge-contributor-add' }, [nameInput, noteInput, addBtn])
@@ -622,6 +641,15 @@
     if (originalId && s.id !== originalId) {
       problems.push('This changes an existing ID (' + originalId + ' → ' + s.id +
                     '). Saved user data references IDs, so a rename should be its own separate pull request — change it back, or make this change on its own.');
+    }
+
+    // Belt and braces on the attribution record. The form gives no way to
+    // touch an existing contributor, so this should be unreachable — which is
+    // exactly why it is worth asserting: a bug that silently dropped someone's
+    // credit would otherwise be invisible until it had already been merged.
+    var kept = (s.contributors || []).slice(0, lockedContributors.length);
+    if (JSON.stringify(kept) !== JSON.stringify(prune(JSON.parse(JSON.stringify(lockedContributors))) || [])) {
+      problems.push('The existing contributor credits have been altered. They record other people’s work and can’t be changed here — reload the page and make your edit again.');
     }
 
     // Ranges, checked after pruning so a half-filled pair is still caught.
