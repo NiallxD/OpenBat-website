@@ -31,6 +31,8 @@ The OpenBat app contains a global bat field guide. With just over 1,400 bat spec
 
 We are calling on bat experts and nerds from around the world to contribute their knowledge of local bat species to our database, directly building the field guide. Contributing is fairly straight forward and we are working on ways to improve further.
 
+The easiest way in is our [[Guide Editor|Field Guide Editor]] — it opens the guide in ordinary form fields, so you can search for a species and edit it, or add a new one, without touching raw JSON. It also handles the version bump your change needs in order to reach people's phones.
+
 Visit our [GitHub Repo](https://github.com/NiallxD/OpenBat-FieldGuide) to learn more.
 
 

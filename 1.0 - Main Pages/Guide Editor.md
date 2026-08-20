@@ -1,0 +1,70 @@
+---
+title: Field Guide Editor
+description: Edit the OpenBat field guide in proper fields instead of raw JSON, then open a pull request with the result.
+permalink: /guide-editor/
+publish: true
+---
+
+## Field Guide Editor
+
+The field guide is one file, `SpeciesGuideData.json`, and anyone can edit it. This page lets you do that in ordinary form fields instead of hand-editing JSON — and it fills in the fiddly bits that are easy to forget, like bumping the version number so your change actually reaches people's phones.
+
+Everything happens in your browser. Nothing is uploaded, and this page makes no network requests at all.
+
+<div class="ge-steps">
+  <p><strong>1.</strong> <a href="https://github.com/NiallxD/OpenBat-FieldGuide/blob/main/SpeciesGuideData.json">Download the current guide from GitHub</a> (use the download button on that page).</p>
+  <p><strong>2.</strong> Open it below, find your species or add a new one, and edit it.</p>
+  <p><strong>3.</strong> Save the file it gives you back and <a href="https://github.com/NiallxD/OpenBat-FieldGuide">open a pull request</a> with it.</p>
+</div>
+
+Before adding a photo or writing a description, please read the [contributor guide](https://github.com/NiallxD/OpenBat-FieldGuide#contributing-a-species-or-region) — particularly the rules on image licensing and writing in your own words.
+
+<div id="guide-editor">
+
+  <section data-step="load" class="ge-card">
+    <h3>Open the guide file</h3>
+    <div class="ge-drop" data-drop>
+      <p>Drop <code>SpeciesGuideData.json</code> here</p>
+      <p class="ge-hint">or</p>
+      <label class="ge-btn">
+        Choose file
+        <input type="file" accept="application/json,.json" data-file hidden>
+      </label>
+    </div>
+    <details class="ge-paste">
+      <summary>Paste the JSON instead</summary>
+      <textarea data-paste rows="6" placeholder="Paste the contents of SpeciesGuideData.json"></textarea>
+      <button type="button" class="ge-btn ge-btn-quiet" data-paste-go>Load pasted JSON</button>
+    </details>
+    <p class="ge-error" data-load-error hidden></p>
+  </section>
+
+  <section data-step="browse" class="ge-card" hidden>
+    <div class="ge-meta" data-meta></div>
+    <div class="ge-search-row">
+      <input type="search" data-search placeholder="Search by name, family or ID" aria-label="Search species">
+      <button type="button" class="ge-btn" data-add-new>Add a new species</button>
+    </div>
+    <div class="ge-results" data-results></div>
+  </section>
+
+  <section data-step="edit" class="ge-card" hidden>
+    <div class="ge-edit-head">
+      <h3 data-edit-title></h3>
+      <button type="button" class="ge-btn ge-btn-quiet" data-back>Back to list</button>
+    </div>
+
+    <div class="ge-errors" data-errors hidden></div>
+    <div data-form></div>
+
+    <div class="ge-actions">
+      <button type="button" class="ge-btn ge-btn-primary" data-download>Download updated guide</button>
+      <button type="button" class="ge-btn ge-btn-quiet" data-copy>Copy whole file</button>
+      <button type="button" class="ge-btn ge-btn-quiet" data-copy-entry>Copy this entry only</button>
+    </div>
+    <p class="ge-hint">The downloaded file is the complete guide with your entry changed, the version bumped and the date set — replace <code>SpeciesGuideData.json</code> with it in your pull request. Only your entry will show up in the diff.</p>
+  </section>
+
+</div>
+
+<script src="/static/js/guide-editor.js" defer></script>
