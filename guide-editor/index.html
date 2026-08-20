@@ -7,7 +7,7 @@
   <meta name="description" content="Edit the OpenBat field guide in proper fields instead of raw JSON, then open a pull request with the result.">
   
   <!-- Privacy & Security -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="OpenBat">
   <meta property="og:title" content="Field Guide Editor — OpenBat">
@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="/static/css/style.css?v=2.9">
+  <link rel="stylesheet" href="/static/css/style.css?v=3.0">
   <script>
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
@@ -125,12 +125,25 @@ Choose file
     </div>
 <p><div class="ge-errors" data-errors hidden></div>
 <div data-form></div></p>
+<p><div class="ge-field ge-submit-note">
+<label class="ge-label" for="ge-note"><span>Anything the reviewer should know?</span></label>
+<textarea id="ge-note" data-note rows="2" placeholder="Optional — where your information came from, anything you're unsure about"></textarea>
+</div></p>
 <p><div class="ge-actions">
-<button type="button" class="ge-btn ge-btn-primary" data-download>Download updated guide</button>
+<button type="button" class="ge-btn ge-btn-primary" data-submit>Submit for review</button>
+</div>
+<p class="ge-hint">No GitHub account needed. Your entry is sent for review as a pull request — nothing goes live until it’s checked and merged.</p></p>
+<p><div class="ge-result" data-result hidden></div></p>
+<p><details class="ge-manual">
+<summary>Or do it yourself on GitHub</summary>
+<p class="ge-hint">Prefer to open the pull request in your own name? Take the file and go through GitHub as normal.</p>
+<div class="ge-actions">
+<button type="button" class="ge-btn ge-btn-quiet" data-download>Download updated guide</button>
 <button type="button" class="ge-btn ge-btn-quiet" data-copy>Copy whole file</button>
 <button type="button" class="ge-btn ge-btn-quiet" data-copy-entry>Copy this entry only</button>
 </div>
-<p class="ge-hint">The downloaded file is the complete guide with your entry changed, the version bumped and the date set — replace <code>SpeciesGuideData.json</code> with it in your pull request. Only your entry will show up in the diff.</p></p>
+<p class="ge-hint">The downloaded file is the complete guide with your entry changed, the version bumped and the date set — replace <code>SpeciesGuideData.json</code> with it in your pull request. Only your entry will show up in the diff.</p>
+</details></p>
   </section>
 </div>
 <script src="/static/js/guide-editor.js" defer></script>
