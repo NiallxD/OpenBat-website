@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="/static/css/style.css?v=3.0">
+  <link rel="stylesheet" href="/static/css/style.css?v=3.1">
   <script>
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
@@ -80,12 +80,13 @@
 
   <div class="post-content"><h2>Field Guide Editor</h2>
 <p>The field guide is one file, <code>SpeciesGuideData.json</code>, and anyone can edit it. This page lets you do that in ordinary form fields instead of hand-editing JSON — and it fills in the fiddly bits that are easy to forget, like bumping the version number so your change actually reaches people’s phones.</p>
-<p>The current guide loads automatically, so you’re always editing the latest version. Your edits stay in your browser — nothing is uploaded, and the only request this page makes is reading the guide from GitHub.</p>
+<p>The current guide loads automatically, so you’re always editing the latest version. <strong>You don’t need a GitHub account</strong> — we’ll submit your change for review for you.</p>
 <div class="ge-steps">
   <p><strong>1.</strong> Find your species below, or add a new one, and edit it.</p>
-  <p><strong>2.</strong> Download the file it gives you back.</p>
-  <p><strong>3.</strong> <a href="https://github.com/NiallxD/OpenBat-FieldGuide">Open a pull request</a> with it.</p>
+  <p><strong>2.</strong> Add your name under Contributors, so you get the credit.</p>
+  <p><strong>3.</strong> Press Submit. Nothing goes live until it's been checked.</p>
 </div>
+<p>Nothing is sent anywhere until you press Submit, and if you’d rather handle the pull request yourself you still can — the option is at the bottom of the form.</p>
 <p>Before adding a photo or writing a description, please read the <a href="https://github.com/NiallxD/OpenBat-FieldGuide#contributing-a-species-or-region">contributor guide</a> — particularly the rules on image licensing and writing in your own words.</p>
 <div id="guide-editor">
   <section data-step="load" class="ge-card">
@@ -133,7 +134,7 @@ Choose file
 <button type="button" class="ge-btn ge-btn-primary" data-submit>Submit for review</button>
 </div>
 <p class="ge-hint">No GitHub account needed. Your entry is sent for review as a pull request — nothing goes live until it’s checked and merged.</p></p>
-<p><div class="ge-result" data-result hidden></div></p>
+<p><div class="ge-outcome" data-result hidden></div></p>
 <p><details class="ge-manual">
 <summary>Or do it yourself on GitHub</summary>
 <p class="ge-hint">Prefer to open the pull request in your own name? Take the file and go through GitHub as normal.</p>
