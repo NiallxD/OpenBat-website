@@ -31,13 +31,15 @@
  * The form fields are the obvious part and the least valuable. What actually
  * breaks contributions today is the rules around the edit, so those are
  * enforced here rather than left to memory:
- *   • `dataVersion` MUST go up by one or the change reaches nobody's device.
- *   • `updatedAt` moves with it.
  *   • `imageCredit` is required whenever `imageURL` is set.
  *   • `schemaVersion` must be left alone.
+ *   • `dataVersion` and `updatedAt` must be left alone too — a workflow on the
+ *     guide repo's `main` stamps them after a merge. Writing them here put a
+ *     different `updatedAt` in every pull request, so the moment one merged,
+ *     every other open one conflicted on that line no matter which species it
+ *     touched.
  *   • Renaming an existing id should be a deliberate, separate PR.
- * The first two are done automatically on export; the rest are checked and
- * refuse to export until they pass.
+ * These are checked and refuse to export until they pass.
  *
  * ## Output formatting
  *
@@ -539,7 +541,7 @@
     ui.meta.appendChild(el('span', { text: guide.species.length + ' species' }));
     ui.meta.appendChild(el('span', { text: guide.regions.length + ' regions' }));
     ui.meta.appendChild(el('span', { text: 'dataVersion ' + guide.dataVersion }));
-    ui.meta.appendChild(el('span', { class: 'ge-meta-note', text: 'exports as ' + (guide.dataVersion + 1) }));
+    ui.meta.appendChild(el('span', { class: 'ge-meta-note', text: 'bumped when your change is merged' }));
   }
 
   function matches(species, q) {
@@ -1029,16 +1031,29 @@
 
   /* ---------------------------------------------------------------- export */
 
-  // Builds the whole file with this one entry replaced or appended, and the
-  // version fields moved. Whole-file rather than a fragment because
-  // `dataVersion` has to go up in the same change — a fragment would leave the
-  // contributor to remember that, which is the mistake this page exists to stop.
+  // Builds the whole file with this one entry replaced or inserted, matching
+  // what the submission worker would have committed — so a contributor who
+  // downloads this and opens the pull request by hand gets a diff of the same
+  // shape, and it merges alongside everyone else's the same way.
+  //
+  // `dataVersion` and `updatedAt` are left exactly as loaded. Bumping them here
+  // is what used to make every second pull request conflict; the stamp workflow
+  // on the guide repo's `main` does it after a merge instead.
+  //
+  // A new species is inserted where its id sorts rather than appended, because
+  // appending puts every new entry on the same few lines at the end of the
+  // array and two people adding different species would collide there.
   function buildOutput(species) {
     var out = JSON.parse(JSON.stringify(guide));
-    if (editingIndex >= 0) out.species[editingIndex] = species;
-    else out.species.push(species);
-    out.dataVersion = (Number(guide.dataVersion) || 0) + 1;
-    out.updatedAt = todayISO();
+    if (editingIndex >= 0) {
+      out.species[editingIndex] = species;
+    } else {
+      var before = -1;
+      for (var i = 0; i < out.species.length; i++) {
+        if (out.species[i].id > species.id) { before = i; break; }
+      }
+      out.species.splice(before < 0 ? out.species.length : before, 0, species);
+    }
     return JSON.stringify(out, null, 2) + '\n';
   }
 

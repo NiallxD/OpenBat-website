@@ -19,11 +19,21 @@
  * ## Why it takes one species and not the whole file
  *
  * The browser sends only the entry that was edited. This worker fetches the
- * current guide itself, splices that entry in, and bumps the version. So two
- * contributors working hours apart on different species can't clobber one
- * another, and a submission built against a guide that has since moved on still
- * applies cleanly. It also means the version bump and the file's formatting are
- * decided here, where they can't be got wrong, rather than in a browser.
+ * current guide itself and splices that entry in. So two contributors working
+ * hours apart on different species can't clobber one another, a submission
+ * built against a guide that has since moved on still applies cleanly, and the
+ * file's formatting is decided here, where it can't be got wrong, rather than
+ * in a browser.
+ *
+ * ## Why it doesn't set the version
+ *
+ * It writes no `dataVersion` and no `updatedAt` — the branch inherits main's.
+ * Stamping them per-submission made every pair of open pull requests conflict
+ * on the `updatedAt` line regardless of which species they touched. The
+ * stamp-guide-version workflow in the field guide repo bumps both on main
+ * after a merge, which is the only place that can count what actually landed.
+ * If that workflow is ever removed, this becomes a change that reaches nobody's
+ * device: the two go together.
  *
  * ## Setup
  *
@@ -276,16 +286,37 @@ export default {
       const problems = validate(species, guide);
       if (problems.length) return json(400, { error: problems.join(' '), problems }, origin);
 
-      // 2. Splice the one entry in.
+      // 2. Splice the one entry in. A new species goes where its id sorts to
+      //    rather than onto the end of the array: appending puts every new
+      //    entry at the same anchor — the last `}` before the closing `]` — so
+      //    two people adding different species would each rewrite those same
+      //    lines, and whichever pull request merged second would conflict over
+      //    a species the other had never touched.
       const index = guide.species.findIndex((s) => s.id === species.id);
       const isNew = index < 0;
-      if (isNew) guide.species.push(species);
-      else guide.species[index] = species;
+      if (isNew) {
+        const before = guide.species.findIndex((s) => s.id > species.id);
+        guide.species.splice(before < 0 ? guide.species.length : before, 0, species);
+      } else {
+        guide.species[index] = species;
+      }
 
-      // 3. Version fields are decided here, never taken from the client — a
-      //    change that forgets this reaches nobody's device.
-      guide.dataVersion = (Number(guide.dataVersion) || 0) + 1;
-      guide.updatedAt = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
+      // 3. `dataVersion` and `updatedAt` are deliberately left ALONE — the
+      //    branch carries main's values through untouched.
+      //
+      //    Stamping them here was the single largest source of merge
+      //    conflicts. `dataVersion` was survivable, since two submissions off
+      //    the same base both bump it to the same number and git reads an
+      //    identical change on both sides as agreement. `updatedAt` was not:
+      //    every submission wrote its own timestamp, so the moment one pull
+      //    request merged, every other open one differed from main on that one
+      //    line and needed resolving by hand — even when the two touched
+      //    entirely unrelated species.
+      //
+      //    The stamp-guide-version workflow in the field guide repo does the
+      //    bump on main after a merge instead. That is the only place that can
+      //    see how many submissions actually landed, which is what the number
+      //    is supposed to count.
 
       // 4. Canonical formatting, so the pull request diff is only the entry
       //    that changed. The committed guide is kept in this exact shape.
@@ -324,7 +355,6 @@ export default {
             '',
             isNew ? `Adds a new species entry, \`${species.id}\`.`
                   : `Updates the existing entry \`${species.id}\`.`,
-            `\`dataVersion\` bumped to **${guide.dataVersion}**.`,
             note ? `\n**Note from the contributor:**\n\n> ${note.replace(/\n/g, '\n> ')}` : '',
             '',
             '---',

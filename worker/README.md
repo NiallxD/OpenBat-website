@@ -10,8 +10,7 @@ it can't write. This worker holds the token instead.
 ## What it does, and what it deliberately can't
 
 On `POST` it takes **one species entry**, fetches the current guide itself,
-splices that entry in, bumps `dataVersion`, commits to a new branch and opens a
-pull request.
+splices that entry in, commits to a new branch and opens a pull request.
 
 - **It only ever opens a pull request.** It never pushes to `main`, never
   merges, and never touches a file other than `SpeciesGuideData.json`. That is
@@ -24,12 +23,37 @@ pull request.
 - **It protects attribution.** An existing species' `contributors` list may only
   be appended to. Anything that rewrites, reorders or removes an existing credit
   is rejected — those entries record other people's work.
-- **It decides the version fields**, never the client. Forgetting the
-  `dataVersion` bump is the mistake that silently stops a change reaching
-  anyone's device, so it isn't left to a browser.
 - **It takes one species, not the whole file.** Two people editing different
   species hours apart can't clobber each other, and a submission built against a
   guide that has since moved still applies cleanly.
+- **It doesn't touch the version fields.** See below — that job belongs to the
+  field guide repo, on `main`, after a merge.
+
+## Why consecutive pull requests used to conflict
+
+The worker used to stamp `dataVersion` and `updatedAt` into every branch. Two
+submissions off the same base bump `dataVersion` to the same number, and git
+reads an identical change on both sides as agreement — but each wrote its own
+`updatedAt`, so as soon as one pull request merged, every other open one
+differed from `main` on that single line and had to be resolved by hand. The
+species involved were irrelevant; a spelling fix to a bat in Australia
+conflicted with a new photo credit on one in Yorkshire.
+
+Two changes fix it, and they have to be deployed together:
+
+1. **This worker writes neither field.** A branch carries `main`'s values
+   through untouched, so there is nothing on those lines to disagree about.
+2. **`.github/workflows/stamp-guide-version.yml` in
+   [OpenBat-FieldGuide](https://github.com/NiallxD/OpenBat-FieldGuide)** bumps
+   `dataVersion` and sets `updatedAt` on `main` after each merge. Without it
+   the version never moves and no change reaches a device.
+
+The worker also inserts a new species where its `id` sorts rather than at the
+end of the array, so two people adding different species don't both rewrite the
+last few lines of the file.
+
+What still conflicts, correctly, is two open pull requests editing **the same
+species**. That is a genuine disagreement about the same text and wants a human.
 
 ## Setup
 

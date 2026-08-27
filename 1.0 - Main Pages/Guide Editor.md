@@ -95,7 +95,7 @@ Before adding a photo or writing a description, please read the [contributor gui
         <button type="button" class="ge-btn ge-btn-quiet" data-copy>Copy whole file</button>
         <button type="button" class="ge-btn ge-btn-quiet" data-copy-entry>Copy this entry only</button>
       </div>
-      <p class="ge-hint">The downloaded file is the complete guide with your entry changed, the version bumped and the date set — replace <code>SpeciesGuideData.json</code> with it in your pull request. Only your entry will show up in the diff.</p>
+      <p class="ge-hint">The downloaded file is the complete guide with your entry changed — replace <code>SpeciesGuideData.json</code> with it in your pull request. Only your entry will show up in the diff, and the version number is bumped for you once it's merged.</p>
     </details>
     </details>
   </section>
@@ -106,4 +106,4 @@ Before adding a photo or writing a description, please read the [contributor gui
      Pages serves this with a long cache lifetime, so bump the number in the
      same commit as any edit to guide-editor.js or returning visitors keep
      running the old copy. -->
-<script src="/static/js/guide-editor.js?v=5" defer></script>
+<script src="/static/js/guide-editor.js?v=6" defer></script>
