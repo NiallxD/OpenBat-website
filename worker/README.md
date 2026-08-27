@@ -39,21 +39,34 @@ differed from `main` on that single line and had to be resolved by hand. The
 species involved were irrelevant; a spelling fix to a bat in Australia
 conflicted with a new photo credit on one in Yorkshire.
 
-Two changes fix it, and they have to be deployed together:
+Three things fix it. The first two have to be deployed together:
 
 1. **This worker writes neither field.** A branch carries `main`'s values
    through untouched, so there is nothing on those lines to disagree about.
-2. **`.github/workflows/stamp-guide-version.yml` in
+2. **The `stamp` job in `.github/workflows/stamp-guide-version.yml` in
    [OpenBat-FieldGuide](https://github.com/NiallxD/OpenBat-FieldGuide)** bumps
    `dataVersion` and sets `updatedAt` on `main` after each merge. Without it
    the version never moves and no change reaches a device.
 
+3. **The `reapply` job in that same workflow** handles what those two don't.
+   After main moves, each open `guide/*` pull request is rebuilt: the entries it
+   changed against its merge base are spliced into main's current guide, so
+   where they sit in the file stops mattering. It merges by species, which is
+   what the file actually is, rather than by lines, which is all git can see.
+   It's a merge into the branch rather than a rebase of it, so pushes stay
+   fast-forward and no contributor's branch is rewritten under them.
+
 The worker also inserts a new species where its `id` sorts rather than at the
-end of the array, so two people adding different species don't both rewrite the
-last few lines of the file.
+end of the array. That keeps the file in a predictable order, but be clear about
+what it does **not** do: it doesn't stop two additions colliding. The insert
+lands before the first entry with a greater id, so two bats in the same genus
+resolve to the same anchor and conflict exactly as an append would. Only step 3
+covers that.
 
 What still conflicts, correctly, is two open pull requests editing **the same
-species**. That is a genuine disagreement about the same text and wants a human.
+species**. `reapply` deliberately leaves those alone — resolving one in main's
+favour would silently discard a contribution. That is a genuine disagreement
+about the same text and wants a human.
 
 ## Setup
 

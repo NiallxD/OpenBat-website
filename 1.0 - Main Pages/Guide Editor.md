@@ -106,4 +106,4 @@ Before adding a photo or writing a description, please read the [contributor gui
      Pages serves this with a long cache lifetime, so bump the number in the
      same commit as any edit to guide-editor.js or returning visitors keep
      running the old copy. -->
-<script src="/static/js/guide-editor.js?v=6" defer></script>
+<script src="/static/js/guide-editor.js?v=7" defer></script>

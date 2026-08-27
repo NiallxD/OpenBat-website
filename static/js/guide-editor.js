@@ -1040,9 +1040,10 @@
   // is what used to make every second pull request conflict; the stamp workflow
   // on the guide repo's `main` does it after a merge instead.
   //
-  // A new species is inserted where its id sorts rather than appended, because
-  // appending puts every new entry on the same few lines at the end of the
-  // array and two people adding different species would collide there.
+  // A new species is inserted where its id sorts rather than appended, which
+  // keeps the file in a predictable order. It is not by itself enough to stop
+  // two additions colliding — same-genus ids land on the same anchor either
+  // way — and the guide repo re-applies open pull requests to handle that.
   function buildOutput(species) {
     var out = JSON.parse(JSON.stringify(guide));
     if (editingIndex >= 0) {

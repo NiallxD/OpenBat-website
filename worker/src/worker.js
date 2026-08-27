@@ -286,12 +286,18 @@ export default {
       const problems = validate(species, guide);
       if (problems.length) return json(400, { error: problems.join(' '), problems }, origin);
 
-      // 2. Splice the one entry in. A new species goes where its id sorts to
-      //    rather than onto the end of the array: appending puts every new
-      //    entry at the same anchor — the last `}` before the closing `]` — so
-      //    two people adding different species would each rewrite those same
-      //    lines, and whichever pull request merged second would conflict over
-      //    a species the other had never touched.
+      // 2. Splice the one entry in, a new species going where its id sorts to
+      //    rather than onto the end of the array.
+      //
+      //    Be clear about what that does and doesn't buy. It keeps the file in
+      //    a predictable order, and it separates two additions when an existing
+      //    entry sorts between them. It does NOT stop two new species
+      //    colliding in general: the insert lands before the first entry with a
+      //    greater id, so two bats in the same genus — myotis-evotis and
+      //    myotis-volans — resolve to the same anchor and conflict just as an
+      //    append would. That case is handled after the fact, by the reapply
+      //    job in stamp-guide-version.yml, which merges by species rather than
+      //    by lines.
       const index = guide.species.findIndex((s) => s.id === species.id);
       const isNew = index < 0;
       if (isNew) {
