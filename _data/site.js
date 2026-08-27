@@ -14,9 +14,14 @@ export default {
   },
 
   // Header nav. Order here is the order shown. The logo already links home.
+  // An item may carry `children`: those become a dropdown under it on desktop
+  // (hover or keyboard focus) and an indented sub-list inside the mobile
+  // drawer, where there is no hover to open anything.
   nav: [
     { label: "Our Project", url: "/our-project/" },
-    {label: "Contribute", url: "/contribute/"},
+    { label: "Contribute", url: "/contribute/", children: [
+      { label: "Field Guide Editor", url: "/guide-editor/" }
+    ]},
     { label: "Help", url: "/help/" },
     { label: "Privacy", url: "/privacy/" },
     { label: "Contact", url: "/contact/" }

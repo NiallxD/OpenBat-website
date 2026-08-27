@@ -205,6 +205,53 @@ p {
   color: #FF860D !important;
 }
 
+/* Dropdown — a nav item with children (see `nav` in _data/site.js). On desktop
+   it opens on hover or keyboard focus; the panel's own top padding covers the
+   gap below the link so the pointer can cross into it without it closing.
+   Inside the mobile drawer it is always open and simply indented, since there
+   is no hover on a touch screen. */
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding-top: 0.5rem;
+  min-width: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.25rem);
+  transition: opacity var(--ease), transform var(--ease), visibility var(--ease);
+  z-index: 95;
+}
+
+.nav-item:hover > .nav-dropdown,
+.nav-item:focus-within > .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-dropdown a {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 1.125rem;
+  white-space: nowrap;
+}
+
+.nav-dropdown a:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
 /* Theme Toggle */
 .theme-toggle {
   background: transparent;
@@ -308,6 +355,27 @@ p {
     width: 100%;
     padding: 0.75rem 1rem;
     font-size: 1.125rem;
+  }
+
+  .nav-item {
+    display: block;
+    width: 100%;
+  }
+
+  .nav-dropdown {
+    position: static;
+    padding-top: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    padding-left: 1rem;
+  }
+
+  .nav-dropdown a {
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
   }
 
   /* Prevent scrolling when menu is open */

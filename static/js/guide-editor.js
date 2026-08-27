@@ -615,7 +615,35 @@
     // the last species left it in. Start it closed like the rest.
     ui.submitSection.open = false;
     ui.edit.scrollIntoView({ block: 'start' });
+    pushEditorState();
   }
+
+  /* --------------------------------------------------------- back button */
+
+  // Opening a species pushes a history entry so the browser's Back button
+  // returns to the species list rather than off the page entirely — from the
+  // editor, "back" almost never means "back to /contribute/". The URL is
+  // unchanged; only the entry matters. Nothing stacks: a second openEditor
+  // while one is already open (restoring a draft, say) reuses the entry.
+  var HISTORY_MARK = 'ge-editor';
+
+  function inEditorState() {
+    return !!(window.history.state && window.history.state[HISTORY_MARK]);
+  }
+
+  function pushEditorState() {
+    if (inEditorState()) return;
+    var state = {};
+    state[HISTORY_MARK] = true;
+    try { window.history.pushState(state, '', window.location.href); } catch (e) {}
+  }
+
+  window.addEventListener('popstate', function () {
+    if (ui.edit.hidden) return;   // editor isn't open — a real navigation
+    // The entry is already gone by the time this fires, so if the discard is
+    // declined it has to be put back or the next Back leaves the page.
+    if (!closeEditor()) pushEditorState();
+  });
 
   /// The crop of static/images/world-map.svg, in degrees. Antarctica is cut
   /// off the bottom — no region sits there, and keeping it wasted a third of
@@ -1137,7 +1165,15 @@
   });
 
   ui.back.addEventListener('click', function () {
-    if (dirty && !window.confirm('Discard the changes to this species? The saved draft goes too.')) return;
+    // Let the history entry openEditor pushed be the thing that closes the
+    // editor, so this button and the browser's Back do exactly the same job.
+    if (inEditorState()) { window.history.back(); return; }
+    closeEditor();
+  });
+
+  // Returns false if the visitor declined to discard their changes.
+  function closeEditor() {
+    if (dirty && !window.confirm('Discard the changes to this species? The saved draft goes too.')) return false;
     if (dirty) clearDraft();
     dirty = false;
     editing = null;
@@ -1155,5 +1191,6 @@
     // list scrolled off the top of the screen.
     offerDraft();
     ui.browse.scrollIntoView({ block: 'start' });
-  });
+    return true;
+  }
 })();
