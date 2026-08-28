@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Project — OpenBat</title>
-  <meta name="description" content="Learn more about OpenBat and its goals.">
+  <meta name="description" content="Who we are, what we&#39;re trying to do, and how OpenBat works toward it.">
   
   <!-- Privacy & Security -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="OpenBat">
   <meta property="og:title" content="Our Project — OpenBat">
-  <meta property="og:description" content="Learn more about OpenBat and its goals.">
+  <meta property="og:description" content="Who we are, what we&#39;re trying to do, and how OpenBat works toward it.">
   
   <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=6.4">
+  <link rel="stylesheet" href="/static/css/style.css?v=6.7">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -103,25 +103,41 @@
   
   <div class="listing-header">
     <h1>Our Project</h1>
-    <p class="page-lead">Learn more about OpenBat and its goals.</p>
+    <p class="page-lead">Who we are, what we&#39;re trying to do, and how OpenBat works toward it.</p>
   </div>
   
 
   
   <div class="post-content page-cards"><div class="page-plain">
-<h2>Bats are difficult to experience</h2>
-<p>They’re often small, they fly at night, they rarely perch in line of sight, and they call at frequencies far above those humans can hear. For all intents and purposes, they are invisible.</p>
-<div class="callout callout-quote"><div class="callout-title">The Challenge</div><div class="callout-body"><p>To quote the inspirational Sir David Attenborough: <em>“No one will protect what they don’t care about, and no one will care about what they have never experienced.”</em></p></div></div>
+<h2>An initiative, not just an app</h2>
+<p>OpenBat is a community initiative for bat conservation. The app is the most visible part of it, but it exists to serve a mission rather than the other way around: build a field guide worth trusting, make bats easier for ordinary people to appreciate, and turn a night of listening into data science can actually use.</p>
+<div class="callout callout-quote"><div class="callout-title">The Challenge</div><div class="callout-body"><p>To quote Sir David Attenborough: <em>“No one will protect what they don’t care about, and no one will care about what they have never experienced.”</em> Bats are small, nocturnal, and call at frequencies humans can’t hear — for most people, they might as well be invisible.</p></div></div>
 </div>
-<section class="page-card page-card--media page-card--media-left"><h2>Fear not! There is a way!</h2>
-<p><img src="/static/images/griff-hero.webp" alt="A small 3D-printed ultrasonic microphone resting on rocks"></p>
-<p>Electronics hold the key to this problem. By utilising special microphones, we can design tools which can hear the bat calls, and then repeat those calls in frequencies we can here, in real time. This allows us mere humans to listen to bats as they go about their business in the dead of night.</p>
+<section class="page-card"><h2>Who we are</h2>
+<p>OpenBat is built by a few friends in Squamish, British Columbia, not a company or an institution. That shapes how the project runs: the scope stays honest about what a handful of volunteers can actually sustain, and rather than building new infrastructure from scratch, OpenBat plugs into programmes that already exist and already have the community’s trust — the BC Community Bat Programs, NABat, and iNaturalist among them.</p>
 </section>
-<section class="page-card page-card--media page-card--media-right"><h2>There is a catch…</h2>
+<section class="page-card page-card--media page-card--media-left"><h2>What we’re trying to do</h2>
+<p>Three things, roughly in the order a new visitor meets them:</p>
+<ol>
+<li><strong>Make appreciating bats accessible to more people</strong> — hearing a bat and learning what it might be, in the moment, with nothing more than a phone and a cheap microphone.</li>
+<li><strong>Act as a catalyst for bat community science</strong> — turning a night of listening into a properly formatted observation that feeds iNaturalist and, through it, researchers and conservation bodies.</li>
+<li><strong>Build a comprehensive, expert-curated field guide</strong> — the <a href="/guide-editor/" class="wikilink">Field Guide Editor</a> lets bat experts and enthusiasts contribute their local knowledge directly, reviewed rather than published on sight.</li>
+</ol>
 <p><img src="/static/images/screen-detector.webp" alt="OpenBat's detector screen, showing a live spectrogram and species suggestions"></p>
-<p>Most tools for identifying bat calls are expensive, proprietary, and hard to get hold of, which puts this experience out of reach for a lot of people who’d genuinely enjoy it. Free apps that work with ultrasonic microphones already exist, but as far as we know, none of them use the open-source machine learning models that have been trained on bat echolocation calls. By building that identification directly into the app, OpenBat helps people put a name to the call they just heard, a small moment of recognition that builds a real connection with bats, and a bit more respect for them too.</p>
-<p>Bats are remarkable creatures which have adapted ways to experience the world that can only be described as magical! However, they are severely misunderstood.</p>
-<p>Millions of people still fear bats. They believe that they spread diseases, drink human blood, and offer little to our lives. They are seen as pests. This couldn’t be further from the truth!</p>
+<p>Bat acoustic data starts from close to empty in a lot of regions, so a simple “there are bats here, tonight” record is a meaningful step forward on its own, and it doesn’t depend on getting the species right. iNaturalist’s own research-grade standard works the same way: community agreement at whatever taxonomic depth is achievable counts, not resolution to species.</p>
+</section>
+<section class="page-card page-card--media page-card--media-right"><h2>How we’re doing it</h2>
+<p>Hardware, listening apps, and community science platforms already exist as three separate pieces, and nothing connects them for someone who’s just curious. OpenBat is that connective tissue, not a competitor to any one of them, and it does three jobs at once:</p>
+<ul>
+<li><strong>Removes the friction</strong> between recording a bat and submitting it as usable data — record on your phone, and get a properly labelled recording, spectrogram, and metadata, ready to submit.</li>
+<li><strong>Enables a capability that doesn’t otherwise exist</strong> at this price point — live AutoID paired with the field guide lets you learn what you just heard, tied to what’s actually flying near you.</li>
+<li><strong>Recruits people passively</strong> — nobody has to “join” anything. Someone downloads a curiosity app, and the app itself introduces the idea that they could contribute to science.</li>
+</ul>
+<p><img src="/static/images/griff-hero.webp" alt="A small 3D-printed ultrasonic microphone resting on rocks"></p>
+<p>None of this locks anyone into one microphone. OpenBat works with any standard USB ultrasonic mic that doesn’t need its own companion app, including Phil Atkin’s open-source <a href="https://www.pippyg.com/griff.html">Griff Mini</a>, buildable for around $20 CAD. The rest of the stack is open too — the field guide’s species data, the detection models, and the app itself — so anyone can build on, audit, or extend any part of it without asking us. Free is a price point; open is a structural choice about who gets to build on top of this.</p>
+</section>
+<section class="page-card"><h2>Not the first of its kind</h2>
+<p>The closest model isn’t another bat organisation, it’s Merlin Bird ID feeding eBird: a free app, run by Cornell Lab of Ornithology, that turns curiosity into records for a much bigger science platform, without being a conservation body itself. That’s the shape OpenBat is going for — scoped to BC first, iOS first, built by a few people rather than an institution — but aiming at the same structural gap: not a new tier in bat conservation, but the thing that makes the tiers that already exist reachable by an ordinary person.</p>
 </section></div>
   
 </div>

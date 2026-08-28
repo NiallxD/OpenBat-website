@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=6.4">
+  <link rel="stylesheet" href="/static/css/style.css?v=6.7">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -186,7 +186,7 @@
 <blockquote>
 <p><strong>Note:</strong> When the sound of a bat is repeated by your phone, the microphone may pick that call up again and reproduce it. Wear earphones for best performance, or turn the volume down a bit.</p>
 </blockquote>
-<p>Recordings can also be played back in full time expansion after the fact — tap the recording in its session — with nothing missed and nothing sped past, since the whole file already exists on disk by then.</p>
+<p>Recordings can also be played back in full time expansion after the fact — tap the recording in its session — with nothing missed and nothing sped past, since the whole file already exists on disk by then. The speed is yours to pick there: a button under the spectrogram steps between four, eight and sixteen times slower, and you can change it while it’s playing.</p>
 </section>
 <section class="page-card"><h2>Detecting and capturing pulses</h2>
 <p>OpenBat’s pulse detector watches the incoming audio and triggers automatically when it sees a call-shaped pulse, drawing it on screen and, if you’ve armed recording, saving it.</p>
@@ -219,7 +219,9 @@
 <p>The built-in field guide covers species profiles: measurements, echolocation characteristics, distribution and conservation status. It’s searchable and browsable by region, and it’s community-contributed, so if you know your local bats, have a look at the <a href="/contribute/">Contribute</a> page to see how to help expand it.</p>
 </section>
 <section class="page-card"><h2>Reviewing recordings</h2>
-<p>Every recording can be opened for a proper look afterwards — open a session and tap the recording: a static spectrogram of the whole pass, full time expansion playback, and the same measurements you get live (peak frequency, bandwidth, duration and so on) but with time to actually study them. A <strong>Pulses</strong> button on the same screen opens every individual pulse the classifier scored in that recording, so you can see the evidence behind the species it was given.</p>
+<p>Every recording can be opened for a proper look afterwards — open a session and tap the recording: a static spectrogram of the whole pass, full time expansion playback at a speed you choose, and the same measurements you get live (peak frequency, bandwidth, duration and so on) but with time to actually study them. A <strong>Pulses</strong> button on the same screen opens every individual pulse the classifier scored in that recording, so you can see the evidence behind the species it was given.</p>
+<p>Most of a recording is usually silence. <strong>Hide silence</strong> — the crossed-out speaker in the toolbar — cuts it out: the spectrogram packs down to just the stretches with something in them, so a five-minute recording can become twenty seconds of actual calls, and playing it plays exactly that. The gaps aren’t skipped over as you reach them, they’re simply not there, so the elapsed time you see is the time you’ll spend listening. A short margin is kept either side of every pulse so nothing is clipped, and the joins are faded so they sound like cuts rather than clicks.</p>
+<p>Two settings in the tuning panel control what counts as silence. <strong>Keep above</strong> is how far above that recording’s own background noise a sound has to be — lower it to keep faint, distant calls, raise it to cut harder. <strong>Pulse margin</strong> is how much either side of each pulse is kept: widen it for more context, narrow it to pack tighter. Underneath, the panel tells you what it actually did — how much of the recording was kept and how many separate stretches — and says so plainly if nothing cleared the threshold, rather than quietly showing you the whole file.</p>
 </section>
 <section class="page-card"><h2>Contributing recordings to community science</h2>
 <p>iNaturalist is a global community science platform that lets members of the public contribute biological observations to a shared database that researchers can use. We actually use this same database, <a href="https://www.gbif.org">gbif.org</a>, to power the range maps in the field guide.</p>

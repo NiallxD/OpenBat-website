@@ -955,6 +955,41 @@ span.wikilink { color: var(--color-secondary); }
   .page-card { padding: 1.25rem; }
 }
 
+/* A card built around a single CTA link is clickable everywhere, not just on
+   the link text — the anchor stretches over the whole card via ::after, and
+   the card borrows the home page's stronger, buttonlike hover in exchange. */
+.page-card:has(.page-card-link) {
+  position: relative;
+  transition: border-color var(--ease), transform var(--ease);
+}
+
+.page-card:has(.page-card-link):hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-card:has(.page-card-link):hover { transform: none; }
+}
+
+.page-card-link {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.page-card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* Any other link inside a clickable card (e.g. an inline source credit) needs
+   to sit above the stretched overlay, or it becomes unclickable. */
+.page-card:has(.page-card-link) a:not(.page-card-link) {
+  position: relative;
+  z-index: 1;
+}
+
 /* ══════════════════════════════════════════════════════════
    INLINE CHARTS
    Diagrams drawn as inline SVG in a post, rather than exported as images, so
@@ -2323,7 +2358,13 @@ figure.image-float-left figcaption {
     width: 100%;
     height: 100%;
     max-width: none;
-    padding: 0;
+    /* Bottom padding, not the caption's own offset, is what keeps the centred
+       screen clear of the caption slot below it — the caption is positioned
+       against this box (see the dock comment up top), so shrinking this box
+       is what actually pushes the screen up and opens the gap. Small on
+       purpose: just enough that the title clears the screen at its largest,
+       not a full caption-height gap. */
+    padding: 0 0 2rem;
   }
 
   .dock--pinned .dock-item {
