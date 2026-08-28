@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="/static/css/style.css?v=5.4">
+  <link rel="stylesheet" href="/static/css/style.css?v=6.0">
   <script>
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
@@ -99,7 +99,8 @@
   </div>
   
 
-  <div class="post-content"><div class="plat-toggle-wrap" role="tablist" aria-label="Platform">
+  
+  <div class="post-content page-cards"><div class="plat-toggle-wrap" role="tablist" aria-label="Platform">
   <div class="plat-toggle">
     <button type="button" class="plat-toggle-btn active" data-platform="ios" role="tab" aria-selected="true" aria-controls="plat-ios">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.72c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.42-.14-2.76.83-3.48.83-.72 0-1.82-.81-2.99-.79-1.54.02-2.96.89-3.75 2.26-1.6 2.78-.41 6.9 1.15 9.16.76 1.11 1.67 2.35 2.86 2.3 1.15-.04 1.58-.74 2.97-.74 1.39 0 1.78.74 2.99.72 1.23-.02 2.01-1.12 2.76-2.24.87-1.28 1.23-2.53 1.25-2.6-.03-.01-2.39-.92-2.4-3.64zM14.1 5.6c.63-.77 1.06-1.83.94-2.9-.91.04-2.01.61-2.67 1.37-.59.68-1.1 1.76-.96 2.8 1.01.08 2.05-.51 2.69-1.27z"/></svg>
@@ -111,8 +112,8 @@
     </button>
   </div>
 </div>
-<div class="plat-section" id="plat-ios" role="tabpanel">
-<h2>Get started</h2>
+
+<div class="plat-section" id="plat-ios" role="tabpanel"><section class="page-card"><h2>Get started</h2>
 <ol>
 <li><strong>Plug in an ultrasonic USB microphone.</strong> The built-in iPhone mic only hears up to about 24 kHz, and most bat calls happen well above that, so you need something like the <a href="https://www.pippyg.com/griff.html">Griff Mini</a>. Any USB ultrasonic mic that runs at 384 kHz should work fine, plugged in via a USB-C or Lightning adapter depending on your device.</li>
 <li><strong>Open OpenBat and allow microphone and location access.</strong> Location is used to tag your recordings, to suggest the right species model for your area, to work out which species are plausible where you are, to name each session after the place it happened, and to work out your local sunset and sunrise times. It never leaves your phone, and OpenBat doesn’t record a GPS track or use location in the background; see the <a href="/privacy-policy">Privacy Policy</a>.</li>
@@ -120,14 +121,16 @@
 <li><strong>Point the mic at the sky and wait.</strong> Once the status indicator up top turns green, you’re receiving audio. When a bat calls nearby you’ll see a pulse land on the spectrogram.</li>
 </ol>
 <p>Setting the app up takes three screens and asks for nothing but the microphone and location permissions.</p>
-<h2>Finding your way around</h2>
+</section>
+<section class="page-card"><h2>Finding your way around</h2>
 <p>Two tours are waiting on the <strong>Info &amp; Tour</strong> screen, and neither is a video — both live inside the app.</p>
 <ul>
 <li><strong>The guided tour</strong> dims the screen and points at one control at a time, on your own detector, with your own audio running. It’s also offered by the sparkles button at the top of the Detector screen, which appears for a moment shortly after your first run and then stays there until you’ve been through the tour.</li>
 <li><strong>About OpenBat</strong> is the reading tour: what echolocation is, what each listening mode does to the sound, and why calibrating the microphone matters. It’s the same material the app used to walk you through before you’d even plugged anything in, which turned out to be the wrong moment for it.</li>
 </ul>
 <p>Once you’re up and running, the rest of this page covers what everything does.</p>
-<h2>When to go out</h2>
+</section>
+<section class="page-card"><h2>When to go out</h2>
 <p>Bats are busiest in the few hours <strong>after sunset</strong> and again in the hours <strong>before sunrise</strong>, so timing matters more than almost anything else you can control. The top-left of the detector screen tells you where in that night you are:</p>
 <table>
 <thead>
@@ -158,11 +161,13 @@
 <p>The sun icon is filled in while you’re inside an active window and hollow outside one, so a glance tells you which.</p>
 <p>Each window is the first and last <strong>15% of that night</strong>, rather than a fixed number of hours, so it moves with the season along with everything else: around an hour and three-quarters each side at the equinoxes, closer to an hour at midsummer when the whole night is only seven hours long.</p>
 <p><strong>Tap the pill</strong> for tonight’s sunset and sunrise times, how long each window lasts tonight, and a reminder of why those hours are the ones to be out in. It’s worked out on your phone from your latitude and the date, so it’s right whether or not you have signal — and it needs location access to know where the sun is.</p>
-<h2>Simplified and full views</h2>
+</section>
+<section class="page-card"><h2>Simplified and full views</h2>
 <p>OpenBat starts in <strong>simplified view</strong>, which shows a running list of every species identified, the input level and the spectrogram. That’s deliberately most of what a first night needs, and it keeps the screen readable while you’re outside in the dark.</p>
 <p>Turn on <strong>Advanced mode</strong> — it’s the first switch in <strong>Settings &gt; General</strong> — and the detector fills in the rest: peak frequency, bandwidth, duration and pulse rate for the last call, a zoomable close-up of the pulse itself, controls for the timeline, the colour palette and the frequency band, and the ability to drag the spectrogram back through the last minute of history. You’re asked which you’d prefer when you first set the app up, and switching between them costs nothing: anything you’ve adjusted is kept and comes back.</p>
 <p>The rest of this page describes the full view, so if a control it mentions isn’t on your screen, that’s why.</p>
-<h2>Listening to bats</h2>
+</section>
+<section class="page-card"><h2>Listening to bats</h2>
 <p>Bat calls are ultrasonic, so you can’t hear them directly. OpenBat gives you a few ways to bring them into human hearing range, all from a single mode button. Start a session with the round button beside the tab bar, then tap that button again to open the session controls — Listen is the middle one. Tapping it cycles through:</p>
 <ul>
 <li><strong>Off</strong>: no audio output, just detection and the spectrogram.</li>
@@ -174,7 +179,8 @@
 <p><strong>Note:</strong> When the sound of a bat is repeated by your phone, the microphone may pick that call up again and reproduce it. Wear earphones for best performance, or turn the volume down a bit.</p>
 </blockquote>
 <p>Recordings can also be played back in full time expansion after the fact — tap the recording in its session — with nothing missed and nothing sped past, since the whole file already exists on disk by then.</p>
-<h2>Detecting and capturing pulses</h2>
+</section>
+<section class="page-card"><h2>Detecting and capturing pulses</h2>
 <p>OpenBat’s pulse detector watches the incoming audio and triggers automatically when it sees a call-shaped pulse, drawing it on screen and, if you’ve armed recording, saving it.</p>
 <p>Open <strong>Settings &gt; Detecting</strong> to tune it. Under <strong>What counts as a call</strong>:</p>
 <ul>
@@ -193,7 +199,8 @@
 <p>Arm the recorder to save triggered calls as WAV files automatically as you listen. Every outing is saved as a <strong>session</strong> automatically — there’s nothing to choose on the way in. Its detections are grouped together and mapped where each one was heard, and if you stop and start again shortly afterwards it carries on the same session rather than beginning a new one. Everything is saved on your phone, and you can export or share any recording directly from the app.</p>
 <p>Opening a session shows a map of where its IDs happened, then two charts, then its recordings. <strong>Species detected</strong> is a bar per species, as long as the number of detections logged for it. <strong>Detections over time</strong> puts those same detections on the clock, which is a different question worth asking — a hundred IDs spread evenly over four hours and the same hundred in one busy twenty minutes look identical on the first chart and are very different nights. Tap the <strong>i</strong> beside either title for what it does and doesn’t tell you; the important caveat is that these count <em>detections</em>, not individual bats, since one bat circling a pond gets logged again each time it comes past.</p>
 <p>Older recordings that belong to no session — imports, and anything from before every outing became a session — sit in a “Not in a session” group at the bottom of the Sessions list.</p>
-<h2>Species identification</h2>
+</section>
+<section class="page-card"><h2>Species identification</h2>
 <p>Where OpenBat has an open-source model for your region, it can suggest a species for each pulse it detects, entirely on your device. No internet connection needed and nothing is sent anywhere for this to work.</p>
 <ul>
 <li><strong>NABat ML</strong> covers North America.</li>
@@ -202,15 +209,18 @@
 <p>Every suggestion comes with a confidence level, and two extra flags where honesty demands one. <strong>Sounds alike</strong> means the species belongs to a group that overlaps too much to separate by sound — a standing caution about that species rather than a comment on the call you just heard. <strong>Or SPECIES</strong> means that on this particular call a second species scored almost as highly as the winner, and names it, so you can judge for yourself. Either way you’re not given false confidence in a call that could genuinely be either one.</p>
 <h3>Field guide</h3>
 <p>The built-in field guide covers species profiles: measurements, echolocation characteristics, distribution and conservation status. It’s searchable and browsable by region, and it’s community-contributed, so if you know your local bats, have a look at the <a href="/contribute/">Contribute</a> page to see how to help expand it.</p>
-<h2>Reviewing recordings</h2>
+</section>
+<section class="page-card"><h2>Reviewing recordings</h2>
 <p>Every recording can be opened for a proper look afterwards — open a session and tap the recording: a static spectrogram of the whole pass, full time expansion playback, and the same measurements you get live (peak frequency, bandwidth, duration and so on) but with time to actually study them. A <strong>Pulses</strong> button on the same screen opens every individual pulse the classifier scored in that recording, so you can see the evidence behind the species it was given.</p>
-<h2>Contributing recordings to community science</h2>
+</section>
+<section class="page-card"><h2>Contributing recordings to community science</h2>
 <p>iNaturalist is a global community science platform that lets members of the public contribute biological observations to a shared database that researchers can use. We actually use this same database, <a href="https://www.gbif.org">gbif.org</a>, to power the range maps in the field guide.</p>
 <p>To get started, head out and record some bats, then pick your best recordings and export them from the player (open a session, then tap the recording). Upload the spectrogram image and the WAV file to iNaturalist, and in time other experts will help ID the species where they can, which feeds straight back into the wider dataset.</p>
 <blockquote>
 <p>Note: we’re working on a feature to make creating iNaturalist observations easier still, one that gives you everything you need to submit and makes sure it includes everything a potential ID’er would want to see.</p>
 </blockquote>
-<h2>Troubleshooting</h2>
+</section>
+<section class="page-card"><h2>Troubleshooting</h2>
 <p><strong>The status indicator is red, or it says “no ultrasonic microphone detected”</strong>
 Check the USB connection to your microphone and adapter. Unplug and replug if needed, OpenBat detects the microphone through a route change and should pick it up within a second or two. If you’re only using the built-in mic, this is expected, it can’t hear ultrasound and you’ll need a USB ultrasonic microphone.</p>
 <p><strong>The sample rate shown looks lower than expected</strong>
@@ -219,34 +229,37 @@ OpenBat displays the actual sample rate your microphone is delivering. If it’s
 Open <strong>Settings &gt; Detecting</strong> and check <strong>Loudness</strong> isn’t set too high, and that <strong>Lowest pitch</strong> (if you’re in “Loudness + pitch” mode) is below the range you’re actually seeing activity in.</p>
 <p><strong>I can’t find my recordings</strong>
 Recordings are saved on-device and are visible in the Files app, under OpenBat’s own folder. Recordings are kept with the session they were made in; older recordings made outside a session appear in the “Not in a session” group at the bottom of the Sessions list.</p>
-<h2>Still stuck?</h2>
+</section>
+<section class="page-card page-card--note"><h2>Still stuck?</h2>
 <p>Get in touch on the <a href="/contact/">Contact</a> page, we’re happy to help.</p>
-</div>
-<div class="plat-section plat-hidden" id="plat-android" role="tabpanel">
-<h2>OpenBat on Android</h2>
+</section></div>
+<div class="plat-section plat-hidden" id="plat-android" role="tabpanel"><section class="page-card"><h2>OpenBat on Android</h2>
 <p><strong>There’s no Android version of OpenBat yet.</strong> Currently, the OpenBat app is only available on iPhone and iPad. This isn’t a permanent decision, I just can’t feasibly develop an app for two platforms at the same time, especially when one I am not familiar with. If you’d like to see OpenBat on Android, <a href="/contact/">Get in Touch</a> and let me know.</p>
-<h2>What to use in the meantime</h2>
+</section>
+<section class="page-card"><h2>What to use in the meantime</h2>
 <p>The good news is that the hard part of bat detecting is the microphone, not the app. If you’ve already got an ultrasonic USB mic, these will get you listening on Android today:</p>
 <ul>
 <li><strong><a href="https://play.google.com/store/apps/details?id=com.bkmicro.batrecorder">Bat Recorder</a></strong> — heterodyne and time-expansion listening, triggered recording and a live spectrogram, working with a range of USB ultrasonic microphones. The closest thing to OpenBat’s feature set on Android.
 -**<a href="https://play.google.com/store/apps/details?id=uk.org.gimell.batgizmoapp">Bat Gizmo</a> — Supports the Griff Mini microphones and allows visualisation of bat calls with heterodyne playback. Note you have to manually tune the heterodyne. Read below for a brief guide on how to tune for bats in BC.</li>
 </ul>
 <p>Neither app is ours and neither is open source, so we can’t vouch for what they do with your recordings or your location. Check their own privacy terms before you rely on them.</p>
-<h2>Tuning a heterodyne detector</h2>
+</section>
+<section class="page-card"><h2>Tuning a heterodyne detector</h2>
 <p>One of the easiest ways to hear bats is to use heterodyning. This is the process of ‘turning’ into a frequency such that simple signal processing can produce an audible sound. I’ll skip the details, all you need to know is that the frequency you set needs to be near the frequency the bats call at.</p>
 <p>Bat Gizmo app allows you to set two tuning frequencies at the same time, this is great for picking up more bats! As a rule of thumb, in North America, set one to 25 kHz and one to 47 kHz, this will help you pick up as many bats as possible without tweaking the settings all the time.</p>
 <p>For more, search up ‘How to use a heterodyne bat detector’.</p>
-<h2>What still applies</h2>
+</section>
+<section class="page-card"><h2>What still applies</h2>
 <p>Most of what’s on the iOS tab is about bats rather than about the app, and travels perfectly well to whatever you end up using:</p>
 <ul>
 <li><strong>When to go out</strong> — the hours after sunset and before sunrise are the ones that matter, whatever’s in your hand.</li>
 <li><strong>What the listening modes do</strong> — heterodyne and time expansion work the same way in any detector, and the trade-off in time expansion (the mic stops listening while a snippet plays back) is a property of the technique, not of OpenBat.</li>
 <li><strong>Contributing to community science</strong> — a spectrogram and a WAV file are all iNaturalist wants, and any detector that exports recordings can supply both. See the iOS tab for how that upload works.</li>
 </ul>
-<h2>Something else?</h2>
+</section>
+<section class="page-card page-card--note"><h2>Something else?</h2>
 <p>If you’re on Android and stuck on any of this, which microphone to buy, which adapter, where to point it, <a href="/contact/">Get in Touch</a>. The OpenBat project is about more than just our app and we are happy to help.</p>
-</div>
-</div>
+</section></div></div>
   
 </div>
 

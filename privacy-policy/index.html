@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="/static/css/style.css?v=5.4">
+  <link rel="stylesheet" href="/static/css/style.css?v=6.0">
   <script>
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
@@ -99,21 +99,26 @@
   </div>
   
 
-  <div class="post-content"><h1>Privacy Policy</h1>
+  
+  <div class="post-content page-cards"><section class="page-card page-card--note"><h1>Privacy Policy</h1>
 <p>Last revised: 2026-08-07</p>
-<h2>The short version</h2>
+</section>
+<section class="page-card"><h2>The short version</h2>
 <p>OpenBat records bats and identifies species entirely on your phone. Nothing you record is ever sent to us — there is no account, no upload, and no server of ours that your recordings, location, or audio ever reach.</p>
 <p>The app does talk to a few public, third-party reference APIs (species data, images) to help identify what you’ve recorded. One of those sends your approximate current location as part of a lookup query. None of it is tied to your identity, and none of it is collected or stored by us.</p>
 <hr>
-<h2>1. Who we are</h2>
+</section>
+<section class="page-card page-card--note"><h2>1. Who we are</h2>
 <p>OpenBat is developed by <strong>Niall Bell</strong>. OpenBat is not a registered entity.</p>
 <p>For privacy questions, contact privacy@openbat.app.</p>
-<h2>2. What stays on your phone</h2>
+</section>
+<section class="page-card"><h2>2. What stays on your phone</h2>
 <p>Recordings, sessions, and species identifications are stored locally on your device. Species identification runs entirely on-device — nothing is sent anywhere to work out what you recorded.</p>
 <p><strong>Your location never leaves your phone.</strong> It is used on-device to tag detections, to suggest the right species model for your region, to work out which species are plausible where you are, to name a session after the place it happened, and to calculate your local sunset and sunrise for the detector’s sun clock. Earlier versions sent an approximate position to GBIF for that species lookup; that no longer happens — the range data now ships inside the app.</p>
 <p><strong>OpenBat does not record a GPS track.</strong> Sessions used to record a continuous course while detecting. That was removed: each detection already carries a coordinate and a timestamp, so a track can be rebuilt from your own exported data without the app keeping a second, denser record of your movements. The app never requests “Always” location access and never uses location in the background.</p>
 <p>If you enable iCloud sync in Settings, your recordings and sessions are backed up to <strong>your own</strong> iCloud account under Apple’s terms. We have no access to it.</p>
-<h2>3. What the app sends elsewhere, and why</h2>
+</section>
+<section class="page-card"><h2>3. What the app sends elsewhere, and why</h2>
 <p>OpenBat queries a small number of public, third-party reference services to show you information about species — it does not send them anything that identifies you:</p>
 <table>
 <thead>
@@ -137,23 +142,27 @@
 </tbody>
 </table>
 <p>These are ordinary, read-only lookups against public reference data — the same kind of request any app makes to show you information from the internet. No device identifier, account, or recording is ever attached to them, and we don’t operate or control these services.</p>
-<h2>4. Newsletter</h2>
+</section>
+<section class="page-card"><h2>4. Newsletter</h2>
 <p>If you sign up for the OpenBat newsletter, you’ll be taken to a Google Form, hosted by Google, outside this site. It asks for your email address only.</p>
 <p>Responses go into a Google Sheet in Niall’s personal Google Drive — subject to Google’s own privacy terms, not ours. Your email is used only to send you the newsletter, is never shared or sold, and you can ask to be removed at any time by emailing privacy@openbat.app.</p>
-<h2>5. What we don’t do</h2>
+</section>
+<section class="page-card page-card--half"><h2>5. What we don’t do</h2>
 <ul>
 <li>We don’t operate a server that receives your recordings, location, or audio.</li>
 <li>We don’t have accounts, sign-in, or device identifiers tied to you.</li>
 <li>We don’t use analytics, crash reporting, advertising, or tracking SDKs of any kind.</li>
 <li>Outside of the newsletter form above, we don’t collect, sell, or share anything.</li>
 </ul>
-<h2>6. Children</h2>
+</section>
+<section class="page-card page-card--half"><h2>6. Children</h2>
 <p>OpenBat is not directed at children under 13, and we do not knowingly collect personal data from anyone, regardless of age.</p>
-<h2>7. Changes</h2>
+</section>
+<section class="page-card page-card--note"><h2>7. Changes</h2>
 <p>If this changes — for example, if a future version of the app adds a way to contribute recordings to research — we’ll update this notice first and be explicit about what’s new.</p>
 <hr>
 <p><em>Questions: privacy@openbat.app</em></p>
-</div>
+</section></div>
   
 </div>
 
