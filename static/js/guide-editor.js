@@ -535,6 +535,32 @@
 
   /* ----------------------------------------------------------- browse step */
 
+  /// Fields the dot deliberately ignores. `exemplarImageName` has to match an
+  /// image asset bundled in the app, so no contributor can supply one from
+  /// here — counting it would put a dot on almost every entry and the dot would
+  /// stop meaning anything.
+  var COMPLETENESS_IGNORES = { 'echolocation.exemplarImageName': true };
+
+  /// How many of a species' fields are still empty. Drives the dot in the list:
+  /// zero means there is nothing obvious left to add, anything else is an
+  /// invitation.
+  function missingFieldCount(species) {
+    var missing = 0;
+    SPEC.forEach(function (section) {
+      section.fields.forEach(function (field) {
+        if (COMPLETENESS_IGNORES[field.path]) return;
+        if (prune(getPath(species, field.path)) === undefined) missing++;
+      });
+    });
+    return missing;
+  }
+
+  function missingDot(count) {
+    if (!count) return null;
+    var label = count + (count === 1 ? ' field is' : ' fields are') + ' still empty';
+    return el('span', { class: 'ge-dot', role: 'img', title: label, 'aria-label': label });
+  }
+
   function renderMeta() {
     clear(ui.meta);
     ui.meta.appendChild(el('span', { text: 'Loaded from ' + source }));
@@ -542,6 +568,10 @@
     ui.meta.appendChild(el('span', { text: guide.regions.length + ' regions' }));
     ui.meta.appendChild(el('span', { text: 'dataVersion ' + guide.dataVersion }));
     ui.meta.appendChild(el('span', { class: 'ge-meta-note', text: 'bumped when your change is merged' }));
+    ui.meta.appendChild(el('span', { class: 'ge-meta-legend' }, [
+      el('span', { class: 'ge-dot' }),
+      document.createTextNode('missing information')
+    ]));
   }
 
   function matches(species, q) {
@@ -570,7 +600,10 @@
       var idx = guide.species.indexOf(species);
       ui.results.appendChild(
         el('button', { class: 'ge-result', type: 'button', onclick: function () { openEditor(idx); } }, [
-          el('span', { class: 'ge-result-name', text: species.commonName || '(unnamed)' }),
+          el('span', { class: 'ge-result-name' }, [
+            document.createTextNode(species.commonName || '(unnamed)'),
+            missingDot(missingFieldCount(species))
+          ]),
           el('span', { class: 'ge-result-sci', text: species.scientificName || '' }),
           el('span', { class: 'ge-result-meta', text: (species.family || 'No family') + ' · ' +
             ((species.regions || []).length + ' region' + ((species.regions || []).length === 1 ? '' : 's')) })

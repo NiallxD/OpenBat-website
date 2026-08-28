@@ -2,6 +2,19 @@ import { readFileSync, readdirSync, statSync } from "fs";
 import { join, extname } from "path";
 import markdownIt from "markdown-it";
 
+const BLOG_DIR = "2.0 - Blog Posts";
+
+// Kept in step with the slugify in _data/eleventyComputed.js, which is what
+// actually decides a post's URL.
+const slugify = (s) =>
+  String(s)
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/['\u2019]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 function buildWikilinkMap(rootDir) {
   const map = new Map();
   const skip = new Set(["node_modules", "_site", ".obsidian", ".git", ".claude", "96 - Hidden Notes", "99 - Not For Publish", "98 - Media", "97 - Drafts"]);
@@ -18,8 +31,14 @@ function buildWikilinkMap(rootDir) {
             if (!/^publish:\s*true/m.test(fm)) continue;
             const permalink = fm.match(/^permalink:\s*(.+)$/m)?.[1]?.trim();
             const title = fm.match(/^title:\s*(.+)$/m)?.[1]?.trim().replace(/^["']|["']$/g, "");
-            if (!permalink) continue;
-            const url = (permalink.startsWith("/") ? permalink : "/" + permalink).replace(/\/?$/, "/");
+            // Blog posts normally carry no permalink of their own — theirs is
+            // computed from the title in _data/eleventyComputed.js, and the
+            // same rule has to be applied here or [[a post]] never resolves.
+            const blogPost = full.includes(`${BLOG_DIR}/`);
+            if (!permalink && !blogPost) continue;
+            const url = permalink
+              ? (permalink.startsWith("/") ? permalink : "/" + permalink).replace(/\/?$/, "/")
+              : `/blog/${slugify(title || entry.replace(/\.md$/, ""))}/`;
             if (title) map.set(title.toLowerCase(), url);
             map.set(entry.replace(/\.md$/, "").toLowerCase(), url);
           }
@@ -221,13 +240,88 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     if (!dateObj) return "";
     const d = dateObj instanceof Date ? dateObj : new Date(dateObj);
-    return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+    // UTC: a date-only frontmatter value is parsed as UTC midnight, so
+    // formatting it in a behind-UTC local zone would print the day before.
+    return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
   });
 
   eleventyConfig.addFilter("isoDate", (dateObj) => {
     if (!dateObj) return "";
     const d = dateObj instanceof Date ? dateObj : new Date(dateObj);
     return d.toISOString().split("T")[0];
+  });
+
+  // ── Blog ────────────────────────────────────────────────────
+  // A post is any published markdown file inside "2.0 - Blog Posts/".
+  // Nothing in the frontmatter marks it as a post; the folder does.
+  const isPost = (item) =>
+    String(item.inputPath || "").includes("/2.0 - Blog Posts/") &&
+    String(item.data.publish).trim().toLowerCase() === "true";
+
+  const byNewest = (a, b) => (b.date || 0) - (a.date || 0);
+
+  eleventyConfig.addCollection("posts", (api) =>
+    api.getAll().filter(isPost).sort(byNewest)
+  );
+
+  // `featured: true` lifts a post out of the grid and into the wide card at
+  // the top of /blog/. Everything else falls through to `regularPosts`.
+  eleventyConfig.addCollection("featuredPosts", (api) =>
+    api.getAll().filter((i) => isPost(i) && i.data.featured === true).sort(byNewest)
+  );
+
+  eleventyConfig.addCollection("regularPosts", (api) =>
+    api.getAll().filter((i) => isPost(i) && i.data.featured !== true).sort(byNewest)
+  );
+
+  eleventyConfig.addFilter("getAllTags", (collection) => {
+    const tags = new Set();
+    (collection || []).forEach((item) => {
+      (item.data.tags || []).forEach((tag) => tags.add(tag));
+    });
+    return Array.from(tags).sort();
+  });
+
+  // Posts sharing tags with this one, rarest tag first so a tag every post
+  // carries ("openbat") counts for less than a specific one ("firmware").
+  eleventyConfig.addFilter("relatedPosts", (collection, currentUrl, tags) => {
+    if (!collection?.length || !tags?.length) return [];
+    const pageTags = Array.from(tags).map((t) => String(t).toLowerCase().trim());
+
+    const freq = {};
+    collection.forEach((i) => {
+      (i.data.tags || []).forEach((t) => {
+        const k = String(t).toLowerCase().trim();
+        freq[k] = (freq[k] || 0) + 1;
+      });
+    });
+
+    return collection
+      .filter((i) => {
+        if (i.url === currentUrl) return false;
+        const itemTags = (i.data.tags || []).map((t) => String(t).toLowerCase().trim());
+        return itemTags.some((t) => pageTags.includes(t));
+      })
+      .map((i) => {
+        const itemTags = (i.data.tags || []).map((t) => String(t).toLowerCase().trim());
+        const score = itemTags
+          .filter((t) => pageTags.includes(t))
+          .reduce((sum, t) => sum + 1 / (freq[t] || 1), 0);
+        return { item: i, score };
+      })
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3)
+      .map((r) => r.item);
+  });
+
+  // First paragraph of the body, for cards where the author gave no excerpt.
+  eleventyConfig.addFilter("autoExcerpt", (content, len = 180) => {
+    const text = String(content || "")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (text.length <= len) return text;
+    return text.slice(0, text.lastIndexOf(" ", len)) + "\u2026";
   });
 
   return {

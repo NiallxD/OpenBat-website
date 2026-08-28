@@ -1,0 +1,92 @@
+---
+layout: base.njk
+---
+<div class="standard-page">
+  <div class="listing-header">
+    <h1>{{ title }}</h1>
+    {% if description %}<p class="page-lead">{{ description }}</p>{% endif %}
+  </div>
+
+  {% if content | trim %}
+  <div class="post-content">{{ content | safe }}</div>
+  {% endif %}
+
+  {% set featured = collections.featuredPosts | limit(1) %}
+  {% if featured.length %}
+  {% for post in featured %}
+  <a href="{{ post.url | url }}" class="post-card post-card--featured">
+    {% if post.data.coverImage %}
+    <div class="post-card-img">
+      <img src="{{ post.data.coverImage }}" alt="" loading="lazy">
+    </div>
+    {% endif %}
+    <div class="post-card-body">
+      <p class="section-label">Latest</p>
+      <h2>{{ post.data.title }}</h2>
+      <div class="post-card-meta">
+        {% if post.date %}<time datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time>{% endif %}
+        {% for tag in post.data.tags | limit(3) %}<span class="tag">{{ tag }}</span>{% endfor %}
+      </div>
+      <p class="post-card-desc">{{ post.data.excerpt | default(post.data.description) | default(post.templateContent | autoExcerpt) }}</p>
+    </div>
+  </a>
+  {% endfor %}
+  {% endif %}
+
+  {# The filter only acts on the grid, so it is pointless without one. #}
+  {% set allTags = collections.regularPosts | getAllTags %}
+  {% if allTags.length and collections.regularPosts.length %}
+  <div class="filter-cloud" id="post-filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    {% for tag in allTags %}
+    <button class="filter-btn" data-filter="{{ tag }}">{{ tag }}</button>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if collections.regularPosts.length %}
+  <div class="post-grid" id="post-grid">
+    {% for post in collections.regularPosts | reverse %}
+    <a href="{{ post.url | url }}" class="post-card" data-tags="{{ post.data.tags | join(',') if post.data.tags else '' }}">
+      {% if post.data.coverImage %}
+      <div class="post-card-img">
+        <img src="{{ post.data.coverImage }}" alt="" loading="lazy">
+      </div>
+      {% endif %}
+      <div class="post-card-body">
+        <h2>{{ post.data.title }}</h2>
+        <div class="post-card-meta">
+          {% if post.date %}<time datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time>{% endif %}
+          {% for tag in post.data.tags | limit(2) %}<span class="tag">{{ tag }}</span>{% endfor %}
+        </div>
+        <p class="post-card-desc">{{ post.data.excerpt | default(post.data.description) | default(post.templateContent | autoExcerpt) }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% elif not collections.featuredPosts.length %}
+  <p class="empty-state">No posts yet — the first one is being written.</p>
+  {% endif %}
+</div>
+
+<script>
+  // Tag filter. The grid is fully rendered at build time; this only hides
+  // cards, so the page is complete with JS off (every post is still listed).
+  (() => {
+    const grid = document.getElementById('post-grid');
+    const btns = document.querySelectorAll('#post-filters .filter-btn');
+    if (!grid || !btns.length) return;
+    const cards = grid.querySelectorAll('.post-card');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        btns.forEach(b => b.classList.toggle('active', b === btn));
+        cards.forEach(card => {
+          const tags = (card.dataset.tags || '').split(',');
+          card.hidden = !(filter === 'all' || tags.includes(filter));
+        });
+      });
+    });
+  })();
+</script>

@@ -23,7 +23,11 @@
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
 
   --color-bg:        #ffffff;
-  --color-surface:   #363636;
+  /* Cards, code blocks, callouts. Semitransparent black rather than a flat
+     grey, so a surface darkens the page gradient behind it instead of laying an
+     opaque slab over it — and so it stays right in both themes without a second
+     value. Matches `--ge-surface` in the guide editor, which got here first. */
+  --color-surface:   rgba(0, 0, 0, 0.30);
   --color-text:      #ffffff;
   --color-secondary: #cccccc;
   --color-muted:     #888888;
@@ -50,7 +54,7 @@
 
 [data-theme="dark"] {
   --color-bg:        #111111;
-  --color-surface:   #363636;
+  --color-surface:   rgba(0, 0, 0, 0.30);
   --color-text:      #ffffff;
   --color-secondary: #cccccc;
   --color-muted:     #888888;
@@ -879,6 +883,13 @@ figure.image-float-left figcaption {
   flex: 1;
 }
 
+/* Two side-by-side photos become two stacked photos on a phone. Without this
+   the flex row never wraps, so a pair squeezes to half-width each and the
+   detail they were placed side by side to compare is lost. */
+@media (max-width: 700px) {
+  .image-pair { flex-direction: column; gap: 1.25rem; }
+}
+
 @media (max-width: 900px) {
   .image-float-right, .image-float-left {
     float: none;
@@ -1144,14 +1155,13 @@ figure.image-float-left figcaption {
 /* ==========================================================================
    Field guide editor (/guide-editor/)
 
-   Surfaces are scoped tokens rather than the site-wide ones, for two reasons.
-   `--color-surface` is #363636 in both themes, which reads as a grey slab over
-   the dark page gradient — too light for a page that is mostly form. And the
-   site's `--color-bg` is #ffffff in the light theme while `--color-text` is
-   #ffffff in BOTH, so an input using that pair renders white text on white:
-   invisible, and only in the light theme. Everything here is therefore pinned
-   to dark values that work under either theme, matching the dark page gradient
-   the site already paints behind them.
+   Surfaces are scoped tokens rather than the site-wide ones. `--ge-surface`
+   now matches `--color-surface`, but the inputs and borders do not: the site's
+   `--color-bg` is #ffffff in the light theme while `--color-text` is #ffffff in
+   BOTH, so an input using that pair renders white text on white — invisible,
+   and only in the light theme. Everything here is therefore pinned to dark
+   values that work under either theme, matching the dark page gradient the site
+   already paints behind them.
    ========================================================================== */
 
 #guide-editor {
@@ -1218,6 +1228,20 @@ figure.image-float-left figcaption {
   border-bottom: 1px solid var(--ge-border);
 }
 .ge-meta-note { color: var(--color-accent); }
+.ge-meta-legend { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+/* Marks a species with fields still empty, in the list and in the legend above
+   it. A dot rather than a count: the list is for choosing something to work on,
+   and the exact number is one tap away inside the entry. */
+.ge-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex: 0 0 auto;
+}
+.ge-result-name .ge-dot { margin-left: 0.45rem; vertical-align: 0.05em; }
 
 .ge-search-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
 .ge-search-row input[type="search"] { flex: 1 1 16rem; }
@@ -1688,3 +1712,278 @@ figure.image-float-left figcaption {
    stretches these short lines into gappy full-width text. */
 .ge-outcome p { margin: 0.25rem 0; text-align: left; }
 .ge-outcome p + p { margin-top: 0.4rem; }
+
+/* ══════════════════════════════════════════════════════════
+   BLOG (listing at /blog/, and the posts themselves)
+   ══════════════════════════════════════════════════════════ */
+
+/* Tag filter chips above the grid. */
+.filter-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 2rem 0 1.5rem;
+}
+
+.filter-btn {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 99px;
+  padding: 0.3rem 0.85rem;
+  cursor: pointer;
+  transition: color var(--ease), border-color var(--ease), background var(--ease);
+}
+
+.filter-btn:hover { color: var(--color-link); border-color: var(--color-link); }
+
+.filter-btn.active {
+  color: #ffffff;
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--ease), transform var(--ease);
+}
+
+.post-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.post-card[hidden] { display: none; }
+
+.post-card-img {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--color-border);
+}
+
+.post-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.post-card-body {
+  padding: 1.1rem 1.2rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.post-card-body h2 {
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.post-card-meta,
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--color-muted);
+}
+
+.post-card-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-secondary);
+  margin: 0;
+  text-align: left;
+}
+
+.tag {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 99px;
+  padding: 0.05rem 0.55rem;
+}
+
+/* The one wide card at the top of the listing. Side-by-side once there is
+   room for the image to sit beside the text without squeezing either. */
+.post-card--featured { margin: 2.5rem 0 0; }
+
+@media (min-width: 800px) {
+  .post-card--featured {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: stretch;
+  }
+  .post-card--featured .post-card-img { aspect-ratio: auto; height: 100%; }
+  .post-card--featured .post-card-body { justify-content: center; padding: 2rem; }
+  .post-card--featured .post-card-body h2 { font-size: 1.9rem; }
+}
+
+.empty-state {
+  font-family: var(--font-body);
+  color: var(--color-muted);
+  padding: 2rem 0 3rem;
+}
+
+/* ── Post hero ──────────────────────────────────────────────
+   Full-bleed image with the title on it. `main` carries a nav-height top
+   padding for the fixed header, so the hero cancels it and runs underneath —
+   the header is already transparent and blurred over whatever is behind it. */
+.post-hero {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: calc(-1 * var(--nav-height));
+  margin-bottom: 2.5rem;
+  min-height: min(80vh, 760px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.post-hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Two jobs in one gradient: a light wash over the whole image so the nav has
+   something to sit on, and a heavy foot so white text reads over a pale
+   photo — or, as here, over a near-white map. */
+.post-hero-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(0, 0, 0, 0.32) 0%,
+    rgba(0, 0, 0, 0.22) 35%,
+    rgba(0, 0, 0, 0.88) 100%);
+}
+
+.post-hero-inner {
+  position: relative;
+  width: 100%;
+  max-width: var(--max-wide);
+  margin: 0 auto;
+  padding: 8rem 2rem 3rem;
+}
+
+.post-hero-inner .section-label { margin-bottom: 1rem !important; }
+
+.post-hero-inner h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0.09em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.post-hero-text {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 46rem;
+  margin: 1rem 0 0;
+  text-align: left;
+}
+
+.post-hero-inner .post-meta {
+  margin-top: 1.25rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.post-hero-inner .tag {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* The meta line runs date, author and tags together; the pills separate
+   themselves, the two text items need help. */
+.post-meta .post-author::before {
+  content: "·";
+  margin-right: 0.5rem;
+  opacity: 0.6;
+}
+
+.post-hero-inner .post-back { color: rgba(255, 255, 255, 0.8); }
+.post-hero-inner .post-back:hover { color: var(--color-link); }
+
+/* The hero already carries the title block, so the body starts straight in. */
+.post--hero > .post-content { padding-top: 0; }
+
+@media (max-width: 700px) {
+  .post-hero { min-height: min(66vh, 520px); }
+  .post-hero-inner { padding: 6rem 1.25rem 2.25rem; }
+}
+
+/* ── A single post ──────────────────────────────────────── */
+.post-header {
+  padding-top: 3.5rem;
+  padding-bottom: 2rem;
+  color: var(--color-accent);
+}
+
+.post-header h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.post-back { color: var(--color-muted); text-decoration: none; }
+.post-back:hover { color: var(--color-link); }
+
+.post-header .post-meta { margin-top: 1rem; }
+.post-author::after { content: ""; }
+
+.post-cover {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: 2rem 0 0;
+  display: block;
+}
+
+.post-related {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.post-related .post-grid { margin-top: 1rem; }
