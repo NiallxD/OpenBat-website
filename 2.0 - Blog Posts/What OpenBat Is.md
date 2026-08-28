@@ -7,8 +7,8 @@ author: Niall Bell
 tags:
   - openbat
   - community-science
-heroImage: /static/images/about-app.webp
-coverImage: /static/images/about-app.webp
+heroImage: /static/images/OpenBat_Screens.webp
+coverImage: /static/images/OpenBat_Screens.webp
 featured: true
 publish: true
 ---
