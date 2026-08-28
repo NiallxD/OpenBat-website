@@ -2,15 +2,16 @@
 title: A Garden Bats Will Actually Use
 description: "Bats need three things from your garden: insects, dark, and a route in. None of them require you to do more gardening."
 excerpt: Bats need three things from a garden — insects, darkness, and a route in. Usefully, none of them involve doing more gardening.
-date: 2027-01-12
+date: 2026-08-30
 author: Niall Bell
 tags:
   - conservation
   - how-to
+heroImage: /static/images/garden-nighttime.webp
+coverImage: /static/images/garden-nighttime.webp
 featured: false
-publish: false
+publish: true
 ---
-
 Did you know bats probably fly around your garden every night? Keeping a wildlife friendly garden is one of the best ways to contribute to urban biodiversity.
 
 Most "wildlife gardening" advice involves buying things and doing work. This one mostly involves doing less, which is why I like it.

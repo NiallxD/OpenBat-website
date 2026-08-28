@@ -9,40 +9,22 @@ publish: true
 
 ## Contribute to OpenBat
 
-The community is at the heart of this project, and it doesn't exist without people with an interest in bats getting involved. This is by design, we want people to be involved!
-
-There are three main ways to get involved:
+The community is at the heart of this project, and it doesn't exist without people with an interest in bats getting involved. Head out with your bat detector, record what you hear, and put it to work in one of two places:
 
 </div>
 
-## 1. Listen to Bats
+## Bat Field Guide
 
-![A self-build bat detector out in the field](/static/images/griff-hero.webp)
+With just over 1,400 bat species known globally, our field guide needs local knowledge we don't have. It opens in ordinary form fields — search for a species and edit it, or add a new one, without touching raw JSON.
 
-Head out with your bat detector and go listen to bats! That's it!
+<a class="page-card-link" href="/guide-editor/">Open the Field Guide Editor</a>
 
-By spending time listening to bats you will start to (hopefully) gain an appreciation for these remarkable creatures. Sharing the experience with others around you amplifies this appreciation and the more we care about bats the more will there is to protect them.
+## Contribute to iNaturalist
 
-## 2. Contribute to iNaturalist
+iNaturalist is a global community science platform for biological observations — we use its dataset via [gbif.org](https://www.gbif.org) to power the range maps in our Bat Field Guide.
 
-![A recorded call opened for analysis, ready to export](/static/images/screen-call-analysis.webp)
+Record some bats, export your best recordings from the player in the app, and upload the spectrogram and .wav file to iNaturalist so experts can help identify them.
 
-iNaturalist is a global community science platform which allows members of the public to contribute biological observations to a global database of observations which can be used by researchers. In fact, we use this exact database [gbif.org](https://www.gbif.org) in OpenBat to power our range maps found in the Bat Field Guide!
-
-To get started, head out and record some bats. Then select high quality recordings and export them from the player in the app (open a session, then tap the recording). Then upload the spectrogram image and .wav file to iNaturalist. In time, experts will help ID the species recorded where possible, which contributes to the dataset.
-
-> Note: We are working on a feature to make creating iNaturalist observations easier than ever! Our tool will give you everything you need to submit to iNaturalist, and ensures it includes everything a potential ID'er will need to make an ID.
-
-## 3. Bat Field Guide
-
-![The field guide editor, listing species entries](/static/images/guide-editor-list.webp)
-
-The OpenBat app contains a global bat field guide. With just over 1,400 bat species known globally, this is not an easy task, and definitely not something our project team can complete.
-
-We are calling on bat experts and nerds from around the world to contribute their knowledge of local bat species to our database, directly building the field guide. Contributing is fairly straight forward and we are working on ways to improve further.
-
-The easiest way in is our [[Guide Editor|Field Guide Editor]] — it opens the guide in ordinary form fields, so you can search for a species and edit it, or add a new one, without touching raw JSON. It also handles the version bump your change needs in order to reach people's phones.
-
-Visit our [GitHub Repo](https://github.com/NiallxD/OpenBat-FieldGuide) to learn more.
+<a class="page-card-link" href="https://www.inaturalist.org">Visit iNaturalist</a>
 
 

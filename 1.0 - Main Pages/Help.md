@@ -75,7 +75,7 @@ A small pill above the spectrogram shows what Slow replay is doing at any moment
 
 > **Note:** When the sound of a bat is repeated by your phone, the microphone may pick that call up again and reproduce it. Wear earphones for best performance, or turn the volume down a bit.
 
-Recordings can also be played back in full time expansion after the fact — tap the recording in its session — with nothing missed and nothing sped past, since the whole file already exists on disk by then.
+Recordings can also be played back in full time expansion after the fact — tap the recording in its session — with nothing missed and nothing sped past, since the whole file already exists on disk by then. The speed is yours to pick there: a button under the spectrogram steps between four, eight and sixteen times slower, and you can change it while it's playing.
 
 ## Detecting and capturing pulses
 
@@ -118,7 +118,11 @@ The built-in field guide covers species profiles: measurements, echolocation cha
 
 ## Reviewing recordings
 
-Every recording can be opened for a proper look afterwards — open a session and tap the recording: a static spectrogram of the whole pass, full time expansion playback, and the same measurements you get live (peak frequency, bandwidth, duration and so on) but with time to actually study them. A **Pulses** button on the same screen opens every individual pulse the classifier scored in that recording, so you can see the evidence behind the species it was given.
+Every recording can be opened for a proper look afterwards — open a session and tap the recording: a static spectrogram of the whole pass, full time expansion playback at a speed you choose, and the same measurements you get live (peak frequency, bandwidth, duration and so on) but with time to actually study them. A **Pulses** button on the same screen opens every individual pulse the classifier scored in that recording, so you can see the evidence behind the species it was given.
+
+Most of a recording is usually silence. **Hide silence** — the crossed-out speaker in the toolbar — cuts it out: the spectrogram packs down to just the stretches with something in them, so a five-minute recording can become twenty seconds of actual calls, and playing it plays exactly that. The gaps aren't skipped over as you reach them, they're simply not there, so the elapsed time you see is the time you'll spend listening. A short margin is kept either side of every pulse so nothing is clipped, and the joins are faded so they sound like cuts rather than clicks.
+
+Two settings in the tuning panel control what counts as silence. **Keep above** is how far above that recording's own background noise a sound has to be — lower it to keep faint, distant calls, raise it to cut harder. **Pulse margin** is how much either side of each pulse is kept: widen it for more context, narrow it to pack tighter. Underneath, the panel tells you what it actually did — how much of the recording was kept and how many separate stretches — and says so plainly if nothing cleared the threshold, rather than quietly showing you the whole file.
 
 ## Contributing recordings to community science
 
