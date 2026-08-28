@@ -2,6 +2,7 @@
 title: Image Examples
 description: Reference examples for the floated image and gallery patterns.
 permalink: /image-examples/
+cards: false
 publish: true
 noindex: true
 ---

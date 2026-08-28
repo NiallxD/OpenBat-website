@@ -324,6 +324,143 @@ export default function (eleventyConfig) {
     return text.slice(0, text.lastIndexOf(" ", len)) + "\u2026";
   });
 
+  // Splits a rendered page into one card per top-level <h2>, so the standard
+  // pages carry the same stack-of-cards look as the home page without every
+  // .md file having to wrap its own sections in HTML.
+  //
+  // Only headings that sit outside any open container start a card, so a page
+  // that builds its own structure keeps it. `.plat-section` (the platform
+  // toggle on /help/) is the exception: it is a wrapper the toggle shows and
+  // hides, not a visual block, so the split recurses inside it and the wrapper
+  // itself is passed through whole — cutting it in two would leave the
+  // opening and closing tags in different cards and break the toggle.
+  // Anything that doesn't parse cleanly is handed back untouched.
+  const VOID_TAGS = new Set([
+    "area", "base", "br", "col", "embed", "hr", "img", "input", "link",
+    "meta", "param", "source", "track", "wbr",
+  ]);
+  const PASSTHROUGH = /class\s*=\s*["'][^"']*\bplat-section\b/;
+  const TAG = /<(\/?)([a-zA-Z][\w-]*)([^>]*?)(\/?)>/g;
+
+  const isBlank = (html) =>
+    !html.replace(/<[^>]+>/g, "").trim() && !/<(img|table|iframe|video)/i.test(html);
+
+  const toCards = (html) => {
+    if (!html.trim()) return html;
+
+    const tag = new RegExp(TAG.source, "g");
+    const parts = [];      // finished pieces: {card: html} or {raw: html}
+    let section = "";      // the card being accumulated
+    let depth = 0;
+    let cursor = 0;        // start of the unconsumed remainder
+    let wrapperAt = -1;    // where the current passthrough wrapper opened
+    let m;
+
+    const flush = () => {
+      if (!isBlank(section)) parts.push({ card: section });
+      section = "";
+    };
+
+    while ((m = tag.exec(html))) {
+      const [full, closing, name, attrs, selfClosing] = m;
+      const lower = name.toLowerCase();
+
+      if (closing) {
+        depth--;
+        if (depth < 0) return html;                       // unbalanced
+        if (wrapperAt >= 0 && depth === 0) {
+          // Close of a passthrough wrapper: recurse into its contents and
+          // emit the wrapper around the cards that come back.
+          const open = html.slice(wrapperAt, html.indexOf(">", wrapperAt) + 1);
+          const inner = html.slice(wrapperAt + open.length, m.index);
+          parts.push({ raw: open + toCards(inner) + full });
+          cursor = m.index + full.length;
+          wrapperAt = -1;
+        }
+        continue;
+      }
+      if (VOID_TAGS.has(lower) || selfClosing) continue;
+
+      if (depth === 0 && wrapperAt < 0) {
+        if (lower === "h2") {
+          section += html.slice(cursor, m.index);
+          cursor = m.index;
+          flush();
+        } else if (lower === "div" && PASSTHROUGH.test(attrs)) {
+          section += html.slice(cursor, m.index);
+          flush();
+          wrapperAt = m.index;
+        }
+      }
+      depth++;
+    }
+
+    if (depth !== 0 || wrapperAt >= 0) return html;       // unbalanced
+    section += html.slice(cursor);
+    flush();
+
+    // ── Give the cards their widths ──────────────────────────────────────
+    // A page of identical full-width cards reads as a list. Each card is
+    // measured instead: a short one is a candidate for a half-width pair, one
+    // that is little more than a quotation gets the inset treatment, and one
+    // carrying an image gets the picture beside the text, alternating sides
+    // down the page. Everything else stays full width.
+    const text = (html) => html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    const meta = parts.map((part) => {
+      if (part.raw) return part;
+      const body = text(part.card);
+      return {
+        card: part.card,
+        len: body.length,
+        media: /<img\b/i.test(part.card),
+        quote: /<blockquote\b/i.test(part.card) && body.length < 400,
+        // A bare control with no prose — the platform toggle — is furniture,
+        // not a section, so it is passed through rather than boxed in a card.
+        bare: !/<h[1-6]\b/i.test(part.card) && body.length < 60,
+      };
+    });
+
+    let mediaSeen = 0;
+    const classes = meta.map((m) => {
+      if (m.raw) return null;
+      if (m.media) return `page-card--media page-card--media-${mediaSeen++ % 2 ? "right" : "left"}`;
+      if (m.quote) return "page-card--quote";
+      return null;
+    });
+
+    // Halves are marked in strict pairs, so an odd short card stays full width
+    // rather than leaving half a row empty.
+    const short = (i) => meta[i] && !meta[i].raw && classes[i] === null && meta[i].len < 420;
+    for (let i = 0; i < meta.length - 1; i++) {
+      if (short(i) && short(i + 1)) {
+        classes[i] = classes[i + 1] = "page-card--half";
+        i++;
+      }
+    }
+
+    // What is left short and unpaired reads better inset than stretched.
+    for (let i = 0; i < meta.length; i++) {
+      if (!meta[i].raw && !meta[i].bare && classes[i] === null && meta[i].len < 250) {
+        classes[i] = "page-card--note";
+      }
+    }
+
+    // A page that is one short card looks stranded at full width — inset it.
+    if (meta.length === 1 && !meta[0].raw && classes[0] === null && meta[0].len < 600) {
+      classes[0] = "page-card--solo";
+    }
+
+    return meta
+      .map((m, i) => {
+        if (m.raw) return m.raw;
+        if (m.bare) return m.card;
+        return `<section class="page-card${classes[i] ? " " + classes[i] : ""}">${m.card}</section>`;
+      })
+      .join("\n");
+  };
+
+  eleventyConfig.addFilter("sectionCards", toCards);
+
   return {
     pathPrefix: process.env.ELEVENTY_PATH_PREFIX || "/",
     dir: {

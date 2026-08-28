@@ -787,6 +787,158 @@ span.wikilink { color: var(--color-secondary); }
 }
 
 /* ══════════════════════════════════════════════════════════
+   PAGE CARDS
+   The home page's stack-of-cards language applied to the standard pages. The
+   `sectionCards` filter in eleventy.config.js does the splitting — one card
+   per top-level heading — so nothing here depends on the markdown being
+   written a particular way.
+   ══════════════════════════════════════════════════════════ */
+/* Six columns so cards can be full width, half, or inset. Cards keep source
+   order — no dense packing — and the filter only marks halves in pairs, so a
+   row never ends up with a hole in it. */
+/* The listing header carries no bottom spacing of its own (the blog and home
+   pages set their own), so the gap to the first card lives here. */
+.page-cards,
+.post-content--plain { margin-top: 1.75rem; }
+
+.page-cards {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Anything the filter passes through whole — the platform toggle, its panels —
+   takes a row of its own. A panel lays its own cards out on the same grid;
+   a plain control keeps whatever layout it already had. */
+.page-cards > * { grid-column: 1 / -1; }
+
+.page-cards > .plat-section {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.page-card { grid-column: span 6; }
+.page-card--half { grid-column: span 3; }
+
+/* A section that is little more than a quotation: inset, centred, and given
+   room to breathe rather than stretched across the page. */
+.page-card--solo {
+  grid-column: 2 / span 4;
+  text-align: center;
+}
+
+/* A short aside — a "still stuck?" or a one-line sign-off — inset and centred
+   so it reads as a note rather than a section that ran out of things to say. */
+.page-card--note {
+  grid-column: 2 / span 4;
+  text-align: center;
+  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+}
+
+.page-card--note h2 { font-size: 1.15rem; }
+
+.page-card--quote {
+  grid-column: 2 / span 4;
+  text-align: center;
+  padding: 2.5rem 2.75rem;
+}
+
+.page-card--quote blockquote {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+}
+
+.page-card--quote blockquote p { font-size: inherit; line-height: inherit; color: inherit; }
+
+/* Picture beside the text, alternating sides down the page. Floated rather
+   than gridded so the prose wraps around it and short sections don't leave a
+   tall empty column. */
+.page-card--media::after { content: ""; display: block; clear: both; }
+
+.page-card--media p:has(> img) {
+  width: 40%;
+  margin: 0.35rem 0 1rem 1.75rem;
+  float: right;
+}
+
+.page-card--media-left p:has(> img) {
+  float: left;
+  margin-left: 0;
+  margin-right: 1.75rem;
+}
+
+.page-card--media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+@media (max-width: 800px) {
+  .page-cards,
+  .page-cards > .plat-section { grid-template-columns: 1fr; gap: 1.25rem; }
+  .page-card,
+  .page-card--half,
+  .page-card--solo,
+  .page-card--note,
+  .page-card--quote { grid-column: 1 / -1; }
+  .page-card--quote { padding: 1.75rem 1.5rem; }
+  .page-card--media p:has(> img),
+  .page-card--media-left p:has(> img) {
+    float: none;
+    width: 100%;
+    margin: 0 0 1.25rem;
+  }
+}
+
+.page-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 2rem;
+  margin: 0;
+  transition: border-color 300ms ease, transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* A card is a block of reading, not a button, so the lift is slighter than the
+   home page cards and there is no colour change beyond the border. */
+.page-card:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+  transform: scale(1.005);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-card:hover { transform: none; }
+}
+
+/* The heading leads the card, so it loses the space it carries mid-prose. */
+.page-card > :first-child { margin-top: 0; }
+.page-card > :last-child { margin-bottom: 0; }
+
+.page-card h2 {
+  letter-spacing: 0.09em;
+  margin-bottom: 0.9rem;
+}
+
+/* Tables and code blocks scroll inside their card rather than widening it. */
+.page-card table,
+.page-card pre { max-width: 100%; }
+
+@media (max-width: 600px) {
+  .page-card { padding: 1.25rem; }
+}
+
+/* ══════════════════════════════════════════════════════════
    404 PAGE
    ══════════════════════════════════════════════════════════ */
 .not-found-center {

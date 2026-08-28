@@ -2,6 +2,7 @@
 title: Field Guide Editor
 description: Contribute to the OpenBat Field Guide.
 permalink: /guide-editor/
+cards: false
 publish: true
 ---
 

@@ -16,9 +16,13 @@ There often small, fly at night, rarely perch in line of sight, and they call at
 
 ## Fear not! There is a way!
 
+![A small 3D-printed ultrasonic microphone resting on rocks](/static/images/griff-hero.webp)
+
 Electronics hold the key to this problem. By utilising special microphones, we can design tools which can hear the bat calls, and then repeat those calls in frequencies we can here, in real time. This allows us mere humans to listen to bats as they go about their business in the dead of night.
 
 ## There is a catch...
+
+![OpenBat's detector screen, showing a live spectrogram and species suggestions](/static/images/screen-detector.webp)
 
 Most tools for identifying bat calls are expensive, proprietary, and hard to get hold of, which puts this experience out of reach for a lot of people who'd genuinely enjoy it. Free apps that work with ultrasonic microphones already exist, but as far as we know, none of them use the open-source machine learning models that have been trained on bat echolocation calls. By building that identification directly into the app, OpenBat helps people put a name to the call they just heard, a small moment of recognition that builds a real connection with bats, and a bit more respect for them too.
 

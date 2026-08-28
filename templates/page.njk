@@ -16,6 +16,14 @@ layout: base.njk
   </div>
   {% endif %}
 
-  <div class="post-content">{{ content | safe }}</div>
+  {# Cards by default; `cards: false` in the frontmatter opts a page out, for
+     pages that lay themselves out (the guide editor, the image examples). #}
+  <div class="post-content{% if cards === false %} post-content--plain{% else %} page-cards{% endif %}">
+    {%- if cards === false -%}
+      {{ content | safe }}
+    {%- else -%}
+      {{ content | sectionCards | safe }}
+    {%- endif -%}
+  </div>
   {% if 'gallery-start' in content %}<script src="{{ '/static/js/swiper-bundle.min.js' | url }}"></script>{% endif %}
 </div>
