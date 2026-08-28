@@ -23,7 +23,11 @@
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
 
   --color-bg:        #ffffff;
-  --color-surface:   #363636;
+  /* Cards, code blocks, callouts. Semitransparent black rather than a flat
+     grey, so a surface darkens the page gradient behind it instead of laying an
+     opaque slab over it — and so it stays right in both themes without a second
+     value. Matches `--ge-surface` in the guide editor, which got here first. */
+  --color-surface:   rgba(0, 0, 0, 0.30);
   --color-text:      #ffffff;
   --color-secondary: #cccccc;
   --color-muted:     #888888;
@@ -43,6 +47,8 @@
   --max-wide:  1200px;
   --nav-height: 90px;
 
+  --dock-scrim: rgba(6, 10, 20, 0.62);
+
   --radius-sm: 4px;
   --radius-md: 8px;
   --ease: 150ms ease;
@@ -50,7 +56,7 @@
 
 [data-theme="dark"] {
   --color-bg:        #111111;
-  --color-surface:   #363636;
+  --color-surface:   rgba(0, 0, 0, 0.30);
   --color-text:      #ffffff;
   --color-secondary: #cccccc;
   --color-muted:     #888888;
@@ -84,7 +90,12 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  /* `clip`, not `hidden`: hidden computes overflow-y as auto, which makes the
+     root a scroll container and stops `position: sticky` from ever pinning to
+     the viewport — which is what the phone screenshot dock relies on. The
+     hidden line stays first as a fallback for browsers without clip. */
   overflow-x: hidden;
+  overflow-x: clip;
   background: var(--page-gradient);
   transition: background 300ms ease;
 }
@@ -110,6 +121,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 p {
@@ -879,6 +891,13 @@ figure.image-float-left figcaption {
   flex: 1;
 }
 
+/* Two side-by-side photos become two stacked photos on a phone. Without this
+   the flex row never wraps, so a pair squeezes to half-width each and the
+   detail they were placed side by side to compare is lost. */
+@media (max-width: 700px) {
+  .image-pair { flex-direction: column; gap: 1.25rem; }
+}
+
 @media (max-width: 900px) {
   .image-float-right, .image-float-left {
     float: none;
@@ -1144,14 +1163,13 @@ figure.image-float-left figcaption {
 /* ==========================================================================
    Field guide editor (/guide-editor/)
 
-   Surfaces are scoped tokens rather than the site-wide ones, for two reasons.
-   `--color-surface` is #363636 in both themes, which reads as a grey slab over
-   the dark page gradient — too light for a page that is mostly form. And the
-   site's `--color-bg` is #ffffff in the light theme while `--color-text` is
-   #ffffff in BOTH, so an input using that pair renders white text on white:
-   invisible, and only in the light theme. Everything here is therefore pinned
-   to dark values that work under either theme, matching the dark page gradient
-   the site already paints behind them.
+   Surfaces are scoped tokens rather than the site-wide ones. `--ge-surface`
+   now matches `--color-surface`, but the inputs and borders do not: the site's
+   `--color-bg` is #ffffff in the light theme while `--color-text` is #ffffff in
+   BOTH, so an input using that pair renders white text on white — invisible,
+   and only in the light theme. Everything here is therefore pinned to dark
+   values that work under either theme, matching the dark page gradient the site
+   already paints behind them.
    ========================================================================== */
 
 #guide-editor {
@@ -1218,6 +1236,20 @@ figure.image-float-left figcaption {
   border-bottom: 1px solid var(--ge-border);
 }
 .ge-meta-note { color: var(--color-accent); }
+.ge-meta-legend { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+/* Marks a species with fields still empty, in the list and in the legend above
+   it. A dot rather than a count: the list is for choosing something to work on,
+   and the exact number is one tap away inside the entry. */
+.ge-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex: 0 0 auto;
+}
+.ge-result-name .ge-dot { margin-left: 0.45rem; vertical-align: 0.05em; }
 
 .ge-search-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
 .ge-search-row input[type="search"] { flex: 1 1 16rem; }
@@ -1688,3 +1720,593 @@ figure.image-float-left figcaption {
    stretches these short lines into gappy full-width text. */
 .ge-outcome p { margin: 0.25rem 0; text-align: left; }
 .ge-outcome p + p { margin-top: 0.4rem; }
+
+/* ══════════════════════════════════════════════════════════
+   BLOG (listing at /blog/, and the posts themselves)
+   ══════════════════════════════════════════════════════════ */
+
+/* Tag filter chips above the grid. */
+.filter-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 2rem 0 1.5rem;
+}
+
+.filter-btn {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 99px;
+  padding: 0.3rem 0.85rem;
+  cursor: pointer;
+  transition: color var(--ease), border-color var(--ease), background var(--ease);
+}
+
+.filter-btn:hover { color: var(--color-link); border-color: var(--color-link); }
+
+.filter-btn.active {
+  color: #ffffff;
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--ease), transform var(--ease);
+}
+
+.post-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.post-card[hidden] { display: none; }
+
+.post-card-img {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--color-border);
+}
+
+.post-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.post-card-body {
+  padding: 1.1rem 1.2rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.post-card-body h2 {
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.post-card-meta,
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--color-muted);
+}
+
+.post-card-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-secondary);
+  margin: 0;
+  text-align: left;
+}
+
+.tag {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 99px;
+  padding: 0.05rem 0.55rem;
+}
+
+/* The one wide card at the top of the listing. Side-by-side once there is
+   room for the image to sit beside the text without squeezing either. */
+.post-card--featured { margin: 2.5rem 0 0; }
+
+@media (min-width: 800px) {
+  .post-card--featured {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: stretch;
+  }
+  .post-card--featured .post-card-img { aspect-ratio: auto; height: 100%; }
+  .post-card--featured .post-card-body { justify-content: center; padding: 2rem; }
+  .post-card--featured .post-card-body h2 { font-size: 1.9rem; }
+}
+
+/* The featured card again, on the home page under the title block. */
+/* The home page runs tighter than the other pages, since it is a stack of
+   blocks rather than one column of prose. */
+.listing-header--home { padding-top: 2.5rem; }
+
+.home-featured { margin-top: 1.5rem; margin-bottom: 2rem; }
+.home-featured .post-card--featured { margin-top: 0; }
+
+/* Signpost cards under the featured one. Same card styling as /blog/; only
+   the grid rhythm differs, since there are exactly three of them. */
+.home-links {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-bottom: 2rem;
+}
+
+/* Left-aligned heading that introduces each block of the home page. */
+.home-section-title {
+  font-family: var(--font-sans);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.09em;
+  color: var(--color-accent);
+  margin: 0 0 0.85rem;
+}
+
+/* Prose in a card, so the story block matches the cards above it. */
+.home-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  /* Even on all four sides: the last paragraph's own margin is dropped, so
+     the padding is the only bottom spacing. */
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 300ms ease;
+}
+
+.home-card:hover {
+  transform: scale(1.015);
+  border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-border));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-card:hover { transform: none; }
+}
+
+.home-card .post-content { padding-bottom: 0; }
+.home-card .post-content > :last-child { margin-bottom: 0; }
+
+/* Prose is left-aligned everywhere else on the site, so centre it here. */
+.home-card .post-content p {
+  text-align: center;
+  max-width: 60rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* The closing line — "The OpenBat app emerged from this curiosity." */
+.home-card .post-content p:last-child {
+  color: var(--color-accent);
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 600px) {
+  .home-card { padding: 1.25rem; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   HOME — screenshot dock
+   A row of phone screens that magnifies on hover, macOS-dock style. The
+   captions are absolutely positioned against `.dock` rather than their own
+   figure, so every one lands in the same slot below the row — which is why
+   `.dock-item` must stay unpositioned and `.dock-section` reserves the space
+   with padding-bottom. Only `.dock-shot` is transformed, so the caption text
+   never scales with the image. Below 800px there is no hover to speak of, so
+   the whole thing becomes a plain grid with the captions always showing.
+   ══════════════════════════════════════════════════════════ */
+.dock-section {
+  /* Room below for the caption slot. Nothing is clipped here: the script keeps
+     the spreading row inside the page by nudging it, so a magnified screen at
+     either end stays whole. There is deliberately no headroom above — a
+     magnified screen floats over the heading and the cards instead, which is
+     what the raised z-index and the scrim are for. Kept under the header's
+     z-index of 100 so the nav still sits on top. */
+  position: relative;
+  z-index: 90;
+  padding-bottom: 6.5rem;
+  margin-bottom: 0;
+}
+
+/* Page-wide dim behind the row. Fixed, so it covers the whole window rather
+   than the section; the script fades it in proportion to how magnified the
+   nearest screen is, and the transition keeps entering and leaving the row
+   from snapping. */
+.dock-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: var(--dock-scrim);
+  transition: opacity 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dock-scroll { position: relative; z-index: 1; }
+
+.dock {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 1.25rem;
+  /* Narrower than the container on purpose: the row spreads sideways as it
+     magnifies, and this is the headroom it spreads into. */
+  max-width: 68rem;
+  margin: 0 auto;
+}
+
+.dock-item {
+  margin: 0;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.dock-shot {
+  display: block;
+  will-change: transform;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: #000;
+  transform-origin: bottom center;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 260ms ease-out, filter 260ms ease-out,
+              border-color 200ms ease;
+}
+
+.dock-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Fallback for no JS: a plain hover step. The script replaces this with
+   pointer-distance magnification and takes these rules out of play by adding
+   `dock--js` — see the block in home.njk. */
+.dock:not(.dock--js):hover .dock-shot { opacity: 0.4; filter: saturate(0.5); }
+
+.dock:not(.dock--js) .dock-item:hover .dock-shot {
+  opacity: 1;
+  filter: none;
+  transform: scale(1.42) translateY(-0.35rem);
+  position: relative;
+  z-index: 2;
+}
+
+.dock:not(.dock--js) .dock-item:hover + .dock-item .dock-shot,
+.dock:not(.dock--js) .dock-item:has(+ .dock-item:hover) .dock-shot {
+  opacity: 0.85;
+  filter: saturate(0.85);
+  transform: scale(1.16);
+  z-index: 1;
+  position: relative;
+}
+
+/* With the script running, the inline styles do the work; these only supply
+   the easing that damps the pointer into a glide, and the highlight. */
+.dock--js .dock-shot { position: relative; }
+
+.dock--js .dock-item.is-active .dock-shot { border-color: var(--color-accent); }
+
+.dock-caption,
+.dock-hint {
+  position: absolute;
+  top: calc(100% + 1.25rem);
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  transition: opacity 200ms ease;
+}
+
+.dock-caption {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dock:not(.dock--js) .dock-item:hover .dock-caption { opacity: 1; }
+.dock--js .dock-item.is-active .dock-caption { opacity: 1; }
+
+.dock-caption-title {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  margin-bottom: 0.4rem;
+}
+
+.dock-caption-text {
+  display: block;
+  max-width: 40rem;
+  margin: 0 auto;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-secondary);
+}
+
+.dock-hint {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.dock:not(.dock--js):hover .dock-hint,
+.dock--js.is-hovered .dock-hint { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-shot { transition: opacity 200ms ease, filter 200ms ease; }
+  .dock-item:hover .dock-shot { transform: none; }
+  .dock-item:hover + .dock-item .dock-shot,
+  .dock-item:has(+ .dock-item:hover) .dock-shot { transform: none; }
+}
+
+/* Phone, script running: the row is pinned and scrolled through sideways.
+   `.dock-scroll` gets its height from the script (one screenful per shot);
+   `.dock-sticky` holds the row still while that passes. Only `.dock-shot` is
+   transformed, so `.dock` stays an untransformed containing block and the
+   caption can sit at the bottom of the stage. */
+@media (max-width: 800px) {
+  .dock-section.dock--pinned { padding-bottom: 0; }
+
+  .dock--pinned .dock-sticky {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .dock--pinned .dock {
+    display: flex;
+    grid-template-columns: none;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 6vw;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    padding: 0;
+  }
+
+  .dock--pinned .dock-item {
+    flex: 0 0 auto;
+    width: min(62vw, 33svh);
+  }
+
+  .dock--pinned .dock-shot {
+    transform-origin: center center;
+    transition: none; /* position comes straight from scroll offset */
+  }
+
+  .dock--pinned .dock-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1.5rem;
+    top: auto;
+    opacity: 0;
+    text-align: center;
+    padding: 0 1.25rem;
+    transition: opacity 250ms ease;
+  }
+
+  .dock--pinned .dock-item.is-active .dock-caption { opacity: 1; }
+  .dock--pinned .dock-caption-title { font-size: 1.15rem; }
+  .dock--pinned .dock-caption-text { font-size: 0.95rem; }
+}
+
+/* No hover, and no script: plain grid, every caption visible, nothing scales. */
+@media (max-width: 800px) {
+  .dock-section:not(.dock--pinned) { padding-bottom: 2rem; }
+  .dock-section:not(.dock--pinned) .dock {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem 1.25rem;
+    padding-top: 2rem;
+  }
+  .dock-section:not(.dock--pinned) .dock-shot,
+  .dock-section:not(.dock--pinned) .dock-item:hover .dock-shot {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  .dock-section:not(.dock--pinned) .dock-caption {
+    position: static;
+    opacity: 1;
+    text-align: left;
+    margin-top: 0.75rem;
+  }
+  .dock-caption-title { font-size: 1rem; }
+  .dock-caption-text { font-size: 0.9rem; }
+  .dock-hint { display: none; }
+}
+
+.empty-state {
+  font-family: var(--font-body);
+  color: var(--color-muted);
+  padding: 2rem 0 3rem;
+}
+
+/* ── Post hero ──────────────────────────────────────────────
+   Full-bleed image with the title on it. `main` carries a nav-height top
+   padding for the fixed header, so the hero cancels it and runs underneath —
+   the header is already transparent and blurred over whatever is behind it. */
+.post-hero {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: calc(-1 * var(--nav-height));
+  margin-bottom: 2.5rem;
+  min-height: min(80vh, 760px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.post-hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Two jobs in one gradient: a light wash over the whole image so the nav has
+   something to sit on, and a heavy foot so white text reads over a pale
+   photo — or, as here, over a near-white map. */
+.post-hero-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(0, 0, 0, 0.32) 0%,
+    rgba(0, 0, 0, 0.22) 35%,
+    rgba(0, 0, 0, 0.88) 100%);
+}
+
+.post-hero-inner {
+  position: relative;
+  width: 100%;
+  max-width: var(--max-wide);
+  margin: 0 auto;
+  padding: 8rem 2rem 3rem;
+}
+
+.post-hero-inner .section-label { margin-bottom: 1rem !important; }
+
+.post-hero-inner h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0.09em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.post-hero-text {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 46rem;
+  margin: 1rem 0 0;
+  text-align: left;
+}
+
+.post-hero-inner .post-meta {
+  margin-top: 1.25rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.post-hero-inner .tag {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* The meta line runs date, author and tags together; the pills separate
+   themselves, the two text items need help. */
+.post-meta .post-author::before {
+  content: "·";
+  margin-right: 0.5rem;
+  opacity: 0.6;
+}
+
+.post-hero-inner .post-back { color: rgba(255, 255, 255, 0.8); }
+.post-hero-inner .post-back:hover { color: var(--color-link); }
+
+/* The hero already carries the title block, so the body starts straight in. */
+.post--hero > .post-content { padding-top: 0; }
+
+@media (max-width: 700px) {
+  .post-hero { min-height: min(66vh, 520px); }
+  .post-hero-inner { padding: 6rem 1.25rem 2.25rem; }
+}
+
+/* ── A single post ──────────────────────────────────────── */
+.post-header {
+  padding-top: 3.5rem;
+  padding-bottom: 2rem;
+  color: var(--color-accent);
+}
+
+.post-header h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.post-back { color: var(--color-muted); text-decoration: none; }
+.post-back:hover { color: var(--color-link); }
+
+.post-header .post-meta { margin-top: 1rem; }
+.post-author::after { content: ""; }
+
+.post-cover {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: 2rem 0 0;
+  display: block;
+}
+
+.post-related {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.post-related .post-grid { margin-top: 1rem; }

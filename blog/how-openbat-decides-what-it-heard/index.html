@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How OpenBat Decides What It Heard — OpenBat</title>
+  <meta name="description" content="The chain that turns a burst of ultrasound into a species name — pulse detection, a short window of audio, an on-device model, and the gates that let it say &quot;no idea&quot;.">
+  
+  <!-- Privacy & Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta name="referrer" content="no-referrer">
+  <meta property="og:site_name" content="OpenBat">
+  <meta property="og:title" content="How OpenBat Decides What It Heard — OpenBat">
+  <meta property="og:description" content="The chain that turns a burst of ultrasound into a species name — pulse detection, a short window of audio, an on-device model, and the gates that let it say &quot;no idea&quot;.">
+  <meta property="og:image" content="/static/images/autoid-cover.webp">
+  <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="/static/css/style.css?v=5.4">
+  <script>
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme !== 'light') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+  
+</head>
+<body>
+  <header class="site-header transparent-header">
+    <div class="site-header-inner">
+      <a class="site-title" href="/">
+        <img class="site-logo" src="/static/images/logo.png" alt="OpenBat">
+      </a>
+      <nav class="nav-menu">
+        
+        
+        <a href="/our-project/">Our Project</a>
+        
+        
+        
+        <div class="nav-item has-dropdown">
+          <a href="/contribute/">Contribute</a>
+          <div class="nav-dropdown">
+            
+            <a href="/guide-editor/">Field Guide Editor</a>
+            
+          </div>
+        </div>
+        
+        
+        
+        <a href="/blog/">Blog</a>
+        
+        
+        
+        <a href="/help/">Help</a>
+        
+        
+        
+        <a href="/privacy/">Privacy</a>
+        
+        
+        
+        <a href="/contact/">Contact</a>
+        
+        
+      </nav>
+      <div class="header-controls">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
+          <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-overlay"></div>
+
+  <main>
+    
+
+
+
+
+
+
+<div class="post-hero">
+  <img class="post-hero-bg" src="/static/images/autoid-hero.webp" alt="">
+  <div class="post-hero-shade"></div>
+  <div class="post-hero-inner">
+    <p class="section-label"><a href="/blog/" class="post-back">← Blog</a></p>
+    <h1>How OpenBat Decides What It Heard</h1>
+    <p class="post-hero-text">The chain that turns a burst of ultrasound into a species name — pulse detection, a short window of audio, an on-device model, and the gates that let it say &quot;no idea&quot;.</p>
+    <div class="post-meta">
+      <time datetime="2026-08-27">27 August 2026</time>
+      <span class="post-author">Niall Bell</span>
+      <span class="tag">auto-id</span><span class="tag">classifier</span><span class="tag">on-device</span>
+    </div>
+  </div>
+</div>
+
+
+<article class="standard-page post post--hero">
+  
+
+  <div class="post-content"><p>Point OpenBat at the sky and, a second or two after a bat goes over, a name
+appears. This is what happens in between.</p>
+<p>Everything below runs on the phone. No audio, no location and no detection
+leaves the device to produce an identification. There is no server in this
+loop at all, which is also why it works deep in a forest or valley with no phone signal.</p>
+<figure>
+  <a href="/static/images/autoid-pipeline.webp"><img src="/static/images/autoid-pipeline.webp" alt="A seven-step diagram: sound, pulse, window, picture, model, where, verdict." loading="lazy"></a>
+  <figcaption>The whole chain. Steps 1–4 are signal processing, 5 is the neural network, and 6–7 are the parts that decide whether to trust it.</figcaption>
+</figure>
+<h2>Finding a call</h2>
+<p>The microphone delivers 384,000 samples a second. Almost none of it is a bat.</p>
+<p>A call has to be both <strong>loud enough and high enough</strong> to trigger — the pitch
+half of that test is what stops wind, footsteps and jangling keys from filling
+your night with detections. Anything below 15 kHz is ignored, which is under
+every species OpenBat can name.</p>
+<p>Two details do most of the practical work:</p>
+<ul>
+<li><strong>A 30 ms hold-off after each call.</strong> A bat’s own echo comes back a few
+milliseconds behind it, and would otherwise be counted as a second call. The
+hold-off is deliberately shorter than the typical gap between real calls —
+field recordings put that around 79 ms — so a normal pass isn’t thinned out.</li>
+<li><strong>A 6 ms tolerance inside a call.</strong> FM sweeps have amplitude nulls in the
+middle. Without bridging them, one call arrived as three fragments.</li>
+</ul>
+<p>These numbers are set from field recordings rather than theory, and every one
+of them is adjustable in the app if your site or your microphone wants
+something different.</p>
+<h2>Cutting the window, and drawing it</h2>
+<p>Each detected call is cut out with the <strong>onset placed 30% of the way into the
+window</strong> — enough room in front of it to be sure the call started, and enough
+behind for the sweep to finish. How much audio gets cut is the model’s own
+number: 50 ms for NABat ML, and 256 ms for BatDetect2, which is exactly the
+clip length that model was trained on. Everything after the cut is the model’s
+own business.</p>
+<p>Where the call sits matters more to some models than others. NABat ML looks at
+the window as a whole and expects the call in a consistent place; BatDetect2
+hunts for the call inside the window itself, so there the 30% is only keeping it
+clear of both edges.</p>
+<p>The model never sees the sound. It sees a <strong>picture</strong> — a spectrogram, drawn
+to whatever size and shape that particular model expects. That is genuinely how
+these classifiers work: an image network, looking at a plot of frequency
+against time, the same plot you are watching scroll across the screen.</p>
+<p>Some models can also measure how good a capture is before spending anything on
+it, and where that is available OpenBat uses it as a <strong>quality gate</strong>: enough
+signal above the noise, enough amplitude, and the call not jammed against
+either edge of the window, since a clipped call is a misleading one. Not every
+model offers those measurements, and the app only shows the gate’s controls for
+one that does.</p>
+<h2>Two models, one at a time</h2>
+<ul>
+<li><strong>NABat ML</strong> — the USGS North American Bat Monitoring Program’s classifier,
+31 classes covering North American species plus an explicit non-bat NOISE
+class. CC BY 4.0.</li>
+<li><strong>BatDetect2</strong> — the University of Edinburgh’s detector/classifier, 17 UK
+species. CC BY-NC 4.0, and still marked beta in the app.</li>
+</ul>
+<p>Only one classifies at a time, and the app suggests the right one from where
+you are rather than picking silently.</p>
+<p><strong>Confidence is not comparable between the two.</strong> They score very differently —
+BatDetect2 tends to produce far more emphatic numbers — so 70% from one does not
+mean what 70% from the other does.</p>
+<h2>Where you are</h2>
+<p>Every species starts neutral. When the phone gets a location fix, OpenBat reads
+the <a href="/blog/how-openbat-draws-a-range-map/" class="wikilink">bundled range grid</a> and turns it into a
+weight per species: <strong>1.0</strong> if this is inside the species’ range, <strong>0.01</strong> if it
+is well outside, and <strong>0.5</strong> if the grid has nothing to say about that species
+at all.</p>
+<figure>
+  <a href="/static/images/autoid-priors.webp"><img src="/static/images/autoid-priors.webp" alt="Three bar charts: the model's raw scores for six species, the range weight applied to each, and the renormalised result." loading="lazy"></a>
+  <figcaption>An out-of-range species is multiplied down to almost nothing, and the rest are scaled back up so they still add to 1. Illustrative scores; the weights are the real ones.</figcaption>
+</figure>
+<p>Two things about that middle panel matter more than the arithmetic.</p>
+<p><strong>“I don’t know” is not “not here.”</strong> A species with no range data keeps half
+weight and stays enabled, and the settings screen says plainly that it is
+unconfirmed rather than quietly presenting a guess as a fact.</p>
+<p><strong>The weights never decide whether it was a bat.</strong> That question is settled
+first, on the model’s own unweighted scores. Only once those say “this is a
+real, confidently identified call” do the weights get a say in <em>which</em> species
+to name. If where you were standing could influence the first question, the app
+would be inventing evidence out of your own expectations.</p>
+<h2>A pass, not a call</h2>
+<p>Bats don’t call once. The unit OpenBat identifies is a <strong>pass (sometimes called a sequence)</strong>,  the burst of calls as an animal crosses in front of the microphone, closed by two seconds of silence.</p>
+<figure>
+  <a href="/static/images/autoid-pulses.webp"><img src="/static/images/autoid-pulses.webp" alt="Top: an amplitude trace with eight detected calls, the trigger level and hold-off bands marked. Bottom: each call's confidence as bars, with the no-ID line and the mean." loading="lazy"></a>
+  <figcaption>Calls are found one at a time; the verdict is taken over all of them. Two of these eight pulses sit below the no-ID line on their own and neither is thrown away — the pass is judged on the average. Illustrative, at the real thresholds.</figcaption>
+</figure>
+<p>A pass gets a name only if the <strong>mean raw confidence across its pulses clears
+the model’s no-ID line</strong> — 0.57 for NABat ML, 0.4 for BatDetect2, whose scores
+sit on a different scale. Then, among the weighted scores, the winner needs at
+least two pulses and a mean of 0.15 to be reported.</p>
+<p>There are three possible outcomes, and the third is the one worth arguing for:</p>
+<ul>
+<li>a <strong>species</strong>,</li>
+<li><strong>NOISE</strong>, when the model’s own non-bat class wins,</li>
+<li><strong>no ID</strong> — pulses were captured and classified, but the evidence never
+cleared the bar.</li>
+</ul>
+<p>No ID is recorded like any other pass, rather than dropped. The list says
+“something triggered, we couldn’t tell what” instead of quietly losing evidence
+you heard yourself and watched cross the spectrogram.</p>
+<h2>Saying “these two are hard”</h2>
+<p>Some species pairs simply are not separable by ear or by model — UK <em>Myotis</em>,
+common versus soprano pipistrelle, Leisler’s versus noctule, brown versus grey
+long-eared. Each model carries its own list of these <strong>complexes</strong>, because
+whether two species can be told apart is a fact about the model, not about the
+bats.</p>
+<p>When the runner-up is close behind the winner <em>and</em> belongs to the same
+complex, the ID is flagged as genuinely ambiguous rather than merely hard. What
+counts as close is deliberately generous — the point is honesty, not a
+confident-looking number.</p>
+<h2>What it isn’t</h2>
+<p>A species ID from OpenBat is a suggestion — treat it as a knowledgeable
+friend’s guess, not a verified record. It can be confidently wrong, particularly
+inside a complex.</p>
+<p>If one looks wrong, the app keeps a <strong>classifier log</strong>: a diary of every
+detection with the scores behind it, no audio and no coordinates, which
+Settings → General will hand you as a zip. That log is the most useful thing you
+can attach to a report — it shows what the model actually thought, which is
+usually more interesting than what it eventually said.</p>
+</div>
+  
+
+  
+  
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-col brand">
+        <a class="footer-logo-link" href="/">
+          <img class="footer-logo" src="/static/images/logo.png" alt="OpenBat">
+        </a>
+        <p class="footer-web-address">openbat.app</p>
+        <div class="footer-contact">
+          <div class="contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span class="reveal-email" data-u="hello" data-d="openbat.app" style="cursor:pointer;">Click to reveal email</span>
+          </div>
+        </div>
+        <p class="footer-privacy-link"><a href="/privacy/">Privacy</a></p>
+      </div>
+    </div>
+    <p class="footer-copyright">© 2026 Niall Bell (OpenBat)</p>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      const applyTheme = () => {
+        document.documentElement.setAttribute('data-theme', target);
+        localStorage.setItem('theme', target);
+      };
+      if (document.startViewTransition) {
+        document.startViewTransition(applyTheme);
+      } else {
+        applyTheme();
+      }
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const body = document.body;
+
+    const toggleMenu = () => {
+      const isOpen = body.classList.toggle('menu-open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    };
+
+    menuToggle.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', toggleMenu);
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (body.classList.contains('menu-open')) toggleMenu();
+      });
+    });
+
+    const header = document.querySelector('.site-header');
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Platform toggle (Help page) — swap the iOS / Android panels
+    const platBtns = document.querySelectorAll('.plat-toggle-btn');
+    if (platBtns.length) {
+      const platSections = {
+        ios: document.getElementById('plat-ios'),
+        android: document.getElementById('plat-android'),
+      };
+
+      const setPlatform = (mode, instant) => {
+        const incoming = platSections[mode];
+        const outgoing = platSections[mode === 'ios' ? 'android' : 'ios'];
+        if (!incoming || !outgoing) return;
+
+        platBtns.forEach(btn => {
+          const on = btn.dataset.platform === mode;
+          btn.classList.toggle('active', on);
+          btn.setAttribute('aria-selected', on);
+        });
+
+        if (instant) {
+          outgoing.classList.add('plat-hidden');
+          incoming.classList.remove('plat-hidden');
+          return;
+        }
+
+        // Fade the outgoing panel out, swap, then fade the incoming one in
+        outgoing.style.opacity = '0';
+        setTimeout(() => {
+          outgoing.classList.add('plat-hidden');
+          outgoing.style.opacity = '';
+          incoming.classList.remove('plat-hidden');
+          incoming.style.transition = 'none';
+          incoming.style.opacity = '0';
+          incoming.getBoundingClientRect(); // force reflow
+          incoming.style.transition = '';
+          incoming.style.opacity = '1';
+        }, 350);
+      };
+
+      platBtns.forEach(btn => {
+        btn.addEventListener('click', () => setPlatform(btn.dataset.platform));
+      });
+
+      if (location.hash === '#android') setPlatform('android', true);
+    }
+
+    // Assemble obfuscated email addresses on click
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.reveal-email').forEach(el => {
+        el.addEventListener('click', () => {
+          const email = el.dataset.u + '@' + el.dataset.d;
+          const cls = el.className.replace('reveal-email', '').trim();
+          const inner = el.querySelector('svg')
+            ? el.querySelector('svg').outerHTML + email
+            : email;
+          const style = el.getAttribute('style') || '';
+          el.outerHTML = `<a href="mailto:${email}" class="${cls}" style="${style}">${inner}</a>`;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

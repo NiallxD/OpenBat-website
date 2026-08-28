@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Your Own Bat Microphone — OpenBat</title>
+  <meta name="description" content="The Griff Mini is an open-source 384 kHz ultrasonic microphone you can build for about $28. Here is what to order, what it costs, and what building one involves.">
+  
+  <!-- Privacy & Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta name="referrer" content="no-referrer">
+  <meta property="og:site_name" content="OpenBat">
+  <meta property="og:title" content="Build Your Own Bat Microphone — OpenBat">
+  <meta property="og:description" content="The Griff Mini is an open-source 384 kHz ultrasonic microphone you can build for about $28. Here is what to order, what it costs, and what building one involves.">
+  <meta property="og:image" content="/static/images/griff-cover.webp">
+  <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="/static/css/style.css?v=5.4">
+  <script>
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme !== 'light') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+  
+</head>
+<body>
+  <header class="site-header transparent-header">
+    <div class="site-header-inner">
+      <a class="site-title" href="/">
+        <img class="site-logo" src="/static/images/logo.png" alt="OpenBat">
+      </a>
+      <nav class="nav-menu">
+        
+        
+        <a href="/our-project/">Our Project</a>
+        
+        
+        
+        <div class="nav-item has-dropdown">
+          <a href="/contribute/">Contribute</a>
+          <div class="nav-dropdown">
+            
+            <a href="/guide-editor/">Field Guide Editor</a>
+            
+          </div>
+        </div>
+        
+        
+        
+        <a href="/blog/">Blog</a>
+        
+        
+        
+        <a href="/help/">Help</a>
+        
+        
+        
+        <a href="/privacy/">Privacy</a>
+        
+        
+        
+        <a href="/contact/">Contact</a>
+        
+        
+      </nav>
+      <div class="header-controls">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
+          <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-overlay"></div>
+
+  <main>
+    
+
+
+
+
+
+
+<div class="post-hero">
+  <img class="post-hero-bg" src="/static/images/griff-hero.webp" alt="">
+  <div class="post-hero-shade"></div>
+  <div class="post-hero-inner">
+    <p class="section-label"><a href="/blog/" class="post-back">← Blog</a></p>
+    <h1>Build Your Own Bat Microphone</h1>
+    <p class="post-hero-text">The Griff Mini is an open-source 384 kHz ultrasonic microphone you can build for about $28. Here is what to order, what it costs, and what building one involves.</p>
+    <div class="post-meta">
+      <time datetime="2026-08-27">27 August 2026</time>
+      <span class="post-author">Niall Bell</span>
+      <span class="tag">hardware</span><span class="tag">griff</span>
+    </div>
+  </div>
+</div>
+
+
+<article class="standard-page post post--hero">
+  
+
+  <div class="post-content"><p>OpenBat needs an ultrasonic microphone. Your phone’s own mic stops at around 24 kHz and almost every bat call happens above that, so without one there is nothing to hear.</p>
+<p>The cheapest way in by a wide margin is to build one. The <strong><a href="https://www.pippyg.com/griff.html">Griff Mini</a></strong>, designed by Phil Atkin, is an open-source 384 kHz USB microphone that costs around <strong>$20 a unit in parts</strong>, against several hundred for a commercial detector. It plugs straight into a phone and OpenBat treats it as a normal USB microphone.</p>
+<p>Every price below is in Canadian dollars, and assumes a batch of five — which is the sensible number to make, for reasons the table makes obvious.</p>
+<div class="callout callout-tip"><div class="callout-title">Part of a bat or nature group? Build a batch.</div><div class="callout-body"><p>The boards arrive in fives, the hotplate and stencil get bought once, and the whole thing takes an afternoon. Five people splitting one order each go home with a working detector for under $30 — and the group keeps the kit for the next five people who want one.</p></div></div>
+<p>This is a summary of Phil’s own instructions, not a replacement for them. <strong><a href="https://www.pcbway.com/project/shareproject/Griff_Mini_d4d7cbaa.html">The Griff Mini project page on PCBWay</a></strong> is the authoritative source, I’m just repeating them here in case anyone landed on OpenBat trying to learn about detectors.</p>
+<p>One thing about the photo at the top: that green case is a 3D print of our own and <strong>not part of the build</strong>. Nothing below needs it, and none of the prices include it. A finished Griff is a bare board that works perfectly well as it is.</p>
+<h2>Before you start: this is a surface-mount build</h2>
+<p>Be honest with yourself about this bit. The Griff Mini is not a solder-a-few-wires kit. It is a small board of surface-mount components, including a MEMS microphone a couple of millimetres across, and the intended method is:</p>
+<ol>
+<li>Lay solder paste through a stencil.</li>
+<li>Place the components with tweezers.</li>
+<li>Reflow the whole board on a hotplate.</li>
+</ol>
+<p>Phil reckons <strong>about four minutes of paste and placement, then four minutes on the hotplate</strong>, per board, and there’s <a href="https://www.youtube.com/watch?v=qv38JZPgvKo">a video of him doing it</a>. That speed assumes you already own a hotplate and have done this before.</p>
+<p>If you haven’t, it is a very learnable skill and not the black art it looks like — there’s a walkthrough at the foot of this post. The other option is to find a makerspace or repair café with reflow gear, or to build alongside someone who has done it before.</p>
+<p>There is one genuinely fiddly step to know about: the microphone element has an acoustic hole in it, and solder paste getting into that hole ruins it.</p>
+<h2>What to order</h2>
+<p>Three orders, from three places, none of them urgent. Order everything at once.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Order from</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5 × bare PCB</td>
+<td><a href="https://www.pcbway.com/project/shareproject/Griff_Mini_d4d7cbaa.html">Griff Mini on PCBWay</a></td>
+<td>$5</td>
+</tr>
+<tr>
+<td>Solder paste stencil, <strong>no frame</strong></td>
+<td>added manually to the same PCBWay order</td>
+<td>$15</td>
+</tr>
+<tr>
+<td>PCBWay shipping</td>
+<td></td>
+<td>$25</td>
+</tr>
+<tr>
+<td>Components for 5 boards</td>
+<td><a href="https://www.digikey.co.uk/en/mylists/list/HEJJQAEWTN">DigiKey shared list</a></td>
+<td>$60 inc. shipping</td>
+</tr>
+<tr>
+<td>5 × Raspberry Pi Pico</td>
+<td><a href="https://www.aliexpress.com/item/1005007525241877.html">AliExpress</a></td>
+<td>$25</td>
+</tr>
+<tr>
+<td>Lead-free solder paste</td>
+<td><a href="https://www.amazon.ca/dp/B0FNR4N7D3">Amazon</a></td>
+<td>$12</td>
+</tr>
+<tr>
+<td><strong>Total, five microphones</strong></td>
+<td><em>excludes the hotplate and cable below</em></td>
+<td><strong>$142</strong></td>
+</tr>
+</tbody>
+</table>
+<p>That’s about <strong>$28 each</strong> for the microphones themselves, and the shape of it is the reason to build five rather than one: the boards are almost free, while the stencil, the paste and the shipping are flat costs whether you make one microphone or ten. The stencil and the tub of paste both outlast a single batch, so a second run is nearer <strong>$23 a unit</strong> — and the parts alone are about <strong>$20</strong>.</p>
+<p>On top of that come the things you buy once rather than per board, and which
+aren’t in the total above — a cable to get the finished microphone into your
+phone, and a hotplate if you haven’t got one:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Order from</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USB-C to micro-USB cable</td>
+<td><a href="https://www.aliexpress.com/item/1005008423647623.html">AliExpress</a></td>
+<td>$3.50</td>
+</tr>
+<tr>
+<td>Lightning OTG adapter — <strong>only for a Lightning iPhone</strong></td>
+<td><a href="https://www.aliexpress.com/item/1005005713313657.html">AliExpress</a></td>
+<td>$3.50</td>
+</tr>
+<tr>
+<td>Hotplate — <strong>only if you don’t have reflow gear</strong></td>
+<td><a href="https://www.amazon.ca/dp/B0CC62TP4L">Amazon</a></td>
+<td>$57</td>
+</tr>
+</tbody>
+</table>
+<p>A few things that will otherwise cost you an order:</p>
+<ul>
+<li><strong>Order the stencil as “no frame”.</strong> A framed stencil is expensive to ship
+and you don’t need one. <strong>You must add it to the order manually</strong> — it isn’t
+included by default.</li>
+<li><strong>Don’t tick assembly.</strong> PCBWay will decline the order; assembly isn’t
+authorised for this project.</li>
+<li><strong>Get the micro-USB Pico, not the USB-C one.</strong> The USB-C clones don’t work
+here. A genuine Pico is the safe choice and the clones save around $4 each. If you order the clones, don’t forget to remove them from the DigiKey order.</li>
+</ul>
+<p>The DigiKey link is a list Phil maintains, which is the thing to order from, it stays current in a way a parts table copied into a blog post would not.</p>
+<h2>Flashing the firmware</h2>
+<p>The board is built around the Raspberry Pi Pico, which does the digitising and
+presents the whole thing to your phone as an ordinary USB microphone. Once the
+board is assembled, it needs Phil’s firmware, which is what makes it a 384 kHz
+microphone rather than a Pico.</p>
+<ol>
+<li>Download <strong><code>griff.uf2</code></strong> from <a href="https://www.pippyg.com/griff.html">the Griff page</a> (it’s about 80 KB).</li>
+<li>Hold down the white button on the back of the board.</li>
+<li>With the button held, plug the board into a computer with a USB cable.</li>
+<li>It appears as a drive called <strong>RPI-RP2</strong>.</li>
+<li>Drag <code>griff.uf2</code> onto that drive. The board reboots as a microphone.</li>
+</ol>
+<p>That’s the whole process, and it’s the same trick used to flash any Pico. You
+can redo it later if the firmware is updated.</p>
+<h2>Plugging it into a phone</h2>
+<p>The board has a <strong>micro-USB</strong> socket, so what you need between it and your
+phone depends on which iPhone you have:</p>
+<ul>
+<li><strong>USB-C iPhone</strong> — a plain USB-C to micro-USB cable is all it takes.</li>
+<li><strong>Lightning iPhone</strong> — you need a <strong>Lightning OTG adapter</strong> (the kind that
+carries data and can host a USB device), not a plain charging adapter. A
+charge-only one will do nothing at all.</li>
+</ul>
+<p>Then open OpenBat, and it should appear as an input running at 384 kHz. Our
+<a href="/help/">Help page</a> covers what to do from there.</p>
+<h2>You can’t sell them</h2>
+<p>Phil’s terms are simple: Griffs are not to be sold. He makes no money from the design and asks that builders don’t either.</p>
+<p>Since the boards come in fives, the obvious way round it is to find four other people, split the order, and build them together in an afternoon. Everyone pays their share, everyone goes home with a microphone, and nobody has sold anything.</p>
+<h2>Is it worth it?</h2>
+<p>If you already have reflow gear or access to it, obviously yes — this is a $28 instrument doing a job commercial hardware charges several hundred for.</p>
+<p>If you don’t, be realistic about what you’re actually buying. A hotplate is
+$57 and the microphones are $28 each, so on a first solo build the equipment
+costs twice as much as the thing you’re making. That is an argument for scale
+rather than against building: the hotplate is bought once and never again, five
+boards cost barely more than one, and splitting a batch turns an awkward solo
+purchase into an afternoon a bat group can repeat every time someone new wants
+a microphone.</p>
+<h2>A first-timer’s guide to surface-mount</h2>
+<p>If you have only ever soldered wires and through-hole parts, this is a
+different activity, and an easier one than it looks. You are not soldering
+joints one at a time. You are printing glue-like solder onto the board,
+dropping parts into it, and melting the lot at once.</p>
+<p>Here is the whole process on a Griff Mini.</p>
+<h3>1. Know what goes where</h3>
+<p>You start with a bare board. Everything you need is printed on it.</p>
+<div class="image-pair">
+<figure class="image-float-right">
+<img src="/static/images/griff-bare-board.webp" alt="A bare green Griff Mini circuit board photographed from above, with silver pads and the component values printed beside them in white." loading="lazy"><figcaption>The bare board as it arrives. The silver rectangles are pads, and the white text beside each one is the value that belongs there.</figcaption></figure>
+<figure class="image-float-right">
+<img src="/static/images/griff-board-annotated.webp" alt="The same board with every pad group outlined and colour-coded: 47 kΩ, 470 Ω and 100 Ω resistors, 47u and 0.1u capacitors, the op-amp, MEMS microphone, Raspberry Pi Pico, and the brooch pin pads." loading="lazy"><figcaption>The same board, colour-coded. Worth opening full size and keeping on a second screen while you place parts — it is the map this whole step is about.</figcaption></figure>
+</div>
+<p>Lay the components out in front of you and identify them before you start,
+because once there is paste on the board you don’t want to be squinting at a
+reel.</p>
+<p>The board tells you most of it: the white text beside each pad is the value
+that belongs there. Resistors carry their value as a code, so <strong>4702</strong> means
+470 followed by two zeros — 47,000 Ω, or <strong>47 kΩ</strong>, matching the pads marked
+<code>47K</code>, and <strong>471</strong> is 470 Ω. Capacitors are almost always blank, so keep them
+in their strips and label them as you go.</p>
+<p>The <strong>two long rows</strong> in the middle are where the Pico sits, and the
+<strong>square-and-circle pads</strong> top and bottom are for brooch pins — Griff was
+designed to be worn, and a pin soldered there turns it into a badge you can
+clip to a jacket. Pins are cheap and sold in bags of fifty, but they are
+<strong>entirely optional</strong>: leave those pads empty and the microphone works exactly
+the same.</p>
+<div class="callout callout-note"><div class="callout-title">The pad marked FERRITE</div><div class="callout-body"><p>There is no ferrite bead in the parts list. The <strong>100 Ω resistor</strong> is what
+fits that pad, and it’s what went on ours — worked out at the bench rather
+than read anywhere, so treat it as what we did rather than gospel.</p></div></div>
+<h3>2. Build a jig to hold the board</h3>
+<p>This is easily missed and isn’t well covered in other guides, and it makes the difference between a clean print and a smeared one. The board is 1.6 mm thick and weighs nothing — if it can slide even slightly while you drag paste across the stencil, the
+print is ruined.</p>
+<p>The fix costs nothing. Your PCBWay order arrives with offcuts, and they are
+exactly the same thickness as the board:</p>
+<div class="image-pair">
+<figure class="image-float-right">
+<img src="/static/images/griff-jig-empty.webp" alt="Five offcut PCB panels taped and glued to a piece of hardboard, arranged around an empty board-shaped gap, with the steel stencil resting beside them." loading="lazy"><figcaption>The jig itself: offcuts fixed down around a board-shaped gap. Build it once and every board after that drops straight in. My base board was warped so I added a thin piece of metal to lift the blank up a tiny bit for more precise stencilling.</figcaption></figure>
+<figure class="image-float-right">
+<img src="/static/images/griff-jig.webp" alt="A Griff Mini board sitting in the gap in the middle of the jig, boxed in on all four sides by offcuts of the same thickness." loading="lazy"><figcaption>With a board in it. Same thickness all round, so the stencil lies dead flat across the whole area instead of tipping over an edge. This should leave a thin layer of solder paste on the board.</figcaption></figure>
+</div>
+<p>Arrange them around a board so it is trapped on all four sides, then fix them
+down — hot glue, superglue or tape all work. Fix only the surround, never the
+board: what you are making is a board-shaped hole to drop each one into, so
+you can lift it out after pasting and put the next one in.</p>
+<h3>3. Paste</h3>
+<p>Lay the stencil over the board and line it up so every pad sits centred in its
+aperture. Take your time here: it’s the one part of the process where accuracy
+genuinely matters.</p>
+<div class="image-pair">
+<figure class="image-float-right">
+<img src="/static/images/griff-stencil-align.webp" alt="A hand holding down the steel stencil over the jig while taping one edge, with the board's pads visible through the stencil apertures." loading="lazy"><figcaption>Line it up, then tape one edge down as a hinge — that way you can lift and re-check without losing the alignment.</figcaption></figure>
+<figure class="image-float-right">
+<img src="/static/images/griff-stencil-ready.webp" alt="The stencil taped flat over the jig on all sides, sitting level and ready for solder paste." loading="lazy"><figcaption>Taped down and sitting flat. Ready to paste.</figcaption></figure>
+</div>
+<p>Now drag solder paste across the stencil with a plastic card or squeegee in
+<strong>one firm pass</strong>, pressing down rather than scooping.</p>
+<p>Two things matter more than technique:</p>
+<ul>
+<li><strong>Not too much paste.</strong> A thin, even fill of each aperture is right. Excess
+is what causes bridges between pads.</li>
+<li><strong>Lift the stencil straight up</strong>, not sideways. Sideways smears the print
+you just made.</li>
+</ul>
+<p>If the print comes out badly, wipe the board with isopropyl alcohol and start
+again. It costs you two minutes and nothing else.</p>
+<h3>4. Place the parts</h3>
+<p>Now put the components onto the wet paste with fine tweezers.</p>
+<div class="image-pair">
+<figure class="image-float-right">
+<img src="/static/images/griff-placing.webp" alt="Fine-tipped tweezers lowering a tiny surface-mount capacitor onto a pasted pad on the Griff Mini board." loading="lazy"><figcaption>Tweezers, good light and a steady surface. The parts are small but the paste is sticky, which does most of the work of holding them.</figcaption></figure>
+<figure class="image-float-right">
+<img src="/static/images/griff-placed.webp" alt="Close-up of four placed components on the board: two capacitors and two resistors marked 4702, sitting on their pads beside the printed values 47u and 47K." loading="lazy"><figcaption>Placed and ready for the hotplate. The <code>4702</code> markings are the 47 kΩ resistors, on the pads labelled <code>47K</code>.</figcaption></figure>
+</div>
+<p>You do not need to be precise. Solder paste is tacky enough to hold a part
+where you drop it, and — the part that surprises everyone the first time —
+surface tension pulls slightly crooked parts <strong>straight</strong> as the solder melts.
+Close is genuinely good enough.</p>
+<p>Two exceptions to “close is fine”:</p>
+<ul>
+<li><strong>Orientation matters for anything with a pin 1</strong> — the op-amp and the
+microphone. Match the marking on the part to the marking on the board.
+These resistors and capacitors can go either way round.</li>
+<li><strong>Keep paste out of the microphone’s acoustic hole.</strong> It’s the small opening
+in the top of the mic package, and it is the one mistake on this board that
+can’t be fixed after reflow.</li>
+</ul>
+<h3>5. Reflow</h3>
+<p><strong>It all reflows in one pass.</strong> The Pico goes on like any other component,
+sitting over its two rows of pads, and the whole board — passives, op-amp,
+microphone and Pico — goes onto the hotplate together. There is no second
+heating and nothing to hand-solder afterwards.</p>
+<div class="image-pair">
+<figure class="image-float-right">
+<img src="/static/images/griff-hotplate.webp" alt="The assembled Griff Mini board, with a Raspberry Pi Pico sitting on its pads, on the steel bed of a temperature-controlled hotplate." loading="lazy"><figcaption>Everything in place on the plate — surface-mount parts, and the Pico over its two rows of pads.</figcaption></figure>
+<figure class="image-float-right">
+<img src="/static/images/griff-hotplate-wide.webp" alt="The finished board cooling on the hotplate, with the jig and its offcut PCBs on the bench behind." loading="lazy"><figcaption>Both the board and the plate stay hot long after it's switched off — that steel bed is the thing that catches people out.</figcaption></figure>
+</div>
+<div class="callout callout-warning"><div class="callout-title">Ventilation</div><div class="callout-body"><p>Solder paste gives off flux fumes as it heats, and they are an irritant you
+don’t want a lungful of. Open a window, put a fan behind you rather than in
+front, and don’t lean over the plate to watch. This is the one genuine
+hazard in the whole build.</p></div></div>
+<p>Bring the plate up to temperature and <strong>watch the board, not the clock</strong>. The
+paste sits dull grey for a while, then changes all at once: it turns shiny and
+liquid, and the parts visibly twitch and settle as surface tension pulls them
+square onto their pads.</p>
+<p>A board that isn’t sitting perfectly flat heats unevenly, and you’ll see it:
+one corner goes shiny while another is still dull. Press it gently down on
+<strong>two opposite corners</strong> to bring the whole underside into contact with the
+plate. Light pressure is all it needs — you are seating it, not clamping it.</p>
+<div class="callout callout-warning"><div class="callout-title">Never your fingers</div><div class="callout-body"><p>The board and everything on it are at soldering temperature. Use a metal
+tool — the probes that come with most hotplate kits, a solder pick, tweezers,
+anything steel with a handle. Do not test how hot it is by touch, and
+remember the plate itself stays dangerous for a long time after it’s off.</p></div></div>
+<p>The rule is to wait until <strong>every</strong> part has done that. Different parts reach
+temperature at different times — the big ones and anything under the Pico lag
+behind the small passives — so give it a few seconds after the last one goes
+shiny before you call it done. Taking the board off early is the most common
+way to get a dry joint.</p>
+<p>If something hasn’t settled while the solder is still liquid, <strong>nudge it</strong>.
+Tweezers, a gentle push towards its pads, and it will usually snap into place
+on its own. That is a normal part of the process, not a repair.</p>
+<p>Then power the plate down and leave the board alone. Don’t quench it, don’t
+pick parts off, and don’t move it until it’s cool — the solder stays liquid
+for a while after the heat is off, and a knock at that point will shift
+everything you just placed.</p>
+<h3>6. Inspect</h3>
+<p>Look over the cooled board — ideally with a magnifier, or a phone camera
+zoomed in. You are checking for two things: <strong>bridges</strong>, where solder has run
+between two adjacent pads, and <strong>dry joints</strong>, where a pad looks dull or a
+part hasn’t wetted properly. A bridge is fixed with a soldering iron and some
+braid; a dry joint usually just wants reheating.</p>
+<p>Then flash the firmware as described above, and <strong>that’s a finished
+microphone</strong> — plug it in and it detects bats. The printed case in the photo
+at the top of this post is something we added afterwards to make ours
+pocketable and a bit less fragile, and it’s entirely optional.</p>
+<h3>If it doesn’t work</h3>
+<p>Most first boards do work. If yours doesn’t:</p>
+<ul>
+<li><strong>Nothing at all on USB</strong> — suspect the Pico’s rows of joints first, then
+check the board for bridges.</li>
+<li><strong>It appears but is silent, or very quiet</strong> — suspect the microphone: paste
+in the acoustic hole, or a poor joint under the package.</li>
+<li><strong>It works but sounds wrong</strong> — check components against the silkscreen. A
+47 kΩ where a 470 Ω belongs is easy to do and easy to miss.</li>
+</ul>
+<p>And this is the real reason to make five. The first board is where you learn
+the paste, the placement and the hotplate; boards two to five come out clean,
+and even if you write one off entirely you still go home with four working
+microphones.</p>
+</div>
+  
+
+  
+  
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-col brand">
+        <a class="footer-logo-link" href="/">
+          <img class="footer-logo" src="/static/images/logo.png" alt="OpenBat">
+        </a>
+        <p class="footer-web-address">openbat.app</p>
+        <div class="footer-contact">
+          <div class="contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span class="reveal-email" data-u="hello" data-d="openbat.app" style="cursor:pointer;">Click to reveal email</span>
+          </div>
+        </div>
+        <p class="footer-privacy-link"><a href="/privacy/">Privacy</a></p>
+      </div>
+    </div>
+    <p class="footer-copyright">© 2026 Niall Bell (OpenBat)</p>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      const applyTheme = () => {
+        document.documentElement.setAttribute('data-theme', target);
+        localStorage.setItem('theme', target);
+      };
+      if (document.startViewTransition) {
+        document.startViewTransition(applyTheme);
+      } else {
+        applyTheme();
+      }
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const body = document.body;
+
+    const toggleMenu = () => {
+      const isOpen = body.classList.toggle('menu-open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    };
+
+    menuToggle.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', toggleMenu);
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (body.classList.contains('menu-open')) toggleMenu();
+      });
+    });
+
+    const header = document.querySelector('.site-header');
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Platform toggle (Help page) — swap the iOS / Android panels
+    const platBtns = document.querySelectorAll('.plat-toggle-btn');
+    if (platBtns.length) {
+      const platSections = {
+        ios: document.getElementById('plat-ios'),
+        android: document.getElementById('plat-android'),
+      };
+
+      const setPlatform = (mode, instant) => {
+        const incoming = platSections[mode];
+        const outgoing = platSections[mode === 'ios' ? 'android' : 'ios'];
+        if (!incoming || !outgoing) return;
+
+        platBtns.forEach(btn => {
+          const on = btn.dataset.platform === mode;
+          btn.classList.toggle('active', on);
+          btn.setAttribute('aria-selected', on);
+        });
+
+        if (instant) {
+          outgoing.classList.add('plat-hidden');
+          incoming.classList.remove('plat-hidden');
+          return;
+        }
+
+        // Fade the outgoing panel out, swap, then fade the incoming one in
+        outgoing.style.opacity = '0';
+        setTimeout(() => {
+          outgoing.classList.add('plat-hidden');
+          outgoing.style.opacity = '';
+          incoming.classList.remove('plat-hidden');
+          incoming.style.transition = 'none';
+          incoming.style.opacity = '0';
+          incoming.getBoundingClientRect(); // force reflow
+          incoming.style.transition = '';
+          incoming.style.opacity = '1';
+        }, 350);
+      };
+
+      platBtns.forEach(btn => {
+        btn.addEventListener('click', () => setPlatform(btn.dataset.platform));
+      });
+
+      if (location.hash === '#android') setPlatform('android', true);
+    }
+
+    // Assemble obfuscated email addresses on click
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.reveal-email').forEach(el => {
+        el.addEventListener('click', () => {
+          const email = el.dataset.u + '@' + el.dataset.d;
+          const cls = el.className.replace('reveal-email', '').trim();
+          const inner = el.querySelector('svg')
+            ? el.querySelector('svg').outerHTML + email
+            : email;
+          const style = el.getAttribute('style') || '';
+          el.outerHTML = `<a href="mailto:${email}" class="${cls}" style="${style}">${inner}</a>`;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

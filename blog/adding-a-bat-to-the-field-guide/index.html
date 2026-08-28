@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adding a Bat to the Field Guide — OpenBat</title>
+  <meta name="description" content="The field guide inside OpenBat is written by the people who use it. Here is what an entry holds, how to add one without touching any code, and what happens after you press submit.">
+  
+  <!-- Privacy & Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta name="referrer" content="no-referrer">
+  <meta property="og:site_name" content="OpenBat">
+  <meta property="og:title" content="Adding a Bat to the Field Guide — OpenBat">
+  <meta property="og:description" content="The field guide inside OpenBat is written by the people who use it. Here is what an entry holds, how to add one without touching any code, and what happens after you press submit.">
+  <meta property="og:image" content="/static/images/guide-cover.webp">
+  <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="/static/css/style.css?v=5.4">
+  <script>
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme !== 'light') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+  
+</head>
+<body>
+  <header class="site-header transparent-header">
+    <div class="site-header-inner">
+      <a class="site-title" href="/">
+        <img class="site-logo" src="/static/images/logo.png" alt="OpenBat">
+      </a>
+      <nav class="nav-menu">
+        
+        
+        <a href="/our-project/">Our Project</a>
+        
+        
+        
+        <div class="nav-item has-dropdown">
+          <a href="/contribute/">Contribute</a>
+          <div class="nav-dropdown">
+            
+            <a href="/guide-editor/">Field Guide Editor</a>
+            
+          </div>
+        </div>
+        
+        
+        
+        <a href="/blog/">Blog</a>
+        
+        
+        
+        <a href="/help/">Help</a>
+        
+        
+        
+        <a href="/privacy/">Privacy</a>
+        
+        
+        
+        <a href="/contact/">Contact</a>
+        
+        
+      </nav>
+      <div class="header-controls">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
+          <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-overlay"></div>
+
+  <main>
+    
+
+
+
+
+
+
+<div class="post-hero">
+  <img class="post-hero-bg" src="/static/images/guide-hero.webp" alt="">
+  <div class="post-hero-shade"></div>
+  <div class="post-hero-inner">
+    <p class="section-label"><a href="/blog/" class="post-back">← Blog</a></p>
+    <h1>Adding a Bat to the Field Guide</h1>
+    <p class="post-hero-text">The field guide inside OpenBat is written by the people who use it. Here is what an entry holds, how to add one without touching any code, and what happens after you press submit.</p>
+    <div class="post-meta">
+      <time datetime="2026-08-27">27 August 2026</time>
+      <span class="post-author">Niall Bell</span>
+      <span class="tag">field-guide</span><span class="tag">contributing</span>
+    </div>
+  </div>
+</div>
+
+
+<article class="standard-page post post--hero">
+  
+
+  <div class="post-content"><p>There are more than 1,400 bat species in the world. OpenBat’s field guide
+currently describes nineteen of them, across twenty-one regions.</p>
+<p>That gap is not going to be closed by the people who build the app. It closes
+one entry at a time, written by people who already know a bat well — the
+species you survey every summer, the one whose calls you can pick out of a
+recording by eye, the one nobody has written up properly.</p>
+<p>This is how to add one.</p>
+<h2>What an entry is</h2>
+<p>Every species in the guide is one record with four required fields: an id, a
+common name, a scientific name, and the regions it lives in. Everything else is
+optional, and the editor tells you how much of each section you have filled in
+as you go.</p>
+<figure>
+  <a href="/static/images/guide-editor-entry.webp"><img src="/static/images/guide-editor-entry.webp" alt="The field guide editor with the pallid bat open, every section collapsed: identity, regions, summary, photo, measurements, morphology, echolocation, conservation, habits, references, contributors and submit for review, each with a chip showing how many of its fields are filled in." loading="lazy"></a>
+  <figcaption>One entry, open in the editor with its sections closed. Each chip says how much of that section is filled in — and this bat still has no photo. Contributors is where you add your name; submit is the last step.</figcaption>
+</figure>
+<p>The app only draws a section if there is something to put in it, so a
+half-filled entry renders as a shorter page rather than a page of empty boxes.
+That matters more than it sounds: <strong>you do not have to know everything about a
+bat to contribute to its entry.</strong> If all you have is a set of echolocation
+parameters you trust, add those. If all you have is a good photograph and its
+licence, add that. Someone else fills in the roosting behaviour next month.</p>
+<p>The parts that tend to be missing, and are worth the most:</p>
+<ul>
+<li><strong>Echolocation</strong> — call type, peak and characteristic frequency, duration,
+and free-text notes on what it’s confusable with. This is the section people
+in the field actually read.</li>
+<li><strong>A real photograph.</strong> An entry without one falls back to a live Wikipedia
+lookup, which can return the wrong species or nothing at all. A proper
+<code>imageURL</code> fixes that for good.</li>
+<li><strong>References.</strong> What you’d hand someone who asked “how do you know that?”</li>
+<li><strong>Regional detail</strong> — local conservation status, habits that differ from the
+textbook description of the species elsewhere.</li>
+</ul>
+<h2>The editor</h2>
+<p>The easiest way in is the <a href="/guide-editor/" class="wikilink">field guide editor</a> on this site. It
+loads the current guide, gives you ordinary form fields, and writes the file
+correctly for you.</p>
+<ol>
+<li>Find your species, or add a new one.</li>
+<li>Fill in what you know.</li>
+<li>Put your name under Contributors.</li>
+<li>Submit.</li>
+</ol>
+<figure>
+  <a href="/static/images/guide-editor-list.webp"><img src="/static/images/guide-editor-list.webp" alt="The editor's species list: a header showing the guide was loaded from GitHub with 19 species and 21 regions, a search box, an add-a-new-species button, and rows of bats — some marked with an orange dot — with their scientific names and region counts." loading="lazy"></a>
+  <figcaption>The guide is fetched live when the page opens, so you are always editing the current version. An orange dot marks an entry with fields still empty, which is as good a shortlist as any of where to start.</figcaption>
+</figure>
+<p><strong>No GitHub account, and no JSON.</strong> The editor also keeps a local draft as you
+type, so a closed tab or a flat battery doesn’t cost you an evening’s writing.
+That draft lives on your own device, is offered back rather than silently
+reapplied, and is cleared when you submit.</p>
+<h2>What happens after you press submit</h2>
+<figure>
+  <a href="/static/images/guide-journey.webp"><img src="/static/images/guide-journey.webp" alt="Five steps: you fill in the form, a pull request is opened for you, automatic checks run, a person reviews it, and once merged every app picks it up at next launch." loading="lazy"></a>
+  <figcaption>Nothing you submit is applied straight to the guide. The review is the gate.</figcaption>
+</figure>
+<p>Your submission becomes a pull request on the field guide repository, opened on
+your behalf. When you click submit, some automated checks run first, to catch and major errors: the required fields are there, the regions you picked exist, an image has a credit with it, links are sound. Then it heads off to the OpenBat team to review.</p>
+<blockquote>
+<p>We rely on the community to make this field guide what it is. From time to time we may tweak an entry, or reject it altogether. In the spirit of good privacy we don’t collect your contact details so we can’t let you know, but we will add a comment to the pull request on GitHub. If we make a tweak (typo) we will add a note to the contribution comment. If you notice your change didn’t go live, <a href="mailto:hello@openbat.app">get in touch!</a>.</p>
+</blockquote>
+<p>Once it’s merged, every copy of the app picks it up the next time it launches.
+No app update, no waiting for a release — the guide is downloaded, not built in.</p>
+<h2>Two rules worth reading first</h2>
+<p>Both exist so that everything in the guide can be passed on to the next person
+who wants to use it.</p>
+<p><strong>Photographs must be Creative Commons or public domain</strong>, with the credit the
+licence asks for. Wikimedia Commons is the easiest source — the licence and the
+exact attribution are written on each file’s page. Link the image file itself
+rather than the page it sits on, and set the credit whenever you set an image.
+Not a photo from a search engine, a stock site, or social media unless it
+carries a clear licence of its own.</p>
+<p><strong>Write in your own words.</strong> Read your sources, then write the entry from what
+you learned rather than from the source’s sentences. Cite what you used in
+<code>references</code> — that’s what the field is for, and it’s expected either way — but
+a citation says where a fact came from; it isn’t permission to reuse the prose
+that stated it. Technical terms and measurements are obviously exempt: “peak
+frequency ~55 kHz” reads the same however it’s written.</p>
+<h2>Your name stays on it</h2>
+<p>Every entry carries a list of contributors, shown on the species page in the
+app. The first name is the person who created it; everyone who edits it
+afterwards is added below.</p>
+<p>That list can only be added to. An edit that rewrites, reorders or removes
+someone else’s credit is rejected automatically, because those entries are a
+record of other people’s work.</p>
+<h2>The licence</h2>
+<p>The guide data is published under <strong>CC BY-NC 4.0</strong>: anyone may reuse it,
+non-commercially, with credit. Commercial reuse needs permission. By submitting
+an entry you’re releasing your contribution under the same terms — which is
+what makes it usable by everyone who installs the app, and by researchers and
+other projects afterwards.</p>
+<h2>Where to start</h2>
+<p>Two good first contributions, and neither of them is a big job.</p>
+<p><strong>Add a bat that lives near you.</strong> If a species isn’t in the guide at all, it is
+invisible — nobody can correct it, illustrate it or argue with it. Getting it
+onto the list is the contribution. A name, a scientific name and the regions it
+lives in is a real entry, and everything after that can arrive later, from you
+or from someone else.</p>
+<p><strong>Or fill a gap in one that’s already there.</strong> Open <a href="/guide-editor/" class="wikilink">the editor</a>,
+look for the orange dots, and add the one thing missing from a bat you know —
+a photo with its credit, a set of echolocation parameters, a reference, a local
+status that differs from the textbook.</p>
+<p>If you’d rather work in the file directly, the guide and a full description of
+every field live in the
+<a href="https://github.com/NiallxD/OpenBat-FieldGuide">field guide repository</a>, and
+pull requests are welcome there too.</p>
+<p>So that’s it! That’s all there is to it! The OpenBat team are excited to see all the contributions from passionate folk around the world.</p>
+</div>
+  
+
+  
+  
+  <div class="post-related">
+    <p class="section-label">Read more</p>
+    <div class="post-grid">
+      
+      <a href="/blog/how-openbat-draws-a-range-map/" class="post-card">
+        
+        <div class="post-card-img">
+          <img src="/static/images/range-cover.webp" alt="" loading="lazy">
+        </div>
+        
+        <div class="post-card-body">
+          <h2>How OpenBat Draws a Range Map</h2>
+          <div class="post-card-meta">
+            <time datetime="2026-08-27">27 August 2026</time>
+          </div>
+          <p class="post-card-desc">Where the distribution maps come from, what has to be assumed to draw one, and why the rules are careful not to delete real range at the edges.</p>
+        </div>
+      </a>
+      
+    </div>
+  </div>
+  
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-col brand">
+        <a class="footer-logo-link" href="/">
+          <img class="footer-logo" src="/static/images/logo.png" alt="OpenBat">
+        </a>
+        <p class="footer-web-address">openbat.app</p>
+        <div class="footer-contact">
+          <div class="contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span class="reveal-email" data-u="hello" data-d="openbat.app" style="cursor:pointer;">Click to reveal email</span>
+          </div>
+        </div>
+        <p class="footer-privacy-link"><a href="/privacy/">Privacy</a></p>
+      </div>
+    </div>
+    <p class="footer-copyright">© 2026 Niall Bell (OpenBat)</p>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      const applyTheme = () => {
+        document.documentElement.setAttribute('data-theme', target);
+        localStorage.setItem('theme', target);
+      };
+      if (document.startViewTransition) {
+        document.startViewTransition(applyTheme);
+      } else {
+        applyTheme();
+      }
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const body = document.body;
+
+    const toggleMenu = () => {
+      const isOpen = body.classList.toggle('menu-open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    };
+
+    menuToggle.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', toggleMenu);
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (body.classList.contains('menu-open')) toggleMenu();
+      });
+    });
+
+    const header = document.querySelector('.site-header');
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Platform toggle (Help page) — swap the iOS / Android panels
+    const platBtns = document.querySelectorAll('.plat-toggle-btn');
+    if (platBtns.length) {
+      const platSections = {
+        ios: document.getElementById('plat-ios'),
+        android: document.getElementById('plat-android'),
+      };
+
+      const setPlatform = (mode, instant) => {
+        const incoming = platSections[mode];
+        const outgoing = platSections[mode === 'ios' ? 'android' : 'ios'];
+        if (!incoming || !outgoing) return;
+
+        platBtns.forEach(btn => {
+          const on = btn.dataset.platform === mode;
+          btn.classList.toggle('active', on);
+          btn.setAttribute('aria-selected', on);
+        });
+
+        if (instant) {
+          outgoing.classList.add('plat-hidden');
+          incoming.classList.remove('plat-hidden');
+          return;
+        }
+
+        // Fade the outgoing panel out, swap, then fade the incoming one in
+        outgoing.style.opacity = '0';
+        setTimeout(() => {
+          outgoing.classList.add('plat-hidden');
+          outgoing.style.opacity = '';
+          incoming.classList.remove('plat-hidden');
+          incoming.style.transition = 'none';
+          incoming.style.opacity = '0';
+          incoming.getBoundingClientRect(); // force reflow
+          incoming.style.transition = '';
+          incoming.style.opacity = '1';
+        }, 350);
+      };
+
+      platBtns.forEach(btn => {
+        btn.addEventListener('click', () => setPlatform(btn.dataset.platform));
+      });
+
+      if (location.hash === '#android') setPlatform('android', true);
+    }
+
+    // Assemble obfuscated email addresses on click
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.reveal-email').forEach(el => {
+        el.addEventListener('click', () => {
+          const email = el.dataset.u + '@' + el.dataset.d;
+          const cls = el.className.replace('reveal-email', '').trim();
+          const inner = el.querySelector('svg')
+            ? el.querySelector('svg').outerHTML + email
+            : email;
+          const style = el.getAttribute('style') || '';
+          el.outerHTML = `<a href="mailto:${email}" class="${cls}" style="${style}">${inner}</a>`;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

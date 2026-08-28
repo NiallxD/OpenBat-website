@@ -1,43 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://openbat.app/contact/</loc>
+    <loc>https://openbat.app/blog/adding-a-bat-to-the-field-guide/</loc>
     <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://openbat.app/blog/build-your-own-bat-microphone/</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://openbat.app/blog/how-openbat-decides-what-it-heard/</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://openbat.app/blog/how-openbat-draws-a-range-map/</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://openbat.app/blog/the-gaps-in-bat-data/</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://openbat.app/blog/what-openbat-is/</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://openbat.app/blog/white-nose-syndrome/</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://openbat.app/blog/why-bats-are-hard-to-watch/</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://openbat.app/blog/why-openbat-has-a-blog/</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://openbat.app/blog/</loc>
+    <lastmod>2026-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://openbat.app/contact/</loc>
+    <lastmod>2026-08-28</lastmod>
   </url>
   <url>
     <loc>https://openbat.app/contribute/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
   </url>
   <url>
     <loc>https://openbat.app/download-openbat/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
   </url>
   <url>
     <loc>https://openbat.app/generative-ai-use/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
   </url>
   <url>
     <loc>https://openbat.app/guide-editor/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
   </url>
   <url>
     <loc>https://openbat.app/help/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
   </url>
   <url>
     <loc>https://openbat.app/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
   </url>
   <url>
     <loc>https://openbat.app/our-project/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
   </url>
   <url>
     <loc>https://openbat.app/privacy-policy/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
   </url>
   <url>
     <loc>https://openbat.app/privacy/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
   </url>
 </urlset>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How OpenBat Draws a Range Map — OpenBat</title>
+  <meta name="description" content="Where the distribution maps come from, what has to be assumed to draw one, and why the rules are careful not to delete real range at the edges.">
+  
+  <!-- Privacy & Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta name="referrer" content="no-referrer">
+  <meta property="og:site_name" content="OpenBat">
+  <meta property="og:title" content="How OpenBat Draws a Range Map — OpenBat">
+  <meta property="og:description" content="Where the distribution maps come from, what has to be assumed to draw one, and why the rules are careful not to delete real range at the edges.">
+  <meta property="og:image" content="/static/images/range-cover.webp">
+  <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="/static/css/style.css?v=5.4">
+  <script>
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme !== 'light') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+  
+</head>
+<body>
+  <header class="site-header transparent-header">
+    <div class="site-header-inner">
+      <a class="site-title" href="/">
+        <img class="site-logo" src="/static/images/logo.png" alt="OpenBat">
+      </a>
+      <nav class="nav-menu">
+        
+        
+        <a href="/our-project/">Our Project</a>
+        
+        
+        
+        <div class="nav-item has-dropdown">
+          <a href="/contribute/">Contribute</a>
+          <div class="nav-dropdown">
+            
+            <a href="/guide-editor/">Field Guide Editor</a>
+            
+          </div>
+        </div>
+        
+        
+        
+        <a href="/blog/">Blog</a>
+        
+        
+        
+        <a href="/help/">Help</a>
+        
+        
+        
+        <a href="/privacy/">Privacy</a>
+        
+        
+        
+        <a href="/contact/">Contact</a>
+        
+        
+      </nav>
+      <div class="header-controls">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
+          <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-overlay"></div>
+
+  <main>
+    
+
+
+
+
+
+
+<div class="post-hero">
+  <img class="post-hero-bg" src="/static/images/range-hero.webp" alt="">
+  <div class="post-hero-shade"></div>
+  <div class="post-hero-inner">
+    <p class="section-label"><a href="/blog/" class="post-back">← Blog</a></p>
+    <h1>How OpenBat Draws a Range Map</h1>
+    <p class="post-hero-text">Where the distribution maps come from, what has to be assumed to draw one, and why the rules are careful not to delete real range at the edges.</p>
+    <div class="post-meta">
+      <time datetime="2026-08-27">27 August 2026</time>
+      <span class="post-author">Niall Bell</span>
+      <span class="tag">field-guide</span><span class="tag">range-maps</span><span class="tag">gbif</span>
+    </div>
+  </div>
+</div>
+
+
+<article class="standard-page post post--hero">
+  
+
+  <div class="post-content"><p>Open a species in OpenBat and you get a map of where it lives. That map does
+two jobs, and the second one matters more than it looks: it also decides which
+species the app’s on-device identification is willing to consider where you are
+standing. A range map that is wrong in the wrong direction doesn’t just look
+odd — it switches a resident bat off.</p>
+<p>Here is what those maps are made of, and what has to be assumed to draw one.</p>
+<h2>The raw material</h2>
+<p>Every range comes from <a href="https://www.gbif.org/">GBIF</a>, the global pool of
+biodiversity occurrence records — museum specimens, survey data, ringing
+records, verified citizen-science sightings. For each species the app can name,
+we ask GBIF for every record it holds and bin them into a grid of <strong>1° cells</strong>,
+about 111 km across.</p>
+<p>Coarse, deliberately. The question is “does this bat live around here”, not
+“was one caught in this field”. A finer grid mostly encodes where recorders
+happened to walk.</p>
+<p>Two details that took more work than expected:</p>
+<p><strong>Names are unreliable in both directions.</strong> Querying GBIF by scientific name
+fails silently when the app’s name and GBIF’s disagree. The western red bat
+returns zero records near San Francisco under <em>Lasiurus blossevillii</em>, because
+those records now sit under <em>Lasiurus frantzii</em>. The serotine returns zero near
+London under <em>Cnephaeus serotinus</em>, because GBIF matches that name only to a
+genus. Either mistake switches a common bat off in a place it is common, so
+every name is matched to its record set once, in advance, and checked by a
+person rather than looked up on the fly.</p>
+<p><strong>We ask for a summary of every record, not a sample of them.</strong> Records come
+back in no particular order, so taking the first few thousand of a species can
+hand you one large national dataset and leave real parts of a range looking
+empty. GBIF will instead count <em>every</em> record it holds into a grid — all 3.2
+million common pipistrelles — which is both a truer picture and a smaller
+answer.</p>
+<h2>The assumption everything hinges on</h2>
+<p><strong>A record is evidence a person was there and filed something, not evidence a
+bat was there and no bat was anywhere else.</strong> Absence of records is not absence
+of bats.</p>
+<p>That sounds obvious. Building on it is where it gets awkward, because you still
+have to draw a line somewhere: a single record 4,000 km from a species’ range
+is almost always a misidentification, an escapee, or a specimen catalogued at
+the museum that holds it rather than where it was collected. Keep everything
+and every map grows a rash of dots. Filter too hard and you delete real range.</p>
+<p>The obvious way to draw the line is to judge each cell on how many records it
+holds: throw out the thin ones, then tidy up what survives. It reads well until
+you notice that recording effort is thinnest exactly where a range ends, so
+judging cells on record counts reads survey intensity as absence:</p>
+<ul>
+<li>The <strong>spotted bat’s</strong> run north into British Columbia is four cells holding
+1, 1, 2 and 3 records, one empty row away from the main range. Judge those
+cells on their own and every one of them fails: the range stops dead on the
+49th parallel and the bat reads as absent from the whole province.</li>
+<li>The <strong>Hawaiian hoary bat</strong> is seven cells holding 18 records. Set the bar for
+an isolated cluster at 20 and an entire island population disappears, two
+records short.</li>
+</ul>
+<h2>Buffer, bridge, then judge</h2>
+<p>Same ingredients, different order.</p>
+<ol>
+<li><strong>Buffer</strong> — every cell holding a record grows by one cell in each
+direction (~111 km).</li>
+<li><strong>Bridge</strong> — gaps of up to about 440 km between neighbouring blobs are
+closed, so a strait or a stretch of unsurveyed ground doesn’t split one
+range into two.</li>
+<li><strong>Group</strong> — what remains is flood-filled into connected groups, and <em>then</em>
+each group is judged.</li>
+</ol>
+<p>The order is what matters. Judging after bridging lets a thin edge inherit the
+credibility of the range it attaches to, instead of being asked to justify
+itself cell by cell — which is exactly what a sparsely surveyed real edge
+cannot do.</p>
+<figure>
+  <a href="/static/images/range-stages.webp"><img src="/static/images/range-stages.webp" alt="Three maps of the spotted bat showing the algorithm running: the cells holding records, the same cells grown by one in every direction, and short gaps between them closed." loading="lazy"></a>
+  <figcaption>The first two steps, on the spotted bat. <strong>1:</strong> the 72 cells that hold records. <strong>2:</strong> buffering grows each by one cell, adding 210. <strong>3:</strong> bridging closes the short gaps between them, adding 70 more. Green rings what each step added: buffering thickens every blob's outline, bridging only fills between things — including the empty row that had been cutting the run north into British Columbia off from the main range.</figcaption>
+</figure>
+<p>A group survives if it has <strong>either</strong> at least 3 cells holding records <strong>or</strong>
+at least 20 records in total. Either is sufficient, and both have to fail
+before anything is dropped.</p>
+<p>Two tests rather than one, because they catch two different kinds of evidence.
+Cell count alone separates the real disjunct populations (Hawaii’s 7 cells,
+BC’s 4) from the known artefacts (a single cell in Bogotá, a single cell in
+Alaska) — but it also deleted every island endemic, because the Canary Islands
+cannot fill three 1° cells no matter how many barbastelles are on them. A
+record count alone can’t separate the artefacts from BC at all. Together:
+<em>spread out but thinly recorded</em>, or <em>concentrated but well recorded</em>. Only a
+group that is both tiny and thin gets dropped, which is the exact profile of a
+stray record.</p>
+<figure>
+  <a href="/static/images/range-hoary-bat.webp"><img src="/static/images/range-hoary-bat.webp" alt="Three maps of the hoary bat across the Americas: raw records, five single-cell outliers ringed in red, and the final range with Hawaii kept as its own group." loading="lazy"></a>
+  <figcaption>The hoary bat, where the middle step has something to do: five clusters ringed in red, each a single cell holding a handful of records. Hawaii is not among them: seven cells and 18 records clears the spread test comfortably, and an island population is exactly the kind of thing a blunter rule loses.</figcaption>
+</figure>
+<p>One more rule: a species’ <strong>largest group always survives</strong>, however thin.
+Dropping it would turn “we know very little about this bat” into “this bat is
+not here”, and those are not the same statement. The app has an honest way to
+say the first and should never be handed the second by accident.</p>
+<figure>
+  <a href="/static/images/range-common-pipistrelle.webp"><img src="/static/images/range-common-pipistrelle.webp" alt="Three maps of the common pipistrelle: raw records across Europe and Asia, seven outliers ringed in red in the Americas, India and east Africa, and the final range." loading="lazy"></a>
+  <figcaption>The common pipistrelle, 3.2 million records — and seven single cells scattered across the Americas, India and east Africa, each holding one to four of them. Those are the middle step's whole job: eight groups in, one group out.</figcaption>
+</figure>
+<h2>What that adds up to</h2>
+<p>Across the 48 species the app can name, these rules add <strong>15,483 cells</strong> of
+range compared with judging cells one at a time. What they take away is small
+and deliberate: the largest group dropped anywhere holds 2 cells and 15
+records, and 87 of the 133 dropped are a single cell holding a single record.</p>
+<h2>How it reaches the app</h2>
+<p>The range data ships <strong>inside</strong> the app and is refreshed from the
+<a href="https://github.com/NiallxD/OpenBat-FieldGuide">field guide repository</a> at
+launch, so a corrected range reaches every install without an app update — and a
+phone that has never had a signal still has a full set. Everything happens on device;
+nothing about your location is sent anywhere.</p>
+<p>On a species page you can toggle between <strong>Records</strong> and <strong>Range</strong>. Records is
+the raw evidence — the cells that genuinely hold observations, shaded by how
+many. Range is the modelled version, the one described above. We show both
+because they answer different questions, and because the modelled map is an
+inference and shouldn’t pretend otherwise.</p>
+<p>The identification engine reads the same grid, and distinguishes three answers
+rather than two: present, absent, and <em>unknown</em>. A species with no data is not
+a species that isn’t there, and the app says so.</p>
+<h2>What it still can’t tell you</h2>
+<ul>
+<li><strong>There is no seasonality.</strong> GBIF’s density summaries carry no dates, so the
+app has no per-cell month information. It treats that as “no opinion” rather
+than hiding a resident bat whose records lacked dates.</li>
+<li><strong>Cells are 111 km.</strong> A cell being in range means the species lives in that
+region, not on that hillside.</li>
+<li><strong>It is still built from records.</strong> Better-surveyed places look better
+populated. Buffering and bridging soften that; nothing removes it.</li>
+</ul>
+<p>The range data and its licence terms are public, in the
+<a href="https://github.com/NiallxD/OpenBat-FieldGuide">field guide repository</a>, along
+with the guide itself. If you spot a range that looks wrong for a bat you know
+well, that is exactly the kind of report we want.</p>
+</div>
+  
+
+  
+  
+  <div class="post-related">
+    <p class="section-label">Read more</p>
+    <div class="post-grid">
+      
+      <a href="/blog/adding-a-bat-to-the-field-guide/" class="post-card">
+        
+        <div class="post-card-img">
+          <img src="/static/images/guide-cover.webp" alt="" loading="lazy">
+        </div>
+        
+        <div class="post-card-body">
+          <h2>Adding a Bat to the Field Guide</h2>
+          <div class="post-card-meta">
+            <time datetime="2026-08-27">27 August 2026</time>
+          </div>
+          <p class="post-card-desc">The field guide inside OpenBat is written by the people who use it — here is what an entry holds, how to add one without touching any code, and what happens after you press submit.</p>
+        </div>
+      </a>
+      
+    </div>
+  </div>
+  
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-col brand">
+        <a class="footer-logo-link" href="/">
+          <img class="footer-logo" src="/static/images/logo.png" alt="OpenBat">
+        </a>
+        <p class="footer-web-address">openbat.app</p>
+        <div class="footer-contact">
+          <div class="contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span class="reveal-email" data-u="hello" data-d="openbat.app" style="cursor:pointer;">Click to reveal email</span>
+          </div>
+        </div>
+        <p class="footer-privacy-link"><a href="/privacy/">Privacy</a></p>
+      </div>
+    </div>
+    <p class="footer-copyright">© 2026 Niall Bell (OpenBat)</p>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      const applyTheme = () => {
+        document.documentElement.setAttribute('data-theme', target);
+        localStorage.setItem('theme', target);
+      };
+      if (document.startViewTransition) {
+        document.startViewTransition(applyTheme);
+      } else {
+        applyTheme();
+      }
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const body = document.body;
+
+    const toggleMenu = () => {
+      const isOpen = body.classList.toggle('menu-open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    };
+
+    menuToggle.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', toggleMenu);
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (body.classList.contains('menu-open')) toggleMenu();
+      });
+    });
+
+    const header = document.querySelector('.site-header');
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Platform toggle (Help page) — swap the iOS / Android panels
+    const platBtns = document.querySelectorAll('.plat-toggle-btn');
+    if (platBtns.length) {
+      const platSections = {
+        ios: document.getElementById('plat-ios'),
+        android: document.getElementById('plat-android'),
+      };
+
+      const setPlatform = (mode, instant) => {
+        const incoming = platSections[mode];
+        const outgoing = platSections[mode === 'ios' ? 'android' : 'ios'];
+        if (!incoming || !outgoing) return;
+
+        platBtns.forEach(btn => {
+          const on = btn.dataset.platform === mode;
+          btn.classList.toggle('active', on);
+          btn.setAttribute('aria-selected', on);
+        });
+
+        if (instant) {
+          outgoing.classList.add('plat-hidden');
+          incoming.classList.remove('plat-hidden');
+          return;
+        }
+
+        // Fade the outgoing panel out, swap, then fade the incoming one in
+        outgoing.style.opacity = '0';
+        setTimeout(() => {
+          outgoing.classList.add('plat-hidden');
+          outgoing.style.opacity = '';
+          incoming.classList.remove('plat-hidden');
+          incoming.style.transition = 'none';
+          incoming.style.opacity = '0';
+          incoming.getBoundingClientRect(); // force reflow
+          incoming.style.transition = '';
+          incoming.style.opacity = '1';
+        }, 350);
+      };
+
+      platBtns.forEach(btn => {
+        btn.addEventListener('click', () => setPlatform(btn.dataset.platform));
+      });
+
+      if (location.hash === '#android') setPlatform('android', true);
+    }
+
+    // Assemble obfuscated email addresses on click
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.reveal-email').forEach(el => {
+        el.addEventListener('click', () => {
+          const email = el.dataset.u + '@' + el.dataset.d;
+          const cls = el.className.replace('reveal-email', '').trim();
+          const inner = el.querySelector('svg')
+            ? el.querySelector('svg').outerHTML + email
+            : email;
+          const style = el.getAttribute('style') || '';
+          el.outerHTML = `<a href="mailto:${email}" class="${cls}" style="${style}">${inner}</a>`;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

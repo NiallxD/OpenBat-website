@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — OpenBat</title>
+  <meta name="description" content="Notes from building OpenBat — hardware, detection, the field guide, and what we learn along the way.">
+  
+  <!-- Privacy & Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta name="referrer" content="no-referrer">
+  <meta property="og:site_name" content="OpenBat">
+  <meta property="og:title" content="Blog — OpenBat">
+  <meta property="og:description" content="Notes from building OpenBat — hardware, detection, the field guide, and what we learn along the way.">
+  
+  <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="/static/css/style.css?v=5.4">
+  <script>
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme !== 'light') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+  
+</head>
+<body>
+  <header class="site-header transparent-header">
+    <div class="site-header-inner">
+      <a class="site-title" href="/">
+        <img class="site-logo" src="/static/images/logo.png" alt="OpenBat">
+      </a>
+      <nav class="nav-menu">
+        
+        
+        <a href="/our-project/">Our Project</a>
+        
+        
+        
+        <div class="nav-item has-dropdown">
+          <a href="/contribute/">Contribute</a>
+          <div class="nav-dropdown">
+            
+            <a href="/guide-editor/">Field Guide Editor</a>
+            
+          </div>
+        </div>
+        
+        
+        
+        <a href="/blog/" class="active">Blog</a>
+        
+        
+        
+        <a href="/help/">Help</a>
+        
+        
+        
+        <a href="/privacy/">Privacy</a>
+        
+        
+        
+        <a href="/contact/">Contact</a>
+        
+        
+      </nav>
+      <div class="header-controls">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
+          <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-overlay"></div>
+
+  <main>
+    <div class="standard-page">
+  <div class="listing-header">
+    <h1>Blog</h1>
+    <p class="page-lead">Notes from building OpenBat — hardware, detection, the field guide, and what we learn along the way.</p>
+  </div>
+
+  
+
+  
+  
+  
+  <a href="/blog/what-openbat-is/" class="post-card post-card--featured">
+    
+    <div class="post-card-img">
+      <img src="/static/images/OpenBat_Screens.webp" alt="" loading="lazy">
+    </div>
+    
+    <div class="post-card-body">
+      <p class="section-label">Latest</p>
+      <h2>What OpenBat Is</h2>
+      <div class="post-card-meta">
+        <time datetime="2026-08-27">27 August 2026</time>
+        <span class="tag">openbat</span><span class="tag">community-science</span>
+      </div>
+      <p class="post-card-desc">A free app that joins up three things which already exist separately — a cheap ultrasonic microphone, a way to learn what you are hearing, and the science platforms that want the recording afterwards.</p>
+    </div>
+  </a>
+  
+  
+
+  
+  
+  
+  <div class="filter-cloud" id="post-filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    
+    <button class="filter-btn" data-filter="acoustics">acoustics</button>
+    
+    <button class="filter-btn" data-filter="auto-id">auto-id</button>
+    
+    <button class="filter-btn" data-filter="bats">bats</button>
+    
+    <button class="filter-btn" data-filter="classifier">classifier</button>
+    
+    <button class="filter-btn" data-filter="conservation">conservation</button>
+    
+    <button class="filter-btn" data-filter="contributing">contributing</button>
+    
+    <button class="filter-btn" data-filter="data">data</button>
+    
+    <button class="filter-btn" data-filter="field-guide">field-guide</button>
+    
+    <button class="filter-btn" data-filter="gbif">gbif</button>
+    
+    <button class="filter-btn" data-filter="griff">griff</button>
+    
+    <button class="filter-btn" data-filter="hardware">hardware</button>
+    
+    <button class="filter-btn" data-filter="on-device">on-device</button>
+    
+    <button class="filter-btn" data-filter="openbat">openbat</button>
+    
+    <button class="filter-btn" data-filter="range-maps">range-maps</button>
+    
+  </div>
+  
+
+  
+  <div class="post-grid" id="post-grid">
+    
+    <a href="/blog/why-openbat-has-a-blog/" class="post-card" data-tags="openbat">
+      
+      <div class="post-card-img">
+        <img src="/static/images/open-bat-blog-screenshot.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>Why OpenBat Has a Blog</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-08-27">27 August 2026</time>
+          <span class="tag">openbat</span>
+        </div>
+        <p class="post-card-desc">A place to write about what we are building, what breaks, and what we learn from the bats themselves.</p>
+      </div>
+    </a>
+    
+    <a href="/blog/why-bats-are-hard-to-watch/" class="post-card" data-tags="bats,acoustics">
+      
+      <div class="post-card-img">
+        <img src="/static/images/detection-cover.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>Why Bats Are Hard to Watch</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-08-27">27 August 2026</time>
+          <span class="tag">bats</span><span class="tag">acoustics</span>
+        </div>
+        <p class="post-card-desc">Bats are all around us and almost nobody has properly seen one. What makes them so difficult to observe — and why a blank night means far less than it looks.</p>
+      </div>
+    </a>
+    
+    <a href="/blog/white-nose-syndrome/" class="post-card" data-tags="bats,conservation">
+      
+      <div class="post-card-img">
+        <img src="/static/images/little_brown_bat_wns.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>White-Nose Syndrome</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-08-27">27 August 2026</time>
+          <span class="tag">bats</span><span class="tag">conservation</span>
+        </div>
+        <p class="post-card-desc">The fungus that has killed millions of North American bats — what it is, why waking up too often is fatal, and why it turned bat monitoring from a nice idea into an urgent one.</p>
+      </div>
+    </a>
+    
+    <a href="/blog/the-gaps-in-bat-data/" class="post-card" data-tags="bats,data">
+      
+      <div class="post-card-img">
+        <img src="/static/images/records-cover.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>The Gaps in Bat Data</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-08-27">27 August 2026</time>
+          <span class="tag">bats</span><span class="tag">data</span>
+        </div>
+        <p class="post-card-desc">Bat records are thin, and they are thin unevenly. What is missing from the datasets, why an empty space is so easy to misread, and what one ordinary observation is actually worth.</p>
+      </div>
+    </a>
+    
+    <a href="/blog/how-openbat-decides-what-it-heard/" class="post-card" data-tags="auto-id,classifier,on-device">
+      
+      <div class="post-card-img">
+        <img src="/static/images/autoid-cover.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>How OpenBat Decides What It Heard</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-08-27">27 August 2026</time>
+          <span class="tag">auto-id</span><span class="tag">classifier</span>
+        </div>
+        <p class="post-card-desc">The chain that turns a burst of ultrasound into a species name — pulse detection, a short window of audio, an on-device model, and the gates that let it say &quot;no idea&quot;.</p>
+      </div>
+    </a>
+    
+    <a href="/blog/build-your-own-bat-microphone/" class="post-card" data-tags="hardware,griff">
+      
+      <div class="post-card-img">
+        <img src="/static/images/griff-cover.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>Build Your Own Bat Microphone</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-08-27">27 August 2026</time>
+          <span class="tag">hardware</span><span class="tag">griff</span>
+        </div>
+        <p class="post-card-desc">The Griff Mini is an open-source 384 kHz ultrasonic microphone you can build for about $28 a unit. Here is what to order, what it costs, and what building one involves.</p>
+      </div>
+    </a>
+    
+    <a href="/blog/how-openbat-draws-a-range-map/" class="post-card" data-tags="field-guide,range-maps,gbif">
+      
+      <div class="post-card-img">
+        <img src="/static/images/range-cover.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>How OpenBat Draws a Range Map</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-08-27">27 August 2026</time>
+          <span class="tag">field-guide</span><span class="tag">range-maps</span>
+        </div>
+        <p class="post-card-desc">Where the distribution maps come from, what has to be assumed to draw one, and why the rules are careful not to delete real range at the edges.</p>
+      </div>
+    </a>
+    
+    <a href="/blog/adding-a-bat-to-the-field-guide/" class="post-card" data-tags="field-guide,contributing">
+      
+      <div class="post-card-img">
+        <img src="/static/images/guide-cover.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>Adding a Bat to the Field Guide</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-08-27">27 August 2026</time>
+          <span class="tag">field-guide</span><span class="tag">contributing</span>
+        </div>
+        <p class="post-card-desc">The field guide inside OpenBat is written by the people who use it — here is what an entry holds, how to add one without touching any code, and what happens after you press submit.</p>
+      </div>
+    </a>
+    
+  </div>
+  
+</div>
+
+<script>
+  // Tag filter. The grid is fully rendered at build time; this only hides
+  // cards, so the page is complete with JS off (every post is still listed).
+  (() => {
+    const grid = document.getElementById('post-grid');
+    const btns = document.querySelectorAll('#post-filters .filter-btn');
+    if (!grid || !btns.length) return;
+    const cards = grid.querySelectorAll('.post-card');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        btns.forEach(b => b.classList.toggle('active', b === btn));
+        cards.forEach(card => {
+          const tags = (card.dataset.tags || '').split(',');
+          card.hidden = !(filter === 'all' || tags.includes(filter));
+        });
+      });
+    });
+  })();
+</script>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-col brand">
+        <a class="footer-logo-link" href="/">
+          <img class="footer-logo" src="/static/images/logo.png" alt="OpenBat">
+        </a>
+        <p class="footer-web-address">openbat.app</p>
+        <div class="footer-contact">
+          <div class="contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span class="reveal-email" data-u="hello" data-d="openbat.app" style="cursor:pointer;">Click to reveal email</span>
+          </div>
+        </div>
+        <p class="footer-privacy-link"><a href="/privacy/">Privacy</a></p>
+      </div>
+    </div>
+    <p class="footer-copyright">© 2026 Niall Bell (OpenBat)</p>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      const applyTheme = () => {
+        document.documentElement.setAttribute('data-theme', target);
+        localStorage.setItem('theme', target);
+      };
+      if (document.startViewTransition) {
+        document.startViewTransition(applyTheme);
+      } else {
+        applyTheme();
+      }
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const body = document.body;
+
+    const toggleMenu = () => {
+      const isOpen = body.classList.toggle('menu-open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    };
+
+    menuToggle.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', toggleMenu);
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (body.classList.contains('menu-open')) toggleMenu();
+      });
+    });
+
+    const header = document.querySelector('.site-header');
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Platform toggle (Help page) — swap the iOS / Android panels
+    const platBtns = document.querySelectorAll('.plat-toggle-btn');
+    if (platBtns.length) {
+      const platSections = {
+        ios: document.getElementById('plat-ios'),
+        android: document.getElementById('plat-android'),
+      };
+
+      const setPlatform = (mode, instant) => {
+        const incoming = platSections[mode];
+        const outgoing = platSections[mode === 'ios' ? 'android' : 'ios'];
+        if (!incoming || !outgoing) return;
+
+        platBtns.forEach(btn => {
+          const on = btn.dataset.platform === mode;
+          btn.classList.toggle('active', on);
+          btn.setAttribute('aria-selected', on);
+        });
+
+        if (instant) {
+          outgoing.classList.add('plat-hidden');
+          incoming.classList.remove('plat-hidden');
+          return;
+        }
+
+        // Fade the outgoing panel out, swap, then fade the incoming one in
+        outgoing.style.opacity = '0';
+        setTimeout(() => {
+          outgoing.classList.add('plat-hidden');
+          outgoing.style.opacity = '';
+          incoming.classList.remove('plat-hidden');
+          incoming.style.transition = 'none';
+          incoming.style.opacity = '0';
+          incoming.getBoundingClientRect(); // force reflow
+          incoming.style.transition = '';
+          incoming.style.opacity = '1';
+        }, 350);
+      };
+
+      platBtns.forEach(btn => {
+        btn.addEventListener('click', () => setPlatform(btn.dataset.platform));
+      });
+
+      if (location.hash === '#android') setPlatform('android', true);
+    }
+
+    // Assemble obfuscated email addresses on click
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.reveal-email').forEach(el => {
+        el.addEventListener('click', () => {
+          const email = el.dataset.u + '@' + el.dataset.d;
+          const cls = el.className.replace('reveal-email', '').trim();
+          const inner = el.querySelector('svg')
+            ? el.querySelector('svg').outerHTML + email
+            : email;
+          const style = el.getAttribute('style') || '';
+          el.outerHTML = `<a href="mailto:${email}" class="${cls}" style="${style}">${inner}</a>`;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
