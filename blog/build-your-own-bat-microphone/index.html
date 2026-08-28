@@ -20,14 +20,22 @@
   <link rel="icon" href="/static/images/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="/static/css/style.css?v=6.3">
+  <meta name="theme-color" id="theme-color" content="#05070d">
+  <link rel="stylesheet" href="/static/css/style.css?v=6.4">
   <script>
+    // Matches the top of each theme's page gradient, so the browser chrome on
+    // iOS and Android continues the page rather than capping it with a bar.
+    const THEME_COLORS = { dark: '#05070d', light: '#081E37' };
+    const setThemeColor = (theme) => {
+      const meta = document.getElementById('theme-color');
+      if (meta) meta.setAttribute('content', THEME_COLORS[theme]);
+    };
+
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
       document.documentElement.setAttribute('data-theme', 'dark');
     }
+    setThemeColor(savedTheme === 'light' ? 'light' : 'dark');
   </script>
   
 </head>
@@ -441,6 +449,7 @@ microphones.</p>
       const applyTheme = () => {
         document.documentElement.setAttribute('data-theme', target);
         localStorage.setItem('theme', target);
+        setThemeColor(target);
       };
       if (document.startViewTransition) {
         document.startViewTransition(applyTheme);
