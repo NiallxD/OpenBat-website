@@ -5,11 +5,15 @@ permalink: /privacy/
 publish: true
 ---
 
+<div class="page-plain">
+
 # How OpenBat protects your privacy
 
 OpenBat is a bat detector. It records ultrasound and works out which species is calling, entirely on your phone.
 
 Recording anything with a microphone raises obvious questions. This page answers them directly.
+
+</div>
 
 ## Nothing leaves your phone
 

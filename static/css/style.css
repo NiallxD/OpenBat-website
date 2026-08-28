@@ -801,11 +801,14 @@ span.wikilink { color: var(--color-secondary); }
 .page-cards,
 .post-content--plain { margin-top: 1.75rem; }
 
+/* Cards stretch rather than sitting at the top of their row, so a half-width
+   pair matches heights however unevenly the prose falls. A full-width card is
+   alone in its row, so this changes nothing for it. */
 .page-cards {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 1.5rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 /* Anything the filter passes through whole — the platform toggle, its panels —
@@ -817,8 +820,13 @@ span.wikilink { color: var(--color-secondary); }
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 1.5rem;
-  align-items: start;
+  align-items: stretch;
 }
+
+/* The author's opt-out, `.page-plain`: prose that sits on the page rather
+   than in a card — a page intro, a pull quote. Full width, no chrome. */
+.page-plain > :first-child { margin-top: 0; }
+.page-plain > :last-child { margin-bottom: 0; }
 
 .page-card { grid-column: span 6; }
 .page-card--half { grid-column: span 3; }
@@ -936,6 +944,46 @@ span.wikilink { color: var(--color-secondary); }
 
 @media (max-width: 600px) {
   .page-card { padding: 1.25rem; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   INLINE CHARTS
+   Diagrams drawn as inline SVG in a post, rather than exported as images, so
+   they stay sharp, follow the theme, and can be edited in the markdown. The
+   SVG must set its colours with `style="fill: var(--color-…)"` — a CSS
+   variable is not valid in a plain `fill=` presentation attribute.
+   ══════════════════════════════════════════════════════════ */
+.post-content figure.chart {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.5rem 1rem;
+  margin: 2rem 0;
+  overflow-x: auto;
+}
+
+.post-content figure.chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 320px;
+}
+
+.post-content figure.chart figcaption {
+  margin-top: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-muted);
+  text-align: left;
+}
+
+.chart-label { font-family: var(--font-body); font-size: 13px; }
+.chart-label--small { font-size: 11px; }
+.chart-key { font-family: var(--font-sans); font-size: 13px; letter-spacing: 0.06em; }
+
+@media (max-width: 600px) {
+  .post-content figure.chart { padding: 1rem 1rem 0.75rem; }
 }
 
 /* ══════════════════════════════════════════════════════════

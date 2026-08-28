@@ -4,15 +4,16 @@ description: Learn more about OpenBat and its goals.
 permalink: /our-project/
 publish: true
 ---
-## The Challenge
+<div class="page-plain">
 
-To quote the inspirational Sir David Attenborough:
+## Bats are difficult to experience
 
-> *“No one will protect what they don’t care about, and no one will care about what they have never experienced.”*
+They're often small, they fly at night, they rarely perch in line of sight, and they call at frequencies far above those humans can hear. For all intents and purposes, they are invisible.
 
-## Bats are difficult to experience. 
+> [!quote] The Challenge
+> To quote the inspirational Sir David Attenborough: *“No one will protect what they don’t care about, and no one will care about what they have never experienced.”*
 
-There often small, fly at night, rarely perch in line of sight, and they call at frequencies far above those which humans can hear. For all intents and purposes, they are invisible.
+</div>
 
 ## Fear not! There is a way!
 

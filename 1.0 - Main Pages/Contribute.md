@@ -5,11 +5,15 @@ permalink: /contribute/
 publish: true
 ---
 
+<div class="page-plain">
+
 ## Contribute to OpenBat
 
 The community is at the heart of this project, and it doesn't exist without people with an interest in bats getting involved. This is by design, we want people to be involved!
 
 There are three main ways to get involved:
+
+</div>
 
 ## 1. Listen to Bats
 

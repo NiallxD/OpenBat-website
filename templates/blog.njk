@@ -46,7 +46,7 @@ layout: base.njk
 
   {% if collections.regularPosts.length %}
   <div class="post-grid" id="post-grid">
-    {% for post in collections.regularPosts | reverse %}
+    {% for post in collections.regularPosts %}
     <a href="{{ post.url | url }}" class="post-card" data-tags="{{ post.data.tags | join(',') if post.data.tags else '' }}">
       {% if post.data.coverImage %}
       <div class="post-card-img">

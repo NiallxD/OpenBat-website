@@ -340,6 +340,11 @@ export default function (eleventyConfig) {
     "meta", "param", "source", "track", "wbr",
   ]);
   const PASSTHROUGH = /class\s*=\s*["'][^"']*\bplat-section\b/;
+  // `.page-plain` is the author's opt-out for a single block: a page intro or
+  // a pull quote that should sit on the page rather than in a card. Unlike
+  // `.plat-section` it is emitted verbatim, headings and all, so nothing
+  // inside it is cut into cards.
+  const PLAIN = /class\s*=\s*["'][^"']*\bpage-plain\b/;
   const TAG = /<(\/?)([a-zA-Z][\w-]*)([^>]*?)(\/?)>/g;
 
   const isBlank = (html) =>
@@ -354,6 +359,7 @@ export default function (eleventyConfig) {
     let depth = 0;
     let cursor = 0;        // start of the unconsumed remainder
     let wrapperAt = -1;    // where the current passthrough wrapper opened
+    let wrapperCards = false; // …and whether its contents get carded
     let m;
 
     const flush = () => {
@@ -373,7 +379,7 @@ export default function (eleventyConfig) {
           // emit the wrapper around the cards that come back.
           const open = html.slice(wrapperAt, html.indexOf(">", wrapperAt) + 1);
           const inner = html.slice(wrapperAt + open.length, m.index);
-          parts.push({ raw: open + toCards(inner) + full });
+          parts.push({ raw: open + (wrapperCards ? toCards(inner) : inner) + full });
           cursor = m.index + full.length;
           wrapperAt = -1;
         }
@@ -386,10 +392,11 @@ export default function (eleventyConfig) {
           section += html.slice(cursor, m.index);
           cursor = m.index;
           flush();
-        } else if (lower === "div" && PASSTHROUGH.test(attrs)) {
+        } else if (lower === "div" && (PASSTHROUGH.test(attrs) || PLAIN.test(attrs))) {
           section += html.slice(cursor, m.index);
           flush();
           wrapperAt = m.index;
+          wrapperCards = PASSTHROUGH.test(attrs);
         }
       }
       depth++;
