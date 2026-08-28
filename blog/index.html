@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="/static/css/style.css?v=6.0">
+  <link rel="stylesheet" href="/static/css/style.css?v=6.3">
   <script>
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
@@ -140,9 +140,13 @@
     
     <button class="filter-btn" data-filter="gbif">gbif</button>
     
+    <button class="filter-btn" data-filter="glossary">glossary</button>
+    
     <button class="filter-btn" data-filter="griff">griff</button>
     
     <button class="filter-btn" data-filter="hardware">hardware</button>
+    
+    <button class="filter-btn" data-filter="how-to">how-to</button>
     
     <button class="filter-btn" data-filter="on-device">on-device</button>
     
@@ -150,57 +154,43 @@
     
     <button class="filter-btn" data-filter="range-maps">range-maps</button>
     
+    <button class="filter-btn" data-filter="reference">reference</button>
+    
   </div>
   
 
   
   <div class="post-grid" id="post-grid">
     
-    <a href="/blog/why-openbat-has-a-blog/" class="post-card" data-tags="openbat">
+    <a href="/blog/a-blank-space-on-a-map-does-not-mean-absence/" class="post-card" data-tags="data,field-guide">
       
       <div class="post-card-img">
-        <img src="/static/images/open-bat-blog-screenshot.webp" alt="" loading="lazy">
+        <img src="/static/images/map_generation_example.webp" alt="" loading="lazy">
       </div>
       
       <div class="post-card-body">
-        <h2>Why OpenBat Has a Blog</h2>
+        <h2>A Blank Space on a Map does not mean Absence</h2>
         <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">openbat</span>
+          <time datetime="2026-08-29">29 August 2026</time>
+          <span class="tag">data</span><span class="tag">field-guide</span>
         </div>
-        <p class="post-card-desc">A place to write about what we are building, what breaks, and what we learn from the bats themselves.</p>
+        <p class="post-card-desc">Observation maps show where people have looked at least as much as where bats live. Reading the difference changes what you can honestly use them for.</p>
       </div>
     </a>
     
-    <a href="/blog/why-bats-are-hard-to-watch/" class="post-card" data-tags="bats,acoustics">
+    <a href="/blog/a-beginners-bat-vocabulary/" class="post-card" data-tags="how-to,reference,glossary">
       
       <div class="post-card-img">
-        <img src="/static/images/detection-cover.webp" alt="" loading="lazy">
+        <img src="/static/images/jargon_graphic.webp" alt="" loading="lazy">
       </div>
       
       <div class="post-card-body">
-        <h2>Why Bats Are Hard to Watch</h2>
+        <h2>A Beginner&#39;s Bat Vocabulary</h2>
         <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">bats</span><span class="tag">acoustics</span>
+          <time datetime="2026-08-28">28 August 2026</time>
+          <span class="tag">how-to</span><span class="tag">reference</span>
         </div>
-        <p class="post-card-desc">Bats are all around us and almost nobody has properly seen one. What makes them so difficult to observe — and why a blank night means far less than it looks.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/white-nose-syndrome/" class="post-card" data-tags="bats,conservation">
-      
-      <div class="post-card-img">
-        <img src="/static/images/little_brown_bat_wns.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>White-Nose Syndrome</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">bats</span><span class="tag">conservation</span>
-        </div>
-        <p class="post-card-desc">The fungus that has killed millions of North American bats — what it is, why waking up too often is fatal, and why it turned bat monitoring from a nice idea into an urgent one.</p>
+        <p class="post-card-desc">Heterodyne, GUANO, Fc, pass, buzz, transect — the words you will meet in the app and from bat people, explained without the jargon that usually comes attached.</p>
       </div>
     </a>
     
@@ -220,35 +210,19 @@
       </div>
     </a>
     
-    <a href="/blog/how-openbat-decides-what-it-heard/" class="post-card" data-tags="auto-id,classifier,on-device">
+    <a href="/blog/adding-a-bat-to-the-field-guide/" class="post-card" data-tags="field-guide,contributing">
       
       <div class="post-card-img">
-        <img src="/static/images/autoid-cover.webp" alt="" loading="lazy">
+        <img src="/static/images/guide-cover.webp" alt="" loading="lazy">
       </div>
       
       <div class="post-card-body">
-        <h2>How OpenBat Decides What It Heard</h2>
+        <h2>Adding a Bat to the Field Guide</h2>
         <div class="post-card-meta">
           <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">auto-id</span><span class="tag">classifier</span>
+          <span class="tag">field-guide</span><span class="tag">contributing</span>
         </div>
-        <p class="post-card-desc">The chain that turns a burst of ultrasound into a species name — pulse detection, a short window of audio, an on-device model, and the gates that let it say &quot;no idea&quot;.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/build-your-own-bat-microphone/" class="post-card" data-tags="hardware,griff">
-      
-      <div class="post-card-img">
-        <img src="/static/images/griff-cover.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>Build Your Own Bat Microphone</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">hardware</span><span class="tag">griff</span>
-        </div>
-        <p class="post-card-desc">The Griff Mini is an open-source 384 kHz ultrasonic microphone you can build for about $28 a unit. Here is what to order, what it costs, and what building one involves.</p>
+        <p class="post-card-desc">The field guide inside OpenBat is written by the people who use it — here is what an entry holds, how to add one without touching any code, and what happens after you press submit.</p>
       </div>
     </a>
     
@@ -268,19 +242,83 @@
       </div>
     </a>
     
-    <a href="/blog/adding-a-bat-to-the-field-guide/" class="post-card" data-tags="field-guide,contributing">
+    <a href="/blog/white-nose-syndrome/" class="post-card" data-tags="bats,conservation">
       
       <div class="post-card-img">
-        <img src="/static/images/guide-cover.webp" alt="" loading="lazy">
+        <img src="/static/images/little_brown_bat_wns.webp" alt="" loading="lazy">
       </div>
       
       <div class="post-card-body">
-        <h2>Adding a Bat to the Field Guide</h2>
+        <h2>White-Nose Syndrome</h2>
         <div class="post-card-meta">
           <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">field-guide</span><span class="tag">contributing</span>
+          <span class="tag">bats</span><span class="tag">conservation</span>
         </div>
-        <p class="post-card-desc">The field guide inside OpenBat is written by the people who use it — here is what an entry holds, how to add one without touching any code, and what happens after you press submit.</p>
+        <p class="post-card-desc">The fungus that has killed millions of North American bats — what it is, why waking up too often is fatal, and why it turned bat monitoring from a nice idea into an urgent one.</p>
+      </div>
+    </a>
+    
+    <a href="/blog/why-bats-are-hard-to-watch/" class="post-card" data-tags="bats,acoustics">
+      
+      <div class="post-card-img">
+        <img src="/static/images/detection-cover.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>Why Bats Are Hard to Watch</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-08-27">27 August 2026</time>
+          <span class="tag">bats</span><span class="tag">acoustics</span>
+        </div>
+        <p class="post-card-desc">Bats are all around us and almost nobody has properly seen one. What makes them so difficult to observe — and why a blank night means far less than it looks.</p>
+      </div>
+    </a>
+    
+    <a href="/blog/build-your-own-bat-microphone/" class="post-card" data-tags="hardware,griff">
+      
+      <div class="post-card-img">
+        <img src="/static/images/griff-cover.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>Build Your Own Bat Microphone</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-08-27">27 August 2026</time>
+          <span class="tag">hardware</span><span class="tag">griff</span>
+        </div>
+        <p class="post-card-desc">The Griff Mini is an open-source 384 kHz ultrasonic microphone you can build for about $28 a unit. Here is what to order, what it costs, and what building one involves.</p>
+      </div>
+    </a>
+    
+    <a href="/blog/how-openbat-decides-what-it-heard/" class="post-card" data-tags="auto-id,classifier,on-device">
+      
+      <div class="post-card-img">
+        <img src="/static/images/autoid-cover.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>How OpenBat Decides What It Heard</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-08-27">27 August 2026</time>
+          <span class="tag">auto-id</span><span class="tag">classifier</span>
+        </div>
+        <p class="post-card-desc">The chain that turns a burst of ultrasound into a species name — pulse detection, a short window of audio, an on-device model, and the gates that let it say &quot;no idea&quot;.</p>
+      </div>
+    </a>
+    
+    <a href="/blog/why-openbat-has-a-blog/" class="post-card" data-tags="openbat">
+      
+      <div class="post-card-img">
+        <img src="/static/images/open-bat-blog-screenshot.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>Why OpenBat Has a Blog</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-08-27">27 August 2026</time>
+          <span class="tag">openbat</span>
+        </div>
+        <p class="post-card-desc">A place to write about what we are building, what breaks, and what we learn from the bats themselves.</p>
       </div>
     </a>
     

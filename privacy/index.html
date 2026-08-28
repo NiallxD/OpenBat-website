@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="/static/css/style.css?v=6.0">
+  <link rel="stylesheet" href="/static/css/style.css?v=6.3">
   <script>
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme !== 'light') {
@@ -100,10 +100,11 @@
   
 
   
-  <div class="post-content page-cards"><section class="page-card page-card--note"><h1>How OpenBat protects your privacy</h1>
+  <div class="post-content page-cards"><div class="page-plain">
+<h1>How OpenBat protects your privacy</h1>
 <p>OpenBat is a bat detector. It records ultrasound and works out which species is calling, entirely on your phone.</p>
 <p>Recording anything with a microphone raises obvious questions. This page answers them directly.</p>
-</section>
+</div>
 <section class="page-card"><h2>Nothing leaves your phone</h2>
 <p>The app records and identifies species entirely on your device. There’s no account, no background upload, no “phoning home.” Your location never leaves your phone — it’s used on-device to work out which bats are plausible where you are (the range data that decides it ships with the app) and to calculate your local sunset and sunrise times. OpenBat does fetch species reference data and images from a couple of public services, but nothing that identifies you, and no location, is ever sent.</p>
 </section>
