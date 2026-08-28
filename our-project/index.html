@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=6.7">
+  <link rel="stylesheet" href="/static/css/style.css?v=7.5">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -108,34 +108,70 @@
   
 
   
-  <div class="post-content page-cards"><div class="page-plain">
-<h2>An initiative, not just an app</h2>
-<p>OpenBat is a community initiative for bat conservation. The app is the most visible part of it, but it exists to serve a mission rather than the other way around: build a field guide worth trusting, make bats easier for ordinary people to appreciate, and turn a night of listening into data science can actually use.</p>
-<div class="callout callout-quote"><div class="callout-title">The Challenge</div><div class="callout-body"><p>To quote Sir David Attenborough: <em>“No one will protect what they don’t care about, and no one will care about what they have never experienced.”</em> Bats are small, nocturnal, and call at frequencies humans can’t hear — for most people, they might as well be invisible.</p></div></div>
-</div>
-<section class="page-card"><h2>Who we are</h2>
+  <div class="post-content page-cards"><section class="page-card"><h2>Who we are</h2>
 <p>OpenBat is built by a few friends in Squamish, British Columbia, not a company or an institution. That shapes how the project runs: the scope stays honest about what a handful of volunteers can actually sustain, and rather than building new infrastructure from scratch, OpenBat plugs into programmes that already exist and already have the community’s trust — the BC Community Bat Programs, NABat, and iNaturalist among them.</p>
 </section>
-<section class="page-card page-card--media page-card--media-left"><h2>What we’re trying to do</h2>
-<p>Three things, roughly in the order a new visitor meets them:</p>
-<ol>
-<li><strong>Make appreciating bats accessible to more people</strong> — hearing a bat and learning what it might be, in the moment, with nothing more than a phone and a cheap microphone.</li>
-<li><strong>Act as a catalyst for bat community science</strong> — turning a night of listening into a properly formatted observation that feeds iNaturalist and, through it, researchers and conservation bodies.</li>
-<li><strong>Build a comprehensive, expert-curated field guide</strong> — the <a href="/guide-editor/" class="wikilink">Field Guide Editor</a> lets bat experts and enthusiasts contribute their local knowledge directly, reviewed rather than published on sight.</li>
-</ol>
-<p><img src="/static/images/screen-detector.webp" alt="OpenBat's detector screen, showing a live spectrogram and species suggestions"></p>
-<p>Bat acoustic data starts from close to empty in a lot of regions, so a simple “there are bats here, tonight” record is a meaningful step forward on its own, and it doesn’t depend on getting the species right. iNaturalist’s own research-grade standard works the same way: community agreement at whatever taxonomic depth is achievable counts, not resolution to species.</p>
+<section class="page-card"><h2>What we’re trying to do</h2>
+<p>Three things, roughly in the order a new visitor meets them. Bat acoustic data starts from close to empty in a lot of regions, so even a simple “there are bats here, tonight” record is a meaningful step forward on its own — it doesn’t depend on getting the species right, mirroring iNaturalist’s own research-grade standard.</p>
 </section>
-<section class="page-card page-card--media page-card--media-right"><h2>How we’re doing it</h2>
-<p>Hardware, listening apps, and community science platforms already exist as three separate pieces, and nothing connects them for someone who’s just curious. OpenBat is that connective tissue, not a competitor to any one of them, and it does three jobs at once:</p>
-<ul>
-<li><strong>Removes the friction</strong> between recording a bat and submitting it as usable data — record on your phone, and get a properly labelled recording, spectrogram, and metadata, ready to submit.</li>
-<li><strong>Enables a capability that doesn’t otherwise exist</strong> at this price point — live AutoID paired with the field guide lets you learn what you just heard, tied to what’s actually flying near you.</li>
-<li><strong>Recruits people passively</strong> — nobody has to “join” anything. Someone downloads a curiosity app, and the app itself introduces the idea that they could contribute to science.</li>
-</ul>
-<p><img src="/static/images/griff-hero.webp" alt="A small 3D-printed ultrasonic microphone resting on rocks"></p>
-<p>None of this locks anyone into one microphone. OpenBat works with any standard USB ultrasonic mic that doesn’t need its own companion app, including Phil Atkin’s open-source <a href="https://www.pippyg.com/griff.html">Griff Mini</a>, buildable for around $20 CAD. The rest of the stack is open too — the field guide’s species data, the detection models, and the app itself — so anyone can build on, audit, or extend any part of it without asking us. Free is a price point; open is a structural choice about who gets to build on top of this.</p>
-</section>
+<div class="page-plain goal-cards-section">
+<div class="goal-cards-scroll">
+<div class="goal-cards-sticky">
+<div class="post-grid home-links goal-cards">
+<div class="post-card">
+<div class="post-card-img"><img src="/static/images/screen-detector.webp" alt="" loading="lazy"></div>
+<div class="post-card-body">
+<h2>Make bats accessible</h2>
+<div class="post-card-meta"><span class="tag">appreciation</span></div>
+<p>Hearing a bat and learning what it might be, in the moment, with nothing more than a phone and a cheap microphone.</p>
+<p><button class="goal-learn-more" type="button" data-goal="1">How we’re doing it →</button></p>
+</div>
+</div>
+<div class="post-card">
+<div class="post-card-img"><img src="/static/images/screen-call-analysis.webp" alt="" loading="lazy"></div>
+<div class="post-card-body">
+<h2>Community science</h2>
+<div class="post-card-meta"><span class="tag">iNaturalist</span></div>
+<p>Turning a night of listening into a properly formatted observation that feeds iNaturalist and, through it, researchers and conservation bodies.</p>
+<p><button class="goal-learn-more" type="button" data-goal="2">How we’re doing it →</button></p>
+</div>
+</div>
+<div class="post-card">
+<div class="post-card-img"><img src="/static/images/guide-editor-list.webp" alt="" loading="lazy"></div>
+<div class="post-card-body">
+<h2>A field guide</h2>
+<div class="post-card-meta"><span class="tag">expert-curated</span></div>
+<p>Bat experts and enthusiasts contribute local knowledge directly through the <a href="/guide-editor/" class="wikilink">Field Guide Editor</a>, reviewed rather than published on sight.</p>
+<p><button class="goal-learn-more" type="button" data-goal="3">How we’re doing it →</button></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="page-plain goal-modal-source">
+<div class="goal-modal-item" data-goal="1">
+<h2>How we’re doing it</h2>
+<p>A cheap handheld detector lets you hear a bat, but it can’t tell you anything about it. OpenBat pairs live, on-device AutoID with the field guide, narrowed to what’s actually flying near you, so the sound turns into a name, not just a noise in the dark. None of this needs expensive gear either — any standard USB ultrasonic mic works, including Phil Atkin’s open-source <a href="https://www.pippyg.com/griff.html">Griff Mini</a>, buildable for around $20 CAD.</p>
+</div>
+<div class="goal-modal-item" data-goal="2">
+<h2>How we’re doing it</h2>
+<p>Most tools stop at recording — turning that recording into something a scientist can use is a separate, fiddly step that almost nobody finishes. OpenBat removes that friction: record on your phone, and get a properly labelled recording, spectrogram, and metadata, ready to submit to iNaturalist. Nobody has to “join” community science on purpose, the app just makes it the natural next step after listening.</p>
+</div>
+<div class="goal-modal-item" data-goal="3">
+<h2>How we’re doing it</h2>
+<p>The guide is expert-curated, not wiki-style open editing — contributions go through the <a href="/guide-editor/" class="wikilink">Field Guide Editor</a> and are reviewed rather than published on sight. The species data itself is open too, CC BY 4.0, so the same trust standard that convinces professionals also means anyone can audit, reuse, or build on it.</p>
+</div>
+</div>
+<div class="page-plain">
+<div class="goal-modal" id="goal-modal">
+<div class="goal-modal-backdrop" data-modal-close></div>
+<div class="goal-modal-dialog" role="dialog" aria-modal="true">
+<button class="goal-modal-close" type="button" data-modal-close aria-label="Close">&times;</button>
+<div class="goal-modal-body"></div>
+</div>
+</div>
+</div>
 <section class="page-card"><h2>Not the first of its kind</h2>
 <p>The closest model isn’t another bat organisation, it’s Merlin Bird ID feeding eBird: a free app, run by Cornell Lab of Ornithology, that turns curiosity into records for a much bigger science platform, without being a conservation body itself. That’s the shape OpenBat is going for — scoped to BC first, iOS first, built by a few people rather than an institution — but aiming at the same structural gap: not a new tier in bat conservation, but the thing that makes the tiers that already exist reachable by an ordinary person.</p>
 </section></div>
@@ -250,6 +286,117 @@
       });
 
       if (location.hash === '#android') setPlatform('android', true);
+    }
+
+    // Goal cards (Our Project page) — each "What we're trying to do" card
+    // has a "Learn more" button that opens a modal with that goal's "How
+    // we're doing it" write-up, copied in from the hidden source div.
+    const learnMoreBtns = document.querySelectorAll('.goal-learn-more');
+    if (learnMoreBtns.length) {
+      const modal = document.getElementById('goal-modal');
+      const modalBody = modal.querySelector('.goal-modal-body');
+      const modalItems = document.querySelectorAll('.goal-modal-item');
+      let lastFocused = null;
+
+      const onKeydown = (e) => {
+        if (e.key === 'Escape') closeGoalModal();
+      };
+
+      const closeGoalModal = () => {
+        modal.classList.remove('goal-modal--open');
+        document.removeEventListener('keydown', onKeydown);
+        if (lastFocused) lastFocused.focus();
+      };
+
+      const openGoalModal = (goal, trigger) => {
+        const item = [...modalItems].find(i => i.dataset.goal === goal);
+        if (!item) return;
+        modalBody.innerHTML = item.innerHTML;
+        lastFocused = trigger || document.activeElement;
+        modal.classList.add('goal-modal--open');
+        modal.querySelector('.goal-modal-close').focus();
+        document.addEventListener('keydown', onKeydown);
+      };
+
+      learnMoreBtns.forEach(btn => {
+        btn.addEventListener('click', () => openGoalModal(btn.dataset.goal, btn));
+      });
+
+      modal.querySelectorAll('[data-modal-close]').forEach(el => {
+        el.addEventListener('click', closeGoalModal);
+      });
+    }
+
+    // Goal cards, mobile: lock the row in place while vertical scroll slides
+    // it sideways, then release — same mechanic as the home page's dock.
+    const goalCardsSection = document.querySelector('.goal-cards-section');
+    if (goalCardsSection) {
+      const goalScroller = goalCardsSection.querySelector('.goal-cards-scroll');
+      const goalSticky = goalCardsSection.querySelector('.goal-cards-sticky');
+      const goalRow = goalCardsSection.querySelector('.goal-cards');
+      const goalItems = [...goalRow.querySelectorAll('.post-card')];
+      const goalSmall = window.matchMedia('(max-width: 800px)');
+      const goalStill = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const goalPinnable = () => goalSmall.matches && !goalStill.matches && goalItems.length > 1;
+
+      let goalPinFrame = 0;
+
+      const goalPinLayout = () => {
+        const runway = goalScroller.offsetHeight - goalSticky.offsetHeight;
+        if (runway <= 0) return;
+        // The stage is inset from the top of the viewport (see goalStageHeight),
+        // so progress runs from the moment the section's top reaches that inset,
+        // not the moment it reaches zero.
+        const inset = parseFloat(goalSticky.style.top) || 0;
+        const top = goalScroller.getBoundingClientRect().top;
+        const p = Math.min(1, Math.max(0, (inset - top) / runway));
+
+        const w = goalItems[0].offsetWidth || 1;
+        const step = goalItems.length > 1 ? goalItems[1].offsetLeft - goalItems[0].offsetLeft : w;
+        const stage = goalSticky.clientWidth;
+        const slide = (stage - w) / 2 - p * (goalItems.length - 1) * step;
+        goalRow.style.transform = `translateX(${slide.toFixed(2)}px)`;
+      };
+
+      const goalOnScroll = () => {
+        if (!goalPinnable() || goalPinFrame) return;
+        goalPinFrame = requestAnimationFrame(() => { goalPinFrame = 0; goalPinLayout(); });
+      };
+
+      // The stage is only as tall as the tallest card needs, not a full
+      // screenful — a full-height stage leaves the leftover half of it as dead
+      // space below the last card once the pin releases. It is then centred in
+      // the viewport with `top`, so the card still sits in the middle of the
+      // screen while it is pinned.
+      const goalStageHeight = () => {
+        const tallest = Math.max(...goalItems.map(i => i.offsetHeight));
+        return Math.min(window.innerHeight, tallest + 48);
+      };
+
+      const goalSetPinned = () => {
+        if (goalPinnable()) {
+          goalCardsSection.classList.add('goal-cards--pinned');
+          const stageH = goalStageHeight();
+          goalSticky.style.height = stageH + 'px';
+          goalSticky.style.top = Math.max(0, (window.innerHeight - stageH) / 2) + 'px';
+          // Runway: the stage itself, then a screenful-ish per card after it.
+          goalScroller.style.height = `calc(${stageH}px + ${(goalItems.length - 1) * 45}svh)`;
+          goalPinLayout();
+        } else {
+          goalCardsSection.classList.remove('goal-cards--pinned');
+          goalScroller.style.height = '';
+          goalSticky.style.height = '';
+          goalSticky.style.top = '';
+          goalRow.style.transform = '';
+        }
+      };
+
+      window.addEventListener('scroll', goalOnScroll, { passive: true });
+      window.addEventListener('resize', () => { goalSetPinned(); goalOnScroll(); });
+      goalSmall.addEventListener('change', goalSetPinned);
+      goalStill.addEventListener('change', goalSetPinned);
+
+      goalSetPinned();
     }
 
     // Assemble obfuscated email addresses on click

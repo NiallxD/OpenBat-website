@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=6.7">
+  <link rel="stylesheet" href="/static/css/style.css?v=7.5">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -528,6 +528,117 @@ microphones.</p>
       });
 
       if (location.hash === '#android') setPlatform('android', true);
+    }
+
+    // Goal cards (Our Project page) — each "What we're trying to do" card
+    // has a "Learn more" button that opens a modal with that goal's "How
+    // we're doing it" write-up, copied in from the hidden source div.
+    const learnMoreBtns = document.querySelectorAll('.goal-learn-more');
+    if (learnMoreBtns.length) {
+      const modal = document.getElementById('goal-modal');
+      const modalBody = modal.querySelector('.goal-modal-body');
+      const modalItems = document.querySelectorAll('.goal-modal-item');
+      let lastFocused = null;
+
+      const onKeydown = (e) => {
+        if (e.key === 'Escape') closeGoalModal();
+      };
+
+      const closeGoalModal = () => {
+        modal.classList.remove('goal-modal--open');
+        document.removeEventListener('keydown', onKeydown);
+        if (lastFocused) lastFocused.focus();
+      };
+
+      const openGoalModal = (goal, trigger) => {
+        const item = [...modalItems].find(i => i.dataset.goal === goal);
+        if (!item) return;
+        modalBody.innerHTML = item.innerHTML;
+        lastFocused = trigger || document.activeElement;
+        modal.classList.add('goal-modal--open');
+        modal.querySelector('.goal-modal-close').focus();
+        document.addEventListener('keydown', onKeydown);
+      };
+
+      learnMoreBtns.forEach(btn => {
+        btn.addEventListener('click', () => openGoalModal(btn.dataset.goal, btn));
+      });
+
+      modal.querySelectorAll('[data-modal-close]').forEach(el => {
+        el.addEventListener('click', closeGoalModal);
+      });
+    }
+
+    // Goal cards, mobile: lock the row in place while vertical scroll slides
+    // it sideways, then release — same mechanic as the home page's dock.
+    const goalCardsSection = document.querySelector('.goal-cards-section');
+    if (goalCardsSection) {
+      const goalScroller = goalCardsSection.querySelector('.goal-cards-scroll');
+      const goalSticky = goalCardsSection.querySelector('.goal-cards-sticky');
+      const goalRow = goalCardsSection.querySelector('.goal-cards');
+      const goalItems = [...goalRow.querySelectorAll('.post-card')];
+      const goalSmall = window.matchMedia('(max-width: 800px)');
+      const goalStill = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const goalPinnable = () => goalSmall.matches && !goalStill.matches && goalItems.length > 1;
+
+      let goalPinFrame = 0;
+
+      const goalPinLayout = () => {
+        const runway = goalScroller.offsetHeight - goalSticky.offsetHeight;
+        if (runway <= 0) return;
+        // The stage is inset from the top of the viewport (see goalStageHeight),
+        // so progress runs from the moment the section's top reaches that inset,
+        // not the moment it reaches zero.
+        const inset = parseFloat(goalSticky.style.top) || 0;
+        const top = goalScroller.getBoundingClientRect().top;
+        const p = Math.min(1, Math.max(0, (inset - top) / runway));
+
+        const w = goalItems[0].offsetWidth || 1;
+        const step = goalItems.length > 1 ? goalItems[1].offsetLeft - goalItems[0].offsetLeft : w;
+        const stage = goalSticky.clientWidth;
+        const slide = (stage - w) / 2 - p * (goalItems.length - 1) * step;
+        goalRow.style.transform = `translateX(${slide.toFixed(2)}px)`;
+      };
+
+      const goalOnScroll = () => {
+        if (!goalPinnable() || goalPinFrame) return;
+        goalPinFrame = requestAnimationFrame(() => { goalPinFrame = 0; goalPinLayout(); });
+      };
+
+      // The stage is only as tall as the tallest card needs, not a full
+      // screenful — a full-height stage leaves the leftover half of it as dead
+      // space below the last card once the pin releases. It is then centred in
+      // the viewport with `top`, so the card still sits in the middle of the
+      // screen while it is pinned.
+      const goalStageHeight = () => {
+        const tallest = Math.max(...goalItems.map(i => i.offsetHeight));
+        return Math.min(window.innerHeight, tallest + 48);
+      };
+
+      const goalSetPinned = () => {
+        if (goalPinnable()) {
+          goalCardsSection.classList.add('goal-cards--pinned');
+          const stageH = goalStageHeight();
+          goalSticky.style.height = stageH + 'px';
+          goalSticky.style.top = Math.max(0, (window.innerHeight - stageH) / 2) + 'px';
+          // Runway: the stage itself, then a screenful-ish per card after it.
+          goalScroller.style.height = `calc(${stageH}px + ${(goalItems.length - 1) * 45}svh)`;
+          goalPinLayout();
+        } else {
+          goalCardsSection.classList.remove('goal-cards--pinned');
+          goalScroller.style.height = '';
+          goalSticky.style.height = '';
+          goalSticky.style.top = '';
+          goalRow.style.transform = '';
+        }
+      };
+
+      window.addEventListener('scroll', goalOnScroll, { passive: true });
+      window.addEventListener('resize', () => { goalSetPinned(); goalOnScroll(); });
+      goalSmall.addEventListener('change', goalSetPinned);
+      goalStill.addEventListener('change', goalSetPinned);
+
+      goalSetPinned();
     }
 
     // Assemble obfuscated email addresses on click

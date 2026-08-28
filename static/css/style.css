@@ -2114,6 +2114,160 @@ figure.image-float-left figcaption {
   margin-bottom: 2rem;
 }
 
+/* `.home-links` carries its own margin-bottom for its home-page context; here
+   it's a `.page-cards` sibling like any other card, so the grid's own gap
+   should be the only spacing, same as everywhere else on the page. */
+.page-cards .home-links { margin-bottom: 0; }
+
+/* Each "What we're trying to do" card's own take on "how" lives in a modal,
+   opened by this button, rather than an inline panel. */
+.goal-learn-more {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-accent);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.goal-learn-more:hover {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+/* The three "How we're doing it" write-ups, one per goal — never shown as
+   written, only copied into the modal body by the script below. */
+.goal-modal-source { display: none; }
+
+.goal-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.goal-modal.goal-modal--open { display: flex; }
+
+.goal-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 7, 13, 0.7);
+}
+
+.goal-modal-dialog {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  width: 100%;
+  max-width: 32rem;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.goal-modal-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.goal-modal-close:hover { background: var(--color-bg); color: var(--color-text); }
+
+.goal-modal-body > :first-child { margin-top: 0; }
+.goal-modal-body > :last-child { margin-bottom: 0; }
+.goal-modal-body h2 { letter-spacing: 0.09em; margin: 0 0 0.9rem; }
+
+@media (max-width: 600px) {
+  .goal-modal-dialog { padding: 1.5rem; }
+}
+
+/* Mobile: the three goal cards are a locked-scroll stage, same mechanic as
+   the home page's screenshot dock — `.goal-cards-scroll` is a tall runway,
+   `.goal-cards-sticky` pins the row in place while scrolling through it
+   slides the cards sideways, then the page carries on scrolling normally.
+   Script-driven (`.goal-cards--pinned`, set in base.njk); until the script
+   runs, or on wide screens / no-JS, it's a plain swipeable row instead. */
+/* The row is `width: max-content` below, and this section is a grid item in
+   `.page-cards` — whose default `min-width: auto` would let that max-content
+   width push the item (and the page with it) far wider than the screen. The
+   stage has to be allowed to shrink to its column instead and clip. */
+.goal-cards-section,
+.goal-cards-scroll { min-width: 0; }
+
+.goal-cards-scroll { position: relative; }
+
+@media (max-width: 800px) {
+  /* Full-bleed: the stage runs edge to edge so the centred card has the whole
+     screen to sit in and its neighbours peek in from the sides. */
+  .goal-cards--pinned .goal-cards-scroll { margin-left: -2rem; margin-right: -2rem; }
+
+  .goal-cards--pinned .goal-cards-sticky {
+    position: sticky;
+    /* Both of these are overwritten by the script, which sizes the stage to
+       the cards and centres it in the viewport; a screenful at the top is only
+       the starting point it works from. */
+    top: 0;
+    height: 100svh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .goal-cards--pinned .goal-cards {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 6vw;
+    width: max-content;
+    max-width: none;
+    overflow: visible;
+    will-change: transform;
+  }
+
+  .goal-cards--pinned .goal-cards .post-card {
+    flex: 0 0 auto;
+    width: min(78vw, 60svh);
+    scroll-snap-align: none;
+  }
+
+  /* Fallback — no JS, reduced motion, or before the script has run: a plain
+     swipeable row rather than a locked stage. */
+  .goal-cards-section:not(.goal-cards--pinned) .goal-cards {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 1rem;
+    padding-bottom: 0.25rem;
+    margin: 0 -2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .goal-cards-section:not(.goal-cards--pinned) .goal-cards .post-card {
+    flex: 0 0 82%;
+    scroll-snap-align: center;
+  }
+}
+
 /* Left-aligned heading that introduces each block of the home page. */
 .home-section-title {
   font-family: var(--font-sans);
