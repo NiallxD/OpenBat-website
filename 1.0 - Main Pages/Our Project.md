@@ -22,7 +22,7 @@ Three things, roughly in the order a new visitor meets them. Bat acoustic data s
 <div class="post-card-img"><img src="/static/images/screen-detector.webp" alt="" loading="lazy"></div>
 <div class="post-card-body">
 
-## Make bats accessible
+## 1. Make bats accessible
 
 <div class="post-card-meta"><span class="tag">appreciation</span></div>
 
@@ -37,7 +37,7 @@ Hearing a bat and learning what it might be, in the moment, with nothing more th
 <div class="post-card-img"><img src="/static/images/screen-call-analysis.webp" alt="" loading="lazy"></div>
 <div class="post-card-body">
 
-## Community science
+## 2. Community science
 
 <div class="post-card-meta"><span class="tag">iNaturalist</span></div>
 
@@ -52,7 +52,7 @@ Turning a night of listening into a properly formatted observation that feeds iN
 <div class="post-card-img"><img src="/static/images/guide-editor-list.webp" alt="" loading="lazy"></div>
 <div class="post-card-body">
 
-## A field guide
+## 3. A field guide
 
 <div class="post-card-meta"><span class="tag">expert-curated</span></div>
 
@@ -69,7 +69,7 @@ Bat experts and enthusiasts contribute local knowledge directly through the [[Gu
 </div>
 </div>
 
-<div class="page-plain goal-modal-source">
+<div class="page-plain goal-modal-source goal-panel" aria-live="polite">
 
 <div class="goal-modal-item" data-goal="1">
 
