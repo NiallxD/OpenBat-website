@@ -2141,9 +2141,53 @@ figure.image-float-left figcaption {
   border-color: var(--color-accent);
 }
 
-/* The three "How we're doing it" write-ups, one per goal — never shown as
-   written, only copied into the modal body by the script below. */
+/* The three "How we're doing it" write-ups, one per goal. Below 800px they are
+   never shown as written, only copied into the modal body by the script; from
+   801px up they are the panel under the cards instead, one visible at a time,
+   swapped by hovering or focusing a card. */
 .goal-modal-source { display: none; }
+
+@media (min-width: 801px) {
+  .goal-panel {
+    display: block;
+    margin-top: 1.5rem;
+    padding: 1.75rem 2rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  /* No script: the first write-up stands as the panel's content, which reads
+     as a section rather than as something broken. With the script, whichever
+     card is active supplies it. */
+  .goal-panel .goal-modal-item:first-child { display: block; }
+
+  /* All three stacked in one grid cell, so the panel is always as tall as the
+     longest write-up and swapping between them can't shunt the rest of the
+     page up and down under the cursor. `visibility` rather than `display`
+     keeps them stacked while still hiding the inactive two from screen
+     readers — and unlike reserving the height in JS, nothing here depends on
+     measuring text before the webfonts have landed. */
+  .goal-panel--js { display: grid; }
+  .goal-panel--js .goal-modal-item {
+    display: block;
+    grid-area: 1 / 1;
+    visibility: hidden;
+    transition: opacity 200ms ease;
+    opacity: 0;
+  }
+  .goal-panel--js .goal-modal-item.is-active { visibility: visible; opacity: 1; }
+
+  /* The hovered/focused card keeps the accent border while its write-up is the
+     one showing, so the panel is visibly tied to a card rather than floating. */
+  .goal-cards .post-card.is-active { border-color: var(--color-accent); }
+
+  /* The button belongs to the phone layout, where it opens the modal. Here the
+     hover is the whole interaction, so it goes — the card itself is given a
+     tab stop by the script so keyboard users still reach every write-up. */
+  .goal-learn-more { display: none; }
+  .goal-cards .post-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+}
 
 .goal-modal {
   display: none;
@@ -2164,7 +2208,12 @@ figure.image-float-left figcaption {
 
 .goal-modal-dialog {
   position: relative;
-  background: var(--color-surface);
+  /* `--color-surface` alone is 30% black, which is right for a card sitting on
+     the page but lets the cards behind read straight through a dialog floating
+     over them. The page's own solid colour goes underneath it, so this stays
+     the same shade relative to the page in both themes but is opaque. */
+  background-color: var(--page-bg-solid);
+  background-image: linear-gradient(var(--color-surface), var(--color-surface));
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 2rem;

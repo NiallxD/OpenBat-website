@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=7.5">
+  <link rel="stylesheet" href="/static/css/style.css?v=7.9">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -225,9 +225,54 @@
       if (location.hash === '#android') setPlatform('android', true);
     }
 
-    // Goal cards (Our Project page) — each "What we're trying to do" card
-    // has a "Learn more" button that opens a modal with that goal's "How
-    // we're doing it" write-up, copied in from the hidden source div.
+    // Goal cards (Our Project page), desktop — the three "How we're doing it"
+    // write-ups are a panel under the cards, and hovering or focusing a card
+    // swaps which one is showing. On phones the panel is hidden and the same
+    // write-ups go in a modal instead (the block after this one).
+    const goalPanel = document.querySelector('.goal-panel');
+    const goalWide = window.matchMedia('(min-width: 801px)');
+    let setActiveGoal = null;
+
+    if (goalPanel) {
+      const goalPanelItems = [...goalPanel.querySelectorAll('.goal-modal-item')];
+      const goalPanelCards = [...document.querySelectorAll('.goal-cards .post-card')];
+      goalPanel.classList.add('goal-panel--js');
+
+      setActiveGoal = (goal) => {
+        goalPanelItems.forEach(i => i.classList.toggle('is-active', i.dataset.goal === goal));
+        goalPanelCards.forEach(c => {
+          const btn = c.querySelector('.goal-learn-more');
+          c.classList.toggle('is-active', !!btn && btn.dataset.goal === goal);
+        });
+      };
+
+      goalPanelCards.forEach(card => {
+        const btn = card.querySelector('.goal-learn-more');
+        if (!btn) return;
+        const activate = () => { if (goalWide.matches) setActiveGoal(btn.dataset.goal); };
+        card.addEventListener('mouseenter', activate);
+        card.addEventListener('focusin', activate);
+      });
+
+      // No visible button at this width, so the card carries the tab stop that
+      // makes the panel reachable without a mouse. Phones keep the button and
+      // shouldn't gain three extra stops, so this is added and removed with
+      // the breakpoint rather than written into the markup.
+      const goalSetTabStops = () => {
+        goalPanelCards.forEach(c => {
+          if (goalWide.matches) c.setAttribute('tabindex', '0');
+          else c.removeAttribute('tabindex');
+        });
+      };
+
+      setActiveGoal(goalPanelItems.length ? goalPanelItems[0].dataset.goal : null);
+      goalSetTabStops();
+      goalWide.addEventListener('change', goalSetTabStops);
+    }
+
+    // Goal cards, phone — the "How we're doing it" button opens a modal with
+    // that goal's write-up, copied in from the source div. At desktop widths
+    // the same button just swaps the panel above instead.
     const learnMoreBtns = document.querySelectorAll('.goal-learn-more');
     if (learnMoreBtns.length) {
       const modal = document.getElementById('goal-modal');
@@ -256,7 +301,10 @@
       };
 
       learnMoreBtns.forEach(btn => {
-        btn.addEventListener('click', () => openGoalModal(btn.dataset.goal, btn));
+        btn.addEventListener('click', () => {
+          if (goalWide.matches && setActiveGoal) setActiveGoal(btn.dataset.goal);
+          else openGoalModal(btn.dataset.goal, btn);
+        });
       });
 
       modal.querySelectorAll('[data-modal-close]').forEach(el => {
