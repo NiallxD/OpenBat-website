@@ -30,30 +30,18 @@ Bat calls generally live between about 15 and 120 kHz depending on species. So
 384 kHz has comfortable headroom over essentially everything, which is why it's
 the number to aim for.
 
-<figure class="chart">
-  <svg viewBox="0 0 640 250" role="img" aria-label="A frequency scale from 0 to 192 kHz showing human hearing at the bottom, the bat call range in the middle, and the ceilings for 48, 192 and 384 kHz sample rates.">
-    <line x1="40" y1="180" x2="610" y2="180" style="stroke: var(--color-border)" stroke-width="2"></line>
-    <rect x="40" y="150" width="60" height="30" style="fill: var(--color-secondary)" opacity="0.45"></rect>
-    <rect x="100" y="150" width="300" height="30" style="fill: var(--color-accent)" opacity="0.8"></rect>
-    <g class="chart-label chart-label--small" style="fill: var(--color-muted)">
-      <text x="40" y="200">0</text>
-      <text x="96" y="200">20</text>
-      <text x="196" y="200">60</text>
-      <text x="396" y="200">120</text>
-      <text x="596" y="200">192 kHz</text>
-    </g>
-    <text x="70" y="140" text-anchor="middle" class="chart-label--small" style="fill: var(--color-secondary)">you</text>
-    <text x="250" y="140" text-anchor="middle" class="chart-label" style="fill: var(--color-accent); font-weight: 700">bat calls live here</text>
-    <!-- ceilings -->
-    <line x1="112" y1="40" x2="112" y2="150" style="stroke: var(--color-muted)" stroke-dasharray="4 4"></line>
-    <text x="118" y="52" class="chart-label--small" style="fill: var(--color-muted)">a phone mic gives up around here</text>
-    <line x1="330" y1="70" x2="330" y2="150" style="stroke: var(--color-secondary)" stroke-dasharray="4 4"></line>
-    <text x="336" y="82" class="chart-label--small" style="fill: var(--color-secondary)">192 kHz sampling reaches 96 kHz</text>
-    <line x1="600" y1="100" x2="600" y2="150" style="stroke: var(--color-accent)" stroke-dasharray="4 4"></line>
-    <text x="594" y="112" text-anchor="end" class="chart-label--small" style="fill: var(--color-accent)">384 kHz sampling reaches 192 kHz</text>
-  </svg>
-  <figcaption>Sample rate sets a hard ceiling. Anything above it isn't quiet — it's absent, and no processing brings it back.</figcaption>
-</figure>
+{% chart {
+  key: "KILOHERTZ",
+  max: 200,
+  bars: [
+    { label: "what you can hear", from: 0, to: 20, note: "up to about 20 kHz", style: "secondary" },
+    { label: "where bat calls live", from: 20, to: 120, note: "roughly 20–120 kHz", highlight: true },
+    { label: "48 kHz sampling reaches", value: 24, note: "24 kHz — a phone mic gives up here", style: "muted" },
+    { label: "192 kHz sampling reaches", value: 96, note: "96 kHz", style: "secondary" },
+    { label: "384 kHz sampling reaches", value: 192, note: "192 kHz — the whole range" }
+  ],
+  caption: "Sample rate sets a hard ceiling. Anything above it is not quiet — it is absent, and no processing brings it back."
+} %}
 
 ## Why your phone can't do this
 

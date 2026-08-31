@@ -30,19 +30,18 @@ There is no counting of individuals anywhere in this. There *can't* be, from
 sound alone — bats don't have name badges, and two individuals of the same
 species produce nearly identical calls.
 
-<figure class="chart">
-  <svg viewBox="0 0 640 250" role="img" aria-label="One bat circling a pond passes the microphone five times, producing five separate clusters of detections that look like five bats.">
-    <ellipse cx="320" cy="120" rx="160" ry="70" style="fill: none; stroke: var(--color-secondary)" stroke-width="2" stroke-dasharray="6 6"></ellipse>
-    <text x="320" y="124" text-anchor="middle" class="chart-label" style="fill: var(--color-muted)">one bat, one circuit, over and over</text>
-    <g style="fill: var(--color-accent)">
-      <circle cx="160" cy="120" r="7"/><circle cx="240" cy="55" r="7"/><circle cx="400" cy="55" r="7"/><circle cx="480" cy="120" r="7"/><circle cx="320" cy="190" r="7"/>
-    </g>
-    <rect x="250" y="205" width="140" height="34" rx="8" style="fill: var(--color-accent); opacity: 0.85"></rect>
-    <text x="320" y="228" text-anchor="middle" class="chart-label" style="fill: #111; font-weight: 700">your microphone</text>
-    <text x="320" y="24" text-anchor="middle" class="chart-label" style="fill: var(--color-secondary)">five passes → five clusters of detections → one bat</text>
-  </svg>
-  <figcaption>This is the single most common misreading of acoustic data, and every bat worker has done it at some point.</figcaption>
-</figure>
+{% chart {
+  type: "scatter",
+  key: "TIME, ONE EVENING BESIDE A POND →",
+  xTicks: false,
+  height: 200,
+  yGrid: false,
+  beginAtZero: false,
+  series: [
+    { name: "detections", data: [{x: 4, y: 2.9}, {x: 4.4, y: 3.1}, {x: 4.7, y: 2.8}, {x: 5.1, y: 3.2}, {x: 5.4, y: 3}, {x: 17, y: 3.1}, {x: 17.5, y: 2.8}, {x: 17.9, y: 3.2}, {x: 18.4, y: 2.9}, {x: 31, y: 3}, {x: 31.6, y: 3.2}, {x: 32, y: 2.8}, {x: 32.5, y: 3.1}, {x: 32.9, y: 2.9}, {x: 45, y: 3.1}, {x: 45.5, y: 2.9}, {x: 46.1, y: 3.2}, {x: 58, y: 2.9}, {x: 58.6, y: 3.1}, {x: 59, y: 3}, {x: 59.5, y: 3.2}], style: "accent" }
+  ],
+  caption: "Five clusters, five passes, one bat going round and round the same pond. This is the single most common misreading of acoustic data, and every bat worker has done it at some point."
+} %}
 
 ## The two charts, and what each one is for
 

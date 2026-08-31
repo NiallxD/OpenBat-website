@@ -211,7 +211,7 @@ Two things matter more than technique:
   you just made.
 
 If the print comes out badly, wipe the board with isopropyl alcohol and start
-again. It costs you two minutes and nothing else.
+again. It costs you five minutes work and a tiny amount of solder paste, but will improve your build.
 
 ### 4. Place the parts
 

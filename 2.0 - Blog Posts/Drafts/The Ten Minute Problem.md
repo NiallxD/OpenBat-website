@@ -39,23 +39,15 @@ Roughly, by hand:
 
 Ten minutes if you know what you're doing and nothing goes wrong.
 
-<figure class="chart">
-  <svg viewBox="0 0 640 200" role="img" aria-label="A bar comparison: one record takes about ten minutes by hand, so a night of ten records takes over an hour and a half.">
-    <g class="chart-label">
-      <text x="10" y="40" style="fill: var(--color-secondary)">1 recording</text>
-      <rect x="130" y="24" width="48" height="24" rx="4" style="fill: var(--color-accent); opacity: 0.85"></rect>
-      <text x="188" y="42" class="chart-label--small" style="fill: var(--color-muted)">10 minutes</text>
-      <text x="10" y="90" style="fill: var(--color-secondary)">a decent night</text>
-      <rect x="130" y="74" width="480" height="24" rx="4" style="fill: var(--color-accent); opacity: 0.85"></rect>
-      <text x="370" y="91" text-anchor="middle" class="chart-label--small" style="fill: #111; font-weight: 700">1 hour 40 minutes, at a laptop, after the fun bit</text>
-      <text x="10" y="140" style="fill: var(--color-secondary)">a season</text>
-      <rect x="130" y="124" width="480" height="24" rx="4" style="fill: var(--color-accent); opacity: 0.3"></rect>
-      <text x="370" y="141" text-anchor="middle" class="chart-label--small" style="fill: var(--color-secondary)">nobody does this. genuinely, almost nobody.</text>
-    </g>
-    <text x="320" y="180" text-anchor="middle" class="chart-label" style="fill: var(--color-muted)">The bottleneck isn't willingness. It's the tenth repetition.</text>
-  </svg>
-  <figcaption>Ten minutes is fine once. It is not fine as a per-record cost, and per-record costs are what decide whether data exists.</figcaption>
-</figure>
+{% barChart {
+  key: "MINUTES OF DESK WORK, AT TEN MINUTES A RECORD",
+  caption: "Ten minutes is fine once. It is not fine as a per-record cost, and per-record costs are what decide whether data exists — which is why almost nobody does the third bar.",
+  bars: [
+    { label: "1 recording", value: 10, note: "10 minutes" },
+    { label: "a decent night (10 records)", value: 100, note: "1 hour 40 minutes" },
+    { label: "a season (30 nights)", value: 3000, note: "50 hours — nobody does this", highlight: true }
+  ]
+} %}
 
 This is the actual gap between "lots of people record bats" and "very few bat
 records reach scientific databases". Not apathy. Not gatekeeping. Just an

@@ -45,10 +45,18 @@ whispers — its calls are so faint that it is sometimes called a whispering bat
 Standing in one spot with one detector, you are listening to a different sized
 world for each species.
 
-<figure>
-  <a href="/static/images/detection-distance.webp"><img src="/static/images/detection-distance.webp" alt="Left: circles drawn to scale showing detection distance for five bats, from a 100 metre noctule circle down to a 6 metre brown long-eared circle. Right: the same distances as a bar chart." loading="lazy"></a>
-  <figcaption>Approximate detection distances from survey guidance — the real figure moves with habitat, weather, microphone and how the bat is flying. The ratio is the point: a noctule is audible across a field, a long-eared bat has to be almost overhead.</figcaption>
-</figure>
+{% chart {
+  key: "HOW FAR AWAY A DETECTOR HEARS EACH ONE, IN METRES",
+  caption: "Approximate detection distances from survey guidance — the real figure moves with habitat, weather, microphone and how the bat is flying. The ratio is the point: a noctule is audible across a field, a long-eared bat has to be almost overhead.",
+  alt: "Bar chart of detection distance for five species, all to the same scale: noctule 100 m, serotine 40 m, common pipistrelle 25 m, Daubenton's 15 m, brown long-eared 6 m.",
+  bars: [
+    { label: "Noctule (~20 kHz)", value: 100, note: "100 m" },
+    { label: "Serotine (~25 kHz)", value: 40, note: "40 m" },
+    { label: "Common pipistrelle (~45 kHz)", value: 25, note: "25 m" },
+    { label: "Daubenton's (~45 kHz, quieter)", value: 15, note: "15 m" },
+    { label: "Brown long-eared (faint, broadband)", value: 6, note: "6 m", highlight: true }
+  ]
+} %}
 
 A noctule crossing a hundred metres away is on your recording. A long-eared bat
 doing exactly the same thing is not — it has to be nearly overhead. An evening's

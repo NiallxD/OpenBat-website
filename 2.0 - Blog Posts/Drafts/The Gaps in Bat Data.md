@@ -17,10 +17,74 @@ Every distribution map, every conservation assessment and every model of where
 a bat might live rests on a pile of individual records. It is worth looking at
 what that pile is actually made of.
 
-<figure>
-  <a href="/static/images/records-per-species.webp"><img src="/static/images/records-per-species.webp" alt="A bar chart of 48 bat species sorted by how many GBIF records exist for each, on a log scale from under 200 to over three million. The bars are coloured by region, and the European species are almost all clustered at the well-recorded end." loading="lazy"></a>
-  <figcaption>The 48 species OpenBat can name, by how many records exist for them. The scale multiplies by ten each step — the common pipistrelle is not ten times better recorded than the little brown bat, it is nearly a thousand times better recorded. Colour is region, and it does most of the explaining: dark purple is European, pale purple North American.</figcaption>
-</figure>
+{% chart {
+  yKey: "GBIF RECORDS HELD, LOG SCALE",
+  vertical: true,
+  scale: "log",
+  min: 80,
+  max: 8000000,
+  yTicks: true,
+  xTicks: false,
+  notes: false,
+  height: 420,
+  caption: "The 48 species OpenBat can name, by how many records exist for them. The scale multiplies by ten each step — the common pipistrelle is not ten times better recorded than the little brown bat, it is nearly a thousand times better recorded.",
+  alt: "A bar chart of 48 bat species sorted by how many GBIF records exist for each, on a log scale from 184 to over three million, rising smoothly across four orders of magnitude.",
+  bars: [
+    { label: "Idionycteris phyllotis", value: 184 },
+    { label: "Spotted Bat", value: 186 },
+    { label: "Myotis sodalis", value: 271 },
+    { label: "Myotis grisescens", value: 283 },
+    { label: "Myotis leibii", value: 341 },
+    { label: "Northern Myotis", value: 357 },
+    { label: "Eumops perotis", value: 387 },
+    { label: "Lasiurus seminolus", value: 481 },
+    { label: "Nyctinomops macrotis", value: 482 },
+    { label: "Myotis austroriparius", value: 736 },
+    { label: "Fringed Myotis", value: 1055 },
+    { label: "Lasiurus intermedius", value: 1153 },
+    { label: "Lasiurus blossevillii", value: 1179 },
+    { label: "Long-eared Myotis", value: 1216 },
+    { label: "Nycticeius humeralis", value: 1425 },
+    { label: "Western Small-footed Myotis", value: 1465 },
+    { label: "Long-legged Myotis", value: 1481 },
+    { label: "Yuma Myotis", value: 2264 },
+    { label: "Canyon Bat", value: 2326 },
+    { label: "Myotis velifer", value: 2757 },
+    { label: "Townsend's Big-eared Bat", value: 2842 },
+    { label: "Pallid Bat", value: 2862 },
+    { label: "California Myotis", value: 2953 },
+    { label: "Myotis alcathoe", value: 3042 },
+    { label: "Silver-haired Bat", value: 3170 },
+    { label: "Perimyotis subflavus", value: 3211 },
+    { label: "Little Brown Bat", value: 3720 },
+    { label: "Eastern Red Bat", value: 5299 },
+    { label: "Myotis brandtii", value: 5875 },
+    { label: "Hoary Bat", value: 5893 },
+    { label: "Mexican Free-tailed Bat", value: 7740 },
+    { label: "Myotis bechsteinii", value: 10841 },
+    { label: "Big Brown Bat", value: 11731 },
+    { label: "Plecotus austriacus", value: 12718 },
+    { label: "Barbastella barbastellus", value: 22465 },
+    { label: "Myotis mystacinus", value: 24373 },
+    { label: "Rhinolophus hipposideros", value: 29410 },
+    { label: "Myotis nattereri", value: 33764 },
+    { label: "Rhinolophus ferrumequinum", value: 34923 },
+    { label: "Pipistrellus nathusii", value: 43968 },
+    { label: "Cnephaeus serotinus", value: 49587 },
+    { label: "Grey-headed Flying-fox", value: 53087 },
+    { label: "Plecotus auritus", value: 55013 },
+    { label: "Myotis daubentonii", value: 269678 },
+    { label: "Nyctalus leisleri", value: 308473 },
+    { label: "Nyctalus noctula", value: 318300 },
+    { label: "Pipistrellus pygmaeus", value: 427061 },
+    { label: "Common Pipistrelle", value: 3229956 }
+  ],
+  callouts: [
+    { x: "Northern Myotis", y: 2600, text: "Spotted bat, 186 records", style: "muted", arrowTo: { x: "Spotted Bat", y: 215 } },
+    { x: "Little Brown Bat", y: 62000, text: "Little brown bat, 3,720 records", style: "muted", arrowTo: { x: "Little Brown Bat", y: 4200 } },
+    { x: "Grey-headed Flying-fox", y: 5200000, text: "Common pipistrelle, 3,229,956 records", arrowTo: { x: "Common Pipistrelle", y: 3400000 } }
+  ]
+} %}
 
 The little brown bat was once among the most abundant mammals in North America.
 It has about 3,700 records. The common pipistrelle has 3.2 million. Nothing

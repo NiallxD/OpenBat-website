@@ -39,10 +39,26 @@ An infected bat rouses far more often. The infection irritates and damages the
 wing membrane, upsets its water balance, and the animal wakes to deal with it,
 over and over.
 
-<figure>
-  <a href="/static/images/wns-fat-budget.webp"><img src="/static/images/wns-fat-budget.webp" alt="A line chart of fat reserve across a winter: a healthy bat's reserve steps down slowly and still has fuel in spring, while an infected bat's steps down far more often and hits empty in late February." loading="lazy"></a>
-  <figcaption>Illustrative — a drawing of the mechanism rather than measured data. The steps are arousals. Nothing about the fungus needs to be directly lethal for the outcome to be.</figcaption>
-</figure>
+{% chart {
+  type: "line",
+  key: "WHY WAKING UP TOO OFTEN IS FATAL, EVEN THOUGH THE FUNGUS ITSELF IS NOT",
+  yKey: "FAT RESERVE",
+  labels: ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"],
+  caption: "Illustrative — a drawing of the mechanism rather than measured data. The steps are arousals. Nothing about the fungus needs to be directly lethal for the outcome to be.",
+  alt: "A line chart of fat reserve across a winter: a healthy bat's reserve steps down slowly and still has fuel in spring, while an infected bat's steps down far more often and hits empty in late February.",
+  height: 380,
+  series: [
+    { name: "A healthy winter — a bat rouses now and then", data: [100, 92, 85, 76, 66, 57, 44], stepped: true },
+    { name: "With the infection — it rouses far more often", data: [100, 80, 58, 36, 14, 0, 0], stepped: true, style: "secondary" }
+  ],
+  bands: [
+    { from: "Mar", to: "Apr", text: "spring — insects return", style: "muted" }
+  ],
+  callouts: [
+    { x: "Dec", y: 92, text: "each step down is one arousal: a few days' worth of fat, spent in hours", style: "muted", arrowTo: { x: "Dec", y: 60 } },
+    { x: "Feb", y: 30, text: "reserves gone, weeks before there is anything to eat", arrowTo: { x: "Mar", y: 2 } }
+  ]
+} %}
 
 The reserve runs out weeks before there is anything to eat. Bats leave the cave
 in midwinter looking for insects that don't exist yet — which is why one of the

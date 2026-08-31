@@ -38,22 +38,17 @@ personality. It's the geometry of the situation.
 
 Here's the trade-off that shapes everything else.
 
-<figure class="chart">
-  <svg viewBox="0 0 640 260" role="img" aria-label="A trade-off chart: as frequency rises, detail improves but range falls sharply.">
-    <line x1="60" y1="200" x2="600" y2="200" style="stroke: var(--color-border)"></line>
-    <line x1="60" y1="30" x2="60" y2="200" style="stroke: var(--color-border)"></line>
-    <path d="M70 190 C 200 150, 340 90, 590 45" fill="none" style="stroke: var(--color-accent)" stroke-width="3"></path>
-    <path d="M70 50 C 200 90, 340 160, 590 192" fill="none" style="stroke: var(--color-secondary)" stroke-width="3" stroke-dasharray="7 5"></path>
-    <text x="330" y="230" text-anchor="middle" class="chart-key" style="fill: var(--color-accent)">FREQUENCY →</text>
-    <g class="chart-label">
-      <text x="470" y="38" style="fill: var(--color-accent)">detail you can resolve</text>
-      <text x="430" y="186" style="fill: var(--color-secondary)">how far it carries</text>
-      <text x="80" y="46" style="fill: var(--color-secondary)">far</text>
-      <text x="80" y="196" style="fill: var(--color-accent)">coarse</text>
-    </g>
-  </svg>
-  <figcaption>Every echolocating bat sits somewhere on this crossing. Where it sits tells you a lot about how it hunts.</figcaption>
-</figure>
+{% chart {
+  type: "line",
+  key: "FREQUENCY →",
+  legend: true,
+  labels: ["lower", "", "", "", "", "", "", "higher"],
+  series: [
+    { name: "detail you can resolve", data: [1, 2, 3.2, 4.6, 6, 7.4, 8.6, 9.4], style: "accent" },
+    { name: "how far it carries", data: [9.4, 8.7, 7.6, 6.1, 4.4, 3, 2, 1.3], style: "secondary", dashed: true }
+  ],
+  caption: "Every echolocating bat sits somewhere on this crossing. Where it sits tells you a lot about how it hunts. The axes are a shape, not a measurement — no bat has a number here."
+} %}
 
 A sound wave can only resolve detail down to roughly its own wavelength. At 20
 kHz the wavelength is about 17 millimetres — fine for a wall, useless for a

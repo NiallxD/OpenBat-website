@@ -70,21 +70,17 @@ Merlin Bird ID and eBird have been running for years: a huge number of people
 download something fun, a smaller number get hooked, and a smaller number again
 end up contributing real data they never set out to contribute.
 
-<figure class="chart">
-  <svg viewBox="0 0 640 300" role="img" aria-label="A funnel: many people download the app, fewer get a microphone, fewer still hear their first bat, and a smaller group contribute records to science.">
-    <g class="chart-label" style="fill: var(--color-secondary)">
-      <rect x="60" y="20" width="520" height="52" rx="8" style="fill: var(--color-accent); opacity: 0.85"></rect>
-      <text x="320" y="52" text-anchor="middle" style="fill: #111; font-weight: 700">Downloads the app out of curiosity</text>
-      <rect x="130" y="88" width="380" height="52" rx="8" style="fill: var(--color-accent); opacity: 0.62"></rect>
-      <text x="320" y="120" text-anchor="middle" style="fill: #111; font-weight: 700">Gets hold of an ultrasonic microphone</text>
-      <rect x="200" y="156" width="240" height="52" rx="8" style="fill: var(--color-accent); opacity: 0.42"></rect>
-      <text x="320" y="188" text-anchor="middle" style="fill: #111; font-weight: 700">Hears their first bat</text>
-      <rect x="255" y="224" width="130" height="52" rx="8" style="fill: var(--color-accent); opacity: 0.28"></rect>
-      <text x="320" y="256" text-anchor="middle" style="fill: #111; font-weight: 700">Contributes data</text>
-    </g>
-  </svg>
-  <figcaption>Nobody arrives at the bottom on purpose. They arrive because each step was small and the next one was obvious.</figcaption>
-</figure>
+{% chart {
+  key: "RELATIVE, AND ILLUSTRATIVE — NOBODY HAS MEASURED THIS",
+  xTicks: false,
+  bars: [
+    { label: "Downloads the app out of curiosity", value: 100, note: "" },
+    { label: "Gets hold of an ultrasonic microphone", value: 62, note: "" },
+    { label: "Hears their first bat", value: 38, note: "" },
+    { label: "Contributes data", value: 18, note: "", highlight: true }
+  ],
+  caption: "Nobody arrives at the bottom on purpose. They arrive because each step was small and the next one was obvious. The widths are a shape, not a measurement."
+} %}
 
 The important thing about that shape is that the top is enormous and free. You
 don't have to join anything, sign up to anything, or care about science at all

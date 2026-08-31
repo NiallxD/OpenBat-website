@@ -43,25 +43,20 @@ in autumn and conclude it doesn't work.
 
 In temperate regions, bats are strongly seasonal. Broadly:
 
-<figure class="chart">
-  <svg viewBox="0 0 640 260" role="img" aria-label="A rough year of bat activity in a temperate region: very low in winter, rising in spring, peaking in late summer, falling through autumn.">
-    <line x1="50" y1="200" x2="620" y2="200" style="stroke: var(--color-border)"></line>
-    <path d="M50 194 C 90 192, 110 186, 140 168 C 175 148, 200 130, 240 120 C 290 108, 330 96, 380 66 C 420 44, 450 40, 480 52 C 515 66, 545 140, 580 186 C 596 194, 606 196, 620 196"
-          fill="none" style="stroke: var(--color-accent)" stroke-width="3" stroke-linecap="round"></path>
-    <g class="chart-label chart-label--small" style="fill: var(--color-muted)">
-      <text x="60" y="220">Jan</text><text x="155" y="220">Mar</text><text x="250" y="220">May</text>
-      <text x="345" y="220">Jul</text><text x="440" y="220">Sep</text><text x="535" y="220">Nov</text>
-    </g>
-    <g class="chart-label chart-label--small" style="fill: var(--color-secondary)">
-      <text x="90" y="180">hibernation —</text><text x="90" y="194">very little flying</text>
-      <text x="215" y="100">emerging,</text><text x="215" y="114">feeding hard</text>
-      <text x="360" y="36">peak — young</text><text x="360" y="50">bats flying too</text>
-      <text x="500" y="110">fattening up,</text><text x="500" y="124">then gone</text>
-    </g>
-    <text x="20" y="120" class="chart-key" style="fill: var(--color-accent)" transform="rotate(-90 20 120)">ACTIVITY</text>
-  </svg>
-  <figcaption>Rough shape only, and it shifts a lot with latitude and species — but if you start in January and give up in February, this is why.</figcaption>
-</figure>
+{% chart {
+  type: "line",
+  key: "MONTH",
+  yKey: "ACTIVITY",
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  series: [
+    { name: "bat activity", data: [1, 1, 3, 8, 13, 17, 20, 24, 17, 8, 3, 1], style: "accent", fill: true }
+  ],
+  marks: [
+    { at: "Feb", text: "hibernation — very little flying" },
+    { at: "Aug", text: "peak — young bats flying too" }
+  ],
+  caption: "Rough shape only, and it shifts a lot with latitude and species — but if you start in January and give up in February, this is why."
+} %}
 
 - **Winter** — hibernation. Bats may rouse briefly on mild nights, but expect
   very little. A blank January evening tells you nothing about your equipment.

@@ -169,6 +169,13 @@ function buildInlineGallery(uid, slides, hideClass = '') {
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("static");
   eleventyConfig.addPassthroughCopy("robots.txt");
+  eleventyConfig.addPassthroughCopy({
+    "node_modules/chart.js/dist/chart.umd.min.js": "static/js/chart.umd.min.js",
+    // Bands, threshold lines and text callouts. Self-hosted for the same
+    // reason Chart.js is — the CSP is script-src 'self'.
+    "node_modules/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js":
+      "static/js/chartjs-plugin-annotation.min.js",
+  });
   eleventyConfig.addPassthroughCopy({ "static/images/favicon.ico": "favicon.ico" });
 
   // Markdown-it with HTML enabled + Obsidian-style wikilinks
@@ -467,6 +474,194 @@ export default function (eleventyConfig) {
   };
 
   eleventyConfig.addFilter("sectionCards", toCards);
+
+  // ── Charts ──────────────────────────────────────────────────
+  // {% chart {...} %} — every data figure in the blog.
+  //
+  // The shortcode emits data, not drawing: a <canvas data-chart="…"> that
+  // static/js/openbat-charts.js hands to Chart.js, plus a plain table for
+  // anyone without JS. Colours are never written here — the runtime reads them
+  // from the CSS variables, so a chart follows the theme toggle.
+  //
+  // Chart.js is self-hosted (copied out of node_modules below) because the
+  // CSP is script-src 'self'; a CDN copy would be blocked in production.
+  const escapeXml = (s) =>
+    String(s ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+
+  const formatValue = (n) =>
+    Number.isFinite(n) ? new Intl.NumberFormat("en-GB").format(n) : String(n);
+
+  // The no-JS fallback is a real table rather than an apology. It is also what
+  // a screen reader gets if it prefers the table to the canvas label.
+  const fallbackTable = (key, rows) =>
+    `<noscript><table class="chart-table">` +
+    (key ? `<caption>${escapeXml(key)}</caption>` : "") +
+    `<tbody>${rows}</tbody></table></noscript>`;
+
+  const figure = (spec, alt, height, caption, table) =>
+    `<figure class="chart">` +
+    `<div class="chart-canvas" style="height:${height}px">` +
+    `<canvas data-chart="${escapeXml(JSON.stringify(spec))}" role="img" aria-label="${escapeXml(alt)}"></canvas>` +
+    `</div>` +
+    table +
+    (caption ? `<figcaption>${escapeXml(caption)}</figcaption>` : "") +
+    `</figure>`;
+
+  const barsFigure = (opts) => {
+    const bars = (opts.bars || [])
+      .map((b) => ({
+        label: String(b.label ?? ""),
+        // A bar is either a value from zero or a from/to range — the "species
+        // that sound alike" figure is ranges, and drawing those from zero
+        // would say something quite different from what the post means.
+        value: b.value === undefined ? undefined : Number(b.value) || 0,
+        from: b.from === undefined ? undefined : Number(b.from) || 0,
+        to: b.to === undefined ? undefined : Number(b.to) || 0,
+        note:
+          opts.notes === false
+            ? ""
+            : b.note ?? (b.value === undefined ? "" : formatValue(Number(b.value))),
+        highlight: b.highlight === true,
+        style: b.style || undefined,
+      }))
+      .filter((b) => b.label || b.value !== undefined || b.from !== undefined);
+    if (!bars.length) return "";
+
+    const key = opts.key ? String(opts.key) : "";
+    const spec = {
+      type: "bar",
+      bars,
+      key,
+      max: Number(opts.max) || null,
+      min: opts.min === undefined ? null : Number(opts.min),
+      xTicks: opts.xTicks !== false,
+      yTicks: opts.yTicks !== false,
+      xGrid: opts.xGrid !== false,
+      yGrid: opts.yGrid !== false,
+      vertical: opts.vertical === true,
+      scale: opts.scale === "log" ? "log" : undefined,
+      groups: opts.groups || [],
+      marks: opts.marks || [],
+      bands: opts.bands || [],
+      lines: opts.lines || [],
+      callouts: opts.callouts || [],
+    };
+
+    const describe = (b) =>
+      b.note || (b.from !== undefined ? `${formatValue(b.from)} to ${formatValue(b.to)}` : formatValue(b.value));
+    const alt =
+      opts.alt ||
+      "Bar chart, every bar drawn to the same scale: " +
+        bars.map((b) => `${b.label}, ${describe(b)}`).join("; ") + ".";
+
+    // Height is the one thing a canvas can't work out for itself — it has no
+    // intrinsic size, so the row count decides it here.
+    const height =
+      Number(opts.height) ||
+      (spec.vertical ? 320 : bars.length * 34 + (key ? 56 : 32));
+
+    const rows = bars
+      .map(
+        (b) =>
+          `<tr${b.highlight ? ' class="is-highlight"' : ""}><th scope="row">${escapeXml(b.label)}</th>` +
+          `<td>${escapeXml(describe(b))}</td></tr>`
+      )
+      .join("");
+
+    return figure(spec, alt, height, opts.caption, fallbackTable(key, rows));
+  };
+
+  const seriesFigure = (opts) => {
+    const series = (opts.series || []).filter((s) => (s.data || []).length);
+    if (!series.length) return "";
+    const labels = (opts.labels || []).map(String);
+    const key = opts.key ? String(opts.key) : "";
+    const spec = {
+      type: opts.type === "scatter" ? "scatter" : "line",
+      labels,
+      series,
+      key,
+      yKey: opts.yKey ? String(opts.yKey) : "",
+      // Most of these curves are shapes, not measurements — a season, a night,
+      // a trade-off. Numbers on the y axis would invite reading values that
+      // were never claimed, so they are off unless a post asks for them.
+      yTicks: opts.yTicks === true,
+      xTicks: opts.xTicks !== false,
+      yGrid: opts.yGrid !== false,
+      legend: opts.legend !== false,
+      beginAtZero: opts.beginAtZero !== false,
+      marks: opts.marks || [],
+      bands: opts.bands || [],
+      lines: opts.lines || [],
+      callouts: opts.callouts || [],
+    };
+
+    const alt =
+      opts.alt ||
+      (spec.type === "scatter" ? "Scatter chart. " : "Line chart. ") +
+        series.map((s) => s.name).filter(Boolean).join(" against ") +
+        (key ? `, across ${key.toLowerCase()}` : "") + ".";
+
+    const height = Number(opts.height) || 320;
+
+    // Without JS a shape is not much use, so the fallback lists the series and
+    // whatever the post used for x, which is at least the claim in words.
+    const rows = series
+      .map(
+        (s) =>
+          `<tr><th scope="row">${escapeXml(s.name || "series")}</th>` +
+          `<td>${escapeXml(labels.length ? labels.filter(Boolean).join(", ") : `${(s.data || []).length} points`)}</td></tr>`
+      )
+      .join("");
+
+    return figure(spec, alt, height, opts.caption, fallbackTable(key, rows));
+  };
+
+  // {% panels %} … {% endpanels %} — several charts read as one figure.
+  //
+  // Three bar charts side by side say "heard, then weighted, then reported" in
+  // a way three stacked ones do not: the comparison is the point, and it only
+  // works if the eye can cross between them. Below the breakpoint they stack,
+  // because three 200px panels say nothing at all.
+  //
+  // Nested <figure> is valid HTML — the outer one is the figure, the inner
+  // ones are its panels — so each panel keeps its own caption and the wrapper
+  // can carry the caption for the whole thing.
+  eleventyConfig.addPairedShortcode("panels", (content, opts = {}) => {
+    const columns = Number(opts.columns) || 0;
+    const caption = opts.caption
+      ? `<figcaption>${escapeXml(String(opts.caption))}</figcaption>`
+      : "";
+    return (
+      `<figure class="chart-panels"${columns ? ` style="--panels:${columns}"` : ""}>` +
+      `<div class="chart-panels-grid">${String(content).trim()}</div>` +
+      caption +
+      `</figure>`
+    );
+  });
+
+  eleventyConfig.addShortcode("chart", (opts = {}) =>
+    opts.type === "line" || opts.type === "scatter" ? seriesFigure(opts) : barsFigure(opts)
+  );
+
+  // The original name, kept because bar charts are most of them.
+  eleventyConfig.addShortcode("barChart", (opts = {}) => barsFigure(opts));
+
+  // Chart.js and its wiring are ~70KB gzipped, so they load only on the pages
+  // that actually contain a chart rather than site-wide from base.njk.
+  eleventyConfig.addTransform("chartAssets", (content, outputPath) => {
+    if (typeof outputPath !== "string" || !outputPath.endsWith(".html")) return content;
+    if (!content.includes("data-chart=") || !content.includes("</body>")) return content;
+    const tags =
+      `<script src="/static/js/chart.umd.min.js?v=4.5.1" defer></script>` +
+      `<script src="/static/js/chartjs-plugin-annotation.min.js?v=3.1.0" defer></script>` +
+      `<script src="/static/js/openbat-charts.js?v=10" defer></script>`;
+    return content.replace("</body>", tags + "</body>");
+  });
 
   return {
     pathPrefix: process.env.ELEVENTY_PATH_PREFIX || "/",

@@ -97,10 +97,57 @@ weight per species: **1.0** if this is inside the species' range, **0.01** if it
 is well outside, and **0.5** if the grid has nothing to say about that species
 at all.
 
-<figure>
-  <a href="/static/images/autoid-priors.webp"><img src="/static/images/autoid-priors.webp" alt="Three bar charts: the model's raw scores for six species, the range weight applied to each, and the renormalised result." loading="lazy"></a>
-  <figcaption>An out-of-range species is multiplied down to almost nothing, and the rest are scaled back up so they still add to 1. Illustrative scores; the weights are the real ones.</figcaption>
-</figure>
+{% panels { columns: 3, caption: "An out-of-range species is multiplied down to almost nothing, and the rest are scaled back up so they still add to 1. The winner gains confidence because a rival was ruled out, not because the model heard more. Illustrative scores; the weights are the real ones." } %}
+{% chart {
+  key: "1 · WHAT THE MODEL HEARD",
+  caption: "One pulse, scores as the network produced them.",
+  max: 0.7,
+  height: 300,
+  xTicks: false,
+  xGrid: false,
+  bars: [
+    { label: "Daubenton's (MYODAU)", value: 0.38, note: "0.38" },
+    { label: "Brandt's (MYOBRA)", value: 0.23, note: "0.23" },
+    { label: "Common pip (PIPPIP)", value: 0.16, note: "0.16" },
+    { label: "Natterer's (MYONAT)", value: 0.11, note: "0.11" },
+    { label: "Soprano pip (PIPPYG)", value: 0.08, note: "0.08" },
+    { label: "Barbastelle (BARBAR)", value: 0.04, note: "0.04" }
+  ]
+} %}
+{% chart {
+  key: "2 · WHAT LIVES HERE",
+  caption: "Weight from the bundled range grid at your location.",
+  max: 1.2,
+  height: 300,
+  xTicks: false,
+  xGrid: false,
+  bars: [
+    { label: "Daubenton's (MYODAU)", value: 1, note: "1" },
+    { label: "Brandt's (MYOBRA)", value: 0.01, note: "0.01", highlight: true },
+    { label: "Common pip (PIPPIP)", value: 1, note: "1" },
+    { label: "Natterer's (MYONAT)", value: 1, note: "1" },
+    { label: "Soprano pip (PIPPYG)", value: 1, note: "1" },
+    { label: "Barbastelle (BARBAR)", value: 0.5, note: "0.5", style: "secondary" }
+  ]
+} %}
+{% chart {
+  key: "3 · WHAT GETS REPORTED",
+  caption: "Weighted, then renormalised back to a total of 1.",
+  alt: "Bar chart of the renormalised scores: Daubenton's 0.51, common pipistrelle 0.21, Natterer's 0.15, soprano pipistrelle 0.11, barbastelle 0.03, Brandt's 0.00.",
+  max: 0.7,
+  height: 300,
+  xTicks: false,
+  xGrid: false,
+  bars: [
+    { label: "Daubenton's (MYODAU)", value: 0.51, note: "0.51", highlight: true },
+    { label: "Brandt's (MYOBRA)", value: 0.001, note: "0.00" },
+    { label: "Common pip (PIPPIP)", value: 0.21, note: "0.21" },
+    { label: "Natterer's (MYONAT)", value: 0.15, note: "0.15" },
+    { label: "Soprano pip (PIPPYG)", value: 0.11, note: "0.11" },
+    { label: "Barbastelle (BARBAR)", value: 0.03, note: "0.03" }
+  ]
+} %}
+{% endpanels %}
 
 Two things about that middle panel matter more than the arithmetic.
 
@@ -118,10 +165,30 @@ would be inventing evidence out of your own expectations.
 
 Bats don't call once. The unit OpenBat identifies is a **pass (sometimes called a sequence)**,  the burst of calls as an animal crosses in front of the microphone, closed by two seconds of silence.
 
-<figure>
-  <a href="/static/images/autoid-pulses.webp"><img src="/static/images/autoid-pulses.webp" alt="Top: an amplitude trace with eight detected calls, the trigger level and hold-off bands marked. Bottom: each call's confidence as bars, with the no-ID line and the mean." loading="lazy"></a>
-  <figcaption>Calls are found one at a time; the verdict is taken over all of them. Two of these eight pulses sit below the no-ID line on their own and neither is thrown away — the pass is judged on the average. Illustrative, at the real thresholds.</figcaption>
-</figure>
+{% chart {
+  key: "PULSE",
+  yKey: "MODEL'S OWN CONFIDENCE",
+  vertical: true,
+  yTicks: true,
+  max: 1,
+  height: 340,
+  caption: "Calls are found one at a time; the verdict is taken over all of them. Two of these eight pulses sit below the no-ID line on their own and neither is thrown away — the pass is judged on the average. Illustrative, at the real thresholds.",
+  alt: "Bar chart of eight pulses in one pass, confidences from 0.41 to 0.88, with the no-ID line at 0.57 and the mean at 0.67 marked. Pulses 1 and 8 fall below the no-ID line; the mean clears it.",
+  bars: [
+    { label: "1", value: 0.44, note: "" },
+    { label: "2", value: 0.71, note: "" },
+    { label: "3", value: 0.83, note: "" },
+    { label: "4", value: 0.75, note: "" },
+    { label: "5", value: 0.88, note: "" },
+    { label: "6", value: 0.62, note: "" },
+    { label: "7", value: 0.69, note: "" },
+    { label: "8", value: 0.41, note: "" }
+  ],
+  lines: [
+    { at: 0.57, axis: "y", text: "no-ID line 0.57", style: "muted", position: "start" },
+    { at: 0.67, axis: "y", text: "mean 0.67 — the pass gets a name", dashed: false, position: "start" }
+  ]
+} %}
 
 A pass gets a name only if the **mean raw confidence across its pulses clears
 the model's no-ID line** — 0.57 for NABat ML, 0.4 for BatDetect2, whose scores

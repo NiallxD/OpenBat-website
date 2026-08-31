@@ -72,43 +72,15 @@ The catch is in the arithmetic. Playing back half a second of audio at
 one-sixteenth speed takes eight seconds, and during those eight seconds the
 microphone isn't listening for the next call.
 
-<figure class="chart">
-  <svg viewBox="0 0 640 250" role="img" aria-label="Two timelines. Heterodyne listens continuously and catches every pass. Slow replay catches a call, then spends time playing it back, during which a second pass is missed.">
-    <g class="chart-key" style="fill: var(--color-accent)">
-      <text x="10" y="30">HETERODYNE</text>
-      <text x="10" y="150">SLOW REPLAY</text>
-    </g>
-    <!-- heterodyne timeline -->
-    <rect x="10" y="46" width="600" height="26" rx="6" style="fill: var(--color-accent); opacity: 0.28"></rect>
-    <text x="20" y="64" class="chart-label" style="fill: var(--color-text)">listening — continuously, the whole time</text>
-    <g style="fill: var(--color-accent)">
-      <circle cx="120" cy="90" r="6"/><circle cx="300" cy="90" r="6"/><circle cx="470" cy="90" r="6"/>
-    </g>
-    <g class="chart-label chart-label--small" style="fill: var(--color-muted)">
-      <text x="120" y="112" text-anchor="middle">pass 1</text>
-      <text x="300" y="112" text-anchor="middle">pass 2</text>
-      <text x="470" y="112" text-anchor="middle">pass 3</text>
-    </g>
-    <!-- slow replay timeline -->
-    <rect x="10" y="166" width="110" height="26" rx="6" style="fill: var(--color-accent); opacity: 0.28"></rect>
-    <rect x="120" y="166" width="180" height="26" rx="6" style="fill: var(--color-accent); opacity: 0.75"></rect>
-    <rect x="300" y="166" width="60" height="26" rx="6" style="fill: var(--color-accent); opacity: 0.28"></rect>
-    <rect x="360" y="166" width="180" height="26" rx="6" style="fill: var(--color-accent); opacity: 0.75"></rect>
-    <rect x="540" y="166" width="70" height="26" rx="6" style="fill: var(--color-accent); opacity: 0.28"></rect>
-    <text x="210" y="184" text-anchor="middle" class="chart-label chart-label--small" style="fill: #111; font-weight: 700">playing back — 8 s deaf</text>
-    <text x="450" y="184" text-anchor="middle" class="chart-label chart-label--small" style="fill: #111; font-weight: 700">playing back — 8 s deaf</text>
-    <g style="fill: var(--color-accent)">
-      <circle cx="120" cy="210" r="6"/><circle cx="330" cy="210" r="6"/>
-    </g>
-    <circle cx="230" cy="210" r="6" style="fill: none; stroke: var(--color-muted)" stroke-width="2"></circle>
-    <g class="chart-label chart-label--small" style="fill: var(--color-muted)">
-      <text x="120" y="232" text-anchor="middle">caught</text>
-      <text x="230" y="232" text-anchor="middle">missed</text>
-      <text x="330" y="232" text-anchor="middle">caught</text>
-    </g>
-  </svg>
-  <figcaption>The trade is the technique, not the app. Every time-expansion detector ever made has had this gap in it.</figcaption>
-</figure>
+{% chart {
+  key: "SECONDS ACTUALLY LISTENING, IN A 30-SECOND WINDOW",
+  max: 30,
+  bars: [
+    { label: "heterodyne", value: 30, note: "30 s — never stops listening", highlight: true },
+    { label: "slow replay", value: 14, note: "14 s — two calls, 8 s deaf after each" }
+  ],
+  caption: "The trade is the technique, not the app. Every time-expansion detector ever made has had this gap in it: while it plays a call back to you, it cannot hear the next one."
+} %}
 
 That gap isn't a bug we haven't got round to fixing. It's inherent to playing
 sound back slower than it arrived, and dedicated time-expansion detectors have

@@ -36,24 +36,18 @@ field section? Did the new streetlight change anything?
 The difference isn't effort — Summer B is *less* work. It's that every session
 in Summer B is comparable to every other one.
 
-<figure class="chart">
-  <svg viewBox="0 0 640 250" role="img" aria-label="Two scatter patterns. Random outings produce scattered incomparable points. A repeated transect produces a readable trend over the season.">
-    <text x="10" y="22" class="chart-key" style="fill: var(--color-muted)">RANDOM OUTINGS</text>
-    <text x="340" y="22" class="chart-key" style="fill: var(--color-accent)">A REPEATED TRANSECT</text>
-    <rect x="10" y="34" width="290" height="170" rx="8" style="fill: var(--color-surface); stroke: var(--color-border)"></rect>
-    <g style="fill: var(--color-secondary)" opacity="0.8">
-      <circle cx="50" cy="150" r="5"/><circle cx="90" cy="80" r="5"/><circle cx="120" cy="180" r="5"/><circle cx="160" cy="60" r="5"/><circle cx="200" cy="140" r="5"/><circle cx="240" cy="90" r="5"/><circle cx="270" cy="170" r="5"/><circle cx="70" cy="110" r="5"/><circle cx="180" cy="120" r="5"/>
-    </g>
-    <text x="155" y="228" text-anchor="middle" class="chart-label--small" style="fill: var(--color-muted)">different places, times, lengths — not comparable</text>
-    <rect x="340" y="34" width="290" height="170" rx="8" style="fill: var(--color-surface); stroke: var(--color-border)"></rect>
-    <path d="M360 180 C 400 172, 430 140, 470 100 C 500 72, 530 62, 560 70 C 585 78, 600 100, 612 124" fill="none" style="stroke: var(--color-accent)" stroke-width="3"></path>
-    <g style="fill: var(--color-accent)">
-      <circle cx="360" cy="180" r="5"/><circle cx="400" cy="168" r="5"/><circle cx="440" cy="126" r="5"/><circle cx="480" cy="92" r="5"/><circle cx="520" cy="66" r="5"/><circle cx="560" cy="70" r="5"/><circle cx="600" cy="112" r="5"/>
-    </g>
-    <text x="485" y="228" text-anchor="middle" class="chart-label--small" style="fill: var(--color-muted)">same route, same method — a season you can read</text>
-  </svg>
-  <figcaption>Same person, same microphone, same number of evenings. Only the method changed.</figcaption>
-</figure>
+{% chart {
+  type: "scatter",
+  key: "THROUGH THE SEASON →",
+  yKey: "BATS HEARD",
+  xTicks: false,
+  yTicks: true,
+  series: [
+    { name: "random outings", data: [{x: 1, y: 4}, {x: 1.6, y: 14}, {x: 2.4, y: 2}, {x: 3.1, y: 17}, {x: 4, y: 6}, {x: 4.8, y: 13}, {x: 5.6, y: 3}, {x: 6.3, y: 11}, {x: 7, y: 5}], style: "secondary" },
+    { name: "the same route, every time", data: [{x: 1, y: 3}, {x: 2, y: 5}, {x: 3, y: 9}, {x: 4, y: 14}, {x: 5, y: 18}, {x: 6, y: 15}, {x: 7, y: 8}], style: "accent", line: true }
+  ],
+  caption: "Same person, same microphone, same number of evenings. Only the method changed — and only one of these two can be read as a season."
+} %}
 
 ## Designing a route
 

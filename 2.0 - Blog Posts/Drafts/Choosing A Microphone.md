@@ -41,31 +41,15 @@ you'd think at 11pm in a drizzle.
 
 ## The price landscape
 
-<figure class="chart">
-  <svg viewBox="0 0 640 240" role="img" aria-label="A price scale showing an open-source self-build microphone at around thirty dollars and commercial detector hardware from about one hundred and eighty dollars upwards.">
-    <line x1="40" y1="150" x2="610" y2="150" style="stroke: var(--color-border)" stroke-width="2"></line>
-    <g style="fill: var(--color-accent)">
-      <circle cx="90" cy="150" r="10"></circle>
-      <circle cx="420" cy="150" r="10"></circle>
-      <circle cx="560" cy="150" r="10"></circle>
-    </g>
-    <g class="chart-label" style="fill: var(--color-secondary)">
-      <text x="90" y="120" text-anchor="middle" style="fill: var(--color-text); font-weight: 700">~$30 CAD</text>
-      <text x="90" y="186" text-anchor="middle">open-source design,</text>
-      <text x="90" y="202" text-anchor="middle">you or a friend build it</text>
-      <text x="420" y="120" text-anchor="middle" style="fill: var(--color-text); font-weight: 700">$180+</text>
-      <text x="420" y="186" text-anchor="middle">commercial detector</text>
-      <text x="420" y="202" text-anchor="middle">hardware</text>
-      <text x="560" y="120" text-anchor="middle" style="fill: var(--color-text); font-weight: 700">£200+</text>
-      <text x="560" y="186" text-anchor="middle">standalone recorders,</text>
-      <text x="560" y="202" text-anchor="middle">desktop analysis</text>
-    </g>
-    <text x="325" y="40" text-anchor="middle" class="chart-key" style="fill: var(--color-accent)">THE GAP THIS PROJECT EXISTS TO CLOSE</text>
-    <path d="M110 62 C 200 62, 250 100, 300 130" fill="none" style="stroke: var(--color-accent)" stroke-width="2" stroke-dasharray="5 5"></path>
-    <path d="M540 62 C 460 62, 400 100, 350 130" fill="none" style="stroke: var(--color-accent)" stroke-width="2" stroke-dasharray="5 5"></path>
-  </svg>
-  <figcaption>An order of magnitude. That difference is the whole reason a curious person can try this at all.</figcaption>
-</figure>
+{% chart {
+  key: "APPROXIMATE COST, CAD",
+  bars: [
+    { label: "open-source self-build", value: 30, note: "~$30 CAD — you or a friend build it", highlight: true },
+    { label: "commercial detector hardware", value: 180, note: "$180+" },
+    { label: "standalone recorder, desktop analysis", value: 340, note: "£200+, roughly $340 CAD" }
+  ],
+  caption: "An order of magnitude. That difference is the whole reason a curious person can try this at all. The third bar is quoted in pounds by its makers and converted roughly, so read it as a scale, not a price."
+} %}
 
 The commercial detectors are good instruments and I'm not going to pretend
 otherwise. They're built by people who've been doing this for decades, they're

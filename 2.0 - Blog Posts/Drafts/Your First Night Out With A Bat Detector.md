@@ -43,24 +43,16 @@ Bats are busiest in the couple of hours **after sunset** and again in the hours
 onwards. Turn up half an hour before sunset, get set up in daylight, and be
 listening as it goes.
 
-<figure class="chart">
-  <svg viewBox="0 0 640 220" role="img" aria-label="A curve showing bat activity across the night: a large peak shortly after sunset, a quiet middle, and a smaller peak before sunrise.">
-    <line x1="50" y1="170" x2="610" y2="170" style="stroke: var(--color-border)" stroke-width="1"></line>
-    <path d="M50 168 C 90 168, 100 40, 140 40 C 180 40, 200 120, 260 140 C 330 162, 380 164, 430 150 C 470 138, 490 92, 520 92 C 555 92, 570 168, 610 168"
-          fill="none" style="stroke: var(--color-accent)" stroke-width="3" stroke-linecap="round"></path>
-    <line x1="80" y1="30" x2="80" y2="178" style="stroke: var(--color-secondary)" stroke-width="1" stroke-dasharray="4 4"></line>
-    <line x1="560" y1="30" x2="560" y2="178" style="stroke: var(--color-secondary)" stroke-width="1" stroke-dasharray="4 4"></line>
-    <g class="chart-label" style="fill: var(--color-muted)">
-      <text x="84" y="26">sunset</text>
-      <text x="564" y="26">sunrise</text>
-      <text x="140" y="196" text-anchor="middle">the good bit</text>
-      <text x="330" y="196" text-anchor="middle">the quiet middle</text>
-      <text x="520" y="196" text-anchor="middle">worth setting an alarm for</text>
-    </g>
-    <text x="20" y="100" class="chart-key" style="fill: var(--color-accent)" transform="rotate(-90 20 100)">ACTIVITY</text>
-  </svg>
-  <figcaption>The general shape of a summer night. Exact timings shift with season, weather and species, but the two humps are reliable.</figcaption>
-</figure>
+{% chart {
+  type: "line",
+  key: "THROUGH THE NIGHT →",
+  yKey: "ACTIVITY",
+  labels: ["sunset", "the good bit", "", "", "", "the quiet middle", "", "", "worth an alarm", "", "sunrise"],
+  series: [
+    { name: "bat activity", data: [0, 10, 8, 5, 3, 2, 2, 2.5, 5.5, 3.5, 0], style: "accent", fill: true }
+  ],
+  caption: "The general shape of a summer night. Exact timings shift with season, weather and species, but the two humps are reliable."
+} %}
 
 Weather matters too. A still, mild, dry evening beats a windy or cold one by a
 mile — partly because bats are less active in bad conditions, and partly

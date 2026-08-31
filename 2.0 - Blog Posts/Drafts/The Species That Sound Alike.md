@@ -39,25 +39,19 @@ So a single species produces a wide range of calls. And when several related
 species are all doing similar jobs in similar habitats, their ranges of calls
 land on top of each other.
 
-<figure class="chart">
-  <svg viewBox="0 0 640 260" role="img" aria-label="Overlapping horizontal ranges for four species. Two species barely overlap and are separable; two overlap almost completely and are not.">
-    <g class="chart-label">
-      <text x="10" y="46" style="fill: var(--color-secondary)">species A</text>
-      <rect x="110" y="30" width="150" height="22" rx="6" style="fill: var(--color-accent); opacity: 0.8"></rect>
-      <text x="10" y="86" style="fill: var(--color-secondary)">species B</text>
-      <rect x="300" y="70" width="170" height="22" rx="6" style="fill: var(--color-accent); opacity: 0.8"></rect>
-      <text x="10" y="146" style="fill: var(--color-secondary)">species C</text>
-      <rect x="180" y="130" width="230" height="22" rx="6" style="fill: var(--color-accent); opacity: 0.55"></rect>
-      <text x="10" y="182" style="fill: var(--color-secondary)">species D</text>
-      <rect x="205" y="166" width="225" height="22" rx="6" style="fill: var(--color-accent); opacity: 0.55"></rect>
-    </g>
-    <line x1="110" y1="20" x2="110" y2="200" style="stroke: var(--color-border)" stroke-dasharray="3 3"></line>
-    <text x="580" y="46" text-anchor="end" class="chart-label--small" style="fill: var(--color-muted)">separable — barely touch</text>
-    <text x="580" y="182" text-anchor="end" class="chart-label--small" style="fill: var(--color-muted)">not separable — almost identical</text>
-    <text x="320" y="234" text-anchor="middle" class="chart-key" style="fill: var(--color-accent)">RANGE OF CALLS EACH SPECIES PRODUCES →</text>
-  </svg>
-  <figcaption>The bars are ranges, not values. When two ranges sit on top of each other, a single call in the overlap could honestly have come from either.</figcaption>
-</figure>
+{% chart {
+  key: "RANGE OF CALLS EACH SPECIES PRODUCES →",
+  xTicks: false,
+  min: 0,
+  max: 10,
+  bars: [
+    { label: "species A", from: 0.5, to: 3.5, note: "separable — barely touch" },
+    { label: "species B", from: 4, to: 7.5 },
+    { label: "species C", from: 1.8, to: 6.6, note: "not separable — almost identical", highlight: true },
+    { label: "species D", from: 2.4, to: 6.9, highlight: true }
+  ],
+  caption: "The bars are ranges, not values. When two ranges sit on top of each other, a single call in the overlap could honestly have come from either."
+} %}
 
 If a call lands in the overlap — and most do — there is no measurement that
 resolves it. The information simply isn't in the recording.
