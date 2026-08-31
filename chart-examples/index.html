@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chart Examples — OpenBat</title>
+  <meta name="description" content="Every option the chart shortcode supports, rendered next to the code that made it.">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Privacy & Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://upload.wikimedia.org; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta name="referrer" content="no-referrer">
+  <meta property="og:site_name" content="OpenBat">
+  <meta property="og:title" content="Chart Examples — OpenBat">
+  <meta property="og:description" content="Every option the chart shortcode supports, rendered next to the code that made it.">
+  
+  <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
+  <meta name="theme-color" id="theme-color" content="#05070d">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.2">
+  <script>
+    // Matches the top of each theme's page gradient, so the browser chrome on
+    // iOS and Android continues the page rather than capping it with a bar.
+    const THEME_COLORS = { dark: '#05070d', light: '#081E37' };
+    const setThemeColor = (theme) => {
+      const meta = document.getElementById('theme-color');
+      if (meta) meta.setAttribute('content', THEME_COLORS[theme]);
+    };
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme !== 'light') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    setThemeColor(savedTheme === 'light' ? 'light' : 'dark');
+  </script>
+  
+</head>
+<body>
+  <header class="site-header transparent-header">
+    <div class="site-header-inner">
+      <a class="site-title" href="/">
+        <img class="site-logo" src="/static/images/logo.png" alt="OpenBat">
+      </a>
+      <nav class="nav-menu">
+        
+        
+        <a href="/our-project/">Our Project</a>
+        
+        
+        
+        <div class="nav-item has-dropdown">
+          <a href="/contribute/">Contribute</a>
+          <div class="nav-dropdown">
+            
+            <a href="/guide-editor/">Field Guide Editor</a>
+            
+          </div>
+        </div>
+        
+        
+        
+        <a href="/blog/">Blog</a>
+        
+        
+        
+        <a href="/help/">Help</a>
+        
+        
+        
+        <a href="/privacy/">Privacy</a>
+        
+        
+        
+        <a href="/contact/">Contact</a>
+        
+        
+      </nav>
+      <div class="header-controls">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
+          <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-overlay"></div>
+
+  <main>
+    
+
+
+<div class="standard-page">
+  
+
+  
+  <div class="listing-header">
+    <h1>Chart Examples</h1>
+    <p class="page-lead">Every option the chart shortcode supports, rendered next to the code that made it.</p>
+  </div>
+  
+
+  
+  <div class="post-content post-content--plain"><p>Every shape <code>{% chart %}</code> can draw, rendered above the code that made
+it. Copy a block, change the numbers, done.</p>
+<p>Two rules that apply to all of them:</p>
+<ul>
+<li><strong>Never write a colour.</strong> The runtime reads <code>--color-accent</code>,
+<code>--color-secondary</code>, <code>--color-muted</code> and <code>--color-border</code> off <code>:root</code>, so
+every chart follows the theme toggle. <code>style: &quot;secondary&quot;</code> and
+<code>style: &quot;muted&quot;</code> are how you drop a row back.</li>
+<li><strong>No backslash escapes.</strong> Nunjucks takes <code>–</code> literally — paste the real
+character.</li>
+</ul>
+<h2>Bars from zero</h2>
+<p>The default, and most of them. <code>note</code> is the text beside the bar, <code>highlight</code>
+marks the row the figure exists to make.</p>
+<figure class="chart"><div class="chart-canvas" style="height:192px"><canvas data-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;bars&quot;:[{&quot;label&quot;:&quot;Noctule&quot;,&quot;value&quot;:100,&quot;note&quot;:&quot;100 m&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Serotine&quot;,&quot;value&quot;:40,&quot;note&quot;:&quot;40 m&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Common pipistrelle&quot;,&quot;value&quot;:25,&quot;note&quot;:&quot;25 m&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Brown long-eared&quot;,&quot;value&quot;:6,&quot;note&quot;:&quot;6 m&quot;,&quot;highlight&quot;:true}],&quot;key&quot;:&quot;HOW FAR AWAY A DETECTOR HEARS EACH ONE, IN METRES&quot;,&quot;max&quot;:null,&quot;min&quot;:null,&quot;xTicks&quot;:true,&quot;yTicks&quot;:true,&quot;xGrid&quot;:true,&quot;yGrid&quot;:true,&quot;vertical&quot;:false,&quot;groups&quot;:[],&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Bar chart, every bar drawn to the same scale: Noctule, 100 m; Serotine, 40 m; Common pipistrelle, 25 m; Brown long-eared, 6 m."></canvas></div><noscript><table class="chart-table"><caption>HOW FAR AWAY A DETECTOR HEARS EACH ONE, IN METRES</caption><tbody><tr><th scope="row">Noctule</th><td>100 m</td></tr><tr><th scope="row">Serotine</th><td>40 m</td></tr><tr><th scope="row">Common pipistrelle</th><td>25 m</td></tr><tr class="is-highlight"><th scope="row">Brown long-eared</th><td>6 m</td></tr></tbody></table></noscript><figcaption>A caption sits under the figure.</figcaption></figure>
+<pre><code>{% chart {
+  key: &quot;HOW FAR AWAY A DETECTOR HEARS EACH ONE, IN METRES&quot;,
+  caption: &quot;A caption sits under the figure.&quot;,
+  bars: [
+    { label: &quot;Noctule&quot;, value: 100, note: &quot;100 m&quot; },
+    { label: &quot;Serotine&quot;, value: 40, note: &quot;40 m&quot; },
+    { label: &quot;Common pipistrelle&quot;, value: 25, note: &quot;25 m&quot; },
+    { label: &quot;Brown long-eared&quot;, value: 6, note: &quot;6 m&quot;, highlight: true }
+  ]
+} %}
+</code></pre>
+<p><code>{% barChart %}</code> is the same shortcode under its original
+name, kept because bars are most of them.</p>
+<h2>Floating bars — a range</h2>
+<p><code>from</code>/<code>to</code> instead of <code>value</code>. Use this whenever the figure is a <em>range</em>:
+drawing “70 to 100” from zero says something quite different.</p>
+<figure class="chart"><div class="chart-canvas" style="height:192px"><canvas data-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;bars&quot;:[{&quot;label&quot;:&quot;Common pipistrelle&quot;,&quot;from&quot;:43,&quot;to&quot;:49,&quot;note&quot;:&quot;43–49&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Soprano pipistrelle&quot;,&quot;from&quot;:53,&quot;to&quot;:59,&quot;note&quot;:&quot;53–59&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Nathusius' pipistrelle&quot;,&quot;from&quot;:36,&quot;to&quot;:42,&quot;note&quot;:&quot;36–42&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Noctule&quot;,&quot;from&quot;:18,&quot;to&quot;:26,&quot;note&quot;:&quot;18–26&quot;,&quot;highlight&quot;:true}],&quot;key&quot;:&quot;PEAK FREQUENCY, KILOHERTZ&quot;,&quot;max&quot;:null,&quot;min&quot;:null,&quot;xTicks&quot;:true,&quot;yTicks&quot;:true,&quot;xGrid&quot;:true,&quot;yGrid&quot;:true,&quot;vertical&quot;:false,&quot;groups&quot;:[],&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Bar chart, every bar drawn to the same scale: Common pipistrelle, 43–49; Soprano pipistrelle, 53–59; Nathusius' pipistrelle, 36–42; Noctule, 18–26."></canvas></div><noscript><table class="chart-table"><caption>PEAK FREQUENCY, KILOHERTZ</caption><tbody><tr><th scope="row">Common pipistrelle</th><td>43–49</td></tr><tr><th scope="row">Soprano pipistrelle</th><td>53–59</td></tr><tr><th scope="row">Nathusius' pipistrelle</th><td>36–42</td></tr><tr class="is-highlight"><th scope="row">Noctule</th><td>18–26</td></tr></tbody></table></noscript><figcaption>Overlapping ranges are the whole point — a floating bar shows the overlap, a bar from zero hides it.</figcaption></figure>
+<pre><code>{% chart {
+  key: &quot;PEAK FREQUENCY, KILOHERTZ&quot;,
+  caption: &quot;Overlapping ranges are the whole point.&quot;,
+  bars: [
+    { label: &quot;Common pipistrelle&quot;, from: 43, to: 49, note: &quot;43–49&quot; },
+    { label: &quot;Soprano pipistrelle&quot;, from: 53, to: 59, note: &quot;53–59&quot; },
+    { label: &quot;Nathusius' pipistrelle&quot;, from: 36, to: 42, note: &quot;36–42&quot; },
+    { label: &quot;Noctule&quot;, from: 18, to: 26, note: &quot;18–26&quot;, highlight: true }
+  ]
+} %}
+</code></pre>
+<h2>Styles, and the very small number</h2>
+<p><code>style: &quot;secondary&quot;</code> and <code>style: &quot;muted&quot;</code> push a row back. <code>minBarLength</code> keeps
+a true-but-tiny value visible as a sliver rather than rounding it to nothing —
+that behaviour is automatic, and it is why the rabid-bats row below is still
+there at all.</p>
+<figure class="chart"><div class="chart-canvas" style="height:192px"><canvas data-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;bars&quot;:[{&quot;label&quot;:&quot;Wildlife-vehicle collisions&quot;,&quot;value&quot;:440,&quot;note&quot;:&quot;440+&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Lightning strikes&quot;,&quot;value&quot;:43,&quot;note&quot;:&quot;43&quot;,&quot;highlight&quot;:false,&quot;style&quot;:&quot;secondary&quot;},{&quot;label&quot;:&quot;Dog attacks&quot;,&quot;value&quot;:19,&quot;note&quot;:&quot;19&quot;,&quot;highlight&quot;:false,&quot;style&quot;:&quot;muted&quot;},{&quot;label&quot;:&quot;Rabid bats&quot;,&quot;value&quot;:3,&quot;note&quot;:&quot;1–3&quot;,&quot;highlight&quot;:true}],&quot;key&quot;:&quot;DEATHS PER YEAR IN THE US — EVERY BAR TO THE SAME SCALE&quot;,&quot;max&quot;:null,&quot;min&quot;:null,&quot;xTicks&quot;:true,&quot;yTicks&quot;:true,&quot;xGrid&quot;:true,&quot;yGrid&quot;:true,&quot;vertical&quot;:false,&quot;groups&quot;:[],&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Bar chart, every bar drawn to the same scale: Wildlife-vehicle collisions, 440+; Lightning strikes, 43; Dog attacks, 19; Rabid bats, 1–3."></canvas></div><noscript><table class="chart-table"><caption>DEATHS PER YEAR IN THE US — EVERY BAR TO THE SAME SCALE</caption><tbody><tr><th scope="row">Wildlife-vehicle collisions</th><td>440+</td></tr><tr><th scope="row">Lightning strikes</th><td>43</td></tr><tr><th scope="row">Dog attacks</th><td>19</td></tr><tr class="is-highlight"><th scope="row">Rabid bats</th><td>1–3</td></tr></tbody></table></noscript><figcaption>Set `note` yourself when the printed figure is not the drawn one.</figcaption></figure>
+<pre><code>{% chart {
+  key: &quot;DEATHS PER YEAR IN THE US — EVERY BAR TO THE SAME SCALE&quot;,
+  bars: [
+    { label: &quot;Wildlife-vehicle collisions&quot;, value: 440, note: &quot;440+&quot; },
+    { label: &quot;Lightning strikes&quot;, value: 43, style: &quot;secondary&quot; },
+    { label: &quot;Dog attacks&quot;, value: 19, style: &quot;muted&quot; },
+    { label: &quot;Rabid bats&quot;, value: 3, note: &quot;1–3&quot;, highlight: true }
+  ]
+} %}
+</code></pre>
+<h2>Vertical bars</h2>
+<p><code>vertical: true</code>. For when the category is an ordinal the reader scans left to
+right — pulse 1 to 8, a month, a step in a sequence. Species names and other
+long labels want the default sideways bars, where there is room for them.</p>
+<p>Note the axis names swap with the orientation: on a vertical chart the value
+axis is y, so <code>yTicks</code> and <code>max</code> apply to it and a threshold is <code>axis: &quot;y&quot;</code>.</p>
+<figure class="chart"><div class="chart-canvas" style="height:320px"><canvas data-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;bars&quot;:[{&quot;label&quot;:&quot;1&quot;,&quot;value&quot;:0.44,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;2&quot;,&quot;value&quot;:0.71,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;3&quot;,&quot;value&quot;:0.83,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;4&quot;,&quot;value&quot;:0.75,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;5&quot;,&quot;value&quot;:0.88,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;6&quot;,&quot;value&quot;:0.62,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;7&quot;,&quot;value&quot;:0.69,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;8&quot;,&quot;value&quot;:0.41,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false}],&quot;key&quot;:&quot;PULSE&quot;,&quot;max&quot;:1,&quot;min&quot;:null,&quot;xTicks&quot;:true,&quot;yTicks&quot;:true,&quot;xGrid&quot;:true,&quot;yGrid&quot;:true,&quot;vertical&quot;:true,&quot;groups&quot;:[],&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[{&quot;at&quot;:0.57,&quot;axis&quot;:&quot;y&quot;,&quot;text&quot;:&quot;no-ID line 0.57&quot;,&quot;style&quot;:&quot;muted&quot;,&quot;position&quot;:&quot;start&quot;},{&quot;at&quot;:0.67,&quot;axis&quot;:&quot;y&quot;,&quot;text&quot;:&quot;mean 0.67 — the pass gets a name&quot;,&quot;dashed&quot;:false,&quot;position&quot;:&quot;start&quot;}],&quot;callouts&quot;:[]}" role="img" aria-label="Bar chart, every bar drawn to the same scale: 1, 0.44; 2, 0.71; 3, 0.83; 4, 0.75; 5, 0.88; 6, 0.62; 7, 0.69; 8, 0.41."></canvas></div><noscript><table class="chart-table"><caption>PULSE</caption><tbody><tr><th scope="row">1</th><td>0.44</td></tr><tr><th scope="row">2</th><td>0.71</td></tr><tr><th scope="row">3</th><td>0.83</td></tr><tr><th scope="row">4</th><td>0.75</td></tr><tr><th scope="row">5</th><td>0.88</td></tr><tr><th scope="row">6</th><td>0.62</td></tr><tr><th scope="row">7</th><td>0.69</td></tr><tr><th scope="row">8</th><td>0.41</td></tr></tbody></table></noscript><figcaption>No single pulse has to clear the line — the average of them does.</figcaption></figure>
+<pre><code>{% chart {
+  key: &quot;PULSE&quot;,
+  yKey: &quot;MODEL'S OWN CONFIDENCE&quot;,
+  vertical: true,
+  yTicks: true,
+  max: 1,
+  bars: [
+    { label: &quot;1&quot;, value: 0.44, note: &quot;&quot; },
+    { label: &quot;2&quot;, value: 0.71, note: &quot;&quot; }
+  ],
+  lines: [
+    { at: 0.57, axis: &quot;y&quot;, text: &quot;no-ID line 0.57&quot;, style: &quot;muted&quot;, position: &quot;start&quot; },
+    { at: 0.67, axis: &quot;y&quot;, text: &quot;mean 0.67 — the pass gets a name&quot;, dashed: false, position: &quot;start&quot; }
+  ]
+} %}
+</code></pre>
+<h2>Lines</h2>
+<p><code>type: &quot;line&quot;</code>, with <code>labels</code> for the x axis and one or more <code>series</code>.</p>
+<p><strong><code>yTicks</code> is off by default and that is deliberate.</strong> Several of these figures
+are shapes rather than measurements — a season, a night, a trade-off. Numbers
+on the axis would invite reading values nobody claimed. Turn them on with
+<code>yTicks: true</code> only when the numbers are real.</p>
+<figure class="chart"><div class="chart-canvas" style="height:320px"><canvas data-chart="{&quot;type&quot;:&quot;line&quot;,&quot;labels&quot;:[&quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;],&quot;series&quot;:[{&quot;name&quot;:&quot;Common pipistrelle&quot;,&quot;data&quot;:[2,38,30,18,14,12,16,24,9]},{&quot;name&quot;:&quot;Noctule&quot;,&quot;data&quot;:[12,26,12,6,4,3,4,7,3],&quot;style&quot;:&quot;secondary&quot;}],&quot;key&quot;:&quot;HOURS AFTER SUNSET&quot;,&quot;yKey&quot;:&quot;BAT PASSES&quot;,&quot;yTicks&quot;:false,&quot;xTicks&quot;:true,&quot;yGrid&quot;:true,&quot;legend&quot;:true,&quot;beginAtZero&quot;:true,&quot;marks&quot;:[{&quot;at&quot;:&quot;1&quot;,&quot;text&quot;:&quot;peak emergence&quot;}],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Line chart. Common pipistrelle against Noctule, across hours after sunset."></canvas></div><noscript><table class="chart-table"><caption>HOURS AFTER SUNSET</caption><tbody><tr><th scope="row">Common pipistrelle</th><td>0, 1, 2, 3, 4, 5, 6, 7, 8</td></tr><tr><th scope="row">Noctule</th><td>0, 1, 2, 3, 4, 5, 6, 7, 8</td></tr></tbody></table></noscript><figcaption>A shape, not a measurement — so the y axis carries no numbers.</figcaption></figure>
+<pre><code>{% chart {
+  type: &quot;line&quot;,
+  key: &quot;HOURS AFTER SUNSET&quot;,
+  yKey: &quot;BAT PASSES&quot;,
+  labels: [&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;],
+  series: [
+    { name: &quot;Common pipistrelle&quot;, data: [2, 38, 30, 18, 14, 12, 16, 24, 9] },
+    { name: &quot;Noctule&quot;, data: [12, 26, 12, 6, 4, 3, 4, 7, 3], style: &quot;secondary&quot; }
+  ],
+  marks: [{ at: &quot;1&quot;, text: &quot;peak emergence&quot; }]
+} %}
+</code></pre>
+<h3>Series options</h3>
+<p><code>dashed: true</code> for a dashed line, <code>fill: true</code> to shade to the baseline,
+<code>curve: false</code> for straight segments, <code>points: true</code> to mark each value, and
+<code>legend: false</code> to drop the key when the lines are labelled some other way.</p>
+<figure class="chart"><div class="chart-canvas" style="height:320px"><canvas data-chart="{&quot;type&quot;:&quot;line&quot;,&quot;labels&quot;:[&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;,&quot;Sep&quot;,&quot;Oct&quot;],&quot;series&quot;:[{&quot;name&quot;:&quot;Recorded&quot;,&quot;data&quot;:[10,34,58,72,65,40,14],&quot;fill&quot;:true},{&quot;name&quot;:&quot;Expected&quot;,&quot;data&quot;:[14,30,55,70,68,45,18],&quot;dashed&quot;:true,&quot;style&quot;:&quot;muted&quot;},{&quot;name&quot;:&quot;Surveys&quot;,&quot;data&quot;:[3,7,12,15,13,9,4],&quot;style&quot;:&quot;secondary&quot;,&quot;curve&quot;:false,&quot;points&quot;:true}],&quot;key&quot;:&quot;MONTH&quot;,&quot;yKey&quot;:&quot;&quot;,&quot;yTicks&quot;:true,&quot;xTicks&quot;:true,&quot;yGrid&quot;:true,&quot;legend&quot;:true,&quot;beginAtZero&quot;:true,&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Line chart. Recorded against Expected against Surveys, across month."></canvas></div><noscript><table class="chart-table"><caption>MONTH</caption><tbody><tr><th scope="row">Recorded</th><td>Apr, May, Jun, Jul, Aug, Sep, Oct</td></tr><tr><th scope="row">Expected</th><td>Apr, May, Jun, Jul, Aug, Sep, Oct</td></tr><tr><th scope="row">Surveys</th><td>Apr, May, Jun, Jul, Aug, Sep, Oct</td></tr></tbody></table></noscript><figcaption>fill, dashed, points and curve: false, all on one figure.</figcaption></figure>
+<pre><code>{% chart {
+  type: &quot;line&quot;,
+  key: &quot;MONTH&quot;,
+  labels: [&quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;],
+  yTicks: true,
+  series: [
+    { name: &quot;Recorded&quot;, data: [10, 34, 58, 72, 65, 40, 14], fill: true },
+    { name: &quot;Expected&quot;, data: [14, 30, 55, 70, 68, 45, 18], dashed: true, style: &quot;muted&quot; },
+    { name: &quot;Surveys&quot;, data: [3, 7, 12, 15, 13, 9, 4], style: &quot;secondary&quot;, curve: false, points: true }
+  ]
+} %}
+</code></pre>
+<h3>Stepped lines</h3>
+<p><code>stepped: true</code>. A step is a thing that happened at a moment — an arousal, a
+threshold crossing. Smoothing it would draw a gradual change the data does not
+claim.</p>
+<figure class="chart"><div class="chart-canvas" style="height:320px"><canvas data-chart="{&quot;type&quot;:&quot;line&quot;,&quot;labels&quot;:[&quot;Oct&quot;,&quot;Nov&quot;,&quot;Dec&quot;,&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;],&quot;series&quot;:[{&quot;name&quot;:&quot;A healthy winter&quot;,&quot;data&quot;:[100,92,86,78,70,60,48],&quot;stepped&quot;:true},{&quot;name&quot;:&quot;With the infection&quot;,&quot;data&quot;:[100,84,64,44,22,2,0],&quot;stepped&quot;:true,&quot;style&quot;:&quot;secondary&quot;}],&quot;key&quot;:&quot;MONTH&quot;,&quot;yKey&quot;:&quot;FAT RESERVE&quot;,&quot;yTicks&quot;:false,&quot;xTicks&quot;:true,&quot;yGrid&quot;:true,&quot;legend&quot;:true,&quot;beginAtZero&quot;:true,&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Line chart. A healthy winter against With the infection, across month."></canvas></div><noscript><table class="chart-table"><caption>MONTH</caption><tbody><tr><th scope="row">A healthy winter</th><td>Oct, Nov, Dec, Jan, Feb, Mar, Apr</td></tr><tr><th scope="row">With the infection</th><td>Oct, Nov, Dec, Jan, Feb, Mar, Apr</td></tr></tbody></table></noscript><figcaption>Each step down is one arousal: a few days' worth of fat, spent in hours.</figcaption></figure>
+<pre><code>{% chart {
+  type: &quot;line&quot;,
+  key: &quot;MONTH&quot;,
+  yKey: &quot;FAT RESERVE&quot;,
+  labels: [&quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;, &quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;],
+  series: [
+    { name: &quot;A healthy winter&quot;, data: [100, 92, 86, 78, 70, 60, 48], stepped: true },
+    { name: &quot;With the infection&quot;, data: [100, 84, 64, 44, 22, 2, 0], stepped: true, style: &quot;secondary&quot; }
+  ]
+} %}
+</code></pre>
+<h2>Scatter</h2>
+<p><code>type: &quot;scatter&quot;</code>, with <code>{x, y}</code> data. <code>line: true</code> joins the points,
+<code>points: true</code> is implied.</p>
+<figure class="chart"><div class="chart-canvas" style="height:320px"><canvas data-chart="{&quot;type&quot;:&quot;scatter&quot;,&quot;labels&quot;:[],&quot;series&quot;:[{&quot;name&quot;:&quot;Common pipistrelle&quot;,&quot;data&quot;:[{&quot;x&quot;:5.2,&quot;y&quot;:45},{&quot;x&quot;:6.1,&quot;y&quot;:46},{&quot;x&quot;:5.8,&quot;y&quot;:44},{&quot;x&quot;:6.9,&quot;y&quot;:47},{&quot;x&quot;:4.9,&quot;y&quot;:45},{&quot;x&quot;:6.4,&quot;y&quot;:43}]},{&quot;name&quot;:&quot;Soprano pipistrelle&quot;,&quot;data&quot;:[{&quot;x&quot;:4.8,&quot;y&quot;:55},{&quot;x&quot;:5.5,&quot;y&quot;:56},{&quot;x&quot;:5.1,&quot;y&quot;:54},{&quot;x&quot;:6.2,&quot;y&quot;:57},{&quot;x&quot;:4.4,&quot;y&quot;:55},{&quot;x&quot;:5.9,&quot;y&quot;:58}],&quot;style&quot;:&quot;secondary&quot;}],&quot;key&quot;:&quot;CALL DURATION, MILLISECONDS&quot;,&quot;yKey&quot;:&quot;PEAK FREQUENCY, KILOHERTZ&quot;,&quot;yTicks&quot;:true,&quot;xTicks&quot;:true,&quot;yGrid&quot;:true,&quot;legend&quot;:true,&quot;beginAtZero&quot;:true,&quot;marks&quot;:[{&quot;at&quot;:6,&quot;text&quot;:&quot;6 ms&quot;}],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Scatter chart. Common pipistrelle against Soprano pipistrelle, across call duration, milliseconds."></canvas></div><noscript><table class="chart-table"><caption>CALL DURATION, MILLISECONDS</caption><tbody><tr><th scope="row">Common pipistrelle</th><td>6 points</td></tr><tr><th scope="row">Soprano pipistrelle</th><td>6 points</td></tr></tbody></table></noscript><figcaption>Two species that overlap on either axis alone, and separate on both together.</figcaption></figure>
+<pre><code>{% chart {
+  type: &quot;scatter&quot;,
+  key: &quot;CALL DURATION, MILLISECONDS&quot;,
+  yKey: &quot;PEAK FREQUENCY, KILOHERTZ&quot;,
+  yTicks: true,
+  series: [
+    { name: &quot;Common pipistrelle&quot;, data: [
+      { x: 5.2, y: 45 }, { x: 6.1, y: 46 }, { x: 5.8, y: 44 }
+    ] },
+    { name: &quot;Soprano pipistrelle&quot;, data: [
+      { x: 4.8, y: 55 }, { x: 5.5, y: 56 }, { x: 5.1, y: 54 }
+    ], style: &quot;secondary&quot; }
+  ],
+  marks: [{ at: 6, text: &quot;6 ms&quot; }]
+} %}
+</code></pre>
+<h2>Annotations</h2>
+<p>Four kinds, and they work on bars, lines and scatters alike.</p>
+<h3>marks — a labelled vertical</h3>
+<p>The original, and still the shortest thing to type when you want one dashed
+vertical. <code>at</code> is a category label on a line chart, a number on a scatter. Keep
+them away from the plot edges, where the label has nowhere to go.</p>
+<pre><code>marks: [{ at: &quot;Mar&quot;, text: &quot;sunset&quot; }]
+</code></pre>
+<h3>lines — a reference line on either axis</h3>
+<p>What <code>marks</code> cannot do: a horizontal one. <code>axis: &quot;y&quot;</code> for horizontal,
+<code>axis: &quot;x&quot;</code> (the default) for vertical, <code>dashed: false</code> for a solid rule, and
+<code>position: &quot;start&quot; | &quot;center&quot; | &quot;end&quot;</code> to move the label along the line when
+two of them would otherwise collide.</p>
+<figure class="chart"><div class="chart-canvas" style="height:320px"><canvas data-chart="{&quot;type&quot;:&quot;line&quot;,&quot;labels&quot;:[&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;10&quot;],&quot;series&quot;:[{&quot;name&quot;:&quot;Nightly mean&quot;,&quot;data&quot;:[0.42,0.51,0.49,0.63,0.71,0.58,0.66,0.74,0.69,0.77]}],&quot;key&quot;:&quot;NIGHT&quot;,&quot;yKey&quot;:&quot;CONFIDENCE&quot;,&quot;yTicks&quot;:true,&quot;xTicks&quot;:true,&quot;yGrid&quot;:true,&quot;legend&quot;:true,&quot;beginAtZero&quot;:true,&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[{&quot;at&quot;:0.57,&quot;axis&quot;:&quot;y&quot;,&quot;text&quot;:&quot;no-ID line 0.57&quot;,&quot;style&quot;:&quot;muted&quot;},{&quot;at&quot;:&quot;5&quot;,&quot;text&quot;:&quot;microphone replaced&quot;,&quot;style&quot;:&quot;secondary&quot;,&quot;position&quot;:&quot;start&quot;}],&quot;callouts&quot;:[]}" role="img" aria-label="Line chart. Nightly mean, across night."></canvas></div><noscript><table class="chart-table"><caption>NIGHT</caption><tbody><tr><th scope="row">Nightly mean</th><td>1, 2, 3, 4, 5, 6, 7, 8, 9, 10</td></tr></tbody></table></noscript><figcaption>A horizontal threshold, and a vertical one, on the same figure.</figcaption></figure>
+<pre><code>lines: [
+  { at: 0.57, axis: &quot;y&quot;, text: &quot;no-ID line 0.57&quot;, style: &quot;muted&quot; },
+  { at: &quot;5&quot;, text: &quot;microphone replaced&quot;, style: &quot;secondary&quot;, position: &quot;start&quot; }
+]
+</code></pre>
+<h3>bands — a shaded region</h3>
+<p><code>from</code>/<code>to</code> on either axis. For a season, a tolerance window, a hold-off — a
+region that means something rather than a line that does.</p>
+<figure class="chart"><div class="chart-canvas" style="height:320px"><canvas data-chart="{&quot;type&quot;:&quot;line&quot;,&quot;labels&quot;:[&quot;Oct&quot;,&quot;Nov&quot;,&quot;Dec&quot;,&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;],&quot;series&quot;:[{&quot;name&quot;:&quot;Activity&quot;,&quot;data&quot;:[42,18,4,2,3,12,38,64]}],&quot;key&quot;:&quot;MONTH&quot;,&quot;yKey&quot;:&quot;ACTIVITY&quot;,&quot;yTicks&quot;:false,&quot;xTicks&quot;:true,&quot;yGrid&quot;:true,&quot;legend&quot;:false,&quot;beginAtZero&quot;:true,&quot;marks&quot;:[],&quot;bands&quot;:[{&quot;from&quot;:&quot;Nov&quot;,&quot;to&quot;:&quot;Mar&quot;,&quot;text&quot;:&quot;hibernation&quot;,&quot;style&quot;:&quot;muted&quot;},{&quot;from&quot;:&quot;Apr&quot;,&quot;to&quot;:&quot;May&quot;,&quot;text&quot;:&quot;spring — insects return&quot;,&quot;style&quot;:&quot;secondary&quot;}],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Line chart. Activity, across month."></canvas></div><noscript><table class="chart-table"><caption>MONTH</caption><tbody><tr><th scope="row">Activity</th><td>Oct, Nov, Dec, Jan, Feb, Mar, Apr, May</td></tr></tbody></table></noscript><figcaption>Bands sit behind the data, so they never hide it.</figcaption></figure>
+<pre><code>bands: [
+  { from: &quot;Nov&quot;, to: &quot;Mar&quot;, text: &quot;hibernation&quot;, style: &quot;muted&quot; },
+  { from: &quot;Apr&quot;, to: &quot;May&quot;, text: &quot;spring — insects return&quot;, style: &quot;secondary&quot; }
+]
+</code></pre>
+<p>A band on the value axis instead — <code>axis: &quot;y&quot;</code>, <code>from</code>/<code>to</code> as numbers:</p>
+<pre><code>bands: [{ from: 43, to: 49, axis: &quot;y&quot;, text: &quot;pipistrelle range&quot;, style: &quot;muted&quot; }]
+</code></pre>
+<h3>callouts — text, with an optional arrow</h3>
+<p><code>x</code>/<code>y</code> place the text in data coordinates. <code>arrowTo</code> draws a leader line to
+the thing it is talking about. <code>wrap</code> sets the characters per line (26 by
+default), <code>align</code> is <code>&quot;left&quot;</code>, <code>&quot;center&quot;</code> or <code>&quot;right&quot;</code>.</p>
+<figure class="chart"><div class="chart-canvas" style="height:320px"><canvas data-chart="{&quot;type&quot;:&quot;line&quot;,&quot;labels&quot;:[&quot;Oct&quot;,&quot;Nov&quot;,&quot;Dec&quot;,&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;],&quot;series&quot;:[{&quot;name&quot;:&quot;With the infection&quot;,&quot;data&quot;:[100,84,64,44,22,2,0],&quot;stepped&quot;:true}],&quot;key&quot;:&quot;MONTH&quot;,&quot;yKey&quot;:&quot;FAT RESERVE&quot;,&quot;yTicks&quot;:false,&quot;xTicks&quot;:true,&quot;yGrid&quot;:true,&quot;legend&quot;:false,&quot;beginAtZero&quot;:true,&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[{&quot;x&quot;:&quot;Jan&quot;,&quot;y&quot;:78,&quot;text&quot;:&quot;each step down is one arousal: a few days' worth of fat, spent in hours&quot;,&quot;style&quot;:&quot;muted&quot;,&quot;arrowTo&quot;:{&quot;x&quot;:&quot;Dec&quot;,&quot;y&quot;:64}},{&quot;x&quot;:&quot;Mar&quot;,&quot;y&quot;:30,&quot;text&quot;:&quot;reserves gone, weeks before there is anything to eat&quot;,&quot;arrowTo&quot;:{&quot;x&quot;:&quot;Mar&quot;,&quot;y&quot;:4}}]}" role="img" aria-label="Line chart. With the infection, across month."></canvas></div><noscript><table class="chart-table"><caption>MONTH</caption><tbody><tr><th scope="row">With the infection</th><td>Oct, Nov, Dec, Jan, Feb, Mar, Apr</td></tr></tbody></table></noscript><figcaption>A callout is a label plus a line — the two together, so it can point.</figcaption></figure>
+<pre><code>callouts: [
+  { x: &quot;Jan&quot;, y: 78, text: &quot;each step down is one arousal&quot;, style: &quot;muted&quot;,
+    arrowTo: { x: &quot;Dec&quot;, y: 64 } },
+  { x: &quot;Mar&quot;, y: 30, text: &quot;reserves gone, weeks before there is anything to eat&quot;,
+    arrowTo: { x: &quot;Mar&quot;, y: 4 } }
+]
+</code></pre>
+<h2>Panels — several charts as one figure</h2>
+<p>Wrap charts in <code>{% panels %}</code> and they become columns of a
+single bordered figure. Use it when the comparison <em>between</em> the charts is the
+point and the eye needs to cross between them — “heard, then weighted, then
+reported” only works side by side.</p>
+<p><code>columns</code> sets how many (3 by default). <code>caption</code> is the caption for the whole
+figure, and each chart keeps its own smaller one. Below 900px they stack, because
+three narrow panels are worse than three tall ones — so keep <code>key</code> short enough
+to fit a third of the width, and put the detail in the panel’s <code>caption</code>.</p>
+<figure class="chart-panels" style="--panels:2"><div class="chart-panels-grid"><figure class="chart"><div class="chart-canvas" style="height:220px"><canvas data-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;bars&quot;:[{&quot;label&quot;:&quot;Daubenton's&quot;,&quot;value&quot;:0.38,&quot;note&quot;:&quot;0.38&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Brandt's&quot;,&quot;value&quot;:0.23,&quot;note&quot;:&quot;0.23&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Common pip&quot;,&quot;value&quot;:0.16,&quot;note&quot;:&quot;0.16&quot;,&quot;highlight&quot;:false}],&quot;key&quot;:&quot;BEFORE&quot;,&quot;max&quot;:0.6,&quot;min&quot;:null,&quot;xTicks&quot;:true,&quot;yTicks&quot;:true,&quot;xGrid&quot;:true,&quot;yGrid&quot;:true,&quot;vertical&quot;:false,&quot;groups&quot;:[],&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Bar chart, every bar drawn to the same scale: Daubenton's, 0.38; Brandt's, 0.23; Common pip, 0.16."></canvas></div><noscript><table class="chart-table"><caption>BEFORE</caption><tbody><tr><th scope="row">Daubenton's</th><td>0.38</td></tr><tr><th scope="row">Brandt's</th><td>0.23</td></tr><tr><th scope="row">Common pip</th><td>0.16</td></tr></tbody></table></noscript><figcaption>Each panel keeps its own smaller caption.</figcaption></figure>
+<figure class="chart"><div class="chart-canvas" style="height:220px"><canvas data-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;bars&quot;:[{&quot;label&quot;:&quot;Daubenton's&quot;,&quot;value&quot;:0.51,&quot;note&quot;:&quot;0.51&quot;,&quot;highlight&quot;:true},{&quot;label&quot;:&quot;Brandt's&quot;,&quot;value&quot;:0.001,&quot;note&quot;:&quot;0.00&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Common pip&quot;,&quot;value&quot;:0.21,&quot;note&quot;:&quot;0.21&quot;,&quot;highlight&quot;:false}],&quot;key&quot;:&quot;AFTER&quot;,&quot;max&quot;:0.6,&quot;min&quot;:null,&quot;xTicks&quot;:true,&quot;yTicks&quot;:true,&quot;xGrid&quot;:true,&quot;yGrid&quot;:true,&quot;vertical&quot;:false,&quot;groups&quot;:[],&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Bar chart, every bar drawn to the same scale: Daubenton's, 0.51; Brandt's, 0.00; Common pip, 0.21."></canvas></div><noscript><table class="chart-table"><caption>AFTER</caption><tbody><tr class="is-highlight"><th scope="row">Daubenton's</th><td>0.51</td></tr><tr><th scope="row">Brandt's</th><td>0.00</td></tr><tr><th scope="row">Common pip</th><td>0.21</td></tr></tbody></table></noscript><figcaption>Same species, same scale — that is what makes them comparable.</figcaption></figure></div><figcaption>The overall caption sits under a divider, below all the panels.</figcaption></figure>
+<pre><code>{% panels { columns: 2, caption: &quot;The caption for the whole figure.&quot; } %}
+{% chart {
+  key: &quot;BEFORE&quot;,
+  caption: &quot;Each panel keeps its own smaller caption.&quot;,
+  max: 0.6, height: 220,
+  bars: [ { label: &quot;Daubenton's&quot;, value: 0.38, note: &quot;0.38&quot; } ]
+} %}
+{% chart {
+  key: &quot;AFTER&quot;,
+  caption: &quot;Same species, same scale.&quot;,
+  max: 0.6, height: 220,
+  bars: [ { label: &quot;Daubenton's&quot;, value: 0.51, note: &quot;0.51&quot;, highlight: true } ]
+} %}
+{% endpanels %}
+</code></pre>
+<p><strong>Give every panel the same <code>max</code>.</strong> Panels invite the reader to compare across
+them, and they can only do that honestly if the scales agree.</p>
+<p><strong>Turn the value axis off when every bar carries its own number.</strong> With <code>note</code>
+on each row the scale behind them is just noise, so panels usually want
+<code>xTicks: false, xGrid: false</code> — the pinned <code>max</code> still does its job unseen.</p>
+<h2>Log scale, colour groups, and many bars</h2>
+<p>Three options that only earn their place on a big figure: <code>scale: &quot;log&quot;</code> for a
+spread of several orders of magnitude, <code>groups</code> for a legend when <code>style</code> is
+carrying a meaning, and <code>notes: false</code> to drop the per-bar numbers when there
+are too many bars to label.</p>
+<p>Hide the species names with <code>xTicks: false</code> (the category axis on a vertical
+chart) and let a few <code>callouts</code> name the ones that matter.</p>
+<figure class="chart"><div class="chart-canvas" style="height:360px"><canvas data-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;bars&quot;:[{&quot;label&quot;:&quot;a&quot;,&quot;value&quot;:186,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false,&quot;style&quot;:&quot;secondary&quot;},{&quot;label&quot;:&quot;b&quot;,&quot;value&quot;:280,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false,&quot;style&quot;:&quot;secondary&quot;},{&quot;label&quot;:&quot;c&quot;,&quot;value&quot;:490,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false,&quot;style&quot;:&quot;secondary&quot;},{&quot;label&quot;:&quot;d&quot;,&quot;value&quot;:1100,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false,&quot;style&quot;:&quot;secondary&quot;},{&quot;label&quot;:&quot;e&quot;,&quot;value&quot;:1500,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false,&quot;style&quot;:&quot;secondary&quot;},{&quot;label&quot;:&quot;f&quot;,&quot;value&quot;:2400,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false,&quot;style&quot;:&quot;secondary&quot;},{&quot;label&quot;:&quot;g&quot;,&quot;value&quot;:3720,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false,&quot;style&quot;:&quot;secondary&quot;},{&quot;label&quot;:&quot;h&quot;,&quot;value&quot;:6000,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:true},{&quot;label&quot;:&quot;i&quot;,&quot;value&quot;:12000,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false,&quot;style&quot;:&quot;secondary&quot;},{&quot;label&quot;:&quot;j&quot;,&quot;value&quot;:35000,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:true},{&quot;label&quot;:&quot;k&quot;,&quot;value&quot;:52000,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false,&quot;style&quot;:&quot;muted&quot;},{&quot;label&quot;:&quot;l&quot;,&quot;value&quot;:300000,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:true},{&quot;label&quot;:&quot;m&quot;,&quot;value&quot;:3229956,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:true}],&quot;key&quot;:&quot;&quot;,&quot;max&quot;:null,&quot;min&quot;:100,&quot;xTicks&quot;:false,&quot;yTicks&quot;:true,&quot;xGrid&quot;:true,&quot;yGrid&quot;:true,&quot;vertical&quot;:true,&quot;scale&quot;:&quot;log&quot;,&quot;groups&quot;:[{&quot;name&quot;:&quot;European species&quot;,&quot;style&quot;:&quot;highlight&quot;},{&quot;name&quot;:&quot;North American species&quot;,&quot;style&quot;:&quot;secondary&quot;},{&quot;name&quot;:&quot;Elsewhere&quot;,&quot;style&quot;:&quot;muted&quot;}],&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[{&quot;x&quot;:&quot;b&quot;,&quot;y&quot;:1500,&quot;text&quot;:&quot;Spotted bat, 186 records&quot;,&quot;style&quot;:&quot;muted&quot;,&quot;arrowTo&quot;:{&quot;x&quot;:&quot;a&quot;,&quot;y&quot;:200}},{&quot;x&quot;:&quot;j&quot;,&quot;y&quot;:900000,&quot;text&quot;:&quot;Common pipistrelle, 3,229,956 records&quot;,&quot;arrowTo&quot;:{&quot;x&quot;:&quot;m&quot;,&quot;y&quot;:2600000}}]}" role="img" aria-label="Bar chart, every bar drawn to the same scale: a, 186; b, 280; c, 490; d, 1,100; e, 1,500; f, 2,400; g, 3,720; h, 6,000; i, 12,000; j, 35,000; k, 52,000; l, 300,000; m, 3,229,956."></canvas></div><noscript><table class="chart-table"><tbody><tr><th scope="row">a</th><td>186</td></tr><tr><th scope="row">b</th><td>280</td></tr><tr><th scope="row">c</th><td>490</td></tr><tr><th scope="row">d</th><td>1,100</td></tr><tr><th scope="row">e</th><td>1,500</td></tr><tr><th scope="row">f</th><td>2,400</td></tr><tr><th scope="row">g</th><td>3,720</td></tr><tr class="is-highlight"><th scope="row">h</th><td>6,000</td></tr><tr><th scope="row">i</th><td>12,000</td></tr><tr class="is-highlight"><th scope="row">j</th><td>35,000</td></tr><tr><th scope="row">k</th><td>52,000</td></tr><tr class="is-highlight"><th scope="row">l</th><td>300,000</td></tr><tr class="is-highlight"><th scope="row">m</th><td>3,229,956</td></tr></tbody></table></noscript><figcaption>A log scale makes a thousandfold difference look like a threefold one, so say so — here the y label and the caption both do.</figcaption></figure>
+<pre><code>{% chart {
+  yKey: &quot;RECORDS HELD, LOG SCALE&quot;,
+  vertical: true,
+  scale: &quot;log&quot;,
+  min: 100,
+  yTicks: true,
+  xTicks: false,
+  notes: false,
+  groups: [
+    { name: &quot;European species&quot;, style: &quot;highlight&quot; },
+    { name: &quot;North American species&quot;, style: &quot;secondary&quot; },
+    { name: &quot;Elsewhere&quot;, style: &quot;muted&quot; }
+  ],
+  bars: [
+    { label: &quot;a&quot;, value: 186, style: &quot;secondary&quot; },
+    { label: &quot;b&quot;, value: 6000, highlight: true }
+  ]
+} %}
+</code></pre>
+<p><code>groups</code> only draws the key — each bar still picks its own colour with
+<code>highlight</code> / <code>style</code>, so the two have to be kept in step by hand. <code>min</code> is
+required on a log scale, because a log axis cannot start at zero.</p>
+<h2>Everything else</h2>
+<p>Options that apply to any chart:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>key</code></td>
+<td>Labels the x axis</td>
+</tr>
+<tr>
+<td><code>yKey</code></td>
+<td>Labels the y axis</td>
+</tr>
+<tr>
+<td><code>caption</code></td>
+<td>Becomes the <code>figcaption</code></td>
+</tr>
+<tr>
+<td><code>alt</code></td>
+<td>Overrides the auto-generated screen-reader description</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td>Pixels. Bars work it out from the row count; lines default to 320</td>
+</tr>
+<tr>
+<td><code>max</code> / <code>min</code></td>
+<td>Pin the value scale</td>
+</tr>
+<tr>
+<td><code>xTicks: false</code></td>
+<td>Drop the x numbers</td>
+</tr>
+<tr>
+<td><code>yTicks: true</code></td>
+<td>Add the y numbers — off by default on lines and scatters</td>
+</tr>
+<tr>
+<td><code>xGrid: false</code></td>
+<td>Drop the gridlines on the x axis</td>
+</tr>
+<tr>
+<td><code>yGrid: false</code></td>
+<td>Drop the gridlines on the y axis</td>
+</tr>
+<tr>
+<td><code>legend: false</code></td>
+<td>Drop the key</td>
+</tr>
+<tr>
+<td><code>beginAtZero: false</code></td>
+<td>Let a line scale start where the data does</td>
+</tr>
+</tbody>
+</table>
+<h2>What is not a chart</h2>
+<p>The test is whether the figure has numbers behind it. If it does, it is a
+<code>chart</code>. If it is a diagram of how something is <em>arranged</em> — a pipeline, a
+five-layer stack, a plan view of a field, a call sweep whose annotations are
+the content — it stays hand-written inline SVG in the markdown, using
+<code>style=&quot;fill: var(--color-accent)&quot;</code> (a CSS variable is invalid in a plain
+<code>fill=</code> attribute) and the <code>.chart-label</code>, <code>.chart-label--small</code> and
+<code>.chart-key</code> classes from <code>style.css</code>.</p>
+</div>
+  
+</div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-col brand">
+        <a class="footer-logo-link" href="/">
+          <img class="footer-logo" src="/static/images/logo.png" alt="OpenBat">
+        </a>
+        <p class="footer-web-address">openbat.app</p>
+        <div class="footer-contact">
+          <div class="contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span class="reveal-email" data-u="hello" data-d="openbat.app" style="cursor:pointer;">Click to reveal email</span>
+          </div>
+        </div>
+        <p class="footer-privacy-link"><a href="/privacy/">Privacy</a></p>
+      </div>
+    </div>
+    <p class="footer-copyright">© 2026 Niall Bell (OpenBat)</p>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      const applyTheme = () => {
+        document.documentElement.setAttribute('data-theme', target);
+        localStorage.setItem('theme', target);
+        setThemeColor(target);
+      };
+      if (document.startViewTransition) {
+        document.startViewTransition(applyTheme);
+      } else {
+        applyTheme();
+      }
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const body = document.body;
+
+    const toggleMenu = () => {
+      const isOpen = body.classList.toggle('menu-open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    };
+
+    menuToggle.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', toggleMenu);
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (body.classList.contains('menu-open')) toggleMenu();
+      });
+    });
+
+    const header = document.querySelector('.site-header');
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Platform toggle (Help page) — swap the iOS / Android panels
+    const platBtns = document.querySelectorAll('.plat-toggle-btn');
+    if (platBtns.length) {
+      const platSections = {
+        ios: document.getElementById('plat-ios'),
+        android: document.getElementById('plat-android'),
+      };
+
+      const setPlatform = (mode, instant) => {
+        const incoming = platSections[mode];
+        const outgoing = platSections[mode === 'ios' ? 'android' : 'ios'];
+        if (!incoming || !outgoing) return;
+
+        platBtns.forEach(btn => {
+          const on = btn.dataset.platform === mode;
+          btn.classList.toggle('active', on);
+          btn.setAttribute('aria-selected', on);
+        });
+
+        if (instant) {
+          outgoing.classList.add('plat-hidden');
+          incoming.classList.remove('plat-hidden');
+          return;
+        }
+
+        // Fade the outgoing panel out, swap, then fade the incoming one in
+        outgoing.style.opacity = '0';
+        setTimeout(() => {
+          outgoing.classList.add('plat-hidden');
+          outgoing.style.opacity = '';
+          incoming.classList.remove('plat-hidden');
+          incoming.style.transition = 'none';
+          incoming.style.opacity = '0';
+          incoming.getBoundingClientRect(); // force reflow
+          incoming.style.transition = '';
+          incoming.style.opacity = '1';
+        }, 350);
+      };
+
+      platBtns.forEach(btn => {
+        btn.addEventListener('click', () => setPlatform(btn.dataset.platform));
+      });
+
+      if (location.hash === '#android') setPlatform('android', true);
+    }
+
+    // Goal cards (Our Project page), desktop — the three "How we're doing it"
+    // write-ups are a panel under the cards, and hovering or focusing a card
+    // swaps which one is showing. On phones the panel is hidden and the same
+    // write-ups go in a modal instead (the block after this one).
+    const goalPanel = document.querySelector('.goal-panel');
+    const goalWide = window.matchMedia('(min-width: 801px)');
+    let setActiveGoal = null;
+
+    if (goalPanel) {
+      const goalPanelItems = [...goalPanel.querySelectorAll('.goal-modal-item')];
+      const goalPanelCards = [...document.querySelectorAll('.goal-cards .post-card')];
+      goalPanel.classList.add('goal-panel--js');
+
+      setActiveGoal = (goal) => {
+        goalPanelItems.forEach(i => i.classList.toggle('is-active', i.dataset.goal === goal));
+        goalPanelCards.forEach(c => {
+          const btn = c.querySelector('.goal-learn-more');
+          c.classList.toggle('is-active', !!btn && btn.dataset.goal === goal);
+        });
+      };
+
+      goalPanelCards.forEach(card => {
+        const btn = card.querySelector('.goal-learn-more');
+        if (!btn) return;
+        const activate = () => { if (goalWide.matches) setActiveGoal(btn.dataset.goal); };
+        card.addEventListener('mouseenter', activate);
+        card.addEventListener('focusin', activate);
+      });
+
+      // No visible button at this width, so the card carries the tab stop that
+      // makes the panel reachable without a mouse. Phones keep the button and
+      // shouldn't gain three extra stops, so this is added and removed with
+      // the breakpoint rather than written into the markup.
+      const goalSetTabStops = () => {
+        goalPanelCards.forEach(c => {
+          if (goalWide.matches) c.setAttribute('tabindex', '0');
+          else c.removeAttribute('tabindex');
+        });
+      };
+
+      setActiveGoal(goalPanelItems.length ? goalPanelItems[0].dataset.goal : null);
+      goalSetTabStops();
+      goalWide.addEventListener('change', goalSetTabStops);
+    }
+
+    // Goal cards, phone — the "How we're doing it" button opens a modal with
+    // that goal's write-up, copied in from the source div. At desktop widths
+    // the same button just swaps the panel above instead.
+    const learnMoreBtns = document.querySelectorAll('.goal-learn-more');
+    if (learnMoreBtns.length) {
+      const modal = document.getElementById('goal-modal');
+      const modalBody = modal.querySelector('.goal-modal-body');
+      const modalItems = document.querySelectorAll('.goal-modal-item');
+      let lastFocused = null;
+
+      const onKeydown = (e) => {
+        if (e.key === 'Escape') closeGoalModal();
+      };
+
+      const closeGoalModal = () => {
+        modal.classList.remove('goal-modal--open');
+        document.removeEventListener('keydown', onKeydown);
+        if (lastFocused) lastFocused.focus();
+      };
+
+      const openGoalModal = (goal, trigger) => {
+        const item = [...modalItems].find(i => i.dataset.goal === goal);
+        if (!item) return;
+        modalBody.innerHTML = item.innerHTML;
+        lastFocused = trigger || document.activeElement;
+        modal.classList.add('goal-modal--open');
+        modal.querySelector('.goal-modal-close').focus();
+        document.addEventListener('keydown', onKeydown);
+      };
+
+      learnMoreBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (goalWide.matches && setActiveGoal) setActiveGoal(btn.dataset.goal);
+          else openGoalModal(btn.dataset.goal, btn);
+        });
+      });
+
+      modal.querySelectorAll('[data-modal-close]').forEach(el => {
+        el.addEventListener('click', closeGoalModal);
+      });
+    }
+
+    // Goal cards, mobile: lock the row in place while vertical scroll slides
+    // it sideways, then release — same mechanic as the home page's dock.
+    const goalCardsSection = document.querySelector('.goal-cards-section');
+    if (goalCardsSection) {
+      const goalScroller = goalCardsSection.querySelector('.goal-cards-scroll');
+      const goalSticky = goalCardsSection.querySelector('.goal-cards-sticky');
+      const goalRow = goalCardsSection.querySelector('.goal-cards');
+      const goalItems = [...goalRow.querySelectorAll('.post-card')];
+      const goalSmall = window.matchMedia('(max-width: 800px)');
+      const goalStill = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const goalPinnable = () => goalSmall.matches && !goalStill.matches && goalItems.length > 1;
+
+      let goalPinFrame = 0;
+
+      const goalPinLayout = () => {
+        const runway = goalScroller.offsetHeight - goalSticky.offsetHeight;
+        if (runway <= 0) return;
+        // The stage is inset from the top of the viewport (see goalStageHeight),
+        // so progress runs from the moment the section's top reaches that inset,
+        // not the moment it reaches zero.
+        const inset = parseFloat(goalSticky.style.top) || 0;
+        const top = goalScroller.getBoundingClientRect().top;
+        const p = Math.min(1, Math.max(0, (inset - top) / runway));
+
+        const w = goalItems[0].offsetWidth || 1;
+        const step = goalItems.length > 1 ? goalItems[1].offsetLeft - goalItems[0].offsetLeft : w;
+        const stage = goalSticky.clientWidth;
+        const slide = (stage - w) / 2 - p * (goalItems.length - 1) * step;
+        goalRow.style.transform = `translateX(${slide.toFixed(2)}px)`;
+      };
+
+      const goalOnScroll = () => {
+        if (!goalPinnable() || goalPinFrame) return;
+        goalPinFrame = requestAnimationFrame(() => { goalPinFrame = 0; goalPinLayout(); });
+      };
+
+      // The stage is only as tall as the tallest card needs, not a full
+      // screenful — a full-height stage leaves the leftover half of it as dead
+      // space below the last card once the pin releases. It is then centred in
+      // the viewport with `top`, so the card still sits in the middle of the
+      // screen while it is pinned.
+      const goalStageHeight = () => {
+        const tallest = Math.max(...goalItems.map(i => i.offsetHeight));
+        return Math.min(window.innerHeight, tallest + 48);
+      };
+
+      const goalSetPinned = () => {
+        if (goalPinnable()) {
+          goalCardsSection.classList.add('goal-cards--pinned');
+          const stageH = goalStageHeight();
+          goalSticky.style.height = stageH + 'px';
+          goalSticky.style.top = Math.max(0, (window.innerHeight - stageH) / 2) + 'px';
+          // Runway: the stage itself, then a screenful-ish per card after it.
+          goalScroller.style.height = `calc(${stageH}px + ${(goalItems.length - 1) * 45}svh)`;
+          goalPinLayout();
+        } else {
+          goalCardsSection.classList.remove('goal-cards--pinned');
+          goalScroller.style.height = '';
+          goalSticky.style.height = '';
+          goalSticky.style.top = '';
+          goalRow.style.transform = '';
+        }
+      };
+
+      window.addEventListener('scroll', goalOnScroll, { passive: true });
+      window.addEventListener('resize', () => { goalSetPinned(); goalOnScroll(); });
+      goalSmall.addEventListener('change', goalSetPinned);
+      goalStill.addEventListener('change', goalSetPinned);
+
+      goalSetPinned();
+    }
+
+    // Assemble obfuscated email addresses on click
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.reveal-email').forEach(el => {
+        el.addEventListener('click', () => {
+          const email = el.dataset.u + '@' + el.dataset.d;
+          const cls = el.className.replace('reveal-email', '').trim();
+          const inner = el.querySelector('svg')
+            ? el.querySelector('svg').outerHTML + email
+            : email;
+          const style = el.getAttribute('style') || '';
+          el.outerHTML = `<a href="mailto:${email}" class="${cls}" style="${style}">${inner}</a>`;
+        });
+      });
+    });
+  </script>
+<script src="/static/js/chart.umd.min.js?v=4.5.1" defer></script><script src="/static/js/chartjs-plugin-annotation.min.js?v=3.1.0" defer></script><script src="/static/js/openbat-charts.js?v=10" defer></script></body>
+</html>

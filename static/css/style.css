@@ -993,9 +993,13 @@ span.wikilink { color: var(--color-secondary); }
 /* ══════════════════════════════════════════════════════════
    INLINE CHARTS
    Diagrams drawn as inline SVG in a post, rather than exported as images, so
-   they stay sharp, follow the theme, and can be edited in the markdown. The
-   SVG must set its colours with `style="fill: var(--color-…)"` — a CSS
-   variable is not valid in a plain `fill=` presentation attribute.
+   they stay sharp, follow the theme, and can be edited in the markdown.
+
+   Bar charts come from the `{% barChart %}` shortcode in eleventy.config.js
+   and are rendered by Chart.js onto a canvas — a post should not hand-roll
+   one. Bespoke one-off diagrams are still written inline in the markdown, and
+   those must set their colours with `style="fill: var(--color-…)"`, because a
+   CSS variable is not valid in a plain `fill=` presentation attribute.
    ══════════════════════════════════════════════════════════ */
 .post-content figure.chart {
   background: var(--color-surface);
@@ -1022,9 +1026,114 @@ span.wikilink { color: var(--color-secondary); }
   text-align: left;
 }
 
+/* {% panels %} — several charts that read as one figure. The outer figure
+   keeps the surface and border; the panels inside give theirs up, so it looks
+   like one bordered box divided into columns rather than three stacked cards.
+   Below 900px they become one column, because three narrow panels are worse
+   than three tall ones. */
+.post-content figure.chart-panels {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.5rem 1rem;
+  margin: 2rem 0;
+}
+
+.post-content figure.chart-panels .chart-panels-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .post-content figure.chart-panels .chart-panels-grid {
+    grid-template-columns: repeat(var(--panels, 3), minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* A panel is a plain chart again: no card of its own inside the card. */
+.post-content figure.chart-panels figure.chart {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  overflow-x: visible;
+}
+
+.post-content figure.chart-panels figure.chart figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+}
+
+.post-content figure.chart-panels > figcaption {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-muted);
+}
+
+@media (max-width: 899px) {
+  .post-content figure.chart-panels { padding: 1rem 1rem 0.75rem; }
+}
+
 .chart-label { font-family: var(--font-body); font-size: 13px; }
 .chart-label--small { font-size: 11px; }
 .chart-key { font-family: var(--font-sans); font-size: 13px; letter-spacing: 0.06em; }
+
+/* Bar charts built by the {% barChart %} shortcode. The canvas is drawn by
+   Chart.js, which reads the palette below out of these same variables at
+   runtime — so there is nothing here that sets a chart's colours, and a chart
+   follows the theme toggle without a second asset. */
+.post-content figure.chart .chart-canvas {
+  position: relative;
+  width: 100%;
+}
+
+.post-content figure.chart .chart-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Without JS the figure falls back to the numbers as a table, which is a
+   supported look rather than a broken one. */
+.post-content figure.chart .chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+
+.post-content figure.chart .chart-table caption {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  text-align: left;
+  padding-bottom: 0.5rem;
+}
+
+.post-content figure.chart .chart-table th,
+.post-content figure.chart .chart-table td {
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  font-weight: 400;
+  color: var(--color-secondary);
+}
+
+.post-content figure.chart .chart-table td { text-align: right; color: var(--color-muted); }
+
+.post-content figure.chart .chart-table .is-highlight th,
+.post-content figure.chart .chart-table .is-highlight td {
+  color: var(--color-accent);
+  font-weight: 700;
+}
 
 @media (max-width: 600px) {
   .post-content figure.chart { padding: 1rem 1rem 0.75rem; }

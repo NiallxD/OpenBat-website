@@ -7,7 +7,7 @@
   <meta name="description" content="The fungus that has killed millions of North American bats — what it is, why waking up too often is fatal, and why it turned bat monitoring from a nice idea into an urgent one.">
   
   <!-- Privacy & Security -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://upload.wikimedia.org; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="OpenBat">
   <meta property="og:title" content="White-Nose Syndrome — OpenBat">
@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=7.9">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.2">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -140,10 +140,7 @@ of them.</p>
 <p>An infected bat rouses far more often. The infection irritates and damages the
 wing membrane, upsets its water balance, and the animal wakes to deal with it,
 over and over.</p>
-<figure>
-  <a href="/static/images/wns-fat-budget.webp"><img src="/static/images/wns-fat-budget.webp" alt="A line chart of fat reserve across a winter: a healthy bat's reserve steps down slowly and still has fuel in spring, while an infected bat's steps down far more often and hits empty in late February." loading="lazy"></a>
-  <figcaption>Illustrative — a drawing of the mechanism rather than measured data. The steps are arousals. Nothing about the fungus needs to be directly lethal for the outcome to be.</figcaption>
-</figure>
+<figure class="chart"><div class="chart-canvas" style="height:380px"><canvas data-chart="{&quot;type&quot;:&quot;line&quot;,&quot;labels&quot;:[&quot;Oct&quot;,&quot;Nov&quot;,&quot;Dec&quot;,&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;],&quot;series&quot;:[{&quot;name&quot;:&quot;A healthy winter — a bat rouses now and then&quot;,&quot;data&quot;:[100,92,85,76,66,57,44],&quot;stepped&quot;:true},{&quot;name&quot;:&quot;With the infection — it rouses far more often&quot;,&quot;data&quot;:[100,80,58,36,14,0,0],&quot;stepped&quot;:true,&quot;style&quot;:&quot;secondary&quot;}],&quot;key&quot;:&quot;WHY WAKING UP TOO OFTEN IS FATAL, EVEN THOUGH THE FUNGUS ITSELF IS NOT&quot;,&quot;yKey&quot;:&quot;FAT RESERVE&quot;,&quot;yTicks&quot;:false,&quot;xTicks&quot;:true,&quot;yGrid&quot;:true,&quot;legend&quot;:true,&quot;beginAtZero&quot;:true,&quot;marks&quot;:[],&quot;bands&quot;:[{&quot;from&quot;:&quot;Mar&quot;,&quot;to&quot;:&quot;Apr&quot;,&quot;text&quot;:&quot;spring — insects return&quot;,&quot;style&quot;:&quot;muted&quot;}],&quot;lines&quot;:[],&quot;callouts&quot;:[{&quot;x&quot;:&quot;Dec&quot;,&quot;y&quot;:92,&quot;text&quot;:&quot;each step down is one arousal: a few days' worth of fat, spent in hours&quot;,&quot;style&quot;:&quot;muted&quot;,&quot;arrowTo&quot;:{&quot;x&quot;:&quot;Dec&quot;,&quot;y&quot;:60}},{&quot;x&quot;:&quot;Feb&quot;,&quot;y&quot;:30,&quot;text&quot;:&quot;reserves gone, weeks before there is anything to eat&quot;,&quot;arrowTo&quot;:{&quot;x&quot;:&quot;Mar&quot;,&quot;y&quot;:2}}]}" role="img" aria-label="A line chart of fat reserve across a winter: a healthy bat's reserve steps down slowly and still has fuel in spring, while an infected bat's steps down far more often and hits empty in late February."></canvas></div><noscript><table class="chart-table"><caption>WHY WAKING UP TOO OFTEN IS FATAL, EVEN THOUGH THE FUNGUS ITSELF IS NOT</caption><tbody><tr><th scope="row">A healthy winter — a bat rouses now and then</th><td>Oct, Nov, Dec, Jan, Feb, Mar, Apr</td></tr><tr><th scope="row">With the infection — it rouses far more often</th><td>Oct, Nov, Dec, Jan, Feb, Mar, Apr</td></tr></tbody></table></noscript><figcaption>Illustrative — a drawing of the mechanism rather than measured data. The steps are arousals. Nothing about the fungus needs to be directly lethal for the outcome to be.</figcaption></figure>
 <p>The reserve runs out weeks before there is anything to eat. Bats leave the cave
 in midwinter looking for insects that don’t exist yet — which is why one of the
 signs of the disease is bats flying in daylight, in the snow, in February.</p>
@@ -202,6 +199,21 @@ somewhere the disease hasn’t arrived, the most valuable thing you can do is
     <p class="section-label">Read more</p>
     <div class="post-grid">
       
+      <a href="/blog/bats-carry-diseases-heres-what-that-actually-means/" class="post-card">
+        
+        <div class="post-card-img">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Bat_cave_in_El_Maviri_Sinaloa_-_Mexico.jpg" alt="" loading="lazy">
+        </div>
+        
+        <div class="post-card-body">
+          <h2>Bats carry diseases. Here&#39;s what that actually means.</h2>
+          <div class="post-card-meta">
+            <time datetime="2026-08-30">30 August 2026</time>
+          </div>
+          <p class="post-card-desc">Most bat myths are easy to knock down. Not blind, not rodents, not interested in your hair, not vampires. All straightforwardly false, all fun to correct.</p>
+        </div>
+      </a>
+      
       <a href="/blog/a-garden-bats-will-actually-use/" class="post-card">
         
         <div class="post-card-img">
@@ -229,21 +241,6 @@ somewhere the disease hasn’t arrived, the most valuable thing you can do is
             <time datetime="2026-08-27">27 August 2026</time>
           </div>
           <p class="post-card-desc">Bat records are thin, and they are thin unevenly. What is missing from the datasets, why an empty space is so easy to misread, and what one ordinary observation is actually worth.</p>
-        </div>
-      </a>
-      
-      <a href="/blog/why-bats-are-hard-to-watch/" class="post-card">
-        
-        <div class="post-card-img">
-          <img src="/static/images/detection-cover.webp" alt="" loading="lazy">
-        </div>
-        
-        <div class="post-card-body">
-          <h2>Why Bats Are Hard to Watch</h2>
-          <div class="post-card-meta">
-            <time datetime="2026-08-27">27 August 2026</time>
-          </div>
-          <p class="post-card-desc">Bats are all around us and almost nobody has properly seen one. What makes them so difficult to observe — and why a blank night means far less than it looks.</p>
         </div>
       </a>
       
@@ -536,5 +533,5 @@ somewhere the disease hasn’t arrived, the most valuable thing you can do is
       });
     });
   </script>
-</body>
+<script src="/static/js/chart.umd.min.js?v=4.5.1" defer></script><script src="/static/js/chartjs-plugin-annotation.min.js?v=3.1.0" defer></script><script src="/static/js/openbat-charts.js?v=10" defer></script></body>
 </html>

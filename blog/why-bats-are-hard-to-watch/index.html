@@ -7,7 +7,7 @@
   <meta name="description" content="Bats are all around us and almost nobody has properly seen one. What makes them so difficult to observe, and why a blank night means less than it looks.">
   
   <!-- Privacy & Security -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://upload.wikimedia.org; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="OpenBat">
   <meta property="og:title" content="Why Bats Are Hard to Watch — OpenBat">
@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=7.9">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.2">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -145,10 +145,7 @@ dataset in existence.</p>
 whispers — its calls are so faint that it is sometimes called a whispering bat.
 Standing in one spot with one detector, you are listening to a different sized
 world for each species.</p>
-<figure>
-  <a href="/static/images/detection-distance.webp"><img src="/static/images/detection-distance.webp" alt="Left: circles drawn to scale showing detection distance for five bats, from a 100 metre noctule circle down to a 6 metre brown long-eared circle. Right: the same distances as a bar chart." loading="lazy"></a>
-  <figcaption>Approximate detection distances from survey guidance — the real figure moves with habitat, weather, microphone and how the bat is flying. The ratio is the point: a noctule is audible across a field, a long-eared bat has to be almost overhead.</figcaption>
-</figure>
+<figure class="chart"><div class="chart-canvas" style="height:226px"><canvas data-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;bars&quot;:[{&quot;label&quot;:&quot;Noctule (~20 kHz)&quot;,&quot;value&quot;:100,&quot;note&quot;:&quot;100 m&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Serotine (~25 kHz)&quot;,&quot;value&quot;:40,&quot;note&quot;:&quot;40 m&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Common pipistrelle (~45 kHz)&quot;,&quot;value&quot;:25,&quot;note&quot;:&quot;25 m&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Daubenton's (~45 kHz, quieter)&quot;,&quot;value&quot;:15,&quot;note&quot;:&quot;15 m&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Brown long-eared (faint, broadband)&quot;,&quot;value&quot;:6,&quot;note&quot;:&quot;6 m&quot;,&quot;highlight&quot;:true}],&quot;key&quot;:&quot;HOW FAR AWAY A DETECTOR HEARS EACH ONE, IN METRES&quot;,&quot;max&quot;:null,&quot;min&quot;:null,&quot;xTicks&quot;:true,&quot;yTicks&quot;:true,&quot;xGrid&quot;:true,&quot;yGrid&quot;:true,&quot;vertical&quot;:false,&quot;groups&quot;:[],&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Bar chart of detection distance for five species, all to the same scale: noctule 100 m, serotine 40 m, common pipistrelle 25 m, Daubenton's 15 m, brown long-eared 6 m."></canvas></div><noscript><table class="chart-table"><caption>HOW FAR AWAY A DETECTOR HEARS EACH ONE, IN METRES</caption><tbody><tr><th scope="row">Noctule (~20 kHz)</th><td>100 m</td></tr><tr><th scope="row">Serotine (~25 kHz)</th><td>40 m</td></tr><tr><th scope="row">Common pipistrelle (~45 kHz)</th><td>25 m</td></tr><tr><th scope="row">Daubenton's (~45 kHz, quieter)</th><td>15 m</td></tr><tr class="is-highlight"><th scope="row">Brown long-eared (faint, broadband)</th><td>6 m</td></tr></tbody></table></noscript><figcaption>Approximate detection distances from survey guidance — the real figure moves with habitat, weather, microphone and how the bat is flying. The ratio is the point: a noctule is audible across a field, a long-eared bat has to be almost overhead.</figcaption></figure>
 <p>A noctule crossing a hundred metres away is on your recording. A long-eared bat
 doing exactly the same thing is not — it has to be nearly overhead. An evening’s
 recording is therefore not a survey of the bats present. It’s a survey of the
@@ -213,6 +210,21 @@ tells the next person where to look.</p>
   <div class="post-related">
     <p class="section-label">Read more</p>
     <div class="post-grid">
+      
+      <a href="/blog/bats-carry-diseases-heres-what-that-actually-means/" class="post-card">
+        
+        <div class="post-card-img">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Bat_cave_in_El_Maviri_Sinaloa_-_Mexico.jpg" alt="" loading="lazy">
+        </div>
+        
+        <div class="post-card-body">
+          <h2>Bats carry diseases. Here&#39;s what that actually means.</h2>
+          <div class="post-card-meta">
+            <time datetime="2026-08-30">30 August 2026</time>
+          </div>
+          <p class="post-card-desc">Most bat myths are easy to knock down. Not blind, not rodents, not interested in your hair, not vampires. All straightforwardly false, all fun to correct.</p>
+        </div>
+      </a>
       
       <a href="/blog/the-gaps-in-bat-data/" class="post-card">
         
@@ -533,5 +545,5 @@ tells the next person where to look.</p>
       });
     });
   </script>
-</body>
+<script src="/static/js/chart.umd.min.js?v=4.5.1" defer></script><script src="/static/js/chartjs-plugin-annotation.min.js?v=3.1.0" defer></script><script src="/static/js/openbat-charts.js?v=10" defer></script></body>
 </html>
