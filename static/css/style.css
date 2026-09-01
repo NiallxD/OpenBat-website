@@ -46,7 +46,10 @@
      Placeholder stops; swap for final palette. */
   --page-gradient: linear-gradient(0deg, #5E4468 0%, #33375B 45%, #081E37 100%);
   --page-bg-solid: #081E37;
-  --footer-bg-image: url('/static/images/footer-bg-light.webp');
+  /* ?v= for the same reason as style.css itself: this art is served with a
+     4-hour edge cache, so replacing the file leaves visitors on the old one
+     until it expires. Bump on every swap. */
+  --footer-bg-image: url('/static/images/footer-bg-light.webp?v=2');
   --footer-overlay: rgba(0, 0, 0, 0.00);
 
   --max-prose: 720px;
@@ -73,7 +76,7 @@
 
   --page-gradient: linear-gradient(180deg, #05070d 0%, #10131c 45%, #1a1f2e 100%);
   --page-bg-solid: #05070d;
-  --footer-bg-image: url('/static/images/footer-bg-dark.webp');
+  --footer-bg-image: url('/static/images/footer-bg-dark.webp?v=2');
   --footer-overlay: rgba(0, 0, 0, 0.0);
 }
 
