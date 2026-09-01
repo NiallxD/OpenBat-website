@@ -10,7 +10,7 @@ tags:
   - openbat
 coverImage: /static/images/India_2022_Habitat_054.webp
 heroImage: /static/images/India_2022_Habitat_054.webp
-featured: false
+featured: true
 publish: true
 ---
 As you have seen by now, OpenBat adopts a very strong and thematic design language which might seem a little odd on initial read. In this Dev Log I want to chat a bit about why I choose this art style, and what it means for bat conservation.

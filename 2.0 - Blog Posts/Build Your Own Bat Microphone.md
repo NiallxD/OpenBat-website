@@ -9,7 +9,7 @@ tags:
   - griff
 heroImage: /static/images/griff-hero.webp
 coverImage: /static/images/griff-cover.webp
-featured: false
+featured: true
 publish: true
 ---
 
