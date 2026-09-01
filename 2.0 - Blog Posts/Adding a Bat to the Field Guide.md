@@ -7,8 +7,8 @@ author: Niall Bell
 tags:
   - field-guide
   - contributing
-heroImage: /static/images/guide-hero.webp
-coverImage: /static/images/guide-cover.webp
+heroImage: /static/images/field-guide-hero.webp
+coverImage: /static/images/field-guide-hero.webp
 featured: false
 publish: true
 ---

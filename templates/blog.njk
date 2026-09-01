@@ -11,26 +11,9 @@ layout: base.njk
   <div class="post-content">{{ content | safe }}</div>
   {% endif %}
 
-  {% set featured = collections.featuredPosts | limit(1) %}
-  {% if featured.length %}
-  {% for post in featured %}
-  <a href="{{ post.url | url }}" class="post-card post-card--featured">
-    {% if post.data.coverImage %}
-    <div class="post-card-img">
-      <img src="{{ post.data.coverImage }}" alt="" loading="lazy">
-    </div>
-    {% endif %}
-    <div class="post-card-body">
-      <p class="section-label">Latest</p>
-      <h2>{{ post.data.title }}</h2>
-      <div class="post-card-meta">
-        {% if post.date %}<time datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time>{% endif %}
-        {% for tag in post.data.tags | limit(3) %}<span class="tag">{{ tag }}</span>{% endfor %}
-      </div>
-      <p class="post-card-desc">{{ post.data.excerpt | default(post.data.description) | default(post.templateContent | autoExcerpt) }}</p>
-    </div>
-  </a>
-  {% endfor %}
+  {% set hero = collections.heroPosts %}
+  {% if hero.length %}
+  {% include "partials/hero-ticker.njk" %}
   {% endif %}
 
   {# The filter only acts on the grid, so it is pointless without one. #}
@@ -64,7 +47,7 @@ layout: base.njk
     </a>
     {% endfor %}
   </div>
-  {% elif not collections.featuredPosts.length %}
+  {% elif not collections.heroPosts.length %}
   <p class="empty-state">No posts yet — the first one is being written.</p>
   {% endif %}
 </div>

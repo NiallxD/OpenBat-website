@@ -8,8 +8,8 @@ tags:
   - auto-id
   - classifier
   - on-device
-heroImage: /static/images/autoid-hero.webp
-coverImage: /static/images/autoid-cover.webp
+heroImage: /static/images/how-autoid-hero.webp
+coverImage: /static/images/how-autoid-hero.webp
 featured: false
 publish: true
 ---

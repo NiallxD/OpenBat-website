@@ -271,15 +271,21 @@ export default function (eleventyConfig) {
     api.getAll().filter(isPost).sort(byNewest)
   );
 
-  // `featured: true` lifts a post out of the grid and into the wide card at
-  // the top of /blog/. Everything else falls through to `regularPosts`.
-  eleventyConfig.addCollection("featuredPosts", (api) =>
-    api.getAll().filter((i) => isPost(i) && i.data.featured === true).sort(byNewest)
-  );
-
+  // `featured: true` lifts a post out of the grid and into the ticker at the
+  // top of /blog/ and /. Everything else falls through to `regularPosts`.
   eleventyConfig.addCollection("regularPosts", (api) =>
     api.getAll().filter((i) => isPost(i) && i.data.featured !== true).sort(byNewest)
   );
+
+  // Up to three slides for the featured ticker on / and /blog/: featured
+  // posts first (newest first), topped up with the newest remaining posts so
+  // the ticker still has three slides when only one post is marked featured.
+  eleventyConfig.addCollection("heroPosts", (api) => {
+    const posts = api.getAll().filter(isPost).sort(byNewest);
+    const featured = posts.filter((i) => i.data.featured === true);
+    const rest = posts.filter((i) => i.data.featured !== true);
+    return [...featured, ...rest].slice(0, 3);
+  });
 
   eleventyConfig.addFilter("getAllTags", (collection) => {
     const tags = new Set();

@@ -7,8 +7,8 @@ author: Niall Bell
 tags:
   - bats
   - data
-heroImage: /static/images/records-hero.webp
-coverImage: /static/images/records-cover.webp
+heroImage: /static/images/gaps-in-date-hero.webp
+coverImage: /static/images/gaps-in-date-hero.webp
 featured: false
 publish: true
 ---
@@ -80,9 +80,9 @@ what that pile is actually made of.
     { label: "Common Pipistrelle", value: 3229956 }
   ],
   callouts: [
-    { x: "Northern Myotis", y: 2600, text: "Spotted bat, 186 records", style: "muted", arrowTo: { x: "Spotted Bat", y: 215 } },
+    { x: "Northern Myotis", y: 1700, text: "Spotted bat, 186 records", style: "muted", arrowTo: { x: "Spotted Bat", y: 215 } },
     { x: "Little Brown Bat", y: 62000, text: "Little brown bat, 3,720 records", style: "muted", arrowTo: { x: "Little Brown Bat", y: 4200 } },
-    { x: "Grey-headed Flying-fox", y: 5200000, text: "Common pipistrelle, 3,229,956 records", arrowTo: { x: "Common Pipistrelle", y: 3400000 } }
+    { x: "Grey-headed Flying-fox", y: 5000000, text: "Common pipistrelle, 3,229,956 records", arrowTo: { x: "Pipistrellus pygmaeus", y: 2500000 } }
   ]
 } %}
 
