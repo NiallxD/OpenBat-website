@@ -97,10 +97,26 @@
               'Critically Endangered', 'Extinct in the Wild', 'Extinct',
               'Data Deficient', 'Not Evaluated'];
 
+  // The groups already used in the loaded guide, offered as the suggestions
+  // for the Group field. It is a suggestion list rather than a fixed one for
+  // the same reason IUCN is: a family the guide doesn't cover yet needs a
+  // group nobody has typed before. What it does prevent is the common case —
+  // a second spelling of a group that is already in there.
+  function groupsInGuide() {
+    var seen = {};
+    ((guide && guide.species) || []).forEach(function (s) {
+      if (s.group) seen[s.group] = true;
+    });
+    return Object.keys(seen).sort();
+  }
+
   var SPEC = [
     { title: 'Identity', fields: [
       { path: 'id', label: 'ID', type: 'text', required: true,
         hint: 'Stable slug — genus-species, lowercase, hyphenated. Other entries and saved user data reference this.' },
+      { path: 'group', label: 'Group', type: 'text', placeholder: 'Vesper Bat',
+        datalist: groupsInGuide,
+        hint: 'The everyday family grouping, shown above the common name in the app. Pick one of the groups already in the guide where it fits — a new one is fine when it doesn’t.' },
       { path: 'commonName', label: 'Common name', type: 'text', required: true },
       { path: 'scientificName', label: 'Scientific name', type: 'text', required: true,
         hint: 'Genus is parsed from this automatically. Don’t add a separate genus field. Only the genus name should be capitalised.' },
@@ -811,11 +827,14 @@
     // Plain text, optionally with suggestions.
     var input = el('input', { type: 'text', id: id, value: value || '',
                               placeholder: field.placeholder || '' });
-    if (field.datalist) {
+    // A fixed array of suggestions, or a function returning them — the latter
+    // for a list that can only be worked out once the guide has loaded.
+    var suggestions = typeof field.datalist === 'function' ? field.datalist() : field.datalist;
+    if (suggestions && suggestions.length) {
       var listId = id + '-list';
       input.setAttribute('list', listId);
       var dl = el('datalist', { id: listId });
-      field.datalist.forEach(function (v) { dl.appendChild(el('option', { value: v })); });
+      suggestions.forEach(function (v) { dl.appendChild(el('option', { value: v })); });
       input.appendChild(dl);
     }
     input.addEventListener('input', function () {

@@ -41,7 +41,6 @@
   --color-link-hover:#ffa040;
   --color-accent:    #FF860D;
   --color-border:    #333333;
-   --color-drop-shadow: drop-shadow(0px 0px 50px rgba(0,0,0,0.5));
 
   /* Day/night page backdrop — spills behind the nav and footer.
      Placeholder stops; swap for final palette. */
@@ -71,7 +70,6 @@
   --color-link-hover:#ffa040;
   --color-accent:    #FF860D;
   --color-border:    #333333;
-  --color-drop-shadow: drop-shadow(0px 0px 50px rgba(0,0,0,0.9));
 
   --page-gradient: linear-gradient(180deg, #05070d 0%, #10131c 45%, #1a1f2e 100%);
   --page-bg-solid: #05070d;
@@ -91,6 +89,57 @@
   ::view-transition-new(root) {
     animation: none;
   }
+}
+
+/* ── Starfield ────────────────────────────────────────────── */
+/* Pixel-art stars scattered behind the page (JS in base.njk places them),
+   dimmed to nothing under the light theme — night stars, not daytime ones.
+   `absolute` against the positioned `body` (below) so the field spans the
+   full page height and scrolls with the content, rather than sitting fixed
+   over the viewport. */
+.starfield {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 900ms ease;
+}
+:root:not([data-theme="dark"]) .starfield { opacity: 0; }
+
+.star {
+  position: absolute;
+  width: var(--star-size, 2px);
+  height: var(--star-size, 2px);
+  background: var(--star-color, #ffffff);
+  /* Four offset copies of the same square, no blur — a plus-shaped pixel
+     sprite drawn without a second element per star. */
+  box-shadow:
+    calc(var(--star-size, 2px) * -1) 0 0 0 var(--star-color, #ffffff),
+    var(--star-size, 2px) 0 0 0 var(--star-color, #ffffff),
+    0 calc(var(--star-size, 2px) * -1) 0 0 var(--star-color, #ffffff),
+    0 var(--star-size, 2px) 0 0 var(--star-color, #ffffff);
+  --star-max: 1;
+  --star-min: 0.15;
+  animation: star-twinkle var(--star-duration, 3s) ease-in-out infinite;
+  animation-delay: var(--star-delay, 0s);
+}
+
+/* Stars whose column falls under the readable content width — dimmer so
+   they don't compete with text and cards sitting over them. */
+.star--dim {
+  --star-max: 0.4;
+  --star-min: 0.06;
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: var(--star-min); }
+  50% { opacity: var(--star-max); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star { animation: none; opacity: var(--star-min); }
 }
 
 /* ── Reset ────────────────────────────────────────────────── */
@@ -131,6 +180,9 @@ body {
   flex-direction: column;
   overflow-x: hidden;
   overflow-x: clip;
+  /* Gives the starfield's `inset: 0` a containing block the height of the
+     whole page rather than just the viewport, so it scrolls with content. */
+  position: relative;
 }
 
 p {
@@ -426,12 +478,17 @@ main {
   --color-muted: rgba(255, 255, 255, 0.6);
   --color-border: rgba(255, 255, 255, 0.15);
   border-top: 0px solid var(--color-border);
-  padding: 20rem 0 2rem;
+  padding: 20rem 0 22rem;
   margin-top: auto;
   background:
     linear-gradient(var(--footer-overlay), var(--footer-overlay)),
     var(--footer-bg-image);
-  background-size: cover;
+  /* Width-filled, not `cover`: cover rescales the art to whatever height the
+     footer ends up, so the treeline always climbs back up to meet the
+     content no matter how much padding is added below it. Sizing off the
+     width alone fixes the art's height, so extra bottom padding actually
+     buys clear sky between the content and the mountain tops. */
+  background-size: 100% auto;
   background-position: center bottom;
   background-repeat: no-repeat;
   transition: background 300ms ease;
@@ -439,13 +496,17 @@ main {
 
 .site-footer-inner {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 3rem 2rem;
 }
 
 .footer-col {
   display: flex;
   flex-direction: column;
-  filter: var(--color-drop-shadow)
 }
+
+.footer-brand { flex: 1 1 260px; }
 
 .footer-logo-link {
   display: inline-block;
@@ -464,7 +525,13 @@ main {
   font-weight: 700;
   color: var(--color-text);
   letter-spacing: 0.03em;
-  margin-bottom: 1.5rem;
+}
+
+.footer-tagline {
+  font-size: 0.9rem;
+  color: var(--color-secondary);
+  max-width: 26em;
+  margin-bottom: 1.25rem;
 }
 
 .footer-contact {
@@ -496,18 +563,53 @@ main {
   flex-shrink: 0;
 }
 
-.footer-privacy-link {
+/* The three link columns (Explore, Open Source, Get in Touch) — same
+   `.section-label` heading used for "Featured"/"Latest" elsewhere, so the
+   footer reads as one more section of the site rather than a bolted-on
+   bar. */
+.footer-newsletter-btn {
+  display: inline-block;
+  align-self: flex-start;
   margin-top: 1.25rem;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #111;
+  font-family: var(--font-sans);
   font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 150ms ease, background 150ms ease;
 }
 
-.footer-privacy-link a {
-  color: var(--color-link);
+.footer-newsletter-btn:hover {
+  background: color-mix(in srgb, var(--color-accent) 85%, #fff);
+  transform: translateY(-1px);
+}
+
+.footer-nav {
+  flex: 0 1 160px;
+  gap: 0.65rem;
+}
+
+.footer-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-secondary);
   text-decoration: none;
+  transition: color var(--ease);
+  width: fit-content;
 }
 
-.footer-privacy-link a:hover {
-  color: var(--color-link-hover);
+.footer-nav a:hover {
+  color: var(--color-link);
+}
+
+.footer-icon {
+  color: var(--color-muted);
+  flex-shrink: 0;
 }
 
 .footer-copyright {
@@ -515,7 +617,7 @@ main {
   font-size: 0.9rem;
   font-weight: 600;
   color: #ffffff;
-  filter: var(--color-drop-shadow);
+  margin-top: 3rem;
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -2208,13 +2310,51 @@ figure.image-float-left figcaption {
   .post-card--featured .post-card-body h2 { font-size: 1.9rem; }
 }
 
+/* Featured-post ticker: the slides stack side by side in a flex track that
+   slides via transform, one card's width per step, so only one is ever
+   visible. JS toggles nothing here beyond that transform and the dots. */
+.hero-ticker { overflow: hidden; margin: 2.5rem 0 0; --ticker-gap: 1.5rem; }
+.hero-ticker-track {
+  display: flex;
+  gap: var(--ticker-gap);
+  transition: transform 0.9s ease;
+}
+.hero-ticker-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  margin: 0;
+}
+/* .post-card:hover lifts the card 2px, which the ticker's overflow: hidden
+   clips clean off — the top border vanishes instead of the card floating.
+   The slide swap already reads as motion, so the lift isn't missed. */
+.hero-ticker-slide:hover { transform: none; }
+
+.hero-ticker-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.hero-ticker-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 99px;
+  background: var(--color-border);
+  cursor: pointer;
+}
+.hero-ticker-dot.is-active {
+  background: var(--color-accent);
+}
+
 /* The featured card again, on the home page under the title block. */
 /* The home page runs tighter than the other pages, since it is a stack of
    blocks rather than one column of prose. */
 .listing-header--home { padding-top: 2.5rem; }
 
 .home-featured { margin-top: 1.5rem; margin-bottom: 2rem; }
-.home-featured .post-card--featured { margin-top: 0; }
+.home-featured .hero-ticker { margin-top: 0; }
 
 /* Signpost cards under the featured one. Same card styling as /blog/; only
    the grid rhythm differs, since there are exactly three of them. */
@@ -2354,6 +2494,70 @@ figure.image-float-left figcaption {
 
 @media (max-width: 600px) {
   .goal-modal-dialog { padding: 1.5rem; }
+}
+
+/* Newsletter modal (footer, every page) — same dialog/backdrop/close pattern
+   as .goal-modal above, sized for the embedded Google Form instead of a
+   write-up. */
+.newsletter-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.newsletter-modal.newsletter-modal--open { display: flex; }
+
+.newsletter-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 7, 13, 0.7);
+}
+
+.newsletter-modal-dialog {
+  position: relative;
+  background-color: var(--page-bg-solid);
+  background-image: linear-gradient(var(--color-surface), var(--color-surface));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 660px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.newsletter-modal-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.newsletter-modal-close:hover { background: var(--color-bg); color: var(--color-text); }
+
+.newsletter-modal-frame {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: 70vh;
+  max-height: 749px;
+  border: none;
+  background: #fff;
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 600px) {
+  .newsletter-modal-dialog { padding: 1rem; }
 }
 
 /* Mobile: the three goal cards are a locked-scroll stage, same mechanic as

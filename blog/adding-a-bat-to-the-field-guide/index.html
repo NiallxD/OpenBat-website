@@ -7,12 +7,12 @@
   <meta name="description" content="The field guide inside OpenBat is written by the people who use it. Here is what an entry holds, how to add one without touching any code, and what happens after you press submit.">
   
   <!-- Privacy & Security -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://upload.wikimedia.org; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://upload.wikimedia.org; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; frame-src https://docs.google.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="OpenBat">
   <meta property="og:title" content="Adding a Bat to the Field Guide — OpenBat">
   <meta property="og:description" content="The field guide inside OpenBat is written by the people who use it. Here is what an entry holds, how to add one without touching any code, and what happens after you press submit.">
-  <meta property="og:image" content="/static/images/guide-cover.webp">
+  <meta property="og:image" content="/static/images/field-guide-hero.webp">
   <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Favicons -->
@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.2">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.15">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -40,6 +40,7 @@
   
 </head>
 <body>
+  <div class="starfield" id="starfield" aria-hidden="true"></div>
   <header class="site-header transparent-header">
     <div class="site-header-inner">
       <a class="site-title" href="/">
@@ -102,7 +103,7 @@
 
 
 <div class="post-hero">
-  <img class="post-hero-bg" src="/static/images/guide-hero.webp" alt="">
+  <img class="post-hero-bg" src="/static/images/field-guide-hero.webp" alt="">
   <div class="post-hero-shade"></div>
   <div class="post-hero-inner">
     <p class="section-label"><a href="/blog/" class="post-back">← Blog</a></p>
@@ -276,24 +277,107 @@ pull requests are welcome there too.</p>
 
   <footer class="site-footer">
     <div class="site-footer-inner">
-      <div class="footer-col brand">
+      <div class="footer-col footer-brand">
         <a class="footer-logo-link" href="/">
           <img class="footer-logo" src="/static/images/logo.png" alt="OpenBat">
         </a>
         <p class="footer-web-address">openbat.app</p>
+        <p class="footer-tagline">Open source bat detection.</p>
         <div class="footer-contact">
           <div class="contact-item">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             <span class="reveal-email" data-u="hello" data-d="openbat.app" style="cursor:pointer;">Click to reveal email</span>
           </div>
         </div>
-        <p class="footer-privacy-link"><a href="/privacy/">Privacy</a></p>
+        <button type="button" class="footer-newsletter-btn" id="newsletter-open" data-newsletter-src="https://docs.google.com/forms/d/e/1FAIpQLSc4L2pCjbGhjjtug6fJBUPbhLdl0K8CBQpQMfRLYqf0T_SSJw/viewform?embedded=true">
+          Sign up for the newsletter
+        </button>
+      </div>
+
+      <div class="footer-col footer-nav">
+        <p class="section-label">Explore</p>
+        <a href="/our-project/">Our Project</a>
+        <a href="/contribute/">Contribute</a>
+        <a href="/blog/">Blog</a>
+        <a href="/help/">Help</a>
+      </div>
+
+      <div class="footer-col footer-nav">
+        <p class="section-label">Open Source</p>
+        <a href="https://github.com/NiallxD/OpenBat-App" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" class="footer-icon"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          OpenBat App
+        </a>
+        <a href="https://github.com/NiallxD/OpenBat-FieldGuide" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" class="footer-icon"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          Field Guide
+        </a>
+        <a href="/guide-editor/">Guide Editor</a>
+      </div>
+
+      <div class="footer-col footer-nav">
+        <p class="section-label">Get in Touch</p>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy/">Privacy</a>
       </div>
     </div>
     <p class="footer-copyright">© 2026 Niall Bell (OpenBat)</p>
   </footer>
 
+  <div class="newsletter-modal" id="newsletter-modal">
+    <div class="newsletter-modal-backdrop" data-newsletter-close></div>
+    <div class="newsletter-modal-dialog" role="dialog" aria-modal="true" aria-label="Newsletter sign-up">
+      <button class="newsletter-modal-close" type="button" data-newsletter-close aria-label="Close">&times;</button>
+      <!-- The form is Google's, embedded on demand: the iframe's src is only
+           set once this modal is opened, so no page contacts Google until a
+           visitor actually asks to sign up. See /privacy/. -->
+      <iframe class="newsletter-modal-frame" title="OpenBat newsletter sign-up" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    </div>
+  </div>
+
   <script>
+    // Pixel-art starfield — scattered once at load, each star's own duration
+    // and negative delay puts it at a random point in its twinkle cycle
+    // immediately, rather than every star flashing in sync. Fades out under
+    // the light theme via CSS (`.starfield` opacity), not here.
+    (() => {
+      const field = document.getElementById('starfield');
+      if (!field) return;
+      // The nav's inner column has the same max-width/centring as every
+      // page's content, so its horizontal bounds double as "where the
+      // readable column sits" — stars under it are dimmed.
+      const column = document.querySelector('.site-header-inner');
+      const colRect = column ? column.getBoundingClientRect() : null;
+      // The footer paints its own art (with its own sky) over this same
+      // field, so stars are only scattered down to where it starts — one
+      // landing behind the logo read as a stray pulsing shadow.
+      const footer = document.querySelector('.site-footer');
+      const fieldHeight = field.offsetHeight || document.body.scrollHeight;
+      const footerTop = footer ? footer.offsetTop : fieldHeight;
+      const COUNT = 88;
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < COUNT; i++) {
+        const star = document.createElement('span');
+        star.className = 'star';
+        const bright = Math.random() < 0.08;
+        const size = bright ? 3 : (Math.random() < 0.5 ? 1 : 2);
+        const duration = (2 + Math.random() * 3).toFixed(2);
+        const leftPct = Math.random() * 100;
+        const leftPx = (leftPct / 100) * window.innerWidth;
+        if (colRect && leftPx >= colRect.left && leftPx <= colRect.right) {
+          star.classList.add('star--dim');
+        }
+        star.style.setProperty('--star-size', `${size}px`);
+        star.style.setProperty('--star-color', bright ? '#ffd9a0' : '#ffffff');
+        star.style.setProperty('--star-duration', `${duration}s`);
+        star.style.setProperty('--star-delay', `${(-Math.random() * duration).toFixed(2)}s`);
+        star.style.top = `${((Math.random() * footerTop / fieldHeight) * 100).toFixed(2)}%`;
+        star.style.left = `${leftPct.toFixed(2)}%`;
+        frag.appendChild(star);
+      }
+      field.appendChild(frag);
+    })();
+
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', () => {
       const current = document.documentElement.getAttribute('data-theme');
@@ -540,6 +624,120 @@ pull requests are welcome there too.</p>
 
       goalSetPinned();
     }
+
+    // Newsletter modal (footer, every page) — the Google Form iframe only
+    // gets its src set the first time the modal is opened, so visitors who
+    // never click "Sign up" never load anything from Google.
+    const newsletterOpenBtn = document.getElementById('newsletter-open');
+    if (newsletterOpenBtn) {
+      const newsletterModal = document.getElementById('newsletter-modal');
+      const newsletterFrame = newsletterModal.querySelector('.newsletter-modal-frame');
+      let newsletterLastFocused = null;
+
+      const onNewsletterKeydown = (e) => {
+        if (e.key === 'Escape') closeNewsletterModal();
+      };
+
+      const closeNewsletterModal = () => {
+        newsletterModal.classList.remove('newsletter-modal--open');
+        document.removeEventListener('keydown', onNewsletterKeydown);
+        if (newsletterLastFocused) newsletterLastFocused.focus();
+      };
+
+      const openNewsletterModal = () => {
+        if (!newsletterFrame.src) newsletterFrame.src = newsletterOpenBtn.dataset.newsletterSrc;
+        newsletterLastFocused = document.activeElement;
+        newsletterModal.classList.add('newsletter-modal--open');
+        newsletterModal.querySelector('.newsletter-modal-close').focus();
+        document.addEventListener('keydown', onNewsletterKeydown);
+      };
+
+      newsletterOpenBtn.addEventListener('click', openNewsletterModal);
+      newsletterModal.querySelectorAll('[data-newsletter-close]').forEach(el => {
+        el.addEventListener('click', closeNewsletterModal);
+      });
+    }
+
+    // Featured-post ticker (home and /blog/) — advances every 2.5s, pauses on
+    // hover/focus so a reader isn't fighting the slide while they read, and
+    // reduced motion drops the autoplay but keeps the dots working.
+    document.querySelectorAll('[data-ticker]').forEach(ticker => {
+      const track = ticker.querySelector('.hero-ticker-track');
+      const slides = [...ticker.querySelectorAll('.hero-ticker-slide')];
+      const dotsWrap = ticker.parentElement.querySelector('.hero-ticker-dots');
+      const dots = dotsWrap ? [...dotsWrap.querySelectorAll('.hero-ticker-dot')] : [];
+      if (slides.length < 2) return;
+
+      // A clone of the first slide sits after the last real one so autoplay
+      // can always step forward. Advancing onto the clone plays the same
+      // forward animation as any other step; once it finishes, the track
+      // jumps back to the real first slide with no transition — invisibly,
+      // since the clone looks identical — instead of animating backwards to
+      // loop, which would read as the ticker reversing itself.
+      const clone = slides[0].cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('tabindex', '-1');
+      track.appendChild(clone);
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      // The small gap between slides (--ticker-gap) rides along with each
+      // step, so the offset per slide is one card width plus one gap, not
+      // a flat 100%.
+      const gap = getComputedStyle(ticker).getPropertyValue('--ticker-gap') || '0px';
+      let position = 0; // 0..slides.length, where slides.length is the clone
+      let timer = null;
+
+      const setDots = (i) => dots.forEach((d, di) => d.classList.toggle('is-active', di === i));
+      const setOffset = () => {
+        track.style.transform = `translateX(calc((100% + ${gap}) * -${position}))`;
+      };
+
+      const step = () => {
+        position += 1;
+        setOffset();
+        setDots(position % slides.length);
+      };
+
+      // Direct navigation (the dots) jumps straight to a real slide rather
+      // than always stepping forward.
+      const jumpTo = (i, animate) => {
+        position = (i + slides.length) % slides.length;
+        if (!animate) track.style.transition = 'none';
+        setOffset();
+        if (!animate) {
+          track.getBoundingClientRect(); // force reflow before restoring the transition
+          track.style.transition = '';
+        }
+        setDots(position);
+      };
+
+      track.addEventListener('transitionend', (e) => {
+        if (e.propertyName === 'transform' && position === slides.length) jumpTo(0, false);
+      });
+
+      const stop = () => { clearInterval(timer); timer = null; };
+      const start = () => {
+        if (reduceMotion.matches || timer) return;
+        timer = setInterval(step, 2500);
+      };
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          jumpTo(Number(dot.dataset.index), true);
+          stop();
+          start();
+        });
+      });
+
+      ticker.addEventListener('mouseenter', stop);
+      ticker.addEventListener('mouseleave', start);
+      ticker.addEventListener('focusin', stop);
+      ticker.addEventListener('focusout', start);
+      reduceMotion.addEventListener('change', () => (reduceMotion.matches ? stop() : start()));
+
+      setDots(0);
+      start();
+    });
 
     // Assemble obfuscated email addresses on click
     document.addEventListener('DOMContentLoaded', () => {
