@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video: Bat Emergence in Thermal — OpenBat</title>
+  <meta name="description" content="Watch this short video of bats emerging from their roost box. The thermal camera picks up the bats as they drop out of the box ready for a night foraging.">
+  
+  <!-- Privacy & Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://upload.wikimedia.org; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; frame-src https://docs.google.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta name="referrer" content="no-referrer">
+  <meta property="og:site_name" content="OpenBat">
+  <meta property="og:title" content="Video: Bat Emergence in Thermal — OpenBat">
+  <meta property="og:description" content="Watch this short video of bats emerging from their roost box. The thermal camera picks up the bats as they drop out of the box ready for a night foraging.">
+  <meta property="og:image" content="/static/images/bat-thermal-emergence.webp">
+  <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
+  <meta name="theme-color" id="theme-color" content="#05070d">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.19">
+  <script>
+    // Matches the top of each theme's page gradient, so the browser chrome on
+    // iOS and Android continues the page rather than capping it with a bar.
+    const THEME_COLORS = { dark: '#05070d', light: '#081E37' };
+    const setThemeColor = (theme) => {
+      const meta = document.getElementById('theme-color');
+      if (meta) meta.setAttribute('content', THEME_COLORS[theme]);
+    };
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme !== 'light') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    setThemeColor(savedTheme === 'light' ? 'light' : 'dark');
+  </script>
+  
+</head>
+<body>
+  <div class="starfield" id="starfield" aria-hidden="true"></div>
+  <header class="site-header transparent-header">
+    <div class="site-header-inner">
+      <a class="site-title" href="/">
+        <img class="site-logo" src="/static/images/logo.png" alt="OpenBat">
+      </a>
+      <nav class="nav-menu">
+        
+        
+        <a href="/our-project/">Our Project</a>
+        
+        
+        
+        <div class="nav-item has-dropdown">
+          <a href="/contribute/">Contribute</a>
+          <div class="nav-dropdown">
+            
+            <a href="/guide-editor/">Field Guide Editor</a>
+            
+          </div>
+        </div>
+        
+        
+        
+        <a href="/blog/">Blog</a>
+        
+        
+        
+        <a href="/help/">Help</a>
+        
+        
+        
+        <a href="/privacy/">Privacy</a>
+        
+        
+        
+        <a href="/contact/">Contact</a>
+        
+        
+      </nav>
+      <div class="header-controls">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
+          <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-overlay"></div>
+
+  <main>
+    
+
+
+
+
+
+
+<div class="post-hero">
+  <img class="post-hero-bg" src="/static/images/bat-thermal-emergence.webp" alt="">
+  <div class="post-hero-shade"></div>
+  <div class="post-hero-inner">
+    <p class="section-label"><a href="/blog/" class="post-back">← Blog</a></p>
+    <h1>Video: Bat Emergence in Thermal</h1>
+    <p class="post-hero-text">Watch this short video of bats emerging from their roost box. The thermal camera picks up the bats as they drop out of the box ready for a night foraging.</p>
+    <div class="post-meta">
+      <time datetime="2026-09-04">4 September 2026</time>
+      <span class="post-author">Niall Bell</span>
+      <span class="tag">surveying</span><span class="tag">thermal-camera</span><span class="tag">video</span>
+    </div>
+  </div>
+</div>
+
+
+<article class="standard-page post post--hero">
+  
+
+  <div class="post-content"><p>In this video, bats can be seen emerging from their roost in rapid succession. This is typical behaviour bats and ie beautifully revealed by using a thermal camera. These bats are likely Yuma myotis.</p>
+<figure class="video-figure">
+  <video controls playsinline preload="metadata" poster="/static/images/bat-thermal-emergence.webp">
+    <source src="/static/videos/bat_emergence-optimised.mp4" type="video/mp4">
+    Your browser can't play this video. <a href="/static/videos/bat_emergence-optimised.mp4">Download it instead.</a>
+  </video>
+  <figcaption>Bats dropping from a roost box in rapid succession, seen in thermal, during a Bat Emergence Survey - June 15 2026. Video credit: Niall Bell, all rights reserved.</figcaption>
+</figure></div>
+  
+
+  
+  
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-col footer-brand">
+        <a class="footer-logo-link" href="/">
+          <img class="footer-logo" src="/static/images/logo.png" alt="OpenBat">
+        </a>
+        <p class="footer-web-address">openbat.app</p>
+        <p class="footer-tagline">Open source bat detection.</p>
+        <div class="footer-contact">
+          <div class="contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span class="reveal-email" data-u="hello" data-d="openbat.app" style="cursor:pointer;">Click to reveal email</span>
+          </div>
+        </div>
+        <button type="button" class="footer-newsletter-btn" id="newsletter-open" data-newsletter-src="https://docs.google.com/forms/d/e/1FAIpQLSc4L2pCjbGhjjtug6fJBUPbhLdl0K8CBQpQMfRLYqf0T_SSJw/viewform?embedded=true">
+          Sign up for the newsletter
+        </button>
+      </div>
+
+      <div class="footer-col footer-nav">
+        <p class="section-label">Explore</p>
+        <a href="/our-project/">Our Project</a>
+        <a href="/contribute/">Contribute</a>
+        <a href="/blog/">Blog</a>
+        <a href="/help/">Help</a>
+      </div>
+
+      <div class="footer-col footer-nav">
+        <p class="section-label">Open Source</p>
+        <a href="https://github.com/NiallxD/OpenBat-App" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" class="footer-icon"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          OpenBat App
+        </a>
+        <a href="https://github.com/NiallxD/OpenBat-FieldGuide" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" class="footer-icon"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          Field Guide
+        </a>
+        <a href="/guide-editor/">Guide Editor</a>
+      </div>
+
+      <div class="footer-col footer-nav">
+        <p class="section-label">Get in Touch</p>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy/">Privacy</a>
+      </div>
+    </div>
+    <p class="footer-copyright">© 2026 Niall Bell (OpenBat) - Hand crafted with 11ty</p>
+  </footer>
+
+  <div class="newsletter-modal" id="newsletter-modal">
+    <div class="newsletter-modal-backdrop" data-newsletter-close></div>
+    <div class="newsletter-modal-dialog" role="dialog" aria-modal="true" aria-label="Newsletter sign-up">
+      <button class="newsletter-modal-close" type="button" data-newsletter-close aria-label="Close">&times;</button>
+      <!-- The form is Google's, embedded on demand: the iframe's src is only
+           set once this modal is opened, so no page contacts Google until a
+           visitor actually asks to sign up. See /privacy/. -->
+      <iframe class="newsletter-modal-frame" title="OpenBat newsletter sign-up" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    </div>
+  </div>
+
+  <script>
+    // Pixel-art starfield — scattered once at load, each star's own duration
+    // and negative delay puts it at a random point in its twinkle cycle
+    // immediately, rather than every star flashing in sync. Fades out under
+    // the light theme via CSS (`.starfield` opacity), not here.
+    (() => {
+      const field = document.getElementById('starfield');
+      if (!field) return;
+      // The nav's inner column has the same max-width/centring as every
+      // page's content, so its horizontal bounds double as "where the
+      // readable column sits" — stars under it are dimmed.
+      const column = document.querySelector('.site-header-inner');
+      const colRect = column ? column.getBoundingClientRect() : null;
+      // The footer paints its own art (with its own sky) over this same
+      // field, so stars are only scattered down to where it starts — one
+      // landing behind the logo read as a stray pulsing shadow.
+      const footer = document.querySelector('.site-footer');
+      const fieldHeight = field.offsetHeight || document.body.scrollHeight;
+      const footerTop = footer ? footer.offsetTop : fieldHeight;
+      const COUNT = 88;
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < COUNT; i++) {
+        const star = document.createElement('span');
+        star.className = 'star';
+        const bright = Math.random() < 0.08;
+        const size = bright ? 3 : (Math.random() < 0.5 ? 1 : 2);
+        const duration = (2 + Math.random() * 3).toFixed(2);
+        const leftPct = Math.random() * 100;
+        const leftPx = (leftPct / 100) * window.innerWidth;
+        if (colRect && leftPx >= colRect.left && leftPx <= colRect.right) {
+          star.classList.add('star--dim');
+        }
+        star.style.setProperty('--star-size', `${size}px`);
+        star.style.setProperty('--star-color', bright ? '#ffd9a0' : '#ffffff');
+        star.style.setProperty('--star-duration', `${duration}s`);
+        star.style.setProperty('--star-delay', `${(-Math.random() * duration).toFixed(2)}s`);
+        star.style.top = `${((Math.random() * footerTop / fieldHeight) * 100).toFixed(2)}%`;
+        star.style.left = `${leftPct.toFixed(2)}%`;
+        frag.appendChild(star);
+      }
+      field.appendChild(frag);
+    })();
+
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      const applyTheme = () => {
+        document.documentElement.setAttribute('data-theme', target);
+        localStorage.setItem('theme', target);
+        setThemeColor(target);
+      };
+      if (document.startViewTransition) {
+        document.startViewTransition(applyTheme);
+      } else {
+        applyTheme();
+      }
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const body = document.body;
+
+    const toggleMenu = () => {
+      const isOpen = body.classList.toggle('menu-open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    };
+
+    menuToggle.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', toggleMenu);
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (body.classList.contains('menu-open')) toggleMenu();
+      });
+    });
+
+    const header = document.querySelector('.site-header');
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Platform toggle (Help page) — swap the iOS / Android panels
+    const platBtns = document.querySelectorAll('.plat-toggle-btn');
+    if (platBtns.length) {
+      const platSections = {
+        ios: document.getElementById('plat-ios'),
+        android: document.getElementById('plat-android'),
+      };
+
+      const setPlatform = (mode, instant) => {
+        const incoming = platSections[mode];
+        const outgoing = platSections[mode === 'ios' ? 'android' : 'ios'];
+        if (!incoming || !outgoing) return;
+
+        platBtns.forEach(btn => {
+          const on = btn.dataset.platform === mode;
+          btn.classList.toggle('active', on);
+          btn.setAttribute('aria-selected', on);
+        });
+
+        if (instant) {
+          outgoing.classList.add('plat-hidden');
+          incoming.classList.remove('plat-hidden');
+          return;
+        }
+
+        // Fade the outgoing panel out, swap, then fade the incoming one in
+        outgoing.style.opacity = '0';
+        setTimeout(() => {
+          outgoing.classList.add('plat-hidden');
+          outgoing.style.opacity = '';
+          incoming.classList.remove('plat-hidden');
+          incoming.style.transition = 'none';
+          incoming.style.opacity = '0';
+          incoming.getBoundingClientRect(); // force reflow
+          incoming.style.transition = '';
+          incoming.style.opacity = '1';
+        }, 350);
+      };
+
+      platBtns.forEach(btn => {
+        btn.addEventListener('click', () => setPlatform(btn.dataset.platform));
+      });
+
+      if (location.hash === '#android') setPlatform('android', true);
+    }
+
+    // Goal cards (Our Project page), desktop — the three "How we're doing it"
+    // write-ups are a panel under the cards, and hovering or focusing a card
+    // swaps which one is showing. On phones the panel is hidden and the same
+    // write-ups go in a modal instead (the block after this one).
+    const goalPanel = document.querySelector('.goal-panel');
+    const goalWide = window.matchMedia('(min-width: 801px)');
+    let setActiveGoal = null;
+
+    if (goalPanel) {
+      const goalPanelItems = [...goalPanel.querySelectorAll('.goal-modal-item')];
+      const goalPanelCards = [...document.querySelectorAll('.goal-cards .post-card')];
+      goalPanel.classList.add('goal-panel--js');
+
+      setActiveGoal = (goal) => {
+        goalPanelItems.forEach(i => i.classList.toggle('is-active', i.dataset.goal === goal));
+        goalPanelCards.forEach(c => {
+          const btn = c.querySelector('.goal-learn-more');
+          c.classList.toggle('is-active', !!btn && btn.dataset.goal === goal);
+        });
+      };
+
+      goalPanelCards.forEach(card => {
+        const btn = card.querySelector('.goal-learn-more');
+        if (!btn) return;
+        const activate = () => { if (goalWide.matches) setActiveGoal(btn.dataset.goal); };
+        card.addEventListener('mouseenter', activate);
+        card.addEventListener('focusin', activate);
+      });
+
+      // No visible button at this width, so the card carries the tab stop that
+      // makes the panel reachable without a mouse. Phones keep the button and
+      // shouldn't gain three extra stops, so this is added and removed with
+      // the breakpoint rather than written into the markup.
+      const goalSetTabStops = () => {
+        goalPanelCards.forEach(c => {
+          if (goalWide.matches) c.setAttribute('tabindex', '0');
+          else c.removeAttribute('tabindex');
+        });
+      };
+
+      setActiveGoal(goalPanelItems.length ? goalPanelItems[0].dataset.goal : null);
+      goalSetTabStops();
+      goalWide.addEventListener('change', goalSetTabStops);
+    }
+
+    // Goal cards, phone — the "How we're doing it" button opens a modal with
+    // that goal's write-up, copied in from the source div. At desktop widths
+    // the same button just swaps the panel above instead.
+    const learnMoreBtns = document.querySelectorAll('.goal-learn-more');
+    if (learnMoreBtns.length) {
+      const modal = document.getElementById('goal-modal');
+      const modalBody = modal.querySelector('.goal-modal-body');
+      const modalItems = document.querySelectorAll('.goal-modal-item');
+      let lastFocused = null;
+
+      const onKeydown = (e) => {
+        if (e.key === 'Escape') closeGoalModal();
+      };
+
+      const closeGoalModal = () => {
+        modal.classList.remove('goal-modal--open');
+        document.removeEventListener('keydown', onKeydown);
+        if (lastFocused) lastFocused.focus();
+      };
+
+      const openGoalModal = (goal, trigger) => {
+        const item = [...modalItems].find(i => i.dataset.goal === goal);
+        if (!item) return;
+        modalBody.innerHTML = item.innerHTML;
+        lastFocused = trigger || document.activeElement;
+        modal.classList.add('goal-modal--open');
+        modal.querySelector('.goal-modal-close').focus();
+        document.addEventListener('keydown', onKeydown);
+      };
+
+      learnMoreBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (goalWide.matches && setActiveGoal) setActiveGoal(btn.dataset.goal);
+          else openGoalModal(btn.dataset.goal, btn);
+        });
+      });
+
+      modal.querySelectorAll('[data-modal-close]').forEach(el => {
+        el.addEventListener('click', closeGoalModal);
+      });
+    }
+
+    // Goal cards, mobile: lock the row in place while vertical scroll slides
+    // it sideways, then release — same mechanic as the home page's dock.
+    const goalCardsSection = document.querySelector('.goal-cards-section');
+    if (goalCardsSection) {
+      const goalScroller = goalCardsSection.querySelector('.goal-cards-scroll');
+      const goalSticky = goalCardsSection.querySelector('.goal-cards-sticky');
+      const goalRow = goalCardsSection.querySelector('.goal-cards');
+      const goalItems = [...goalRow.querySelectorAll('.post-card')];
+      const goalSmall = window.matchMedia('(max-width: 800px)');
+      const goalStill = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const goalPinnable = () => goalSmall.matches && !goalStill.matches && goalItems.length > 1;
+
+      let goalPinFrame = 0;
+
+      const goalPinLayout = () => {
+        const runway = goalScroller.offsetHeight - goalSticky.offsetHeight;
+        if (runway <= 0) return;
+        // The stage is inset from the top of the viewport (see goalStageHeight),
+        // so progress runs from the moment the section's top reaches that inset,
+        // not the moment it reaches zero.
+        const inset = parseFloat(goalSticky.style.top) || 0;
+        const top = goalScroller.getBoundingClientRect().top;
+        const p = Math.min(1, Math.max(0, (inset - top) / runway));
+
+        const w = goalItems[0].offsetWidth || 1;
+        const step = goalItems.length > 1 ? goalItems[1].offsetLeft - goalItems[0].offsetLeft : w;
+        const stage = goalSticky.clientWidth;
+        const slide = (stage - w) / 2 - p * (goalItems.length - 1) * step;
+        goalRow.style.transform = `translateX(${slide.toFixed(2)}px)`;
+      };
+
+      const goalOnScroll = () => {
+        if (!goalPinnable() || goalPinFrame) return;
+        goalPinFrame = requestAnimationFrame(() => { goalPinFrame = 0; goalPinLayout(); });
+      };
+
+      // The stage is only as tall as the tallest card needs, not a full
+      // screenful — a full-height stage leaves the leftover half of it as dead
+      // space below the last card once the pin releases. It is then centred in
+      // the viewport with `top`, so the card still sits in the middle of the
+      // screen while it is pinned.
+      const goalStageHeight = () => {
+        const tallest = Math.max(...goalItems.map(i => i.offsetHeight));
+        return Math.min(window.innerHeight, tallest + 48);
+      };
+
+      const goalSetPinned = () => {
+        if (goalPinnable()) {
+          goalCardsSection.classList.add('goal-cards--pinned');
+          const stageH = goalStageHeight();
+          goalSticky.style.height = stageH + 'px';
+          goalSticky.style.top = Math.max(0, (window.innerHeight - stageH) / 2) + 'px';
+          // Runway: the stage itself, then a screenful-ish per card after it.
+          goalScroller.style.height = `calc(${stageH}px + ${(goalItems.length - 1) * 45}svh)`;
+          goalPinLayout();
+        } else {
+          goalCardsSection.classList.remove('goal-cards--pinned');
+          goalScroller.style.height = '';
+          goalSticky.style.height = '';
+          goalSticky.style.top = '';
+          goalRow.style.transform = '';
+        }
+      };
+
+      window.addEventListener('scroll', goalOnScroll, { passive: true });
+      window.addEventListener('resize', () => { goalSetPinned(); goalOnScroll(); });
+      goalSmall.addEventListener('change', goalSetPinned);
+      goalStill.addEventListener('change', goalSetPinned);
+
+      goalSetPinned();
+    }
+
+    // Newsletter modal (footer, every page) — the Google Form iframe only
+    // gets its src set the first time the modal is opened, so visitors who
+    // never click "Sign up" never load anything from Google.
+    const newsletterOpenBtn = document.getElementById('newsletter-open');
+    if (newsletterOpenBtn) {
+      const newsletterModal = document.getElementById('newsletter-modal');
+      const newsletterFrame = newsletterModal.querySelector('.newsletter-modal-frame');
+      let newsletterLastFocused = null;
+
+      const onNewsletterKeydown = (e) => {
+        if (e.key === 'Escape') closeNewsletterModal();
+      };
+
+      const closeNewsletterModal = () => {
+        newsletterModal.classList.remove('newsletter-modal--open');
+        document.removeEventListener('keydown', onNewsletterKeydown);
+        if (newsletterLastFocused) newsletterLastFocused.focus();
+      };
+
+      const openNewsletterModal = () => {
+        if (!newsletterFrame.src) newsletterFrame.src = newsletterOpenBtn.dataset.newsletterSrc;
+        newsletterLastFocused = document.activeElement;
+        newsletterModal.classList.add('newsletter-modal--open');
+        newsletterModal.querySelector('.newsletter-modal-close').focus();
+        document.addEventListener('keydown', onNewsletterKeydown);
+      };
+
+      newsletterOpenBtn.addEventListener('click', openNewsletterModal);
+      newsletterModal.querySelectorAll('[data-newsletter-close]').forEach(el => {
+        el.addEventListener('click', closeNewsletterModal);
+      });
+    }
+
+    // Featured-post ticker (home and /blog/) — advances every 2.5s, pauses on
+    // hover/focus so a reader isn't fighting the slide while they read, and
+    // reduced motion drops the autoplay but keeps the dots working.
+    document.querySelectorAll('[data-ticker]').forEach(ticker => {
+      const track = ticker.querySelector('.hero-ticker-track');
+      const slides = [...ticker.querySelectorAll('.hero-ticker-slide')];
+      const dotsWrap = ticker.parentElement.querySelector('.hero-ticker-dots');
+      const dots = dotsWrap ? [...dotsWrap.querySelectorAll('.hero-ticker-dot')] : [];
+      if (slides.length < 2) return;
+
+      // A clone of the first slide sits after the last real one so autoplay
+      // can always step forward. Advancing onto the clone plays the same
+      // forward animation as any other step; once it finishes, the track
+      // jumps back to the real first slide with no transition — invisibly,
+      // since the clone looks identical — instead of animating backwards to
+      // loop, which would read as the ticker reversing itself.
+      const clone = slides[0].cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('tabindex', '-1');
+      track.appendChild(clone);
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      // The small gap between slides (--ticker-gap) rides along with each
+      // step, so the offset per slide is one card width plus one gap, not
+      // a flat 100%.
+      const gap = getComputedStyle(ticker).getPropertyValue('--ticker-gap') || '0px';
+      let position = 0; // 0..slides.length, where slides.length is the clone
+      let timer = null;
+
+      const setDots = (i) => dots.forEach((d, di) => d.classList.toggle('is-active', di === i));
+      const setOffset = () => {
+        track.style.transform = `translateX(calc((100% + ${gap}) * -${position}))`;
+      };
+
+      const step = () => {
+        position += 1;
+        setOffset();
+        setDots(position % slides.length);
+      };
+
+      // Direct navigation (the dots) jumps straight to a real slide rather
+      // than always stepping forward.
+      const jumpTo = (i, animate) => {
+        position = (i + slides.length) % slides.length;
+        if (!animate) track.style.transition = 'none';
+        setOffset();
+        if (!animate) {
+          track.getBoundingClientRect(); // force reflow before restoring the transition
+          track.style.transition = '';
+        }
+        setDots(position);
+      };
+
+      track.addEventListener('transitionend', (e) => {
+        if (e.propertyName === 'transform' && position === slides.length) jumpTo(0, false);
+      });
+
+      const stop = () => { clearInterval(timer); timer = null; };
+      const start = () => {
+        if (reduceMotion.matches || timer) return;
+        timer = setInterval(step, 2500);
+      };
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          jumpTo(Number(dot.dataset.index), true);
+          stop();
+          start();
+        });
+      });
+
+      ticker.addEventListener('mouseenter', stop);
+      ticker.addEventListener('mouseleave', start);
+      ticker.addEventListener('focusin', stop);
+      ticker.addEventListener('focusout', start);
+      reduceMotion.addEventListener('change', () => (reduceMotion.matches ? stop() : start()));
+
+      setDots(0);
+      start();
+    });
+
+    // Assemble obfuscated email addresses on click
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.reveal-email').forEach(el => {
+        el.addEventListener('click', () => {
+          const email = el.dataset.u + '@' + el.dataset.d;
+          const cls = el.className.replace('reveal-email', '').trim();
+          const inner = el.querySelector('svg')
+            ? el.querySelector('svg').outerHTML + email
+            : email;
+          const style = el.getAttribute('style') || '';
+          el.outerHTML = `<a href="mailto:${email}" class="${cls}" style="${style}">${inner}</a>`;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

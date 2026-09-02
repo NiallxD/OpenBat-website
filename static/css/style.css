@@ -1304,6 +1304,20 @@ span.wikilink { color: var(--color-secondary); }
   text-align: center;
 }
 
+/* ── Video Figure ──────────────────────────────── */
+/* Shares the block-image figcaption styling above. The cap is for portrait
+   clips, which would otherwise run taller than the viewport at full width. */
+.post-content figure.video-figure video {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: var(--radius-md);
+  background: var(--color-border);
+}
+
+
 /* ── Float Images (text wraps around and below) ────────────── */
 .image-float-right {
   float: right;
@@ -2650,6 +2664,40 @@ figure.image-float-left figcaption {
   color: var(--color-accent);
   margin: 0 0 0.85rem;
 }
+
+/* Section heading with a link on the right — used by "Recent Posts", where
+   the row is a sample and the reader needs a way through to the rest. The
+   title keeps its own margin, so this only handles the row. */
+.home-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.home-section-link {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-decoration: none;
+  margin-bottom: 0.85rem;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.home-section-link:hover,
+.home-section-link:focus-visible {
+  color: var(--color-accent);
+}
+
+/* The recent-posts row sits directly above the footer, so it needs the
+   breathing room the sections above get from the block that follows them. */
+.home-recent {
+  margin-bottom: 2.5rem;
+}
+
 
 /* Prose in a card, so the story block matches the cards above it. */
 .home-card {
