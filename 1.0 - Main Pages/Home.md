@@ -1,6 +1,6 @@
 ---
 title: OpenBat
-description: Affordable bat detection for all!
+description: Bat detection, ID, and Community Science!
 permalink: /
 layout: home.njk
 publish: true

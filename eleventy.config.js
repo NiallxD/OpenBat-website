@@ -287,6 +287,18 @@ export default function (eleventyConfig) {
     return [...featured, ...rest].slice(0, 3);
   });
 
+  // The "Recent posts" row at the foot of the home page. It is the newest
+  // posts, minus anything the ticker at the top of that same page is already
+  // showing — otherwise featuring a recent post would print it twice on one
+  // page. Mirrors heroPosts' own top-up rule, so the two never collide.
+  eleventyConfig.addCollection("recentPosts", (api) => {
+    const posts = api.getAll().filter(isPost).sort(byNewest);
+    const featured = posts.filter((i) => i.data.featured === true);
+    const rest = posts.filter((i) => i.data.featured !== true);
+    const inTicker = new Set([...featured, ...rest].slice(0, 3).map((i) => i.url));
+    return posts.filter((i) => !inTicker.has(i.url)).slice(0, 3);
+  });
+
   eleventyConfig.addFilter("getAllTags", (collection) => {
     const tags = new Set();
     (collection || []).forEach((item) => {

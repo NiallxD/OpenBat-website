@@ -324,5 +324,33 @@ layout: base.njk
   <div class="home-card">
     <div class="post-content">{{ content | safe }}</div>
   </div>
+  {# The newest posts, as the same cards /blog/ uses. The collection excludes
+     whatever the ticker above is showing, so nothing appears twice. #}
+  {% if collections.recentPosts.length %}
+  <div class="home-section-head">
+    <h2 class="home-section-title">Recent Posts</h2>
+    <a class="home-section-link" href="{{ '/blog/' | url }}">All posts <span aria-hidden="true">&rarr;</span></a>
+  </div>
+  <div class="post-grid home-recent">
+    {% for post in collections.recentPosts %}
+    <a href="{{ post.url | url }}" class="post-card">
+      {% if post.data.coverImage %}
+      <div class="post-card-img">
+        <img src="{{ post.data.coverImage }}" alt="" loading="lazy">
+      </div>
+      {% endif %}
+      <div class="post-card-body">
+        <h2>{{ post.data.title }}</h2>
+        <div class="post-card-meta">
+          {% if post.date %}<time datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time>{% endif %}
+          {% for tag in post.data.tags | limit(2) %}<span class="tag">{{ tag }}</span>{% endfor %}
+        </div>
+        <p class="post-card-desc">{{ post.data.excerpt | default(post.data.description) | default(post.templateContent | autoExcerpt) }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
   {% if 'gallery-start' in content %}<script src="{{ '/static/js/swiper-bundle.min.js' | url }}"></script>{% endif %}
 </div>
