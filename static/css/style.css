@@ -225,6 +225,13 @@ p {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 0px solid rgba(255, 255, 255, 0.08);
+  /* Captured as its own layer during the theme crossfade. Without this the
+     header is part of the root snapshot, and a `backdrop-filter` in that
+     snapshot has no live page behind it to blur — the nav flattens to plain
+     translucent black for the whole 900ms and snaps back at the end. Named,
+     it is snapshotted with its blur already applied, so old and new fade
+     into each other still blurred. */
+  view-transition-name: site-header;
 }
 
 .site-header-inner {
