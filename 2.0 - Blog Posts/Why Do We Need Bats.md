@@ -26,7 +26,7 @@ Our bats are facing their greatest challenge yet. In 2026, the [Ministry of Wate
 
 <figure>
   <a href="/static/images/spotted-bat-Jason Headley.webp"><img src="/static/images/spotted-bat-Jason Headley.webp" alt="Spotted bat by Jason Headley - iNaturalist" loading="lazy"></a>
-  <figcaption>Spotted bat by Jason Headley</figcaption>
+  <figcaption>Spotted bat by © Jason Headley CC-BY-NC some rights reserved</figcaption>
 </figure>
 
 ### Nature's pest controllers
