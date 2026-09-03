@@ -22,3 +22,10 @@ This is a simple roadmap, nothing fancy. Let me know if any of this sounds excit
 
 >[!tip] Bat Life List
 >Add the ability to record the species which you have seen in app so you can keep a list and tally of which bats you've detected, where, and how many times. No points for guessing where my inspiration came from here.
+
+>[!tip] Region Showcase
+>Add a region showcase to the top of each region page, above the species list, which covers info about that region from the angle of bats. Could also include conservation efforts, local groups, and organisations.
+
+>[!tip] Species Showcase
+>Create beautiful showcases (presentations) in app which go through a selection of species to help educators share how amazing the bat species are which we share our home.
+
