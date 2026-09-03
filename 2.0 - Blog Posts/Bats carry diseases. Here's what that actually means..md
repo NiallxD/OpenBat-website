@@ -35,7 +35,7 @@ This is where it's worth slowing down, because the stats people actually cite ar
 **In the actual wild population, prevalence is well under 1%.** Studies that survey healthy, randomly sampled bats in their habitat, rather than the bats people bring in for testing, consistently find infection rates below 1%. The 5 to 10% figures that circulate are true only for the small, sick, non-representative slice of bats that end up in a lab.
 
 > **An Analogy**
-> Imaging walking into a doctors clinic and testing everyone in the foyer for some kind of illness or disease. Then report that stat as 'the percentage of humans with an illness is...'. That what we see with bats. Only the ill or misbehaving ones are tests, skewing the data.
+> Imagine walking into a doctors clinic and testing everyone in the foyer for some kind of illness or disease. Then report that stat as 'the percentage of humans with an illness is...'. That what we see with bats. Only the ill or misbehaving ones are tested, skewing the data.
 
 **The risk to you is about contact, not proximity.** Living near bats, watching them, listening to them on a detector, none of that transmits anything. Handling a bat, or being bitten or scratched by one, is the route that matters, and it's avoidable simply by not handling bats, which you shouldn't be doing anyway.
 
