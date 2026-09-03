@@ -794,8 +794,11 @@ main {
 .post-content tr:last-child td { border-bottom: none; }
 .post-content tr:hover td { background: var(--color-surface); }
 
-/* Accordions — <details> in post bodies, used for references and long asides */
-.post-content details {
+/* Accordions — plain <details> written into a post body, for references and
+   long asides. Scoped to details carrying no class of their own: the guide
+   editor puts its own <details> (.ge-paste, .ge-section, .ge-manual) inside
+   .post-content and styles them itself, and these rules must not reach them. */
+.post-content details:not([class]) {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
@@ -803,7 +806,7 @@ main {
   padding: 0 1.25rem;
 }
 
-.post-content details > summary {
+.post-content details:not([class]) > summary {
   cursor: pointer;
   list-style: none;
   font-family: var(--font-body);
@@ -816,9 +819,9 @@ main {
   gap: 0.6rem;
 }
 
-.post-content details > summary::-webkit-details-marker { display: none; }
+.post-content details:not([class]) > summary::-webkit-details-marker { display: none; }
 
-.post-content details > summary::before {
+.post-content details:not([class]) > summary::before {
   content: "";
   width: 0.45rem;
   height: 0.45rem;
@@ -829,20 +832,20 @@ main {
   flex: none;
 }
 
-.post-content details[open] > summary::before { transform: rotate(45deg); }
+.post-content details:not([class])[open] > summary::before { transform: rotate(45deg); }
 
-.post-content details > summary:hover { color: var(--color-link-hover); }
+.post-content details:not([class]) > summary:hover { color: var(--color-link-hover); }
 
-.post-content details > *:not(summary) { font-size: 0.95rem; }
+.post-content details:not([class]) > *:not(summary) { font-size: 0.95rem; }
 
-.post-content details > summary + * { margin-top: 0; }
+.post-content details:not([class]) > summary + * { margin-top: 0; }
 
-.post-content details > *:last-child { margin-bottom: 1.25rem; }
+.post-content details:not([class]) > *:last-child { margin-bottom: 1.25rem; }
 
-.post-content details ul,
-.post-content details ol { margin: 0 0 1.25rem; }
+.post-content details:not([class]) ul,
+.post-content details:not([class]) ol { margin: 0 0 1.25rem; }
 
-.post-content details li { word-break: break-word; }
+.post-content details:not([class]) li { word-break: break-word; }
 
 /* Callouts */
 .callout {
