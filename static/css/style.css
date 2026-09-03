@@ -794,6 +794,56 @@ main {
 .post-content tr:last-child td { border-bottom: none; }
 .post-content tr:hover td { background: var(--color-surface); }
 
+/* Accordions — <details> in post bodies, used for references and long asides */
+.post-content details {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  margin: 2rem 0;
+  padding: 0 1.25rem;
+}
+
+.post-content details > summary {
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  padding: 0.9rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.post-content details > summary::-webkit-details-marker { display: none; }
+
+.post-content details > summary::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 2px solid var(--color-secondary);
+  border-bottom: 2px solid var(--color-secondary);
+  transform: rotate(-45deg);
+  transition: transform 0.15s ease;
+  flex: none;
+}
+
+.post-content details[open] > summary::before { transform: rotate(45deg); }
+
+.post-content details > summary:hover { color: var(--color-link-hover); }
+
+.post-content details > *:not(summary) { font-size: 0.95rem; }
+
+.post-content details > summary + * { margin-top: 0; }
+
+.post-content details > *:last-child { margin-bottom: 1.25rem; }
+
+.post-content details ul,
+.post-content details ol { margin: 0 0 1.25rem; }
+
+.post-content details li { word-break: break-word; }
+
 /* Callouts */
 .callout {
   border-left: 4px solid var(--color-accent);
