@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog — OpenBat</title>
-  <meta name="description" content="Notes from building OpenBat — hardware, detection, the field guide, and what we learn along the way.">
+  <title>The Two Models OpenBat Uses — OpenBat</title>
+  <meta name="description" content="OpenBat doesn&#39;t have &quot;an AI&quot; — it ships two published classifiers, NABat ML for North America and BatDetect2 for the UK, and only one runs at a time. What each is, how they differ, and why their numbers can&#39;t be compared.">
   
   <!-- Privacy & Security -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://upload.wikimedia.org; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; frame-src https://docs.google.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="OpenBat">
-  <meta property="og:title" content="Blog — OpenBat">
-  <meta property="og:description" content="Notes from building OpenBat — hardware, detection, the field guide, and what we learn along the way.">
+  <meta property="og:title" content="The Two Models OpenBat Uses — OpenBat">
+  <meta property="og:description" content="OpenBat doesn&#39;t have &quot;an AI&quot; — it ships two published classifiers, NABat ML for North America and BatDetect2 for the UK, and only one runs at a time. What each is, how they differ, and why their numbers can&#39;t be compared.">
   
   <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
@@ -64,7 +64,7 @@
         
         
         
-        <a href="/blog/" class="active">Blog</a>
+        <a href="/blog/">Blog</a>
         
         
         
@@ -91,452 +91,143 @@
   <div class="nav-overlay"></div>
 
   <main>
-    <div class="standard-page">
-  <div class="listing-header">
-    <h1>Blog</h1>
-    <p class="page-lead">Notes from building OpenBat — hardware, detection, the field guide, and what we learn along the way.</p>
-  </div>
+    
 
+
+
+
+
+
+<article class="standard-page post">
+  
+  <header class="post-header">
+    <p class="section-label"><a href="/blog/" class="post-back">← Blog</a></p>
+    <h1>The Two Models OpenBat Uses</h1>
+    <p class="page-lead">OpenBat doesn&#39;t have &quot;an AI&quot; — it ships two published classifiers, NABat ML for North America and BatDetect2 for the UK, and only one runs at a time. What each is, how they differ, and why their numbers can&#39;t be compared.</p>
+    <div class="post-meta">
+      <time datetime="2026-09-05">5 September 2026</time>
+      <span class="post-author">Niall Bell</span>
+      <span class="tag">auto-id</span><span class="tag">classifier</span><span class="tag">machine-learning</span>
+    </div>
+  </header>
   
 
-  
-  
-  
-<div class="hero-ticker" data-ticker>
-  <div class="hero-ticker-track">
-    
-    <a href="/blog/what-openbat-is/" class="post-card post-card--featured hero-ticker-slide">
-      
-      <div class="post-card-img">
-        <img src="/static/images/OpenBat_Screens.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <p class="section-label">Featured</p>
-        <h2>What OpenBat Is</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">openbat</span><span class="tag">community-science</span>
-        </div>
-        <p class="post-card-desc">A free app that joins up three things which already exist separately — a cheap ultrasonic microphone, a way to learn what you are hearing, and the science platforms that want the recording afterwards.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/openbat-design-philosophy/" class="post-card post-card--featured hero-ticker-slide">
-      
-      <div class="post-card-img">
-        <img src="/static/images/India_2022_Habitat_054.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <p class="section-label">Featured</p>
-        <h2>OpenBat Design Philosophy</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-31">31 August 2026</time>
-          <span class="tag">dev-log</span><span class="tag">design</span><span class="tag">openbat</span>
-        </div>
-        <p class="post-card-desc">OpenBat adopts an obvious, in your face design philosophy, but why?</p>
-      </div>
-    </a>
-    
-    <a href="/blog/build-your-own-bat-microphone/" class="post-card post-card--featured hero-ticker-slide">
-      
-      <div class="post-card-img">
-        <img src="/static/images/griff-cover.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <p class="section-label">Featured</p>
-        <h2>Build Your Own Bat Microphone</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">hardware</span><span class="tag">griff</span>
-        </div>
-        <p class="post-card-desc">The Griff Mini is an open-source 384 kHz ultrasonic microphone you can build for about $28 a unit. Here is what to order, what it costs, and what building one involves.</p>
-      </div>
-    </a>
-    
-  </div>
+  <div class="post-content"><p>OpenBat doesn’t have “an AI”. It ships two separate, published models built by
+other people, and which one you get depends on where you are. Most apps present
+identification as one seamless capability; being upfront about this explains a
+lot of otherwise confusing behaviour.</p>
+<p>This is the short version. For how either model’s output is actually turned into
+a name, see <a href="/blog/how-openbat-decides-what-it-heard/" class="wikilink">How OpenBat Decides What It Heard</a>.</p>
+<h2 id="the-two-of-them">The two of them<a class="heading-anchor" href="#the-two-of-them" aria-label="Link to this section">#</a></h2>
+<p><strong>NABat ML</strong> covers North America. It comes from the USGS North American Bat
+Monitoring Program, the continental standard for acoustic monitoring. It knows
+31 classes — North American species, plus an explicit NOISE class for things
+that aren’t bats. Licensed CC BY 4.0.</p>
+<p><strong>BatDetect2</strong> covers the United Kingdom. It comes from the University of
+Edinburgh, knows 17 UK species, and is licensed CC BY-NC 4.0 — non-commercial.
+It is still marked <strong>beta</strong> in the app.</p>
+<p>Only one classifies at a time. The app suggests the right one from where you
+are rather than switching silently.</p>
+<h2 id="they-are-not-interchangeable">They are not interchangeable<a class="heading-anchor" href="#they-are-not-interchangeable" aria-label="Link to this section">#</a></h2>
+<p>They were trained on different recordings, expect different lengths of audio,
+and know entirely different species. The app handles the mechanics — each model
+is handed the window length it was trained on, 50 ms for NABat ML and 256 ms for
+BatDetect2 — but the results carry the fingerprint of whichever one produced
+them.</p>
+<p>The difference that matters most to you is the score.</p>
+<p><strong>Confidence is not comparable between the two.</strong> BatDetect2 tends to produce
+far more emphatic numbers, so 70% from one does not mean what 70% from the other
+does. Each model has its own cut-off for putting a name on a call at all — 0.57
+for NABat ML, 0.4 for BatDetect2 — precisely because the numbers sit on
+different scales.</p>
+<p>The practical consequence: <strong>the model name is part of the result.</strong> If you are
+reporting an identification anywhere serious, say which model produced it.</p>
+<h2 id="why-not-one-model-for-everywhere">Why not one model for everywhere?<a class="heading-anchor" href="#why-not-one-model-for-everywhere" aria-label="Link to this section">#</a></h2>
+<p>Because it doesn’t exist, and building it would be a research programme rather
+than an app feature.</p>
+<p>A classifier can only recognise species it was trained on, and training needs a
+large library of recordings verified by people who know what they are listening
+to. Those libraries are assembled region by region, over years, by monitoring
+programmes and research groups. Where that effort has gone in, there is a model.
+Where it hasn’t, there isn’t.</p>
+<p>The part that surprises people: <strong>you can be somewhere with no model and still
+get almost the whole app.</strong> Detection doesn’t need a classifier, and neither
+does the spectrogram, the listening modes, recording, sessions or export. An
+unidentified recording that a person later identifies is a genuinely useful
+contribution.</p>
+<h2 id="why-we-dont-train-our-own">Why we don’t train our own<a class="heading-anchor" href="#why-we-dont-train-our-own" aria-label="Link to this section">#</a></h2>
+<p>We can’t, and we shouldn’t.</p>
+<p>We can’t because we don’t have the verified recording library, and assembling
+one takes research groups years.</p>
+<p>We shouldn’t because a model that exists only inside one app is a model nobody
+can check, compare or improve. Using published models means anyone sceptical
+about a result can go and read what the model was trained on and how it
+performed.</p>
+<h2 id="what-beta-means-on-batdetect2">What “beta” means on BatDetect2<a class="heading-anchor" href="#what-beta-means-on-batdetect2" aria-label="Link to this section">#</a></h2>
+<p>Not that the model is bad — it is published research and it is good work.</p>
+<p>It means we haven’t yet seen enough real-world use to know how it behaves in
+ordinary hands, in ordinary places, with ordinary phones. A model can do well on
+a curated test set and still surprise you in a hedge in the rain. NABat ML’s
+cut-off was checked against the reference pipeline it came from; BatDetect2’s is
+a documented starting point that nobody has tested against a labelled set of
+noise yet, and its scoring differs enough that the NABat number can’t just be
+borrowed.</p>
+<p>So the beta label is about our confidence in the integration, not a judgement on
+the research. It comes off when we have seen enough to say something honest —
+and if the answer turns out to be “it struggles with X”, we will say that too.</p>
+<h2 id="the-licence-decides-more-than-you-would-think">The licence decides more than you would think<a class="heading-anchor" href="#the-licence-decides-more-than-you-would-think" aria-label="Link to this section">#</a></h2>
+<p>One model was rejected for a reason unrelated to accuracy. BattyBirdNET is
+capable, and it was considered, but its weights carry a <em>share-alike</em> term:
+anything derived from them, including a converted phone-ready copy, would have
+to be released under the same licence. BatDetect2’s licence is the opposite
+shape — non-commercial only, but no obligation to hand the derived model back.</p>
+<p>That comes with a hard consequence. While the app ships a non-commercial model,
+OpenBat cannot be sold, subscribed to, or carry in-app purchases of any kind.
+The licence, not a business decision, is what keeps it free.</p>
+<div class="callout callout-note"><div class="callout-title">If you know of a model</div><div class="callout-body"><p>If there is a published, open classifier for a region we don’t cover, we would
+genuinely love to hear about it. It turns a whole region from “detector” into
+“detector plus identification” in one go.</p></div></div>
+<p>Neither model knows anything about where you are standing. That is a separate
+step, described in <a href="/blog/openbat-species-priors-for-location-weighting/" class="wikilink">OpenBat Species Priors for Location Weighting</a>.</p>
 </div>
-
-<div class="hero-ticker-dots" role="tablist" aria-label="Featured posts">
-  
-  <button type="button" class="hero-ticker-dot" data-index="0" role="tab" aria-label="Show featured post 1 of 3"></button>
-  
-  <button type="button" class="hero-ticker-dot" data-index="1" role="tab" aria-label="Show featured post 2 of 3"></button>
-  
-  <button type="button" class="hero-ticker-dot" data-index="2" role="tab" aria-label="Show featured post 3 of 3"></button>
-  
-</div>
-
-
   
 
   
   
-  
-  <div class="filter-cloud" id="post-filters">
-    <button class="filter-btn active" data-filter="all">All</button>
-    
-    <button class="filter-btn" data-filter="acoustics">acoustics</button>
-    
-    <button class="filter-btn" data-filter="app">app</button>
-    
-    <button class="filter-btn" data-filter="auto-id">auto-id</button>
-    
-    <button class="filter-btn" data-filter="bats">bats</button>
-    
-    <button class="filter-btn" data-filter="classifier">classifier</button>
-    
-    <button class="filter-btn" data-filter="conservation">conservation</button>
-    
-    <button class="filter-btn" data-filter="contributing">contributing</button>
-    
-    <button class="filter-btn" data-filter="data">data</button>
-    
-    <button class="filter-btn" data-filter="dev-log">dev-log</button>
-    
-    <button class="filter-btn" data-filter="disease">disease</button>
-    
-    <button class="filter-btn" data-filter="field-guide">field-guide</button>
-    
-    <button class="filter-btn" data-filter="gbif">gbif</button>
-    
-    <button class="filter-btn" data-filter="glossary">glossary</button>
-    
-    <button class="filter-btn" data-filter="how-to">how-to</button>
-    
-    <button class="filter-btn" data-filter="machine-learning">machine-learning</button>
-    
-    <button class="filter-btn" data-filter="on-device">on-device</button>
-    
-    <button class="filter-btn" data-filter="openbat">openbat</button>
-    
-    <button class="filter-btn" data-filter="project">project</button>
-    
-    <button class="filter-btn" data-filter="range-maps">range-maps</button>
-    
-    <button class="filter-btn" data-filter="reference">reference</button>
-    
-    <button class="filter-btn" data-filter="roadmap">roadmap</button>
-    
-    <button class="filter-btn" data-filter="surveying">surveying</button>
-    
-    <button class="filter-btn" data-filter="thermal-camera">thermal-camera</button>
-    
-    <button class="filter-btn" data-filter="video">video</button>
-    
+  <div class="post-related">
+    <p class="section-label">Read more</p>
+    <div class="post-grid">
+      
+      <a href="/blog/openbat-species-priors-for-location-weighting/" class="post-card">
+        
+        <div class="post-card-body">
+          <h2>OpenBat Species Priors for Location Weighting</h2>
+          <div class="post-card-meta">
+            <time datetime="2026-09-05">5 September 2026</time>
+          </div>
+          <p class="post-card-desc">A classifier has no idea where it is. OpenBat gives it one, by weighting every species against the range map for the spot you are standing in — and by being careful about what that weighting is allowed to decide.</p>
+        </div>
+      </a>
+      
+      <a href="/blog/how-openbat-decides-what-it-heard/" class="post-card">
+        
+        <div class="post-card-img">
+          <img src="/static/images/how-autoid-hero.webp" alt="" loading="lazy">
+        </div>
+        
+        <div class="post-card-body">
+          <h2>How OpenBat Decides What It Heard</h2>
+          <div class="post-card-meta">
+            <time datetime="2026-08-27">27 August 2026</time>
+          </div>
+          <p class="post-card-desc">The chain that turns a burst of ultrasound into a species name — pulse detection, a short window of audio, an on-device model, and the gates that let it say &quot;no idea&quot;.</p>
+        </div>
+      </a>
+      
+    </div>
   </div>
   
-
-  
-  <div class="post-grid" id="post-grid">
-    
-    <a href="/blog/openbat-species-priors-for-location-weighting/" class="post-card" data-tags="auto-id,classifier,range-maps">
-      
-      <div class="post-card-body">
-        <h2>OpenBat Species Priors for Location Weighting</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-09-05">5 September 2026</time>
-          <span class="tag">auto-id</span><span class="tag">classifier</span>
-        </div>
-        <p class="post-card-desc">A classifier has no idea where it is. OpenBat gives it one, by weighting every species against the range map for the spot you are standing in — and by being careful about what that weighting is allowed to decide.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/the-two-models-openbat-uses/" class="post-card" data-tags="auto-id,classifier,machine-learning">
-      
-      <div class="post-card-body">
-        <h2>The Two Models OpenBat Uses</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-09-05">5 September 2026</time>
-          <span class="tag">auto-id</span><span class="tag">classifier</span>
-        </div>
-        <p class="post-card-desc">OpenBat ships two published classifiers rather than one of its own — NABat ML for North America, BatDetect2 for the UK. Only one runs at a time, and their confidence figures mean different things.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/video-bat-emergence-in-thermal/" class="post-card" data-tags="surveying,thermal-camera,video">
-      
-      <div class="post-card-img">
-        <img src="/static/images/bat-thermal-emergence.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>Video: Bat Emergence in Thermal</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-09-04">4 September 2026</time>
-          <span class="tag">surveying</span><span class="tag">thermal-camera</span>
-        </div>
-        <p class="post-card-desc">Watch this short video of bats emerging from their roost box. The thermal camera picks up the bats as they drop out of the box ready for a night foraging.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/why-the-field-guide-is-reviewed-not-a-wiki/" class="post-card" data-tags="field-guide,dev-log">
-      
-      <div class="post-card-img">
-        <img src="/static/images/guide-editor-entry.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>Why the Field Guide Is Reviewed, Not a Wiki</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-09-02">2 September 2026</time>
-          <span class="tag">field-guide</span><span class="tag">dev-log</span>
-        </div>
-        <p class="post-card-desc">Anyone can propose changes and additions to the guide. Buy nobody can publish them alone. This slower and more annoying, but absolutely necessary.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/why-do-we-need-bats/" class="post-card" data-tags="bats,conservation">
-      
-      <div class="post-card-img">
-        <img src="/static/images/spotted-bat-Jason Headley.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>Why Do We Need Bats</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-09-02">2 September 2026</time>
-          <span class="tag">bats</span><span class="tag">conservation</span>
-        </div>
-        <p class="post-card-desc">From providing billions of dollars&#39; worth of natural pest control to contributing to life-saving medical research, our ecosystems, economies and even aspects of human health benefit from healthy bat populations.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/openbat-roadmap/" class="post-card" data-tags="openbat,app,dev-log,roadmap">
-      
-      <div class="post-card-img">
-        <img src="/static/images/India_2022_Habitat_033.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>OpenBat Roadmap</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-09-02">2 September 2026</time>
-          <span class="tag">openbat</span><span class="tag">app</span>
-        </div>
-        <p class="post-card-desc">This is a roadmap of features I&#39;d like to implement into OpenBat should time and will allow.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/the-open-in-openbat/" class="post-card" data-tags="openbat,project">
-      
-      <div class="post-card-img">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Big-eared-townsend-fledermaus.jpg" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>The &#39;open&#39; in OpenBat</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-09-01">1 September 2026</time>
-          <span class="tag">openbat</span><span class="tag">project</span>
-        </div>
-        <p class="post-card-desc">OpenBat is free. But being &#39;free&#39; is not the way we like to look at it, we like to say that OpenBat is Open. In this post we will talk a little bit about that philosophy and what it means.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/a-garden-bats-will-actually-use/" class="post-card" data-tags="conservation,how-to">
-      
-      <div class="post-card-img">
-        <img src="/static/images/garden-nighttime.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>A Garden Bats Will Actually Use</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-30">30 August 2026</time>
-          <span class="tag">conservation</span><span class="tag">how-to</span>
-        </div>
-        <p class="post-card-desc">Bats need three things from a garden — insects, darkness, and a route in. Usefully, none of them involve doing more gardening.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/bats-carry-diseases-heres-what-that-actually-means/" class="post-card" data-tags="bats,conservation,disease">
-      
-      <div class="post-card-img">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Bat_cave_in_El_Maviri_Sinaloa_-_Mexico.jpg" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>Bats carry diseases. Here&#39;s what that actually means.</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-30">30 August 2026</time>
-          <span class="tag">bats</span><span class="tag">conservation</span>
-        </div>
-        <p class="post-card-desc">Most bat myths are easy to knock down. Not blind, not rodents, not interested in your hair, not vampires. All straightforwardly false, all fun to correct.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/a-blank-space-on-a-map-does-not-mean-absence/" class="post-card" data-tags="data,field-guide">
-      
-      <div class="post-card-img">
-        <img src="/static/images/map_generation_example.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>A Blank Space on a Map does not mean Absence</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-29">29 August 2026</time>
-          <span class="tag">data</span><span class="tag">field-guide</span>
-        </div>
-        <p class="post-card-desc">Observation maps show where people have looked at least as much as where bats live. Reading the difference changes what you can honestly use them for.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/a-beginners-bat-vocabulary/" class="post-card" data-tags="how-to,reference,glossary">
-      
-      <div class="post-card-img">
-        <img src="/static/images/jargon_graphic.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>A Beginner&#39;s Bat Vocabulary</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-28">28 August 2026</time>
-          <span class="tag">how-to</span><span class="tag">reference</span>
-        </div>
-        <p class="post-card-desc">Heterodyne, GUANO, Fc, pass, buzz, transect — the words you will meet in the app and from bat people, explained without the jargon that usually comes attached.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/the-gaps-in-bat-data/" class="post-card" data-tags="bats,data">
-      
-      <div class="post-card-img">
-        <img src="/static/images/gaps-in-date-hero.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>The Gaps in Bat Data</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">bats</span><span class="tag">data</span>
-        </div>
-        <p class="post-card-desc">Bat records are thin, and they are thin unevenly. What is missing from the datasets, why an empty space is so easy to misread, and what one ordinary observation is actually worth.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/adding-a-bat-to-the-field-guide/" class="post-card" data-tags="field-guide,contributing">
-      
-      <div class="post-card-img">
-        <img src="/static/images/field-guide-hero.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>Adding a Bat to the Field Guide</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">field-guide</span><span class="tag">contributing</span>
-        </div>
-        <p class="post-card-desc">The field guide inside OpenBat is written by the people who use it — here is what an entry holds, how to add one without touching any code, and what happens after you press submit.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/how-openbat-draws-a-range-map/" class="post-card" data-tags="field-guide,range-maps,gbif">
-      
-      <div class="post-card-img">
-        <img src="/static/images/range-cover.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>How OpenBat Draws a Range Map</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">field-guide</span><span class="tag">range-maps</span>
-        </div>
-        <p class="post-card-desc">Where the distribution maps come from, what has to be assumed to draw one, and why the rules are careful not to delete real range at the edges.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/white-nose-syndrome/" class="post-card" data-tags="bats,conservation">
-      
-      <div class="post-card-img">
-        <img src="/static/images/little_brown_bat_wns.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>White-Nose Syndrome</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">bats</span><span class="tag">conservation</span>
-        </div>
-        <p class="post-card-desc">The fungus that has killed millions of North American bats — what it is, why waking up too often is fatal, and why it turned bat monitoring from a nice idea into an urgent one.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/why-bats-are-hard-to-watch/" class="post-card" data-tags="bats,acoustics">
-      
-      <div class="post-card-img">
-        <img src="/static/images/detection-cover.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>Why Bats Are Hard to Watch</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">bats</span><span class="tag">acoustics</span>
-        </div>
-        <p class="post-card-desc">Bats are all around us and almost nobody has properly seen one. What makes them so difficult to observe — and why a blank night means far less than it looks.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/how-openbat-decides-what-it-heard/" class="post-card" data-tags="auto-id,classifier,on-device">
-      
-      <div class="post-card-img">
-        <img src="/static/images/how-autoid-hero.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>How OpenBat Decides What It Heard</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">auto-id</span><span class="tag">classifier</span>
-        </div>
-        <p class="post-card-desc">The chain that turns a burst of ultrasound into a species name — pulse detection, a short window of audio, an on-device model, and the gates that let it say &quot;no idea&quot;.</p>
-      </div>
-    </a>
-    
-    <a href="/blog/why-openbat-has-a-blog/" class="post-card" data-tags="openbat">
-      
-      <div class="post-card-img">
-        <img src="/static/images/open-bat-blog-screenshot.webp" alt="" loading="lazy">
-      </div>
-      
-      <div class="post-card-body">
-        <h2>Why OpenBat Has a Blog</h2>
-        <div class="post-card-meta">
-          <time datetime="2026-08-27">27 August 2026</time>
-          <span class="tag">openbat</span>
-        </div>
-        <p class="post-card-desc">A place to write about what we are building, what breaks, and what we learn from the bats themselves.</p>
-      </div>
-    </a>
-    
-  </div>
-  
-</div>
-
-<script>
-  // Tag filter. The grid is fully rendered at build time; this only hides
-  // cards, so the page is complete with JS off (every post is still listed).
-  (() => {
-    const grid = document.getElementById('post-grid');
-    const btns = document.querySelectorAll('#post-filters .filter-btn');
-    if (!grid || !btns.length) return;
-    const cards = grid.querySelectorAll('.post-card');
-
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const filter = btn.dataset.filter;
-        btns.forEach(b => b.classList.toggle('active', b === btn));
-        cards.forEach(card => {
-          const tags = (card.dataset.tags || '').split(',');
-          card.hidden = !(filter === 'all' || tags.includes(filter));
-        });
-      });
-    });
-  })();
-</script>
+</article>
 
   </main>
 
