@@ -7,11 +7,13 @@ Next best: Long-legged Myotis (9%)
 Note: Myotis species — species in this group are hard to separate acoustically.  
 Location weighting: not recorded for this session.
 
+**Call Parameters:**
 Calls analysed: 4  
 Peak frequency (kHz): 39 (range 39–43)  
 Call duration (ms): 5.0  
 Recording length (s): 10.2
 
-Audio attached is slowed 16× so it is audible — a 16× time-expanded copy, with the silence either side of the calls removed. The same trimmed audio is attached at its original ultrasonic sample rate for re-analysis.
+**Notes:**
+Time expanded audio plays back at 16x slower. The full spectrum file is recorded at 384 kHz. Call parameters are produced automatically by OpenBat from the recording. Nothing here has been checked by a person, and the identification suggestion is a best guess by an ML model, please treat all of it as a starting point rather than a result.
 
-These measurements are produced automatically by OpenBat from the recording. Nothing here has been checked by a person, and the identification is a model's opinion — please treat all of it as a starting point rather than a result.
+Thank you for taking time to look at this observation!
