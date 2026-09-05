@@ -101,8 +101,9 @@ function wikilinkPlugin(md, wikilinkMap) {
   });
 }
 
-// Give every h2..h6 an id derived from its text and a "#" link back to
-// itself, so any section on any page can be linked to directly. Ids are
+// Give every h2..h6 an id derived from its text, so any section on any page
+// can be linked to directly with /page/#the-heading. Nothing is drawn — the
+// id is the whole feature. Ids are
 // deduped per document (a repeated heading gets -2, -3, ...). Written by
 // hand rather than pulled in as markdown-it-anchor: it is twenty lines and
 // the site deliberately carries no dependencies it doesn't need.
@@ -122,11 +123,6 @@ function headingAnchorPlugin(md) {
       seen.set(base, n);
       const id = n === 1 ? base : `${base}-${n}`;
       open.attrSet("id", id);
-
-      const link = new state.Token("html_inline", "", 0);
-      link.content =
-        `<a class="heading-anchor" href="#${id}" aria-label="Link to this section">#</a>`;
-      inline.children.push(link);
     }
   });
 }
@@ -139,9 +135,7 @@ function parseSlidesFromBlock(blockHtml) {
     if (!block.trim()) continue;
     const titleMatch = block.match(/<h2[^>]*>([\s\S]*?)<\/h2>/i);
     if (!titleMatch) continue;
-    let rawTitle = titleMatch[1]
-      .replace(/<a class="heading-anchor"[\s\S]*?<\/a>/gi, '')
-      .replace(/<[^>]+>/g, '').trim()
+    let rawTitle = titleMatch[1].replace(/<[^>]+>/g, '').trim()
       .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
       .replace(/&quot;/g, '"').replace(/&#39;/g, "'");
     if (!rawTitle || /gallery-(start|end)/i.test(rawTitle)) continue;
