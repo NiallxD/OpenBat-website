@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.32">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.33">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -123,7 +123,7 @@
 <div class="callout callout-tip"><div class="callout-title">Part of a bat or nature group? Build a batch.</div><div class="callout-body"><p>The boards arrive in fives, the hotplate and stencil get bought once, and the whole thing takes an afternoon. Five people splitting one order each go home with a working detector for under $30 — and the group keeps the kit for the next five people who want one.</p></div></div>
 <p>This is a summary of Phil’s own instructions, not a replacement for them. <strong><a href="https://www.pcbway.com/project/shareproject/Griff_Mini_d4d7cbaa.html">The Griff Mini project page on PCBWay</a></strong> is the authoritative source, I’m just repeating them here in case anyone landed on OpenBat trying to learn about detectors.</p>
 <p>One thing about the photo at the top: that green case is a 3D print of our own and <strong>not part of the build</strong>. Nothing below needs it, and none of the prices include it. A finished Griff is a bare board that works perfectly well as it is.</p>
-<h2>Before you start: this is a surface-mount build</h2>
+<h2 id="before-you-start-this-is-a-surface-mount-build">Before you start: this is a surface-mount build<a class="heading-anchor" href="#before-you-start-this-is-a-surface-mount-build" aria-label="Link to this section">#</a></h2>
 <p>Be honest with yourself about this bit. The Griff Mini is not a solder-a-few-wires kit. It is a small board of surface-mount components, including a MEMS microphone a couple of millimetres across, and the intended method is:</p>
 <ol>
 <li>Lay solder paste through a stencil.</li>
@@ -133,7 +133,7 @@
 <p>Phil reckons <strong>about four minutes of paste and placement, then four minutes on the hotplate</strong>, per board, and there’s <a href="https://www.youtube.com/watch?v=qv38JZPgvKo">a video of him doing it</a>. That speed assumes you already own a hotplate and have done this before.</p>
 <p>If you haven’t, it is a very learnable skill and not the black art it looks like — there’s a walkthrough at the foot of this post. The other option is to find a makerspace or repair café with reflow gear, or to build alongside someone who has done it before.</p>
 <p>There is one genuinely fiddly step to know about: the microphone element has an acoustic hole in it, and solder paste getting into that hole ruins it.</p>
-<h2>What to order</h2>
+<h2 id="what-to-order">What to order<a class="heading-anchor" href="#what-to-order" aria-label="Link to this section">#</a></h2>
 <p>Three orders, from three places, none of them urgent. Order everything at once.</p>
 <table>
 <thead>
@@ -222,7 +222,7 @@ authorised for this project.</li>
 here. A genuine Pico is the safe choice and the clones save around $4 each. If you order the clones, don’t forget to remove them from the DigiKey order.</li>
 </ul>
 <p>The DigiKey link is a list Phil maintains, which is the thing to order from, it stays current in a way a parts table copied into a blog post would not.</p>
-<h2>Flashing the firmware</h2>
+<h2 id="flashing-the-firmware">Flashing the firmware<a class="heading-anchor" href="#flashing-the-firmware" aria-label="Link to this section">#</a></h2>
 <p>The board is built around the Raspberry Pi Pico, which does the digitising and
 presents the whole thing to your phone as an ordinary USB microphone. Once the
 board is assembled, it needs Phil’s firmware, which is what makes it a 384 kHz
@@ -236,7 +236,7 @@ microphone rather than a Pico.</p>
 </ol>
 <p>That’s the whole process, and it’s the same trick used to flash any Pico. You
 can redo it later if the firmware is updated.</p>
-<h2>Plugging it into a phone</h2>
+<h2 id="plugging-it-into-a-phone">Plugging it into a phone<a class="heading-anchor" href="#plugging-it-into-a-phone" aria-label="Link to this section">#</a></h2>
 <p>The board has a <strong>micro-USB</strong> socket, so what you need between it and your
 phone depends on which iPhone you have:</p>
 <ul>
@@ -247,10 +247,10 @@ charge-only one will do nothing at all.</li>
 </ul>
 <p>Then open OpenBat, and it should appear as an input running at 384 kHz. Our
 <a href="/help/">Help page</a> covers what to do from there.</p>
-<h2>You can’t sell them</h2>
+<h2 id="you-cant-sell-them">You can’t sell them<a class="heading-anchor" href="#you-cant-sell-them" aria-label="Link to this section">#</a></h2>
 <p>Phil’s terms are simple: Griffs are not to be sold. He makes no money from the design and asks that builders don’t either.</p>
 <p>Since the boards come in fives, the obvious way round it is to find four other people, split the order, and build them together in an afternoon. Everyone pays their share, everyone goes home with a microphone, and nobody has sold anything.</p>
-<h2>Is it worth it?</h2>
+<h2 id="is-it-worth-it">Is it worth it?<a class="heading-anchor" href="#is-it-worth-it" aria-label="Link to this section">#</a></h2>
 <p>If you already have reflow gear or access to it, obviously yes — this is a $28 instrument doing a job commercial hardware charges several hundred for.</p>
 <p>If you don’t, be realistic about what you’re actually buying. A hotplate is
 $57 and the microphones are $28 each, so on a first solo build the equipment
@@ -259,13 +259,13 @@ rather than against building: the hotplate is bought once and never again, five
 boards cost barely more than one, and splitting a batch turns an awkward solo
 purchase into an afternoon a bat group can repeat every time someone new wants
 a microphone.</p>
-<h2>A first-timer’s guide to surface-mount</h2>
+<h2 id="a-first-timers-guide-to-surface-mount">A first-timer’s guide to surface-mount<a class="heading-anchor" href="#a-first-timers-guide-to-surface-mount" aria-label="Link to this section">#</a></h2>
 <p>If you have only ever soldered wires and through-hole parts, this is a
 different activity, and an easier one than it looks. You are not soldering
 joints one at a time. You are printing glue-like solder onto the board,
 dropping parts into it, and melting the lot at once.</p>
 <p>Here is the whole process on a Griff Mini.</p>
-<h3>1. Know what goes where</h3>
+<h3 id="1-know-what-goes-where">1. Know what goes where<a class="heading-anchor" href="#1-know-what-goes-where" aria-label="Link to this section">#</a></h3>
 <p>You start with a bare board. Everything you need is printed on it.</p>
 <div class="image-pair">
 <figure class="image-float-right">
@@ -290,7 +290,7 @@ the same.</p>
 <div class="callout callout-note"><div class="callout-title">The pad marked FERRITE</div><div class="callout-body"><p>There is no ferrite bead in the parts list. The <strong>100 Ω resistor</strong> is what
 fits that pad, and it’s what went on ours — worked out at the bench rather
 than read anywhere, so treat it as what we did rather than gospel.</p></div></div>
-<h3>2. Build a jig to hold the board</h3>
+<h3 id="2-build-a-jig-to-hold-the-board">2. Build a jig to hold the board<a class="heading-anchor" href="#2-build-a-jig-to-hold-the-board" aria-label="Link to this section">#</a></h3>
 <p>This is easily missed and isn’t well covered in other guides, and it makes the difference between a clean print and a smeared one. The board is 1.6 mm thick and weighs nothing — if it can slide even slightly while you drag paste across the stencil, the
 print is ruined.</p>
 <p>The fix costs nothing. Your PCBWay order arrives with offcuts, and they are
@@ -305,7 +305,7 @@ exactly the same thickness as the board:</p>
 down — hot glue, superglue or tape all work. Fix only the surround, never the
 board: what you are making is a board-shaped hole to drop each one into, so
 you can lift it out after pasting and put the next one in.</p>
-<h3>3. Paste</h3>
+<h3 id="3-paste">3. Paste<a class="heading-anchor" href="#3-paste" aria-label="Link to this section">#</a></h3>
 <p>Lay the stencil over the board and line it up so every pad sits centred in its
 aperture. Take your time here: it’s the one part of the process where accuracy
 genuinely matters.</p>
@@ -326,7 +326,7 @@ you just made.</li>
 </ul>
 <p>If the print comes out badly, wipe the board with isopropyl alcohol and start
 again. It costs you five minutes work and a tiny amount of solder paste, but will improve your build.</p>
-<h3>4. Place the parts</h3>
+<h3 id="4-place-the-parts">4. Place the parts<a class="heading-anchor" href="#4-place-the-parts" aria-label="Link to this section">#</a></h3>
 <p>Now put the components onto the wet paste with fine tweezers.</p>
 <div class="image-pair">
 <figure class="image-float-right">
@@ -347,7 +347,7 @@ These resistors and capacitors can go either way round.</li>
 in the top of the mic package, and it is the one mistake on this board that
 can’t be fixed after reflow.</li>
 </ul>
-<h3>5. Reflow</h3>
+<h3 id="5-reflow">5. Reflow<a class="heading-anchor" href="#5-reflow" aria-label="Link to this section">#</a></h3>
 <p><strong>It all reflows in one pass.</strong> The Pico goes on like any other component,
 sitting over its two rows of pads, and the whole board — passives, op-amp,
 microphone and Pico — goes onto the hotplate together. There is no second
@@ -386,7 +386,7 @@ on its own. That is a normal part of the process, not a repair.</p>
 pick parts off, and don’t move it until it’s cool — the solder stays liquid
 for a while after the heat is off, and a knock at that point will shift
 everything you just placed.</p>
-<h3>6. Inspect</h3>
+<h3 id="6-inspect">6. Inspect<a class="heading-anchor" href="#6-inspect" aria-label="Link to this section">#</a></h3>
 <p>Look over the cooled board — ideally with a magnifier, or a phone camera
 zoomed in. You are checking for two things: <strong>bridges</strong>, where solder has run
 between two adjacent pads, and <strong>dry joints</strong>, where a pad looks dull or a
@@ -396,7 +396,7 @@ braid; a dry joint usually just wants reheating.</p>
 microphone</strong> — plug it in and it detects bats. The printed case in the photo
 at the top of this post is something we added afterwards to make ours
 pocketable and a bit less fragile, and it’s entirely optional.</p>
-<h3>If it doesn’t work</h3>
+<h3 id="if-it-doesnt-work">If it doesn’t work<a class="heading-anchor" href="#if-it-doesnt-work" aria-label="Link to this section">#</a></h3>
 <p>Most first boards do work. If yours doesn’t:</p>
 <ul>
 <li><strong>Nothing at all on USB</strong> — suspect the Pico’s rows of joints first, then

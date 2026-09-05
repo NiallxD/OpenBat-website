@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.32">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.33">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -111,25 +111,25 @@
 <p>OpenBat is a bat detector. It records ultrasound and works out which species is calling, entirely on your phone.</p>
 <p>Recording anything with a microphone raises obvious questions. This page answers them directly.</p>
 </div>
-<section class="page-card"><h2>Nothing leaves your phone unless you send it</h2>
+<section class="page-card"><h2 id="nothing-leaves-your-phone-unless-you-send-it">Nothing leaves your phone unless you send it<a class="heading-anchor" href="#nothing-leaves-your-phone-unless-you-send-it" aria-label="Link to this section">#</a></h2>
 <p>The app records and identifies species entirely on your device. There’s no background upload and no “phoning home.” Your location is used on-device to work out which bats are plausible where you are (the range data that decides it ships with the app) and to calculate your local sunset and sunrise times. OpenBat does fetch species reference data and images from a couple of public services, but nothing that identifies you, and no location, is ever sent.</p>
 <p><strong>The one exception is posting to iNaturalist, and it is always a deliberate tap.</strong> If you sign in to iNaturalist, OpenBat can turn one recording into an observation on your own iNaturalist account — the call audio, a spectrogram, the time, the place, and what the app thought the species was. You see all of it on a confirmation screen before anything is sent, and nothing is ever posted in the background or in bulk. The location goes up <em>obscured</em> by default, so iNaturalist publishes a rough area rather than the exact spot, because a precise bat record can give away a roost. You sign in on iNaturalist’s own page, so OpenBat never sees your password, and you can sign out or revoke it whenever you like. None of this involves us: the observation goes to iNaturalist, on your account, under <a href="https://www.inaturalist.org/pages/privacy">their privacy policy</a>.</p>
 </section>
-<section class="page-card"><h2>This website</h2>
+<section class="page-card"><h2 id="this-website">This website<a class="heading-anchor" href="#this-website" aria-label="Link to this section">#</a></h2>
 <p>No analytics, no cookies, no tracking. Two things are stored in your browser, both of them yours and neither of them sent anywhere: whether you chose light or dark mode, and — if you are part-way through an edit in the field guide editor — a draft of that edit.</p>
 <p>One page is worth naming: the <a href="/guide-editor/">field guide editor</a>. It reads the field guide straight from our public GitHub repository when you open it, so you’re always editing the current version — a read-only request that sends nothing about you.</p>
 <p>If you then choose to press Submit, your edit is sent to our own service, which opens a pull request on the field guide repository for you. Only what you typed into the form is sent. Whatever name you put in the contributors box becomes part of the public record of who wrote what, which is the point of it — so use whatever name you’re happy to have published. Nothing is sent unless you press Submit.</p>
 <p>The only other page that contacts anything outside this site is the newsletter sign-up in the footer, which is a Google Form embedded in a pop-up. Nothing loads from Google until you click “Sign up for the newsletter” — at that point the form loads directly from Google, which sees your IP address the way it would for any page it serves.</p>
 <p>While you are working on an entry, the editor keeps a draft of it in your own browser’s storage, so that closing the tab, running out of battery or reloading by accident doesn’t cost you the work. The draft stays on your device — it is never uploaded, and it is not a copy we can see. It is offered back the next time you open the editor, and it is deleted as soon as you submit the entry or press “Delete the saved draft”, whichever comes first. If you would rather it wasn’t kept at all, delete it and finish the entry in one sitting; clearing your browser’s site data removes it too.</p>
 </section>
-<section class="page-card page-card--half"><h2>Newsletter</h2>
+<section class="page-card page-card--half"><h2 id="newsletter">Newsletter<a class="heading-anchor" href="#newsletter" aria-label="Link to this section">#</a></h2>
 <p>If you sign up for the newsletter, that’s a Google Form — your email goes to Niall’s own Google Drive, used only to send the newsletter, never shared.</p>
 </section>
-<section class="page-card page-card--half"><h2>Questions</h2>
+<section class="page-card page-card--half"><h2 id="questions">Questions<a class="heading-anchor" href="#questions" aria-label="Link to this section">#</a></h2>
 <p>privacy@openbat.app — that reaches Niall Bell, who created this app and is responsible for privacy at OpenBat (which is just me). Trust me, I went far down this rabbit-hole in order to protect your privacy, it’s important to me!</p>
 <p>The full <a href="https://openbat.app/privacy-policy">Privacy Policy</a> has the formal detail, including your legal rights and who hosts the service.</p>
 </section>
-<section class="page-card"><h2>AI Use Policy</h2>
+<section class="page-card"><h2 id="ai-use-policy">AI Use Policy<a class="heading-anchor" href="#ai-use-policy" aria-label="Link to this section">#</a></h2>
 <p>I’m one guy developing this app and as such, moving with the times, I use generative ‘AI’ to help write the code. I have principles which I follow when it comes to ‘AI’ and I’ve written these in a blog post on my main website - take a look <a href="https://niallbell.com/blog/acceptable-use-of-ai/">here</a>.</p>
 <p>Learn more about my use of AI in the development of OpenBat <a href="/generative-ai-use/">here</a>.</p>
 </section></div>

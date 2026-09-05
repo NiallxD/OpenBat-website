@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.32">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.33">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -119,7 +119,7 @@
 
   <div class="post-content"><p>Open a species in the field guide and you get a distribution map built from real records. It’s one of my favourite things in the app, and it’s also the thing most likely to be misread.</p>
 <p>Here’s the trap, in one sentence: <strong>the map shows where records exist, not where bats exist.</strong></p>
-<h2>Records cluster around people</h2>
+<h2 id="records-cluster-around-people">Records cluster around people<a class="heading-anchor" href="#records-cluster-around-people" aria-label="Link to this section">#</a></h2>
 <p>Every dot on a biodiversity map required somebody to be standing there with
 equipment, and people are not evenly distributed. They cluster around roads,
 towns, universities, nature reserves, and the places where a monitoring
@@ -133,7 +133,7 @@ programme happened to get funded.</p>
 <p>We learned this one the hard way, in our own app. OpenBat used to decide which species were plausible near you by asking how many records each had within 100 km. It seemed obviously sensible, and it was wrong in two separate ways at once.</p>
 <p><strong>Record counts measure surveyors, not bats.</strong> Museum specimens, century-old taxonomy and university field courses all count towards that total.</p>
 <p><strong>And names moved underneath us.</strong> Ask for a bat by one accepted scientific name and you get nothing; ask by the name the records were actually filed under and you get ninety. In one case a species was switched off near London, where it has well over a thousand records, because the newer name the model used matched only its genus, and returned nothing anywhere on Earth. None of that was a bug in GBIF. Every one of those numbers was a true statement about <em>records</em>, read as if it were a statement about <em>bats</em>. The fix was to stop counting records and start using mapped ranges.</p>
-<h2>Why bats have it worse than most</h2>
+<h2 id="why-bats-have-it-worse-than-most">Why bats have it worse than most<a class="heading-anchor" href="#why-bats-have-it-worse-than-most" aria-label="Link to this section">#</a></h2>
 <p>Three reasons stack up.</p>
 <p><strong>They’re nocturnal.</strong> Casual daytime observation, which produces enormous quantities of bird and plant records, contributes almost nothing for bats.</p>
 <p><strong>They need equipment.</strong> Even a keen naturalist can’t add a bat record without a detector, so the pool of possible recorders is tiny by comparison.</p>
@@ -142,7 +142,7 @@ programme happened to get funded.</p>
 <blockquote>
 <p>You can see this patchiness by going to the field guide and toggling the map to ‘Records’. This shows the density of records without the distribution modelling laid over the top.</p>
 </blockquote>
-<h2>So what are the maps good for?</h2>
+<h2 id="so-what-are-the-maps-good-for">So what are the maps good for?<a class="heading-anchor" href="#so-what-are-the-maps-good-for" aria-label="Link to this section">#</a></h2>
 <p>Quite a lot, as long as you read them as <em>evidence of presence</em> rather than <em>proof of absence</em>.</p>
 <p><strong>Good uses:</strong></p>
 <ul>
@@ -157,7 +157,7 @@ programme happened to get funded.</p>
 <li>“This species is more common than that one.”</li>
 </ul>
 <p>That third one is worth dwelling on: <a href="/blog/why-bats-are-hard-to-watch/">species differ enormously in how detectable they are</a>. A loud, low-frequency, easily identified bat generates records at a rate a quiet, high-frequency, ambiguous one never will, even if both are equally abundant.</p>
-<h2>Which is why your recordings matter</h2>
+<h2 id="which-is-why-your-recordings-matter">Which is why your recordings matter<a class="heading-anchor" href="#which-is-why-your-recordings-matter" aria-label="Link to this section">#</a></h2>
 <p>Here’s the encouraging flip side of all this.</p>
 <p>If the maps are thin because not enough people have looked, then more people looking genuinely improves them. That’s not true of every conservation problem, you can’t personally fix habitat loss on a Tuesday evening, but it is true of this one.</p>
 <p>A record from an unsurveyed valley is worth many records from a well-studied reserve. The empty parts of the map are exactly where an ordinary person with a thirty-dollar microphone can add something a professional survey hasn’t.</p>

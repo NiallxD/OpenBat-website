@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.32">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.33">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -122,7 +122,7 @@ because it borrows from three separate fields at once: biology, signal
 processing, and conservation monitoring.</p>
 <p>Here’s the plain-language version of the words you’ll actually meet. Bookmark it
 and come back when something baffles you.</p>
-<h2>The sounds</h2>
+<h2 id="the-sounds">The sounds<a class="heading-anchor" href="#the-sounds" aria-label="Link to this section">#</a></h2>
 <p><strong>Echolocation</strong> — shouting and listening to the echo to work out what’s around
 you. The whole basis of the hobby/acoustic field study.</p>
 <p><strong>Ultrasound</strong> — sound above the range of human hearing, roughly above 20 kHz.
@@ -140,7 +140,7 @@ audible to humans.</p>
   <a href="/static/images/jargon_graphic.webp"><img src="/static/images/jargon_graphic.webp" alt="Screenshot from the OpenBat app showing a bat pulse been analysed to reveal its features.." loading="lazy"></a>
   <figcaption>OpenBat allows you to analyse a bat call and extract some of these key metrics..</figcaption>
 </figure>
-<h2>The measurements</h2>
+<h2 id="the-measurements">The measurements<a class="heading-anchor" href="#the-measurements" aria-label="Link to this section">#</a></h2>
 <p><strong>Peak frequency</strong> — the pitch at which the call is loudest. Not the highest note.</p>
 <p><strong>Characteristic frequency (Fc)</strong> — the frequency at the flattest part near the end of a call. The number most reference tables mean. Makes up the Call Body.</p>
 <p><strong>Knee frequency (Fk)</strong> — where the call stops falling steeply and levels out.</p>
@@ -149,14 +149,14 @@ audible to humans.</p>
 <p><strong>Pulse rate</strong> — how many calls arrive per second. A property of the sequence,
 not of one call.</p>
 <p><strong>Harmonics</strong> — quieter copies of a call at multiples of its frequency. Useful clues, and sometimes the only visible part of a call if the fundamental is out of range.</p>
-<h2>The equipment</h2>
+<h2 id="the-equipment">The equipment<a class="heading-anchor" href="#the-equipment" aria-label="Link to this section">#</a></h2>
 <p><strong>Heterodyne</strong> — mixes incoming sound against a tuned frequency to produce an audible difference tone. Continuous, narrow-band, and lossy. Good for “is anything out there”.</p>
 <p><strong>Time expansion / slow replay</strong> — records a snippet and plays it back slowed down, dropping every frequency in it into audible range. Faithful, but the microphone isn’t listening while it plays.</p>
 <p><strong>Frequency division</strong> — a third approach, common in cheaper detectors, that divides frequencies down by a fixed ratio. Continuous like heterodyne, broader band, still lossy.</p>
 <p><strong>Sample rate</strong> — how many measurements per second the recording takes. Cannot be higher than what the microphone is capable of. Must be twice the frequency you are trying to hear/record (Nyquist Limit). A 384 kHz mic produces a 192 kHz recording.</p>
 <p><strong>Spectrogram</strong> — the picture of sound: time across, pitch up, loudness as brightness. Produced by parsing out individual frequencies using a Fast Fourier Transform (FFT).</p>
 <p><strong>Trigger</strong> — the moment a detector decides a sound counts as a call and starts recording it.</p>
-<h2>The data words</h2>
+<h2 id="the-data-words">The data words<a class="heading-anchor" href="#the-data-words" aria-label="Link to this section">#</a></h2>
 <p><strong>GUANO</strong> — (Grand Unified Acoustic Notation Ontology) a metadata standard for bat recordings. It’s how a file carries its time, place, sample rate and equipment details in a form other bat software can read years later. Yes, the name is a joke. Yes, it’s a good one. Also bat poo.</p>
 <p><strong>WAV</strong> — uncompressed audio. The only format you should ever store or share bat recordings in because you don’t loose any data.</p>
 <p><strong>iNaturalist</strong> — a global platform where anyone can post observations of wildlife and the community identifies them.</p>
@@ -164,7 +164,7 @@ not of one call.</p>
 <p><strong>Research grade</strong> — an iNaturalist status meaning enough people agree on the identification. It does <em>not</em> require identification to species; agreement at genus level counts.</p>
 <p><strong>NABat</strong> — the North American Bat Monitoring Program. Also the source of one of the classifier models OpenBat uses.</p>
 <p><strong>Presence data</strong> — a record that something was here, at this time. The foundation everything else is built on.</p>
-<h2>The fieldwork words</h2>
+<h2 id="the-fieldwork-words">The fieldwork words<a class="heading-anchor" href="#the-fieldwork-words" aria-label="Link to this section">#</a></h2>
 <p><strong>Transect</strong> — a fixed route walked or driven at a fixed speed, recorded consistently, so results can be compared between visits.</p>
 <p><strong>Point count</strong> — standing still at a fixed spot for a fixed time, for the same reason.</p>
 <p><strong>Emergence count</strong> — sitting outside a roost at dusk and counting bats as they leave. Done from a distance, without lights.</p>
@@ -172,7 +172,7 @@ not of one call.</p>
 <p><strong>Maternity roost</strong> — where females gather to give birth and raise young. The most sensitive of the lot.</p>
 <p><strong>Hibernaculum</strong> — a winter roost. Cold, stable, humid, and absolutely not somewhere to go poking about.</p>
 <p><strong>Clutter</strong> — vegetation and structures that produce confusing echoes. Bats change their calls in it; detectors hear less through it.</p>
-<h2>The two that get confused in OpenBat</h2>
+<h2 id="the-two-that-get-confused-in-openbat">The two that get confused in OpenBat<a class="heading-anchor" href="#the-two-that-get-confused-in-openbat" aria-label="Link to this section">#</a></h2>
 <p><strong>Pulse quality</strong> — how clean the recording is. It’s about the signal itself not the ID.</p>
 <p><strong>Species confidence</strong> — how sure the classifier is about the name. About the identity.</p>
 <p><span class="wikilink">They are not the same number</span> and telling them apart is the single most useful distinction in the app.</p>
