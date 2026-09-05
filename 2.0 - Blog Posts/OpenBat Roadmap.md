@@ -29,3 +29,5 @@ This is a simple roadmap, nothing fancy. Let me know if any of this sounds excit
 >[!tip] Species Showcase
 >Create beautiful showcases (presentations) in app which go through a selection of species to help educators share how amazing the bat species are which we share our home.
 
+>[!tip] Favouriting Recordings
+>The ability to favourite recordings of bats to playback easily in future. Recordings are hidden in sessions and it might be nice to be able to quickly pull one up to listen or show to someone else.

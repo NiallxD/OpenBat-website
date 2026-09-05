@@ -9,6 +9,7 @@ tags:
   - field-guide
 coverImage: /static/images/some-image.webp
 featured: false
+priority:            # optional, featured posts only — 1 runs first in the ticker
 publish: false
 ---
 

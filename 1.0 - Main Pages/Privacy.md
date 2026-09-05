@@ -15,9 +15,11 @@ Recording anything with a microphone raises obvious questions. This page answers
 
 </div>
 
-## Nothing leaves your phone
+## Nothing leaves your phone unless you send it
 
-The app records and identifies species entirely on your device. There's no account, no background upload, no "phoning home." Your location never leaves your phone — it's used on-device to work out which bats are plausible where you are (the range data that decides it ships with the app) and to calculate your local sunset and sunrise times. OpenBat does fetch species reference data and images from a couple of public services, but nothing that identifies you, and no location, is ever sent.
+The app records and identifies species entirely on your device. There's no background upload and no "phoning home." Your location is used on-device to work out which bats are plausible where you are (the range data that decides it ships with the app) and to calculate your local sunset and sunrise times. OpenBat does fetch species reference data and images from a couple of public services, but nothing that identifies you, and no location, is ever sent.
+
+**The one exception is posting to iNaturalist, and it is always a deliberate tap.** If you sign in to iNaturalist, OpenBat can turn one recording into an observation on your own iNaturalist account — the call audio, a spectrogram, the time, the place, and what the app thought the species was. You see all of it on a confirmation screen before anything is sent, and nothing is ever posted in the background or in bulk. The location goes up *obscured* by default, so iNaturalist publishes a rough area rather than the exact spot, because a precise bat record can give away a roost. You sign in on iNaturalist's own page, so OpenBat never sees your password, and you can sign out or revoke it whenever you like. None of this involves us: the observation goes to iNaturalist, on your account, under [their privacy policy](https://www.inaturalist.org/pages/privacy).
 
 ## This website
 

@@ -277,26 +277,46 @@ export default function (eleventyConfig) {
     api.getAll().filter((i) => isPost(i) && i.data.featured !== true).sort(byNewest)
   );
 
-  // Up to three slides for the featured ticker on / and /blog/: featured
-  // posts first (newest first), topped up with the newest remaining posts so
+  // `priority` orders the featured posts in the ticker: 1 runs first, then 2,
+  // and so on. It is optional — a featured post without one sorts after every
+  // post that has one, and ties (including two posts given the same number)
+  // fall back to newest first, which is what the ticker did before priorities
+  // existed. Only featured posts are ordered by it; a post pulled in merely to
+  // top the ticker up to three slides is always there by date.
+  const byPriority = (a, b) => {
+    const pa = Number(a.data.priority);
+    const pb = Number(b.data.priority);
+    const ha = Number.isFinite(pa);
+    const hb = Number.isFinite(pb);
+    if (ha && hb && pa !== pb) return pa - pb;
+    if (ha !== hb) return ha ? -1 : 1;
+    return byNewest(a, b);
+  };
+
+  // Up to three slides for the featured ticker on / and /blog/: featured posts
+  // first (in `priority` order), topped up with the newest remaining posts so
   // the ticker still has three slides when only one post is marked featured.
-  eleventyConfig.addCollection("heroPosts", (api) => {
+  const tickerPosts = (api) => {
     const posts = api.getAll().filter(isPost).sort(byNewest);
-    const featured = posts.filter((i) => i.data.featured === true);
+    const featured = posts.filter((i) => i.data.featured === true).sort(byPriority);
     const rest = posts.filter((i) => i.data.featured !== true);
     return [...featured, ...rest].slice(0, 3);
-  });
+  };
+
+  eleventyConfig.addCollection("heroPosts", tickerPosts);
 
   // The "Recent posts" row at the foot of the home page. It is the newest
   // posts, minus anything the ticker at the top of that same page is already
   // showing — otherwise featuring a recent post would print it twice on one
   // page. Mirrors heroPosts' own top-up rule, so the two never collide.
   eleventyConfig.addCollection("recentPosts", (api) => {
-    const posts = api.getAll().filter(isPost).sort(byNewest);
-    const featured = posts.filter((i) => i.data.featured === true);
-    const rest = posts.filter((i) => i.data.featured !== true);
-    const inTicker = new Set([...featured, ...rest].slice(0, 3).map((i) => i.url));
-    return posts.filter((i) => !inTicker.has(i.url)).slice(0, 3);
+    const inTicker = new Set(tickerPosts(api).map((i) => i.url));
+    return api
+      .getAll()
+      .filter(isPost)
+      .sort(byNewest)
+      .filter((i) => !inTicker.has(i.url))
+      .slice(0, 3);
   });
 
   eleventyConfig.addFilter("getAllTags", (collection) => {

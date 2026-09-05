@@ -10,6 +10,7 @@ tags:
 heroImage: /static/images/OpenBat_Screens.webp
 coverImage: /static/images/OpenBat_Screens.webp
 featured: true
+priority: 1
 publish: true
 ---
 

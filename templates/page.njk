@@ -9,7 +9,10 @@ layout: base.njk
   <p class="section-label">{{ sectionLabel }}</p>
   {% endif %}
 
-  {% if title %}
+  {# `hideTitle: true` for a page that opens with its own header — the
+     download page's centred app lockup, which would read as a second title
+     under this one. #}
+  {% if title and not hideTitle %}
   <div class="listing-header">
     <h1>{{ title }}</h1>
     {% if description %}<p class="page-lead">{{ description }}</p>{% endif %}

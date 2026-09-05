@@ -335,6 +335,44 @@ p {
   background: rgba(0, 0, 0, 0.75);
 }
 
+/* Nav download button — the one orange thing in the header, so it reads as the
+   action rather than another nav link. Apple glyph up front because it goes to
+   the App Store listing. Collapses to the icon alone on narrow screens, where
+   the label would push the burger off the edge. */
+.nav-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #111;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--ease), transform var(--ease);
+}
+
+.nav-download-btn:hover {
+  background: color-mix(in srgb, var(--color-accent) 85%, #fff);
+  color: #111;
+  transform: translateY(-1px);
+}
+
+.nav-download-icon {
+  display: block;
+  /* The Apple glyph sits optically low against cap-height text. */
+  margin-top: -1px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 520px) {
+  .nav-download-label { display: none; }
+  .nav-download-btn { padding: 0.45rem 0.55rem; }
+}
+
 /* Theme Toggle */
 .theme-toggle {
   background: transparent;
@@ -958,6 +996,164 @@ span.wikilink { color: var(--color-secondary); }
 .hero-plain-cta:hover {
   background: color-mix(in srgb, var(--color-accent) 85%, #fff);
   transform: translateY(-1px);
+}
+
+/* Download page — a centred app-store style lockup: icon, name, one line of
+   pitch, the badge, then the screens. `cards: false` and `hideTitle: true` in
+   the page's frontmatter keep the standard page furniture out of its way. */
+.app-landing {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem 0 4rem;
+  text-align: center;
+}
+
+.post-content .app-landing-icon,
+.app-landing-icon {
+  width: 128px;
+  height: auto;
+  display: block;
+  margin: 0 auto 1.5rem;
+  border-radius: 24px;
+}
+
+.post-content .app-landing-title,
+.app-landing-title {
+  font-family: var(--font-sans);
+  font-size: clamp(2.75rem, 8vw, 4.5rem);
+  line-height: 1;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.post-content .app-landing-tagline,
+.app-landing-tagline {
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+  line-height: 1.4;
+  color: var(--color-secondary);
+  margin: 0.75rem auto 2rem;
+  max-width: 30ch;
+}
+
+.app-landing .appstore-badge { margin: 0 auto; }
+
+/* The dock wants the full page column, not the landing page's narrower
+   reading width, so it is broken back out to `--max-wide` from the middle. */
+.app-landing-dock {
+  /* Centred with margins rather than translateX(-50%): a transform would make
+     this the containing block for the dock's `position: fixed` scrim, and the
+     page-wide dim would shrink to the width of this wrapper. */
+  --dock-breakout: min(calc(100vw - 4rem), var(--max-wide));
+  width: var(--dock-breakout);
+  margin-left: calc(50% - var(--dock-breakout) / 2);
+  margin-top: 2rem;
+}
+
+/* Three columns on desktop, one below 800px — the same breakpoint the page
+   cards use, so the whole site reflows at one width. */
+.app-landing-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+  text-align: left;
+}
+
+/* Same hover as the home page's cards — border to the accent and a 2px lift —
+   so a card behaves the same wherever it appears. */
+.app-landing-feature {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  transition: border-color var(--ease), transform var(--ease);
+}
+
+.app-landing-feature:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.post-content .app-landing-feature h2,
+.app-landing-feature h2 {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem;
+  color: var(--color-accent);
+}
+
+.post-content .app-landing-feature p,
+.app-landing-feature p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-secondary);
+  margin: 0;
+}
+
+.post-content .app-landing-foot,
+.app-landing-foot {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-secondary);
+  margin: 2.5rem auto 0;
+  max-width: 52ch;
+}
+
+.app-landing-foot a { color: var(--color-link); }
+.app-landing-foot a:hover { color: var(--color-link-hover); }
+
+@media (max-width: 800px) {
+  .app-landing-features { grid-template-columns: 1fr; }
+  .app-landing-icon { width: 104px; }
+}
+
+/* App Store badge — Apple's two-line lockup rebuilt in CSS rather than
+   shipped as artwork, so it takes the site's orange and stays crisp at any
+   size. `.post-content a` sets the link colour and out-specifies a bare
+   class, hence the doubled selectors. */
+.post-content a.appstore-badge,
+.appstore-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 10px;
+  background: var(--color-accent);
+  color: #000;
+  font-family: var(--font-sans);
+  text-decoration: none;
+  line-height: 1;
+  transition: background var(--ease), transform var(--ease);
+}
+
+.post-content a.appstore-badge:hover,
+.appstore-badge:hover {
+  background: color-mix(in srgb, var(--color-accent) 85%, #fff);
+  color: #000;
+  transform: translateY(-1px);
+}
+
+.appstore-badge-icon { flex-shrink: 0; }
+
+.appstore-badge-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  text-align: left;
+}
+
+.appstore-badge-small {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.appstore-badge-large {
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 /* ══════════════════════════════════════════════════════════

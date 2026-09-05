@@ -23,8 +23,6 @@ export default {
       { label: "Field Guide Editor", url: "/guide-editor/" }
     ]},
     { label: "Blog", url: "/blog/" },
-    { label: "Help", url: "/help/" },
-    { label: "Privacy", url: "/privacy/" },
-    { label: "Contact", url: "/contact/" }
+    { label: "Help", url: "/help/" }
   ],
 };

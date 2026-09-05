@@ -10,7 +10,7 @@ Last revised: 2026-08-07
 
 ## The short version
 
-OpenBat records bats and identifies species entirely on your phone. Nothing you record is ever sent to us — there is no account, no upload, and no server of ours that your recordings, location, or audio ever reach.
+OpenBat records bats and identifies species entirely on your phone. Nothing you record is ever sent to us — we run no server that your recordings, location, or audio ever reach. The one thing that can leave your phone is an observation you choose to post to iNaturalist, on your own iNaturalist account, one tap at a time. That goes to iNaturalist, not to us.
 
 The app does talk to a few public, third-party reference APIs (species data, images) to help identify what you've recorded. One of those sends your approximate current location as part of a lookup query. None of it is tied to your identity, and none of it is collected or stored by us.
 
@@ -26,7 +26,7 @@ For privacy questions, contact privacy@openbat.app.
 
 Recordings, sessions, and species identifications are stored locally on your device. Species identification runs entirely on-device — nothing is sent anywhere to work out what you recorded.
 
-**Your location never leaves your phone.** It is used on-device to tag detections, to suggest the right species model for your region, to work out which species are plausible where you are, to name a session after the place it happened, and to calculate your local sunset and sunrise for the detector's sun clock. Earlier versions sent an approximate position to GBIF for that species lookup; that no longer happens — the range data now ships inside the app.
+**Your location does not leave your phone unless you post an observation to iNaturalist.** It is used on-device to tag detections, to suggest the right species model for your region, to work out which species are plausible where you are, to name a session after the place it happened, and to calculate your local sunset and sunrise for the detector's sun clock. Earlier versions sent an approximate position to GBIF for that species lookup; that no longer happens — the range data now ships inside the app.
 
 **OpenBat does not record a GPS track.** Sessions used to record a continuous course while detecting. That was removed: each detection already carries a coordinate and a timestamp, so a track can be rebuilt from your own exported data without the app keeping a second, denser record of your movements. The app never requests "Always" location access and never uses location in the background.
 
@@ -43,6 +43,25 @@ OpenBat queries a small number of public, third-party reference services to show
 
 These are ordinary, read-only lookups against public reference data — the same kind of request any app makes to show you information from the internet. No device identifier, account, or recording is ever attached to them, and we don't operate or control these services.
 
+### iNaturalist — the one thing you can send
+
+If you choose to, OpenBat can post a recording to [iNaturalist](https://www.inaturalist.org) as an observation on **your own** iNaturalist account. This is entirely optional, and off unless you sign in.
+
+| What's sent | To whom |
+|---|---|
+| The call audio (a slowed-down audible copy, and the trimmed original) | iNaturalist |
+| A spectrogram image of the call | iNaturalist |
+| The date, time and coordinates of the recording | iNaturalist |
+| The species the app suggested, its confidence, and the call measurements behind it | iNaturalist |
+
+It only ever happens when you press Post on a screen that shows you all of the above first. There is no background posting, no bulk upload, and no queue that sends things later. Nothing is sent to us at any point.
+
+**About the location.** Observations are set to *obscured* by default, which means iNaturalist receives your real coordinates but publishes only a rough area — roughly a 20 km cell — rather than the exact spot. We do this because a precise bat record can give away a roost. You can choose to publish the exact position, or to hide the location entirely, on the same screen. To be clear about what obscured does and does not mean: the position is hidden from the public, not from iNaturalist.
+
+**Signing in.** You sign in on iNaturalist's own web page, in a browser view OpenBat cannot read, so the app never sees your iNaturalist password. What it keeps afterwards is a revocable access token, stored in your iPhone's Keychain. You can sign out in OpenBat's settings, or revoke OpenBat entirely from your iNaturalist account settings, at any time.
+
+Once an observation is on iNaturalist it is governed by [iNaturalist's own privacy policy](https://www.inaturalist.org/pages/privacy) and terms, not ours, and it is yours to edit or delete there.
+
 ## 4. Newsletter
 
 If you sign up for the OpenBat newsletter, you'll be taken to a Google Form, hosted by Google, outside this site. It asks for your email address only.
@@ -52,7 +71,7 @@ Responses go into a Google Sheet in Niall's personal Google Drive — subject to
 ## 5. What we don't do
 
 - We don't operate a server that receives your recordings, location, or audio.
-- We don't have accounts, sign-in, or device identifiers tied to you.
+- We don't have accounts, sign-in, or device identifiers tied to you. (The optional iNaturalist sign-in is an account with *iNaturalist*, not with us — we never see it, and nothing about it reaches us.)
 - We don't use analytics, crash reporting, advertising, or tracking SDKs of any kind.
 - Outside of the newsletter form above, we don't collect, sell, or share anything.
 
