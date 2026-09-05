@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.33">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.34">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -126,7 +126,7 @@ loop at all, which is also why it works deep in a forest or valley with no phone
   <a href="/static/images/autoid-pipeline.webp"><img src="/static/images/autoid-pipeline.webp" alt="A seven-step diagram: sound, pulse, window, picture, model, where, verdict." loading="lazy"></a>
   <figcaption>The whole chain. Steps 1–4 are signal processing, 5 is the neural network, and 6–7 are the parts that decide whether to trust it.</figcaption>
 </figure>
-<h2 id="finding-a-call">Finding a call<a class="heading-anchor" href="#finding-a-call" aria-label="Link to this section">#</a></h2>
+<h2 id="finding-a-call">Finding a call</h2>
 <p>The microphone delivers 384,000 samples a second. Almost none of it is a bat.</p>
 <p>A call has to be both <strong>loud enough and high enough</strong> to trigger — the pitch
 half of that test is what stops wind, footsteps and jangling keys from filling
@@ -144,7 +144,7 @@ middle. Without bridging them, one call arrived as three fragments.</li>
 <p>These numbers are set from field recordings rather than theory, and every one
 of them is adjustable in the app if your site or your microphone wants
 something different.</p>
-<h2 id="cutting-the-window-and-drawing-it">Cutting the window, and drawing it<a class="heading-anchor" href="#cutting-the-window-and-drawing-it" aria-label="Link to this section">#</a></h2>
+<h2 id="cutting-the-window-and-drawing-it">Cutting the window, and drawing it</h2>
 <p>Each detected call is cut out with the <strong>onset placed 30% of the way into the
 window</strong> — enough room in front of it to be sure the call started, and enough
 behind for the sweep to finish. How much audio gets cut is the model’s own
@@ -165,7 +165,7 @@ signal above the noise, enough amplitude, and the call not jammed against
 either edge of the window, since a clipped call is a misleading one. Not every
 model offers those measurements, and the app only shows the gate’s controls for
 one that does.</p>
-<h2 id="two-models-one-at-a-time">Two models, one at a time<a class="heading-anchor" href="#two-models-one-at-a-time" aria-label="Link to this section">#</a></h2>
+<h2 id="two-models-one-at-a-time">Two models, one at a time</h2>
 <ul>
 <li><strong>NABat ML</strong> — the USGS North American Bat Monitoring Program’s classifier,
 31 classes covering North American species plus an explicit non-bat NOISE
@@ -178,7 +178,7 @@ you are rather than picking silently.</p>
 <p><strong>Confidence is not comparable between the two.</strong> They score very differently —
 BatDetect2 tends to produce far more emphatic numbers — so 70% from one does not
 mean what 70% from the other does.</p>
-<h2 id="where-you-are">Where you are<a class="heading-anchor" href="#where-you-are" aria-label="Link to this section">#</a></h2>
+<h2 id="where-you-are">Where you are</h2>
 <p>Every species starts neutral. When the phone gets a location fix, OpenBat reads
 the <a href="/blog/how-openbat-draws-a-range-map/" class="wikilink">bundled range grid</a> and turns it into a
 weight per species: <strong>1.0</strong> if this is inside the species’ range, <strong>0.01</strong> if it
@@ -196,7 +196,7 @@ first, on the model’s own unweighted scores. Only once those say “this is a
 real, confidently identified call” do the weights get a say in <em>which</em> species
 to name. If where you were standing could influence the first question, the app
 would be inventing evidence out of your own expectations.</p>
-<h2 id="a-pass-not-a-call">A pass, not a call<a class="heading-anchor" href="#a-pass-not-a-call" aria-label="Link to this section">#</a></h2>
+<h2 id="a-pass-not-a-call">A pass, not a call</h2>
 <p>Bats don’t call once. The unit OpenBat identifies is a <strong>pass (sometimes called a sequence)</strong>,  the burst of calls as an animal crosses in front of the microphone, closed by two seconds of silence.</p>
 <figure class="chart"><div class="chart-canvas" style="height:340px"><canvas data-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;bars&quot;:[{&quot;label&quot;:&quot;1&quot;,&quot;value&quot;:0.44,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;2&quot;,&quot;value&quot;:0.71,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;3&quot;,&quot;value&quot;:0.83,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;4&quot;,&quot;value&quot;:0.75,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;5&quot;,&quot;value&quot;:0.88,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;6&quot;,&quot;value&quot;:0.62,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;7&quot;,&quot;value&quot;:0.69,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;8&quot;,&quot;value&quot;:0.41,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false}],&quot;key&quot;:&quot;PULSE&quot;,&quot;max&quot;:1,&quot;min&quot;:null,&quot;xTicks&quot;:true,&quot;yTicks&quot;:true,&quot;xGrid&quot;:true,&quot;yGrid&quot;:true,&quot;vertical&quot;:true,&quot;groups&quot;:[],&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[{&quot;at&quot;:0.57,&quot;axis&quot;:&quot;y&quot;,&quot;text&quot;:&quot;no-ID line 0.57&quot;,&quot;style&quot;:&quot;muted&quot;,&quot;position&quot;:&quot;start&quot;},{&quot;at&quot;:0.67,&quot;axis&quot;:&quot;y&quot;,&quot;text&quot;:&quot;mean 0.67 — the pass gets a name&quot;,&quot;dashed&quot;:false,&quot;position&quot;:&quot;start&quot;}],&quot;callouts&quot;:[]}" role="img" aria-label="Bar chart of eight pulses in one pass, confidences from 0.41 to 0.88, with the no-ID line at 0.57 and the mean at 0.67 marked. Pulses 1 and 8 fall below the no-ID line; the mean clears it."></canvas></div><noscript><table class="chart-table"><caption>PULSE</caption><tbody><tr><th scope="row">1</th><td>0.44</td></tr><tr><th scope="row">2</th><td>0.71</td></tr><tr><th scope="row">3</th><td>0.83</td></tr><tr><th scope="row">4</th><td>0.75</td></tr><tr><th scope="row">5</th><td>0.88</td></tr><tr><th scope="row">6</th><td>0.62</td></tr><tr><th scope="row">7</th><td>0.69</td></tr><tr><th scope="row">8</th><td>0.41</td></tr></tbody></table></noscript><figcaption>Calls are found one at a time; the verdict is taken over all of them. Two of these eight pulses sit below the no-ID line on their own and neither is thrown away — the pass is judged on the average. Illustrative, at the real thresholds.</figcaption></figure>
 <p>A pass gets a name only if the <strong>mean raw confidence across its pulses clears
@@ -213,7 +213,7 @@ cleared the bar.</li>
 <p>No ID is recorded like any other pass, rather than dropped. The list says
 “something triggered, we couldn’t tell what” instead of quietly losing evidence
 you heard yourself and watched cross the spectrogram.</p>
-<h2 id="saying-these-two-are-hard">Saying “these two are hard”<a class="heading-anchor" href="#saying-these-two-are-hard" aria-label="Link to this section">#</a></h2>
+<h2 id="saying-these-two-are-hard">Saying “these two are hard”</h2>
 <p>Some species pairs simply are not separable by ear or by model — UK <em>Myotis</em>,
 common versus soprano pipistrelle, Leisler’s versus noctule, brown versus grey
 long-eared. Each model carries its own list of these <strong>complexes</strong>, because
@@ -223,7 +223,7 @@ bats.</p>
 complex, the ID is flagged as genuinely ambiguous rather than merely hard. What
 counts as close is deliberately generous — the point is honesty, not a
 confident-looking number.</p>
-<h2 id="what-it-isnt">What it isn’t<a class="heading-anchor" href="#what-it-isnt" aria-label="Link to this section">#</a></h2>
+<h2 id="what-it-isnt">What it isn’t</h2>
 <p>A species ID from OpenBat is a suggestion — treat it as a knowledgeable
 friend’s guess, not a verified record. It can be confidently wrong, particularly
 inside a complex.</p>

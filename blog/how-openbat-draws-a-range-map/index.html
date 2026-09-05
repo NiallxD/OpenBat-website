@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.33">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.34">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -123,7 +123,7 @@ species the app’s on-device identification is willing to consider where you ar
 standing. A range map that is wrong in the wrong direction doesn’t just look
 odd — it switches a resident bat off.</p>
 <p>Here is what those maps are made of, and what has to be assumed to draw one.</p>
-<h2 id="the-raw-material">The raw material<a class="heading-anchor" href="#the-raw-material" aria-label="Link to this section">#</a></h2>
+<h2 id="the-raw-material">The raw material</h2>
 <p>Every range comes from <a href="https://www.gbif.org/">GBIF</a>, the global pool of
 biodiversity occurrence records — museum specimens, survey data, ringing
 records, verified citizen-science sightings. For each species the app can name,
@@ -147,7 +147,7 @@ hand you one large national dataset and leave real parts of a range looking
 empty. GBIF will instead count <em>every</em> record it holds into a grid — all 3.2
 million common pipistrelles — which is both a truer picture and a smaller
 answer.</p>
-<h2 id="the-assumption-everything-hinges-on">The assumption everything hinges on<a class="heading-anchor" href="#the-assumption-everything-hinges-on" aria-label="Link to this section">#</a></h2>
+<h2 id="the-assumption-everything-hinges-on">The assumption everything hinges on</h2>
 <p><strong>A record is evidence a person was there and filed something, not evidence a
 bat was there and no bat was anywhere else.</strong> Absence of records is not absence
 of bats.</p>
@@ -169,7 +169,7 @@ cells on their own and every one of them fails: the range stops dead on the
 an isolated cluster at 20 and an entire island population disappears, two
 records short.</li>
 </ul>
-<h2 id="buffer-bridge-then-judge">Buffer, bridge, then judge<a class="heading-anchor" href="#buffer-bridge-then-judge" aria-label="Link to this section">#</a></h2>
+<h2 id="buffer-bridge-then-judge">Buffer, bridge, then judge</h2>
 <p>Same ingredients, different order.</p>
 <ol>
 <li><strong>Buffer</strong> — every cell holding a record grows by one cell in each
@@ -212,12 +212,12 @@ say the first and should never be handed the second by accident.</p>
   <a href="/static/images/range-common-pipistrelle.webp"><img src="/static/images/range-common-pipistrelle.webp" alt="Three maps of the common pipistrelle: raw records across Europe and Asia, seven outliers ringed in red in the Americas, India and east Africa, and the final range." loading="lazy"></a>
   <figcaption>The common pipistrelle, 3.2 million records — and seven single cells scattered across the Americas, India and east Africa, each holding one to four of them. Those are the middle step's whole job: eight groups in, one group out.</figcaption>
 </figure>
-<h2 id="what-that-adds-up-to">What that adds up to<a class="heading-anchor" href="#what-that-adds-up-to" aria-label="Link to this section">#</a></h2>
+<h2 id="what-that-adds-up-to">What that adds up to</h2>
 <p>Across the 48 species the app can name, these rules add <strong>15,483 cells</strong> of
 range compared with judging cells one at a time. What they take away is small
 and deliberate: the largest group dropped anywhere holds 2 cells and 15
 records, and 87 of the 133 dropped are a single cell holding a single record.</p>
-<h2 id="how-it-reaches-the-app">How it reaches the app<a class="heading-anchor" href="#how-it-reaches-the-app" aria-label="Link to this section">#</a></h2>
+<h2 id="how-it-reaches-the-app">How it reaches the app</h2>
 <p>The range data ships <strong>inside</strong> the app and is refreshed from the
 <a href="https://github.com/NiallxD/OpenBat-FieldGuide">field guide repository</a> at
 launch, so a corrected range reaches every install without an app update — and a
@@ -231,7 +231,7 @@ inference and shouldn’t pretend otherwise.</p>
 <p>The identification engine reads the same grid, and distinguishes three answers
 rather than two: present, absent, and <em>unknown</em>. A species with no data is not
 a species that isn’t there, and the app says so.</p>
-<h2 id="what-it-still-cant-tell-you">What it still can’t tell you<a class="heading-anchor" href="#what-it-still-cant-tell-you" aria-label="Link to this section">#</a></h2>
+<h2 id="what-it-still-cant-tell-you">What it still can’t tell you</h2>
 <ul>
 <li><strong>There is no seasonality.</strong> GBIF’s density summaries carry no dates, so the
 app has no per-cell month information. It treats that as “no opinion” rather

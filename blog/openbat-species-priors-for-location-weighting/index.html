@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.33">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.34">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -118,7 +118,7 @@ the sound says otherwise.</p>
 <p>OpenBat gives it that context. This is the short version of one link in the
 chain described in <a href="/blog/how-openbat-decides-what-it-heard/" class="wikilink">How OpenBat Decides What It Heard</a> — the part where the
 app takes where you are standing and turns it into a set of weights.</p>
-<h2 id="the-prior">The prior<a class="heading-anchor" href="#the-prior" aria-label="Link to this section">#</a></h2>
+<h2 id="the-prior">The prior</h2>
 <p>Every species the model can name starts neutral. When the phone has a location
 fix, OpenBat looks that spot up in the range grid it ships with — the same grid
 behind the maps in <a href="/blog/how-openbat-draws-a-range-map/" class="wikilink">the field guide</a> — and gives
@@ -132,7 +132,7 @@ each species one of three weights:</p>
 are scaled back up so they still add to 1. That last step is why the winner’s
 confidence <em>rises</em>: a rival has been ruled out, so what is left divides a whole
 between fewer plausible species. Nothing about the sound changed.</p>
-<h2 id="a-worked-example">A worked example<a class="heading-anchor" href="#a-worked-example" aria-label="Link to this section">#</a></h2>
+<h2 id="a-worked-example">A worked example</h2>
 <p>Say the model hears one pulse in the UK and reports Daubenton’s at 0.38,
 Brandt’s at 0.23, common pipistrelle at 0.16, Natterer’s at 0.11, soprano
 pipistrelle at 0.08 and barbastelle at 0.04.</p>
@@ -141,7 +141,7 @@ which gets 0.01, and barbastelle, which has no data there and keeps 0.5.</p>
 <p>Multiply, renormalise, and Daubenton’s is reported at 0.51. Brandt’s has
 effectively gone. The model was never more certain than it was a moment ago —
 it simply has less competition.</p>
-<h2 id="three-rules-that-matter-more-than-the-arithmetic">Three rules that matter more than the arithmetic<a class="heading-anchor" href="#three-rules-that-matter-more-than-the-arithmetic" aria-label="Link to this section">#</a></h2>
+<h2 id="three-rules-that-matter-more-than-the-arithmetic">Three rules that matter more than the arithmetic</h2>
 <p><strong>Nothing is ever switched off.</strong> The out-of-range weight is 0.01, not zero.
 Bats stray, migrate and shift their ranges, and range maps are drawn from
 <a href="/blog/how-openbat-draws-a-range-map/">patchy records</a>. A model that is emphatic
@@ -156,12 +156,12 @@ real, confidently identified call” do the weights get a say in <em>which</em> 
 to name. If where you were standing could influence the first question, the app
 would be inventing evidence out of your own expectations — you would go looking
 for a species, and the app would agree with you.</p>
-<h2 id="what-it-doesnt-fix">What it doesn’t fix<a class="heading-anchor" href="#what-it-doesnt-fix" aria-label="Link to this section">#</a></h2>
+<h2 id="what-it-doesnt-fix">What it doesn’t fix</h2>
 <p>Location weighting separates species that don’t share a place. It does nothing
 for species that do: UK <em>Myotis</em>, common versus soprano pipistrelle, Leisler’s
 versus noctule. Those are flagged as a complex instead, and the honest answer
 there stays “one of these”.</p>
-<h2 id="where-the-location-goes">Where the location goes<a class="heading-anchor" href="#where-the-location-goes" aria-label="Link to this section">#</a></h2>
+<h2 id="where-the-location-goes">Where the location goes</h2>
 <p>Nowhere. The range grid is bundled with the app, the lookup happens on the
 phone, and no coordinate is sent anywhere to produce an identification. A
 confidence figure marked <em>location-weighted</em> means the weighting was applied on

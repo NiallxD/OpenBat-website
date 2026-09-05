@@ -3386,35 +3386,11 @@ figure.image-float-left figcaption {
 
 /* ---------------------------------------------------------------
    Heading anchors
-   Every h2..h6 in markdown content gets an id and a "#" link back to
-   itself (see headingAnchorPlugin in eleventy.config.js). The mark is
-   invisible until the heading is hovered or the link is focused, and
-   scroll-margin keeps the jumped-to heading clear of the fixed header.
+   Every h2..h6 in markdown content carries an id (see headingAnchorPlugin
+   in eleventy.config.js) so sections can be linked to directly. Nothing is
+   drawn for it; scroll-margin just keeps a jumped-to heading clear of the
+   fixed header.
    --------------------------------------------------------------- */
 h2[id], h3[id], h4[id], h5[id], h6[id] {
   scroll-margin-top: calc(var(--nav-height) + 1rem);
-}
-
-.heading-anchor {
-  margin-left: 0.4em;
-  color: var(--color-muted);
-  text-decoration: none;
-  font-weight: 400;
-  opacity: 0;
-  transition: opacity 0.15s ease, color 0.15s ease;
-}
-
-:is(h2, h3, h4, h5, h6):hover > .heading-anchor,
-.heading-anchor:focus-visible {
-  opacity: 1;
-}
-
-.heading-anchor:hover {
-  color: var(--color-accent);
-  opacity: 1;
-}
-
-/* Touch devices never hover, so keep the mark permanently visible but quiet. */
-@media (hover: none) {
-  .heading-anchor { opacity: 0.35; }
 }

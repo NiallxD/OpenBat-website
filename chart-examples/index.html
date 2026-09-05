@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.33">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.34">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -117,7 +117,7 @@ every chart follows the theme toggle. <code>style: &quot;secondary&quot;</code> 
 <li><strong>No backslash escapes.</strong> Nunjucks takes <code>–</code> literally — paste the real
 character.</li>
 </ul>
-<h2 id="bars-from-zero">Bars from zero<a class="heading-anchor" href="#bars-from-zero" aria-label="Link to this section">#</a></h2>
+<h2 id="bars-from-zero">Bars from zero</h2>
 <p>The default, and most of them. <code>note</code> is the text beside the bar, <code>highlight</code>
 marks the row the figure exists to make.</p>
 <figure class="chart"><div class="chart-canvas" style="height:192px"><canvas data-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;bars&quot;:[{&quot;label&quot;:&quot;Noctule&quot;,&quot;value&quot;:100,&quot;note&quot;:&quot;100 m&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Serotine&quot;,&quot;value&quot;:40,&quot;note&quot;:&quot;40 m&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Common pipistrelle&quot;,&quot;value&quot;:25,&quot;note&quot;:&quot;25 m&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Brown long-eared&quot;,&quot;value&quot;:6,&quot;note&quot;:&quot;6 m&quot;,&quot;highlight&quot;:true}],&quot;key&quot;:&quot;HOW FAR AWAY A DETECTOR HEARS EACH ONE, IN METRES&quot;,&quot;max&quot;:null,&quot;min&quot;:null,&quot;xTicks&quot;:true,&quot;yTicks&quot;:true,&quot;xGrid&quot;:true,&quot;yGrid&quot;:true,&quot;vertical&quot;:false,&quot;groups&quot;:[],&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Bar chart, every bar drawn to the same scale: Noctule, 100 m; Serotine, 40 m; Common pipistrelle, 25 m; Brown long-eared, 6 m."></canvas></div><noscript><table class="chart-table"><caption>HOW FAR AWAY A DETECTOR HEARS EACH ONE, IN METRES</caption><tbody><tr><th scope="row">Noctule</th><td>100 m</td></tr><tr><th scope="row">Serotine</th><td>40 m</td></tr><tr><th scope="row">Common pipistrelle</th><td>25 m</td></tr><tr class="is-highlight"><th scope="row">Brown long-eared</th><td>6 m</td></tr></tbody></table></noscript><figcaption>A caption sits under the figure.</figcaption></figure>
@@ -134,7 +134,7 @@ marks the row the figure exists to make.</p>
 </code></pre>
 <p><code>{% barChart %}</code> is the same shortcode under its original
 name, kept because bars are most of them.</p>
-<h2 id="floating-bars-a-range">Floating bars — a range<a class="heading-anchor" href="#floating-bars-a-range" aria-label="Link to this section">#</a></h2>
+<h2 id="floating-bars-a-range">Floating bars — a range</h2>
 <p><code>from</code>/<code>to</code> instead of <code>value</code>. Use this whenever the figure is a <em>range</em>:
 drawing “70 to 100” from zero says something quite different.</p>
 <figure class="chart"><div class="chart-canvas" style="height:192px"><canvas data-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;bars&quot;:[{&quot;label&quot;:&quot;Common pipistrelle&quot;,&quot;from&quot;:43,&quot;to&quot;:49,&quot;note&quot;:&quot;43–49&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Soprano pipistrelle&quot;,&quot;from&quot;:53,&quot;to&quot;:59,&quot;note&quot;:&quot;53–59&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Nathusius' pipistrelle&quot;,&quot;from&quot;:36,&quot;to&quot;:42,&quot;note&quot;:&quot;36–42&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;Noctule&quot;,&quot;from&quot;:18,&quot;to&quot;:26,&quot;note&quot;:&quot;18–26&quot;,&quot;highlight&quot;:true}],&quot;key&quot;:&quot;PEAK FREQUENCY, KILOHERTZ&quot;,&quot;max&quot;:null,&quot;min&quot;:null,&quot;xTicks&quot;:true,&quot;yTicks&quot;:true,&quot;xGrid&quot;:true,&quot;yGrid&quot;:true,&quot;vertical&quot;:false,&quot;groups&quot;:[],&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Bar chart, every bar drawn to the same scale: Common pipistrelle, 43–49; Soprano pipistrelle, 53–59; Nathusius' pipistrelle, 36–42; Noctule, 18–26."></canvas></div><noscript><table class="chart-table"><caption>PEAK FREQUENCY, KILOHERTZ</caption><tbody><tr><th scope="row">Common pipistrelle</th><td>43–49</td></tr><tr><th scope="row">Soprano pipistrelle</th><td>53–59</td></tr><tr><th scope="row">Nathusius' pipistrelle</th><td>36–42</td></tr><tr class="is-highlight"><th scope="row">Noctule</th><td>18–26</td></tr></tbody></table></noscript><figcaption>Overlapping ranges are the whole point — a floating bar shows the overlap, a bar from zero hides it.</figcaption></figure>
@@ -149,7 +149,7 @@ drawing “70 to 100” from zero says something quite different.</p>
   ]
 } %}
 </code></pre>
-<h2 id="styles-and-the-very-small-number">Styles, and the very small number<a class="heading-anchor" href="#styles-and-the-very-small-number" aria-label="Link to this section">#</a></h2>
+<h2 id="styles-and-the-very-small-number">Styles, and the very small number</h2>
 <p><code>style: &quot;secondary&quot;</code> and <code>style: &quot;muted&quot;</code> push a row back. <code>minBarLength</code> keeps
 a true-but-tiny value visible as a sliver rather than rounding it to nothing —
 that behaviour is automatic, and it is why the rabid-bats row below is still
@@ -165,7 +165,7 @@ there at all.</p>
   ]
 } %}
 </code></pre>
-<h2 id="vertical-bars">Vertical bars<a class="heading-anchor" href="#vertical-bars" aria-label="Link to this section">#</a></h2>
+<h2 id="vertical-bars">Vertical bars</h2>
 <p><code>vertical: true</code>. For when the category is an ordinal the reader scans left to
 right — pulse 1 to 8, a month, a step in a sequence. Species names and other
 long labels want the default sideways bars, where there is room for them.</p>
@@ -188,7 +188,7 @@ axis is y, so <code>yTicks</code> and <code>max</code> apply to it and a thresho
   ]
 } %}
 </code></pre>
-<h2 id="lines">Lines<a class="heading-anchor" href="#lines" aria-label="Link to this section">#</a></h2>
+<h2 id="lines">Lines</h2>
 <p><code>type: &quot;line&quot;</code>, with <code>labels</code> for the x axis and one or more <code>series</code>.</p>
 <p><strong><code>yTicks</code> is off by default and that is deliberate.</strong> Several of these figures
 are shapes rather than measurements — a season, a night, a trade-off. Numbers
@@ -207,7 +207,7 @@ on the axis would invite reading values nobody claimed. Turn them on with
   marks: [{ at: &quot;1&quot;, text: &quot;peak emergence&quot; }]
 } %}
 </code></pre>
-<h3 id="series-options">Series options<a class="heading-anchor" href="#series-options" aria-label="Link to this section">#</a></h3>
+<h3 id="series-options">Series options</h3>
 <p><code>dashed: true</code> for a dashed line, <code>fill: true</code> to shade to the baseline,
 <code>curve: false</code> for straight segments, <code>points: true</code> to mark each value, and
 <code>legend: false</code> to drop the key when the lines are labelled some other way.</p>
@@ -224,7 +224,7 @@ on the axis would invite reading values nobody claimed. Turn them on with
   ]
 } %}
 </code></pre>
-<h3 id="stepped-lines">Stepped lines<a class="heading-anchor" href="#stepped-lines" aria-label="Link to this section">#</a></h3>
+<h3 id="stepped-lines">Stepped lines</h3>
 <p><code>stepped: true</code>. A step is a thing that happened at a moment — an arousal, a
 threshold crossing. Smoothing it would draw a gradual change the data does not
 claim.</p>
@@ -240,7 +240,7 @@ claim.</p>
   ]
 } %}
 </code></pre>
-<h2 id="scatter">Scatter<a class="heading-anchor" href="#scatter" aria-label="Link to this section">#</a></h2>
+<h2 id="scatter">Scatter</h2>
 <p><code>type: &quot;scatter&quot;</code>, with <code>{x, y}</code> data. <code>line: true</code> joins the points,
 <code>points: true</code> is implied.</p>
 <figure class="chart"><div class="chart-canvas" style="height:320px"><canvas data-chart="{&quot;type&quot;:&quot;scatter&quot;,&quot;labels&quot;:[],&quot;series&quot;:[{&quot;name&quot;:&quot;Common pipistrelle&quot;,&quot;data&quot;:[{&quot;x&quot;:5.2,&quot;y&quot;:45},{&quot;x&quot;:6.1,&quot;y&quot;:46},{&quot;x&quot;:5.8,&quot;y&quot;:44},{&quot;x&quot;:6.9,&quot;y&quot;:47},{&quot;x&quot;:4.9,&quot;y&quot;:45},{&quot;x&quot;:6.4,&quot;y&quot;:43}]},{&quot;name&quot;:&quot;Soprano pipistrelle&quot;,&quot;data&quot;:[{&quot;x&quot;:4.8,&quot;y&quot;:55},{&quot;x&quot;:5.5,&quot;y&quot;:56},{&quot;x&quot;:5.1,&quot;y&quot;:54},{&quot;x&quot;:6.2,&quot;y&quot;:57},{&quot;x&quot;:4.4,&quot;y&quot;:55},{&quot;x&quot;:5.9,&quot;y&quot;:58}],&quot;style&quot;:&quot;secondary&quot;}],&quot;key&quot;:&quot;CALL DURATION, MILLISECONDS&quot;,&quot;yKey&quot;:&quot;PEAK FREQUENCY, KILOHERTZ&quot;,&quot;yTicks&quot;:true,&quot;xTicks&quot;:true,&quot;yGrid&quot;:true,&quot;legend&quot;:true,&quot;beginAtZero&quot;:true,&quot;marks&quot;:[{&quot;at&quot;:6,&quot;text&quot;:&quot;6 ms&quot;}],&quot;bands&quot;:[],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Scatter chart. Common pipistrelle against Soprano pipistrelle, across call duration, milliseconds."></canvas></div><noscript><table class="chart-table"><caption>CALL DURATION, MILLISECONDS</caption><tbody><tr><th scope="row">Common pipistrelle</th><td>6 points</td></tr><tr><th scope="row">Soprano pipistrelle</th><td>6 points</td></tr></tbody></table></noscript><figcaption>Two species that overlap on either axis alone, and separate on both together.</figcaption></figure>
@@ -260,15 +260,15 @@ claim.</p>
   marks: [{ at: 6, text: &quot;6 ms&quot; }]
 } %}
 </code></pre>
-<h2 id="annotations">Annotations<a class="heading-anchor" href="#annotations" aria-label="Link to this section">#</a></h2>
+<h2 id="annotations">Annotations</h2>
 <p>Four kinds, and they work on bars, lines and scatters alike.</p>
-<h3 id="marks-a-labelled-vertical">marks — a labelled vertical<a class="heading-anchor" href="#marks-a-labelled-vertical" aria-label="Link to this section">#</a></h3>
+<h3 id="marks-a-labelled-vertical">marks — a labelled vertical</h3>
 <p>The original, and still the shortest thing to type when you want one dashed
 vertical. <code>at</code> is a category label on a line chart, a number on a scatter. Keep
 them away from the plot edges, where the label has nowhere to go.</p>
 <pre><code>marks: [{ at: &quot;Mar&quot;, text: &quot;sunset&quot; }]
 </code></pre>
-<h3 id="lines-a-reference-line-on-either-axis">lines — a reference line on either axis<a class="heading-anchor" href="#lines-a-reference-line-on-either-axis" aria-label="Link to this section">#</a></h3>
+<h3 id="lines-a-reference-line-on-either-axis">lines — a reference line on either axis</h3>
 <p>What <code>marks</code> cannot do: a horizontal one. <code>axis: &quot;y&quot;</code> for horizontal,
 <code>axis: &quot;x&quot;</code> (the default) for vertical, <code>dashed: false</code> for a solid rule, and
 <code>position: &quot;start&quot; | &quot;center&quot; | &quot;end&quot;</code> to move the label along the line when
@@ -279,7 +279,7 @@ two of them would otherwise collide.</p>
   { at: &quot;5&quot;, text: &quot;microphone replaced&quot;, style: &quot;secondary&quot;, position: &quot;start&quot; }
 ]
 </code></pre>
-<h3 id="bands-a-shaded-region">bands — a shaded region<a class="heading-anchor" href="#bands-a-shaded-region" aria-label="Link to this section">#</a></h3>
+<h3 id="bands-a-shaded-region">bands — a shaded region</h3>
 <p><code>from</code>/<code>to</code> on either axis. For a season, a tolerance window, a hold-off — a
 region that means something rather than a line that does.</p>
 <figure class="chart"><div class="chart-canvas" style="height:320px"><canvas data-chart="{&quot;type&quot;:&quot;line&quot;,&quot;labels&quot;:[&quot;Oct&quot;,&quot;Nov&quot;,&quot;Dec&quot;,&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;],&quot;series&quot;:[{&quot;name&quot;:&quot;Activity&quot;,&quot;data&quot;:[42,18,4,2,3,12,38,64]}],&quot;key&quot;:&quot;MONTH&quot;,&quot;yKey&quot;:&quot;ACTIVITY&quot;,&quot;yTicks&quot;:false,&quot;xTicks&quot;:true,&quot;yGrid&quot;:true,&quot;legend&quot;:false,&quot;beginAtZero&quot;:true,&quot;marks&quot;:[],&quot;bands&quot;:[{&quot;from&quot;:&quot;Nov&quot;,&quot;to&quot;:&quot;Mar&quot;,&quot;text&quot;:&quot;hibernation&quot;,&quot;style&quot;:&quot;muted&quot;},{&quot;from&quot;:&quot;Apr&quot;,&quot;to&quot;:&quot;May&quot;,&quot;text&quot;:&quot;spring — insects return&quot;,&quot;style&quot;:&quot;secondary&quot;}],&quot;lines&quot;:[],&quot;callouts&quot;:[]}" role="img" aria-label="Line chart. Activity, across month."></canvas></div><noscript><table class="chart-table"><caption>MONTH</caption><tbody><tr><th scope="row">Activity</th><td>Oct, Nov, Dec, Jan, Feb, Mar, Apr, May</td></tr></tbody></table></noscript><figcaption>Bands sit behind the data, so they never hide it.</figcaption></figure>
@@ -291,7 +291,7 @@ region that means something rather than a line that does.</p>
 <p>A band on the value axis instead — <code>axis: &quot;y&quot;</code>, <code>from</code>/<code>to</code> as numbers:</p>
 <pre><code>bands: [{ from: 43, to: 49, axis: &quot;y&quot;, text: &quot;pipistrelle range&quot;, style: &quot;muted&quot; }]
 </code></pre>
-<h3 id="callouts-text-with-an-optional-arrow">callouts — text, with an optional arrow<a class="heading-anchor" href="#callouts-text-with-an-optional-arrow" aria-label="Link to this section">#</a></h3>
+<h3 id="callouts-text-with-an-optional-arrow">callouts — text, with an optional arrow</h3>
 <p><code>x</code>/<code>y</code> place the text in data coordinates. <code>arrowTo</code> draws a leader line to
 the thing it is talking about. <code>wrap</code> sets the characters per line (26 by
 default), <code>align</code> is <code>&quot;left&quot;</code>, <code>&quot;center&quot;</code> or <code>&quot;right&quot;</code>.</p>
@@ -303,7 +303,7 @@ default), <code>align</code> is <code>&quot;left&quot;</code>, <code>&quot;cente
     arrowTo: { x: &quot;Mar&quot;, y: 4 } }
 ]
 </code></pre>
-<h2 id="panels-several-charts-as-one-figure">Panels — several charts as one figure<a class="heading-anchor" href="#panels-several-charts-as-one-figure" aria-label="Link to this section">#</a></h2>
+<h2 id="panels-several-charts-as-one-figure">Panels — several charts as one figure</h2>
 <p>Wrap charts in <code>{% panels %}</code> and they become columns of a
 single bordered figure. Use it when the comparison <em>between</em> the charts is the
 point and the eye needs to cross between them — “heard, then weighted, then
@@ -334,7 +334,7 @@ them, and they can only do that honestly if the scales agree.</p>
 <p><strong>Turn the value axis off when every bar carries its own number.</strong> With <code>note</code>
 on each row the scale behind them is just noise, so panels usually want
 <code>xTicks: false, xGrid: false</code> — the pinned <code>max</code> still does its job unseen.</p>
-<h2 id="log-scale-colour-groups-and-many-bars">Log scale, colour groups, and many bars<a class="heading-anchor" href="#log-scale-colour-groups-and-many-bars" aria-label="Link to this section">#</a></h2>
+<h2 id="log-scale-colour-groups-and-many-bars">Log scale, colour groups, and many bars</h2>
 <p>Three options that only earn their place on a big figure: <code>scale: &quot;log&quot;</code> for a
 spread of several orders of magnitude, <code>groups</code> for a legend when <code>style</code> is
 carrying a meaning, and <code>notes: false</code> to drop the per-bar numbers when there
@@ -364,7 +364,7 @@ chart) and let a few <code>callouts</code> name the ones that matter.</p>
 <p><code>groups</code> only draws the key — each bar still picks its own colour with
 <code>highlight</code> / <code>style</code>, so the two have to be kept in step by hand. <code>min</code> is
 required on a log scale, because a log axis cannot start at zero.</p>
-<h2 id="everything-else">Everything else<a class="heading-anchor" href="#everything-else" aria-label="Link to this section">#</a></h2>
+<h2 id="everything-else">Everything else</h2>
 <p>Options that apply to any chart:</p>
 <table>
 <thead>
@@ -424,7 +424,7 @@ required on a log scale, because a log axis cannot start at zero.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="what-is-not-a-chart">What is not a chart<a class="heading-anchor" href="#what-is-not-a-chart" aria-label="Link to this section">#</a></h2>
+<h2 id="what-is-not-a-chart">What is not a chart</h2>
 <p>The test is whether the figure has numbers behind it. If it does, it is a
 <code>chart</code>. If it is a diagram of how something is <em>arranged</em> — a pipeline, a
 five-layer stack, a plan view of a field, a call sweep whose annotations are
