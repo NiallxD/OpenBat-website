@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OpenBat Species Priors for Location Weighting — OpenBat</title>
-  <meta name="description" content="The short version of how OpenBat uses where you are standing to weight a species identification — the three weights, what they do to a score, and the question they are never allowed to answer.">
+  <title>The Models OpenBat Uses — OpenBat</title>
+  <meta name="description" content="OpenBat doesn&#39;t have &quot;an AI&quot; — it ships two published classifiers, NABat ML for North America and BatDetect2 for the UK, and only one runs at a time. What each is, how they differ, and why their numbers can&#39;t be compared.">
   
   <!-- Privacy & Security -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://upload.wikimedia.org; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; frame-src https://docs.google.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="OpenBat">
-  <meta property="og:title" content="OpenBat Species Priors for Location Weighting — OpenBat">
-  <meta property="og:description" content="The short version of how OpenBat uses where you are standing to weight a species identification — the three weights, what they do to a score, and the question they are never allowed to answer.">
+  <meta property="og:title" content="The Models OpenBat Uses — OpenBat">
+  <meta property="og:description" content="OpenBat doesn&#39;t have &quot;an AI&quot; — it ships two published classifiers, NABat ML for North America and BatDetect2 for the UK, and only one runs at a time. What each is, how they differ, and why their numbers can&#39;t be compared.">
   
   <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
@@ -102,71 +102,46 @@
   
   <header class="post-header">
     <p class="section-label"><a href="/blog/" class="post-back">← Blog</a></p>
-    <h1>OpenBat Species Priors for Location Weighting</h1>
-    <p class="page-lead">The short version of how OpenBat uses where you are standing to weight a species identification — the three weights, what they do to a score, and the question they are never allowed to answer.</p>
+    <h1>The Models OpenBat Uses</h1>
+    <p class="page-lead">OpenBat doesn&#39;t have &quot;an AI&quot; — it ships two published classifiers, NABat ML for North America and BatDetect2 for the UK, and only one runs at a time. What each is, how they differ, and why their numbers can&#39;t be compared.</p>
     <div class="post-meta">
       <time datetime="2026-09-05">5 September 2026</time>
       <span class="post-author">Niall Bell</span>
-      <span class="tag">auto-id</span><span class="tag">classifier</span><span class="tag">range-maps</span>
+      <span class="tag">auto-id</span><span class="tag">classifier</span><span class="tag">machine-learning</span>
     </div>
   </header>
   
 
-  <div class="post-content"><p>A classifier has no idea where it is. Show one a recording of a bat and it will
-happily offer you a species from the other side of the world, because nothing in
-the sound says otherwise.</p>
-<p>OpenBat gives it that context. This is the short version of one link in the
-chain described in <a href="/blog/how-openbat-decides-what-it-heard/" class="wikilink">How OpenBat Decides What It Heard</a> — the part where the
-app takes where you are standing and turns it into a set of weights.</p>
-<h2 id="the-prior">The prior</h2>
-<p>Every species the model can name starts neutral. When the phone has a location
-fix, OpenBat looks that spot up in the range grid it ships with — the same grid
-behind the maps in <a href="/blog/how-openbat-draws-a-range-map/" class="wikilink">the field guide</a> — and gives
-each species one of three weights:</p>
-<ul>
-<li><strong>1.0</strong> — the species’ range covers where you are.</li>
-<li><strong>0.5</strong> — the grid has nothing to say about this species here.</li>
-<li><strong>0.01</strong> — you are well outside the species’ range.</li>
-</ul>
-<p>The model’s score for each species is multiplied by its weight, and the results
-are scaled back up so they still add to 1. That last step is why the winner’s
-confidence <em>rises</em>: a rival has been ruled out, so what is left divides a whole
-between fewer plausible species. Nothing about the sound changed.</p>
-<h2 id="a-worked-example">A worked example</h2>
-<p>Say the model hears one pulse in the UK and reports Daubenton’s at 0.38,
-Brandt’s at 0.23, common pipistrelle at 0.16, Natterer’s at 0.11, soprano
-pipistrelle at 0.08 and barbastelle at 0.04.</p>
-<p>At your location the grid puts every one of those in range except Brandt’s,
-which gets 0.01, and barbastelle, which has no data there and keeps 0.5.</p>
-<p>Multiply, renormalise, and Daubenton’s is reported at 0.51. Brandt’s has
-effectively gone. The model was never more certain than it was a moment ago —
-it simply has less competition.</p>
-<h2 id="three-rules-that-matter-more-than-the-arithmetic">Three rules that matter more than the arithmetic</h2>
-<p><strong>Nothing is ever switched off.</strong> The out-of-range weight is 0.01, not zero.
-Bats stray, migrate and shift their ranges, and range maps are drawn from
-<a href="/blog/how-openbat-draws-a-range-map/">patchy records</a>. A model that is emphatic
-enough about a species can still get it named a long way outside where it is
-supposed to be — which is exactly the record you would want to keep.</p>
-<p><strong>“I don’t know” is not “not here.”</strong> A species with no range data keeps half
-weight and stays in the running, and the app says plainly that it is unconfirmed
-rather than presenting a guess as a fact.</p>
-<p><strong>The weights never decide whether it was a bat.</strong> That question is settled
-first, on the model’s own unweighted scores. Only once those say “this is a
-real, confidently identified call” do the weights get a say in <em>which</em> species
-to name. If where you were standing could influence the first question, the app
-would be inventing evidence out of your own expectations — you would go looking
-for a species, and the app would agree with you.</p>
-<h2 id="what-it-doesnt-fix">What it doesn’t fix</h2>
-<p>Location weighting separates species that don’t share a place. It does nothing
-for species that do: UK <em>Myotis</em>, common versus soprano pipistrelle, Leisler’s
-versus noctule. Those are flagged as a complex instead, and the honest answer
-there stays “one of these”.</p>
-<h2 id="where-the-location-goes">Where the location goes</h2>
-<p>Nowhere. The range grid is bundled with the app, the lookup happens on the
-phone, and no coordinate is sent anywhere to produce an identification. A
-confidence figure marked <em>location-weighted</em> means the weighting was applied on
-your device from a fix your device already had. Without a fix, no weighting is
-applied at all and you see the model’s raw opinion.</p>
+  <div class="post-content"><p>OpenBat doesn’t have “an AI”. It does however include two, separate, published models built by other people. The model you use depends on where you are.</p>
+<p>This is the short version or how these model outputs are actually turned into an ID suggestion. For the details, checkout <a href="/blog/how-openbat-decides-what-it-heard/" class="wikilink">How OpenBat Decides What It Heard</a>.</p>
+<h2 id="the-current-models">The current models</h2>
+<p>OpenBat currently includes two models, and has been built to allow new models to be added over time:</p>
+<p><strong>NABat ML</strong> covers North America. It was developed by researchers at the USGS North American Bat Monitoring Program and is the continental standard for acoustic bat monitoring. It has been trained to identify 30 North American/Canadian bat species, plus an explicit NOISE class for things that aren’t bats. Licensed CC BY 4.0.</p>
+<p><strong>BatDetect2</strong> covers the United Kingdom. It comes from the University of Edinburgh, knows 17 UK species, and is licensed CC BY-NC 4.0 — non-commercial. It is still marked <strong>beta</strong> in the app.</p>
+<p>Only one model runs at a time and the app suggests the best option for your current location.</p>
+<h2 id="they-are-not-interchangeable">They are not interchangeable</h2>
+<p>The models were trained on different recordings, expect different lengths of audio,
+and know entirely different species. Each model works in it’s own way, accepts different ‘shaped’ audio, and produces their own scores, independently of other model methodology.</p>
+<p>Something to keep in mind on the scores:</p>
+<p><strong>Confidence is not comparable between the two.</strong> BatDetect2 tends to produce
+far higher confidence numbers, so 70% from BatDectect2 and 70% from NABat ML does not mean the same thing. Each model has its own cut-off for whether to offer an ID on a call: 57% for NABat ML, 40% for BatDetect2. The difference here reflected the ‘character’ of each model.</p>
+<p>The practical consequence: <strong>the model name is part of the result.</strong> If you are
+reporting an identification anywhere serious, say which model produced it.</p>
+<h2 id="why-not-one-model-for-everywhere">Why not one model for everywhere?</h2>
+<p>Because it doesn’t exist, and building it would be a research programme rather than an app feature.</p>
+<p>A classifier, the proper term for a model which classifies inputs, can only recognise species it was trained on, and training needs a large library of recordings verified by people who know what they are listening to. Those libraries are created over time, one region at a time, and reflect the activity of machine learning experts and researcher.</p>
+<p>It’s worth noting here that, while OpenBat only currently supports North America and the UK, the app can still be used elsewhere. OpenBat is a bat detector and field guide app first, with autoID and community science as additional features. You can download the app, learn about bats, and listen to them in real time (if you have a compatible microphone).</p>
+<h2 id="what-beta-means-on-batdetect2">What “beta” means on BatDetect2</h2>
+<p>Not that the model is bad, it is published research and performs well.</p>
+<p>The beta tag is ours, and we have it there because we have not yet tested how it behaves in the real world alongside our app. We are based in North America and until we distribute the app in the UK, we can’t get the data we need to assess how well the pieces (our app and the BatDetect2 Model) work together.</p>
+<p>So the beta label is about our confidence in the integration, not a judgement on the research. Once we have had time to test and collect data, we will assess how well it fits the app, and we can amend things from there.</p>
+<div class="callout callout-note"><div class="callout-title">If you know of a model</div><div class="callout-body"><p>If there is a published, open classifier for a region we don’t cover, we would
+genuinely love to hear about it. It turns a whole region from “detector” into
+“detector plus identification” in one go.</p></div></div>
+<h2 id="location-is-key">Location is key</h2>
+<p>These models are trained to classify species in a given region, and as we know, not all species are found in all parts of that region. This is a real weakness of using classifiers to identify species with geographic nuance. It’s the same for birds too!</p>
+<p>Neither model knows anything about where you are standing. That is a separate
+step, described in <a href="/blog/how-openbat-weighs-scores-by-location/" class="wikilink">How OpenBat Weighs Scores By Location</a>. In short, we use a range map generated from community science data to understand where a species has been seen before. We then use this to filter out those species from the model outputs in real time so that you only see suggestions of identification for species knowing to be present where you currently are. There is some nuance to this, so check the linked article for more details.</p>
 </div>
   
 
@@ -176,14 +151,14 @@ applied at all and you see the model’s raw opinion.</p>
     <p class="section-label">Read more</p>
     <div class="post-grid">
       
-      <a href="/blog/the-two-models-openbat-uses/" class="post-card">
+      <a href="/blog/how-openbat-weighs-scores-by-location/" class="post-card">
         
         <div class="post-card-body">
-          <h2>The Two Models OpenBat Uses</h2>
+          <h2>How OpenBat Weighs Scores By Location</h2>
           <div class="post-card-meta">
             <time datetime="2026-09-05">5 September 2026</time>
           </div>
-          <p class="post-card-desc">OpenBat ships two published classifiers rather than one of its own — NABat ML for North America, BatDetect2 for the UK. Only one runs at a time, and their confidence figures mean different things.</p>
+          <p class="post-card-desc">A classifier has no idea where it is. OpenBat gives it one, by weighting every species against the range map for the spot you are standing in — and by being careful about what that weighting is allowed to decide.</p>
         </div>
       </a>
       
@@ -199,21 +174,6 @@ applied at all and you see the model’s raw opinion.</p>
             <time datetime="2026-08-27">27 August 2026</time>
           </div>
           <p class="post-card-desc">The chain that turns a burst of ultrasound into a species name — pulse detection, a short window of audio, an on-device model, and the gates that let it say &quot;no idea&quot;.</p>
-        </div>
-      </a>
-      
-      <a href="/blog/how-openbat-draws-a-range-map/" class="post-card">
-        
-        <div class="post-card-img">
-          <img src="/static/images/range-cover.webp" alt="" loading="lazy">
-        </div>
-        
-        <div class="post-card-body">
-          <h2>How OpenBat Draws a Range Map</h2>
-          <div class="post-card-meta">
-            <time datetime="2026-08-27">27 August 2026</time>
-          </div>
-          <p class="post-card-desc">Where the distribution maps come from, what has to be assumed to draw one, and why the rules are careful not to delete real range at the edges.</p>
         </div>
       </a>
       
