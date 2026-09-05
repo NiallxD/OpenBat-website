@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.22">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.32">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -71,16 +71,12 @@
         <a href="/help/">Help</a>
         
         
-        
-        <a href="/privacy/">Privacy</a>
-        
-        
-        
-        <a href="/contact/">Contact</a>
-        
-        
       </nav>
       <div class="header-controls">
+        <a class="nav-download-btn" href="https://apps.apple.com/gb/app/openbat/id6787886621" aria-label="Download OpenBat on the App Store">
+          <svg class="nav-download-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M11.18 8.34c-.02-1.72 1.4-2.55 1.47-2.59-.8-1.17-2.05-1.33-2.49-1.35-1.06-.11-2.07.62-2.6.62-.54 0-1.36-.61-2.24-.59-1.15.02-2.21.67-2.8 1.7-1.19 2.07-.3 5.13.86 6.81.57.82 1.25 1.74 2.14 1.71.86-.04 1.19-.56 2.23-.56s1.33.56 2.24.54c.93-.02 1.51-.84 2.08-1.66.65-.95.92-1.87.94-1.92-.02-.01-1.8-.69-1.83-2.74ZM9.47 3.28c.47-.58.79-1.37.7-2.17-.68.03-1.5.45-1.99 1.02-.44.51-.82 1.32-.72 2.09.76.06 1.53-.38 2.01-.94Z"/></svg>
+          <span class="nav-download-label">Download</span>
+        </a>
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
           <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
           <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
@@ -102,6 +98,7 @@
   
 
   
+  
   <div class="listing-header">
     <h1>Privacy Policy</h1>
     <p class="page-lead">What data this site and the OpenBat software collect.</p>
@@ -113,7 +110,7 @@
 <p>Last revised: 2026-08-07</p>
 </section>
 <section class="page-card"><h2>The short version</h2>
-<p>OpenBat records bats and identifies species entirely on your phone. Nothing you record is ever sent to us — there is no account, no upload, and no server of ours that your recordings, location, or audio ever reach.</p>
+<p>OpenBat records bats and identifies species entirely on your phone. Nothing you record is ever sent to us — we run no server that your recordings, location, or audio ever reach. The one thing that can leave your phone is an observation you choose to post to iNaturalist, on your own iNaturalist account, one tap at a time. That goes to iNaturalist, not to us.</p>
 <p>The app does talk to a few public, third-party reference APIs (species data, images) to help identify what you’ve recorded. One of those sends your approximate current location as part of a lookup query. None of it is tied to your identity, and none of it is collected or stored by us.</p>
 <hr>
 </section>
@@ -123,7 +120,7 @@
 </section>
 <section class="page-card"><h2>2. What stays on your phone</h2>
 <p>Recordings, sessions, and species identifications are stored locally on your device. Species identification runs entirely on-device — nothing is sent anywhere to work out what you recorded.</p>
-<p><strong>Your location never leaves your phone.</strong> It is used on-device to tag detections, to suggest the right species model for your region, to work out which species are plausible where you are, to name a session after the place it happened, and to calculate your local sunset and sunrise for the detector’s sun clock. Earlier versions sent an approximate position to GBIF for that species lookup; that no longer happens — the range data now ships inside the app.</p>
+<p><strong>Your location does not leave your phone unless you post an observation to iNaturalist.</strong> It is used on-device to tag detections, to suggest the right species model for your region, to work out which species are plausible where you are, to name a session after the place it happened, and to calculate your local sunset and sunrise for the detector’s sun clock. Earlier versions sent an approximate position to GBIF for that species lookup; that no longer happens — the range data now ships inside the app.</p>
 <p><strong>OpenBat does not record a GPS track.</strong> Sessions used to record a continuous course while detecting. That was removed: each detection already carries a coordinate and a timestamp, so a track can be rebuilt from your own exported data without the app keeping a second, denser record of your movements. The app never requests “Always” location access and never uses location in the background.</p>
 <p>If you enable iCloud sync in Settings, your recordings and sessions are backed up to <strong>your own</strong> iCloud account under Apple’s terms. We have no access to it.</p>
 </section>
@@ -151,15 +148,47 @@
 </tbody>
 </table>
 <p>These are ordinary, read-only lookups against public reference data — the same kind of request any app makes to show you information from the internet. No device identifier, account, or recording is ever attached to them, and we don’t operate or control these services.</p>
+<h3>iNaturalist — the one thing you can send</h3>
+<p>If you choose to, OpenBat can post a recording to <a href="https://www.inaturalist.org">iNaturalist</a> as an observation on <strong>your own</strong> iNaturalist account. This is entirely optional, and off unless you sign in.</p>
+<table>
+<thead>
+<tr>
+<th>What’s sent</th>
+<th>To whom</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The call audio (a slowed-down audible copy, and the trimmed original)</td>
+<td>iNaturalist</td>
+</tr>
+<tr>
+<td>A spectrogram image of the call</td>
+<td>iNaturalist</td>
+</tr>
+<tr>
+<td>The date, time and coordinates of the recording</td>
+<td>iNaturalist</td>
+</tr>
+<tr>
+<td>The species the app suggested, its confidence, and the call measurements behind it</td>
+<td>iNaturalist</td>
+</tr>
+</tbody>
+</table>
+<p>It only ever happens when you press Post on a screen that shows you all of the above first. There is no background posting, no bulk upload, and no queue that sends things later. Nothing is sent to us at any point.</p>
+<p><strong>About the location.</strong> Observations are set to <em>obscured</em> by default, which means iNaturalist receives your real coordinates but publishes only a rough area — roughly a 20 km cell — rather than the exact spot. We do this because a precise bat record can give away a roost. You can choose to publish the exact position, or to hide the location entirely, on the same screen. To be clear about what obscured does and does not mean: the position is hidden from the public, not from iNaturalist.</p>
+<p><strong>Signing in.</strong> You sign in on iNaturalist’s own web page, in a browser view OpenBat cannot read, so the app never sees your iNaturalist password. What it keeps afterwards is a revocable access token, stored in your iPhone’s Keychain. You can sign out in OpenBat’s settings, or revoke OpenBat entirely from your iNaturalist account settings, at any time.</p>
+<p>Once an observation is on iNaturalist it is governed by <a href="https://www.inaturalist.org/pages/privacy">iNaturalist’s own privacy policy</a> and terms, not ours, and it is yours to edit or delete there.</p>
 </section>
 <section class="page-card"><h2>4. Newsletter</h2>
 <p>If you sign up for the OpenBat newsletter, you’ll be taken to a Google Form, hosted by Google, outside this site. It asks for your email address only.</p>
 <p>Responses go into a Google Sheet in Niall’s personal Google Drive — subject to Google’s own privacy terms, not ours. Your email is used only to send you the newsletter, is never shared or sold, and you can ask to be removed at any time by emailing privacy@openbat.app.</p>
 </section>
-<section class="page-card page-card--half"><h2>5. What we don’t do</h2>
+<section class="page-card"><h2>5. What we don’t do</h2>
 <ul>
 <li>We don’t operate a server that receives your recordings, location, or audio.</li>
-<li>We don’t have accounts, sign-in, or device identifiers tied to you.</li>
+<li>We don’t have accounts, sign-in, or device identifiers tied to you. (The optional iNaturalist sign-in is an account with <em>iNaturalist</em>, not with us — we never see it, and nothing about it reaches us.)</li>
 <li>We don’t use analytics, crash reporting, advertising, or tracking SDKs of any kind.</li>
 <li>Outside of the newsletter form above, we don’t collect, sell, or share anything.</li>
 </ul>
@@ -167,7 +196,7 @@
 <section class="page-card page-card--half"><h2>6. Children</h2>
 <p>OpenBat is not directed at children under 13, and we do not knowingly collect personal data from anyone, regardless of age.</p>
 </section>
-<section class="page-card page-card--note"><h2>7. Changes</h2>
+<section class="page-card page-card--half"><h2>7. Changes</h2>
 <p>If this changes — for example, if a future version of the app adds a way to contribute recordings to research — we’ll update this notice first and be explicit about what’s new.</p>
 <hr>
 <p><em>Questions: privacy@openbat.app</em></p>
