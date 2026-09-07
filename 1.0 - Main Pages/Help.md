@@ -128,9 +128,15 @@ Two settings in the tuning panel control what counts as silence. **Keep above** 
 
 iNaturalist is a global community science platform that lets members of the public contribute biological observations to a shared database that researchers can use. We actually use this same database, [gbif.org](https://www.gbif.org), to power the range maps in the field guide.
 
-To get started, head out and record some bats, then pick your best recordings and export them from the player (open a session, then tap the recording). Upload the spectrogram image and the WAV file to iNaturalist, and in time other experts will help ID the species where they can, which feeds straight back into the wider dataset.
+Head out and record some bats, then open a session and tap a recording. A leaf on a row in the list means it's worth posting — gold for the strongest, green for solid, orange for usable but harder work for whoever looks at it. Rows with nothing on them are better kept for yourself.
 
-> Note: we're working on a feature to make creating iNaturalist observations easier still, one that gives you everything you need to submit and makes sure it includes everything a potential ID'er would want to see.
+Open one and choose **Add to iNaturalist** from the share button. The screen shows you exactly what will be sent before anything happens, and there are two ways to finish. If you sign in to iNaturalist, one tap posts it to your own account. If you'd rather not have an account, or you're sending the record somewhere else entirely, **Save or Share** hands you the same set of files to put in iNaturalist's website yourself — its own iPhone app can't take sound, so the website is the route that works.
+
+Either way it's the same set of files. One sound: the bat pass cut out of the recording exactly as it was captured, full spectrum and at its real speed. Then the spectrograms: the whole pass in one frame, that pass again in consecutive two-second close-ups — as many as it takes, so a longer pass gets more of them — and the single strongest call on its own with frequency and millisecond scales drawn on it, so it can be measured rather than just looked at.
+
+Nothing sent has been processed, which is the point: the sound is the evidence somebody else can re-analyse, and the pictures are what it looks like. A full-spectrum file won't play in a browser, so anyone wanting to hear it needs a program that can slow it down — the spectrograms are there for everyone else.
+
+In time other people will help ID the species where they can, which feeds straight back into the wider dataset. There's a cap of two observations per species, per night, per rough area — iNaturalist runs on volunteers who look at other people's records, and more of the same bat from the same place doesn't add anything.
 
 ## Troubleshooting
 

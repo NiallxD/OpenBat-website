@@ -49,8 +49,8 @@ If you choose to, OpenBat can post a recording to [iNaturalist](https://www.inat
 
 | What's sent | To whom |
 |---|---|
-| The call audio (a slowed-down audible copy, and the trimmed original) | iNaturalist |
-| A spectrogram image of the call | iNaturalist |
+| The call audio: the bat pass cut out of the recording, as captured, and a slowed-down copy of it cleaned up for listening | iNaturalist |
+| Spectrogram images of the pass and of the strongest single call | iNaturalist |
 | The date, time and coordinates of the recording | iNaturalist |
 | The species the app suggested, its confidence, and the call measurements behind it | iNaturalist |
 

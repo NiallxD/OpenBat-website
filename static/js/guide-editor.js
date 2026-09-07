@@ -651,6 +651,14 @@
     ui.browse.hidden = true;
     ui.edit.hidden = false;
     ui.draftRestore.hidden = true;
+    // Belt and braces with closeEditor's reset: restoring a draft opens the
+    // editor without closing it first, and nothing about the species just
+    // submitted should follow the visitor onto the next one.
+    ui.result.hidden = true;
+    clear(ui.result);
+    ui.note.value = '';
+    ui.submit.disabled = false;
+    ui.submit.textContent = 'Submit for review';
     renderDraftNote();
     ui.title.textContent = index >= 0
       ? 'Editing ' + (editing.commonName || editing.id)

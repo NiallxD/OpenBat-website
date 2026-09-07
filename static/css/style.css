@@ -2440,6 +2440,11 @@ figure.image-float-left figcaption {
   padding: 0.85rem 1rem;
   margin-top: 1rem;
 }
+/* `display: block` above is an author rule, so it beats the browser's own
+   `[hidden] { display: none }` and the JS's `ui.result.hidden = true` does
+   nothing without this. Leaving it out left the last species' "sent for
+   review" message on screen when the next one was opened. */
+.ge-outcome[hidden] { display: none; }
 .ge-outcome.is-ok { border-color: var(--color-accent); background: rgba(255,134,13,0.10); }
 .ge-outcome.is-error { border-color: #ff6b6b; background: rgba(255,107,107,0.10); }
 .ge-outcome.is-working { color: var(--color-secondary); font-style: italic; }
