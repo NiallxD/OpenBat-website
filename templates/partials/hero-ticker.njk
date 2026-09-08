@@ -1,18 +1,33 @@
 {# Featured-post ticker: up to three cards, auto-advancing, with position
    dots. Shared by home.njk and blog.njk — both set `hero` to
    collections.heroPosts before including this. The script that drives it
-   lives once in base.njk and runs over every [data-ticker] on the page. #}
-<div class="hero-ticker" data-ticker>
+   lives once in base.njk and runs over every [data-ticker] on the page.
+
+   Set `heroRow = true` before including to get the three cards side by side
+   instead, which is what /blog/ does. `collections.heroPosts` is capped at
+   three, so a row shows all of them at once and there is nothing left to
+   advance to: the row deliberately carries no [data-ticker] (the script skips
+   it entirely — no clone, no timer) and no dots. Each card also drops
+   `post-card--featured`, whose ≥800px rule lays the image beside the text —
+   right for one wide card, wrong for a third of the width. #}
+<div class="hero-ticker{{ ' hero-ticker--row' if heroRow }}"{{ '' if heroRow else ' data-ticker' }}>
   <div class="hero-ticker-track">
     {% for post in hero %}
-    <a href="{{ post.url | url }}" class="post-card post-card--featured hero-ticker-slide">
+    <a href="{{ post.url | url }}" class="post-card{{ '' if heroRow else ' post-card--featured' }} hero-ticker-slide">
       {% if post.data.coverImage %}
       <div class="post-card-img">
         <img src="{{ post.data.coverImage }}" alt="" loading="lazy">
       </div>
       {% endif %}
       <div class="post-card-body">
-        <p class="section-label">{{ "Featured" if post.data.featured === true else "Latest" }}</p>
+        {% if post.data.featured === true %}
+        {# Row mode is introduced by its own "Featured" header, so the card
+           repeating the word is noise. A top-up post is a different thing from
+           the header's claim, though, and keeps its "Latest". #}
+        {% if not heroRow %}<p class="section-label">Featured</p>{% endif %}
+        {% else %}
+        <p class="section-label">Latest</p>
+        {% endif %}
         <h2>{{ post.data.title }}</h2>
         <div class="post-card-meta">
           {% if post.date %}<time datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time>{% endif %}
@@ -24,7 +39,7 @@
     {% endfor %}
   </div>
 </div>
-{% if hero.length > 1 %}
+{% if hero.length > 1 and not heroRow %}
 <div class="hero-ticker-dots" role="tablist" aria-label="Featured posts">
   {% for post in hero %}
   <button type="button" class="hero-ticker-dot" data-index="{{ loop.index0 }}" role="tab" aria-label="Show featured post {{ loop.index }} of {{ hero.length }}"></button>

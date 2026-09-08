@@ -22,7 +22,7 @@ publish: true
 
 ## Get started
 
-1. **Plug in an ultrasonic USB microphone.** The built-in iPhone mic only hears up to about 24 kHz, and most bat calls happen well above that, so you need something like the [Griff Mini](https://www.pippyg.com/griff.html). Any USB ultrasonic mic that runs at 384 kHz should work fine, plugged in via a USB-C or Lightning adapter depending on your device.
+1. **Plug in an ultrasonic USB microphone.** The built-in iPhone mic only hears up to about 24 kHz, and most bat calls happen well above that, so you need something like the [Griff Mini](https://www.pippyg.com/griff.html). Any USB ultrasonic mic that runs at 384 kHz should work fine, plugged in via a USB-C or Lightning adapter depending on your device. [[Choosing a Bat Microphone]] covers which ones work, what they cost, and which cable you need.
 2. **Open OpenBat and allow microphone and location access.** Location is used to tag your recordings, to suggest the right species model for your area, to work out which species are plausible where you are, to name each session after the place it happened, and to work out your local sunset and sunrise times. It never leaves your phone, and OpenBat doesn't record a GPS track or use location in the background; see the [Privacy Policy](/privacy-policy).
 3. **Calibrate your microphone** when the app offers to, which is the first time you plug that microphone in. It only takes a moment and it's what keeps the amplitude readings meaningful. You can skip it and do it later from Settings.
 4. **Point the mic at the sky and wait.** Once the status indicator up top turns green, you're receiving audio. When a bat calls nearby you'll see a pulse land on the spectrogram.
@@ -144,7 +144,7 @@ In time other people will help ID the species where they can, which feeds straig
 Check the USB connection to your microphone and adapter. Unplug and replug if needed, OpenBat detects the microphone through a route change and should pick it up within a second or two. If you're only using the built-in mic, this is expected, it can't hear ultrasound and you'll need a USB ultrasonic microphone.
 
 **The sample rate shown looks lower than expected**
-OpenBat displays the actual sample rate your microphone is delivering. If it's not what you expect for your device (should be 384 kHz), check the microphone itself is set to its native or maximum rate, and that no other app has claimed the audio session.
+OpenBat displays the actual sample rate your microphone is delivering. If it's not what you expect for your device (should be 384 kHz), check the microphone itself is set to its native or maximum rate, and that no other app has claimed the audio session. Below 384 kHz you'll still get a spectrogram and audio, but no species identifications — [[Choosing a Bat Microphone|why that is]].
 
 **No pulses are triggering even though I can see activity on the spectrogram**
 Open **Settings > Detecting** and check **Loudness** isn't set too high, and that **Lowest pitch** (if you're in "Loudness + pitch" mode) is below the range you're actually seeing activity in.
@@ -191,6 +191,6 @@ Most of what's on the iOS tab is about bats rather than about the app, and trave
 
 ## Something else?
 
-If you're on Android and stuck on any of this, which microphone to buy, which adapter, where to point it, [Get in Touch](/contact/). The OpenBat project is about more than just our app and we are happy to help.
+If you're on Android and stuck on any of this, which microphone to buy, which adapter, where to point it, [Get in Touch](/contact/). [[Choosing a Bat Microphone]] is written around OpenBat, but the hardware advice in it applies to any detector app. The OpenBat project is about more than just our app and we are happy to help.
 
 </div>

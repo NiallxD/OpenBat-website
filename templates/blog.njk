@@ -13,17 +13,27 @@ layout: base.njk
 
   {% set hero = collections.heroPosts %}
   {% if hero.length %}
+  {% set heroRow = true %}
+  <p class="section-label section-label--row">Featured</p>
   {% include "partials/hero-ticker.njk" %}
   {% endif %}
 
   {# The filter only acts on the grid, so it is pointless without one. #}
   {% set allTags = collections.regularPosts | getAllTags %}
   {% if allTags.length and collections.regularPosts.length %}
-  <div class="filter-cloud" id="post-filters">
-    <button class="filter-btn active" data-filter="all">All</button>
-    {% for tag in allTags %}
-    <button class="filter-btn" data-filter="{{ tag }}">{{ tag }}</button>
-    {% endfor %}
+  {# Rendered expanded. The script collapses it to a single row and reveals
+     the chevron, so with JS off every tag is still there and reachable. #}
+  <div class="filter-wrap" data-filter-collapse>
+    <div class="filter-cloud" id="post-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      {% for tag in allTags %}
+      <button class="filter-btn" data-filter="{{ tag }}">{{ tag }}</button>
+      {% endfor %}
+    </div>
+    <button type="button" class="filter-toggle" aria-expanded="true" aria-controls="post-filters" hidden>
+      <span class="filter-toggle-label">More</span>
+      <svg class="filter-toggle-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
   </div>
   {% endif %}
 
@@ -70,6 +80,69 @@ layout: base.njk
           card.hidden = !(filter === 'all' || tags.includes(filter));
         });
       });
+    });
+
+    // Collapse the chips to a single row, with the chevron opening the rest.
+    // The markup ships expanded and the chevron ships hidden, so none of this
+    // running leaves every tag visible rather than a third of them stranded
+    // behind a button that does nothing.
+    const wrap = document.querySelector('[data-filter-collapse]');
+    const toggle = wrap && wrap.querySelector('.filter-toggle');
+    const cloud = document.getElementById('post-filters');
+    if (!wrap || !toggle || !cloud) return;
+    const label = toggle.querySelector('.filter-toggle-label');
+    let expanded = false;
+
+    const apply = (instant) => {
+      if (instant) cloud.style.transition = 'none';
+      // Measure unclipped: one chip is one row, and the full height decides
+      // whether there is anything worth hiding. Both are read rather than
+      // assumed, so a font or a wrapped chip can't put the clip in the wrong
+      // place.
+      cloud.style.maxHeight = '';
+      const first = cloud.querySelector('.filter-btn');
+      const row = first ? first.offsetHeight : 0;
+      const full = cloud.scrollHeight;
+      const overflows = row > 0 && full > row + 1;
+
+      wrap.classList.toggle('is-collapsible', overflows);
+      toggle.hidden = !overflows;
+
+      if (overflows) {
+        wrap.classList.toggle('is-expanded', expanded);
+        cloud.style.maxHeight = (expanded ? full : row) + 'px';
+        toggle.setAttribute('aria-expanded', String(expanded));
+        label.textContent = expanded ? 'Less' : 'More';
+      } else {
+        // Everything fits: nothing clipped, nothing to announce.
+        expanded = false;
+        wrap.classList.remove('is-expanded');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+
+      if (instant) {
+        cloud.getBoundingClientRect(); // flush before the transition returns
+        cloud.style.transition = '';
+      }
+    };
+
+    toggle.addEventListener('click', () => { expanded = !expanded; apply(false); });
+
+    // A chip chosen while collapsed may itself be out of sight on the second
+    // row; opening the list keeps the active filter visible.
+    btns.forEach(btn => btn.addEventListener('click', () => {
+      if (!expanded && wrap.classList.contains('is-collapsible') && btn.offsetTop > 0) {
+        expanded = true;
+        apply(false);
+      }
+    }));
+
+    apply(true);
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => apply(false), 150);
     });
   })();
 </script>

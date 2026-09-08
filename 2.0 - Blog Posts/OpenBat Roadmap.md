@@ -31,3 +31,6 @@ This is a simple roadmap, nothing fancy. Let me know if any of this sounds excit
 
 >[!tip] Favouriting Recordings
 >The ability to favourite recordings of bats to playback easily in future. Recordings are hidden in sessions and it might be nice to be able to quickly pull one up to listen or show to someone else.
+
+>[!tip] Night Survey Mode
+>The ability to consume recordings from a standalone device, like an AudioMoth, and build a session retroactively, with ID. This would be a cool feature to allow people to record overnight and import the audio into OpenBat and listen/explore.
