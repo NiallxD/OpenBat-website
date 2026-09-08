@@ -2458,12 +2458,59 @@ figure.image-float-left figcaption {
    BLOG (listing at /blog/, and the posts themselves)
    ══════════════════════════════════════════════════════════ */
 
-/* Tag filter chips above the grid. */
+/* Tag filter chips above the grid. Collapsed to a single row by the script,
+   with the chevron revealing the rest — the margin therefore lives on the
+   wrapper, so the cloud itself can be clipped to one row's height without a
+   margin hanging below the clip. */
+.filter-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 2rem 0 1.5rem;
+}
+
 .filter-cloud {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin: 2rem 0 1.5rem;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Only once the script has measured an overflow: max-height is set inline in
+   px so it can animate, and so one row's height is whatever a chip actually
+   measures rather than a number guessed here. */
+[data-filter-collapse].is-collapsible .filter-cloud {
+  overflow: hidden;
+  transition: max-height var(--ease);
+}
+
+/* Matches .filter-btn, minus the pill border — it is a control on the row
+   rather than another tag in it. */
+.filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex: 0 0 auto;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 99px;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  transition: color var(--ease);
+}
+
+.filter-toggle:hover { color: var(--color-link); }
+
+.filter-toggle-chevron { transition: transform var(--ease); }
+
+[data-filter-collapse].is-expanded .filter-toggle-chevron {
+  transform: rotate(180deg);
 }
 
 .filter-btn {
@@ -2606,6 +2653,25 @@ figure.image-float-left figcaption {
    clips clean off — the top border vanishes instead of the card floating.
    The slide swap already reads as motion, so the lift isn't missed. */
 .hero-ticker-slide:hover { transform: none; }
+
+/* Row mode (/blog/): the same three cards, all visible at once, as a grid
+   rather than a sliding track. auto-fit matches `.home-links` above, so the
+   row reflows to two and then one card as the viewport narrows instead of
+   squeezing three. Nothing slides, so the track's transition is dropped and
+   the overflow clipping — which exists only to hide the off-screen slides —
+   is released, which lets the card's own 2px hover lift work again. */
+/* The header owns the space above the row, so the row itself drops the
+   top margin the sliding ticker carries. */
+.section-label--row { margin-top: 2.5rem !important; }
+.hero-ticker--row { overflow: visible; margin-top: 0; }
+.hero-ticker--row .hero-ticker-track {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  transition: none;
+  transform: none;
+}
+.hero-ticker--row .hero-ticker-slide { flex: none; }
+.hero-ticker--row .hero-ticker-slide:hover { transform: translateY(-2px); }
 
 .hero-ticker-dots {
   display: flex;

@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.35">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.37">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -121,7 +121,7 @@
 
 <div class="plat-section" id="plat-ios" role="tabpanel"><section class="page-card"><h2 id="get-started">Get started</h2>
 <ol>
-<li><strong>Plug in an ultrasonic USB microphone.</strong> The built-in iPhone mic only hears up to about 24 kHz, and most bat calls happen well above that, so you need something like the <a href="https://www.pippyg.com/griff.html">Griff Mini</a>. Any USB ultrasonic mic that runs at 384 kHz should work fine, plugged in via a USB-C or Lightning adapter depending on your device.</li>
+<li><strong>Plug in an ultrasonic USB microphone.</strong> The built-in iPhone mic only hears up to about 24 kHz, and most bat calls happen well above that, so you need something like the <a href="https://www.pippyg.com/griff.html">Griff Mini</a>. Any USB ultrasonic mic that runs at 384 kHz should work fine, plugged in via a USB-C or Lightning adapter depending on your device. <a href="/blog/choosing-a-bat-microphone/" class="wikilink">Choosing a Bat Microphone</a> covers which ones work, what they cost, and which cable you need.</li>
 <li><strong>Open OpenBat and allow microphone and location access.</strong> Location is used to tag your recordings, to suggest the right species model for your area, to work out which species are plausible where you are, to name each session after the place it happened, and to work out your local sunset and sunrise times. It never leaves your phone, and OpenBat doesn’t record a GPS track or use location in the background; see the <a href="/privacy-policy">Privacy Policy</a>.</li>
 <li><strong>Calibrate your microphone</strong> when the app offers to, which is the first time you plug that microphone in. It only takes a moment and it’s what keeps the amplitude readings meaningful. You can skip it and do it later from Settings.</li>
 <li><strong>Point the mic at the sky and wait.</strong> Once the status indicator up top turns green, you’re receiving audio. When a bat calls nearby you’ll see a pulse land on the spectrogram.</li>
@@ -233,7 +233,7 @@
 <p><strong>The status indicator is red, or it says “no ultrasonic microphone detected”</strong>
 Check the USB connection to your microphone and adapter. Unplug and replug if needed, OpenBat detects the microphone through a route change and should pick it up within a second or two. If you’re only using the built-in mic, this is expected, it can’t hear ultrasound and you’ll need a USB ultrasonic microphone.</p>
 <p><strong>The sample rate shown looks lower than expected</strong>
-OpenBat displays the actual sample rate your microphone is delivering. If it’s not what you expect for your device (should be 384 kHz), check the microphone itself is set to its native or maximum rate, and that no other app has claimed the audio session.</p>
+OpenBat displays the actual sample rate your microphone is delivering. If it’s not what you expect for your device (should be 384 kHz), check the microphone itself is set to its native or maximum rate, and that no other app has claimed the audio session. Below 384 kHz you’ll still get a spectrogram and audio, but no species identifications — <a href="/blog/choosing-a-bat-microphone/" class="wikilink">why that is</a>.</p>
 <p><strong>No pulses are triggering even though I can see activity on the spectrogram</strong>
 Open <strong>Settings &gt; Detecting</strong> and check <strong>Loudness</strong> isn’t set too high, and that <strong>Lowest pitch</strong> (if you’re in “Loudness + pitch” mode) is below the range you’re actually seeing activity in.</p>
 <p><strong>I can’t find my recordings</strong>
@@ -266,8 +266,8 @@ Recordings are saved on-device and are visible in the Files app, under OpenBat�
 <li><strong>Contributing to community science</strong> — a spectrogram and a WAV file are all iNaturalist wants, and any detector that exports recordings can supply both. See the iOS tab for how that upload works.</li>
 </ul>
 </section>
-<section class="page-card page-card--note"><h2 id="something-else">Something else?</h2>
-<p>If you’re on Android and stuck on any of this, which microphone to buy, which adapter, where to point it, <a href="/contact/">Get in Touch</a>. The OpenBat project is about more than just our app and we are happy to help.</p>
+<section class="page-card"><h2 id="something-else">Something else?</h2>
+<p>If you’re on Android and stuck on any of this, which microphone to buy, which adapter, where to point it, <a href="/contact/">Get in Touch</a>. <a href="/blog/choosing-a-bat-microphone/" class="wikilink">Choosing a Bat Microphone</a> is written around OpenBat, but the hardware advice in it applies to any detector app. The OpenBat project is about more than just our app and we are happy to help.</p>
 </section></div></div>
   
 </div>

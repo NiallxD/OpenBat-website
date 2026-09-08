@@ -21,7 +21,7 @@
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
   <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.35">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.37">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
@@ -102,17 +102,22 @@
   
   
   
-<div class="hero-ticker" data-ticker>
+  <p class="section-label section-label--row">Featured</p>
+  
+<div class="hero-ticker hero-ticker--row">
   <div class="hero-ticker-track">
     
-    <a href="/blog/what-openbat-is/" class="post-card post-card--featured hero-ticker-slide">
+    <a href="/blog/what-openbat-is/" class="post-card hero-ticker-slide">
       
       <div class="post-card-img">
         <img src="/static/images/OpenBat_Screens.webp" alt="" loading="lazy">
       </div>
       
       <div class="post-card-body">
-        <p class="section-label">Featured</p>
+        
+        
+        
+        
         <h2>What OpenBat Is</h2>
         <div class="post-card-meta">
           <time datetime="2026-08-27">27 August 2026</time>
@@ -122,14 +127,17 @@
       </div>
     </a>
     
-    <a href="/blog/openbat-design-philosophy/" class="post-card post-card--featured hero-ticker-slide">
+    <a href="/blog/openbat-design-philosophy/" class="post-card hero-ticker-slide">
       
       <div class="post-card-img">
         <img src="/static/images/India_2022_Habitat_054.webp" alt="" loading="lazy">
       </div>
       
       <div class="post-card-body">
-        <p class="section-label">Featured</p>
+        
+        
+        
+        
         <h2>OpenBat Design Philosophy</h2>
         <div class="post-card-meta">
           <time datetime="2026-08-31">31 August 2026</time>
@@ -139,14 +147,17 @@
       </div>
     </a>
     
-    <a href="/blog/build-your-own-bat-microphone/" class="post-card post-card--featured hero-ticker-slide">
+    <a href="/blog/build-your-own-bat-microphone/" class="post-card hero-ticker-slide">
       
       <div class="post-card-img">
         <img src="/static/images/griff-cover.webp" alt="" loading="lazy">
       </div>
       
       <div class="post-card-body">
-        <p class="section-label">Featured</p>
+        
+        
+        
+        
         <h2>Build Your Own Bat Microphone</h2>
         <div class="post-card-meta">
           <time datetime="2026-08-27">27 August 2026</time>
@@ -159,78 +170,95 @@
   </div>
 </div>
 
-<div class="hero-ticker-dots" role="tablist" aria-label="Featured posts">
-  
-  <button type="button" class="hero-ticker-dot" data-index="0" role="tab" aria-label="Show featured post 1 of 3"></button>
-  
-  <button type="button" class="hero-ticker-dot" data-index="1" role="tab" aria-label="Show featured post 2 of 3"></button>
-  
-  <button type="button" class="hero-ticker-dot" data-index="2" role="tab" aria-label="Show featured post 3 of 3"></button>
-  
-</div>
-
 
   
 
   
   
   
-  <div class="filter-cloud" id="post-filters">
-    <button class="filter-btn active" data-filter="all">All</button>
-    
-    <button class="filter-btn" data-filter="acoustics">acoustics</button>
-    
-    <button class="filter-btn" data-filter="app">app</button>
-    
-    <button class="filter-btn" data-filter="auto-id">auto-id</button>
-    
-    <button class="filter-btn" data-filter="bats">bats</button>
-    
-    <button class="filter-btn" data-filter="classifier">classifier</button>
-    
-    <button class="filter-btn" data-filter="conservation">conservation</button>
-    
-    <button class="filter-btn" data-filter="contributing">contributing</button>
-    
-    <button class="filter-btn" data-filter="data">data</button>
-    
-    <button class="filter-btn" data-filter="dev-log">dev-log</button>
-    
-    <button class="filter-btn" data-filter="disease">disease</button>
-    
-    <button class="filter-btn" data-filter="field-guide">field-guide</button>
-    
-    <button class="filter-btn" data-filter="gbif">gbif</button>
-    
-    <button class="filter-btn" data-filter="glossary">glossary</button>
-    
-    <button class="filter-btn" data-filter="how-to">how-to</button>
-    
-    <button class="filter-btn" data-filter="machine-learning">machine-learning</button>
-    
-    <button class="filter-btn" data-filter="on-device">on-device</button>
-    
-    <button class="filter-btn" data-filter="openbat">openbat</button>
-    
-    <button class="filter-btn" data-filter="project">project</button>
-    
-    <button class="filter-btn" data-filter="range-maps">range-maps</button>
-    
-    <button class="filter-btn" data-filter="reference">reference</button>
-    
-    <button class="filter-btn" data-filter="roadmap">roadmap</button>
-    
-    <button class="filter-btn" data-filter="surveying">surveying</button>
-    
-    <button class="filter-btn" data-filter="thermal-camera">thermal-camera</button>
-    
-    <button class="filter-btn" data-filter="video">video</button>
-    
+  
+  <div class="filter-wrap" data-filter-collapse>
+    <div class="filter-cloud" id="post-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      
+      <button class="filter-btn" data-filter="acoustics">acoustics</button>
+      
+      <button class="filter-btn" data-filter="app">app</button>
+      
+      <button class="filter-btn" data-filter="auto-id">auto-id</button>
+      
+      <button class="filter-btn" data-filter="bats">bats</button>
+      
+      <button class="filter-btn" data-filter="classifier">classifier</button>
+      
+      <button class="filter-btn" data-filter="conservation">conservation</button>
+      
+      <button class="filter-btn" data-filter="contributing">contributing</button>
+      
+      <button class="filter-btn" data-filter="data">data</button>
+      
+      <button class="filter-btn" data-filter="dev-log">dev-log</button>
+      
+      <button class="filter-btn" data-filter="disease">disease</button>
+      
+      <button class="filter-btn" data-filter="field-guide">field-guide</button>
+      
+      <button class="filter-btn" data-filter="gbif">gbif</button>
+      
+      <button class="filter-btn" data-filter="glossary">glossary</button>
+      
+      <button class="filter-btn" data-filter="griff">griff</button>
+      
+      <button class="filter-btn" data-filter="hardware">hardware</button>
+      
+      <button class="filter-btn" data-filter="how-to">how-to</button>
+      
+      <button class="filter-btn" data-filter="machine-learning">machine-learning</button>
+      
+      <button class="filter-btn" data-filter="on-device">on-device</button>
+      
+      <button class="filter-btn" data-filter="openbat">openbat</button>
+      
+      <button class="filter-btn" data-filter="project">project</button>
+      
+      <button class="filter-btn" data-filter="range-maps">range-maps</button>
+      
+      <button class="filter-btn" data-filter="reference">reference</button>
+      
+      <button class="filter-btn" data-filter="roadmap">roadmap</button>
+      
+      <button class="filter-btn" data-filter="surveying">surveying</button>
+      
+      <button class="filter-btn" data-filter="thermal-camera">thermal-camera</button>
+      
+      <button class="filter-btn" data-filter="video">video</button>
+      
+    </div>
+    <button type="button" class="filter-toggle" aria-expanded="true" aria-controls="post-filters" hidden>
+      <span class="filter-toggle-label">More</span>
+      <svg class="filter-toggle-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
   </div>
   
 
   
   <div class="post-grid" id="post-grid">
+    
+    <a href="/blog/choosing-a-bat-microphone/" class="post-card" data-tags="hardware,griff">
+      
+      <div class="post-card-img">
+        <img src="/static/images/griff-cover.webp" alt="" loading="lazy">
+      </div>
+      
+      <div class="post-card-body">
+        <h2>Choosing a Bat Microphone</h2>
+        <div class="post-card-meta">
+          <time datetime="2026-09-08">8 September 2026</time>
+          <span class="tag">hardware</span><span class="tag">griff</span>
+        </div>
+        <p class="post-card-desc">You can buy a 384 kHz microphone that works out of the box for €65, or build one for about $30. Here is the honest range, and what separates the options.</p>
+      </div>
+    </a>
     
     <a href="/blog/how-openbat-weighs-scores-by-location/" class="post-card" data-tags="auto-id,classifier,range-maps">
       
@@ -534,6 +562,69 @@
           card.hidden = !(filter === 'all' || tags.includes(filter));
         });
       });
+    });
+
+    // Collapse the chips to a single row, with the chevron opening the rest.
+    // The markup ships expanded and the chevron ships hidden, so none of this
+    // running leaves every tag visible rather than a third of them stranded
+    // behind a button that does nothing.
+    const wrap = document.querySelector('[data-filter-collapse]');
+    const toggle = wrap && wrap.querySelector('.filter-toggle');
+    const cloud = document.getElementById('post-filters');
+    if (!wrap || !toggle || !cloud) return;
+    const label = toggle.querySelector('.filter-toggle-label');
+    let expanded = false;
+
+    const apply = (instant) => {
+      if (instant) cloud.style.transition = 'none';
+      // Measure unclipped: one chip is one row, and the full height decides
+      // whether there is anything worth hiding. Both are read rather than
+      // assumed, so a font or a wrapped chip can't put the clip in the wrong
+      // place.
+      cloud.style.maxHeight = '';
+      const first = cloud.querySelector('.filter-btn');
+      const row = first ? first.offsetHeight : 0;
+      const full = cloud.scrollHeight;
+      const overflows = row > 0 && full > row + 1;
+
+      wrap.classList.toggle('is-collapsible', overflows);
+      toggle.hidden = !overflows;
+
+      if (overflows) {
+        wrap.classList.toggle('is-expanded', expanded);
+        cloud.style.maxHeight = (expanded ? full : row) + 'px';
+        toggle.setAttribute('aria-expanded', String(expanded));
+        label.textContent = expanded ? 'Less' : 'More';
+      } else {
+        // Everything fits: nothing clipped, nothing to announce.
+        expanded = false;
+        wrap.classList.remove('is-expanded');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+
+      if (instant) {
+        cloud.getBoundingClientRect(); // flush before the transition returns
+        cloud.style.transition = '';
+      }
+    };
+
+    toggle.addEventListener('click', () => { expanded = !expanded; apply(false); });
+
+    // A chip chosen while collapsed may itself be out of sight on the second
+    // row; opening the list keeps the active filter visible.
+    btns.forEach(btn => btn.addEventListener('click', () => {
+      if (!expanded && wrap.classList.contains('is-collapsible') && btn.offsetTop > 0) {
+        expanded = true;
+        apply(false);
+      }
+    }));
+
+    apply(true);
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => apply(false), 150);
     });
   })();
 </script>
