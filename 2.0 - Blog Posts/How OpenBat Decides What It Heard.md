@@ -163,7 +163,7 @@ would be inventing evidence out of your own expectations.
 
 ## A pass, not a call
 
-Bats don't call once. The unit OpenBat identifies is a **pass (sometimes called a sequence)**,  the burst of calls as an animal crosses in front of the microphone, closed by eight tenths of a second of silence.
+Bats don't call once. The unit OpenBat identifies is a **pass (sometimes called a sequence)**,  the burst of calls as an animal crosses in front of the microphone, closed by about a second of silence.
 
 {% chart {
   key: "PULSE",
