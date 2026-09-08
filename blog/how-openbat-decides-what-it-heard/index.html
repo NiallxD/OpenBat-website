@@ -197,19 +197,24 @@ real, confidently identified call” do the weights get a say in <em>which</em> 
 to name. If where you were standing could influence the first question, the app
 would be inventing evidence out of your own expectations.</p>
 <h2 id="a-pass-not-a-call">A pass, not a call</h2>
-<p>Bats don’t call once. The unit OpenBat identifies is a <strong>pass (sometimes called a sequence)</strong>,  the burst of calls as an animal crosses in front of the microphone, closed by two seconds of silence.</p>
+<p>Bats don’t call once. The unit OpenBat identifies is a <strong>pass (sometimes called a sequence)</strong>,  the burst of calls as an animal crosses in front of the microphone, closed by eight tenths of a second of silence.</p>
 <figure class="chart"><div class="chart-canvas" style="height:340px"><canvas data-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;bars&quot;:[{&quot;label&quot;:&quot;1&quot;,&quot;value&quot;:0.44,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;2&quot;,&quot;value&quot;:0.71,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;3&quot;,&quot;value&quot;:0.83,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;4&quot;,&quot;value&quot;:0.75,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;5&quot;,&quot;value&quot;:0.88,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;6&quot;,&quot;value&quot;:0.62,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;7&quot;,&quot;value&quot;:0.69,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false},{&quot;label&quot;:&quot;8&quot;,&quot;value&quot;:0.41,&quot;note&quot;:&quot;&quot;,&quot;highlight&quot;:false}],&quot;key&quot;:&quot;PULSE&quot;,&quot;max&quot;:1,&quot;min&quot;:null,&quot;xTicks&quot;:true,&quot;yTicks&quot;:true,&quot;xGrid&quot;:true,&quot;yGrid&quot;:true,&quot;vertical&quot;:true,&quot;groups&quot;:[],&quot;marks&quot;:[],&quot;bands&quot;:[],&quot;lines&quot;:[{&quot;at&quot;:0.57,&quot;axis&quot;:&quot;y&quot;,&quot;text&quot;:&quot;no-ID line 0.57&quot;,&quot;style&quot;:&quot;muted&quot;,&quot;position&quot;:&quot;start&quot;},{&quot;at&quot;:0.67,&quot;axis&quot;:&quot;y&quot;,&quot;text&quot;:&quot;mean 0.67 — the pass gets a name&quot;,&quot;dashed&quot;:false,&quot;position&quot;:&quot;start&quot;}],&quot;callouts&quot;:[]}" role="img" aria-label="Bar chart of eight pulses in one pass, confidences from 0.41 to 0.88, with the no-ID line at 0.57 and the mean at 0.67 marked. Pulses 1 and 8 fall below the no-ID line; the mean clears it."></canvas></div><noscript><table class="chart-table"><caption>PULSE</caption><tbody><tr><th scope="row">1</th><td>0.44</td></tr><tr><th scope="row">2</th><td>0.71</td></tr><tr><th scope="row">3</th><td>0.83</td></tr><tr><th scope="row">4</th><td>0.75</td></tr><tr><th scope="row">5</th><td>0.88</td></tr><tr><th scope="row">6</th><td>0.62</td></tr><tr><th scope="row">7</th><td>0.69</td></tr><tr><th scope="row">8</th><td>0.41</td></tr></tbody></table></noscript><figcaption>Calls are found one at a time; the verdict is taken over all of them. Two of these eight pulses sit below the no-ID line on their own and neither is thrown away — the pass is judged on the average. Illustrative, at the real thresholds.</figcaption></figure>
 <p>A pass gets a name only if the <strong>mean raw confidence across its pulses clears
 the model’s no-ID line</strong> — 0.57 for NABat ML, 0.4 for BatDetect2, whose scores
 sit on a different scale. Then, among the weighted scores, the winner needs at
-least two pulses and a mean of 0.15 to be reported.</p>
+least two pulses, a mean of 0.15, and a clear enough lead over whatever came
+second to be reported.</p>
 <p>There are three possible outcomes, and the third is the one worth arguing for:</p>
 <ul>
 <li>a <strong>species</strong>,</li>
 <li><strong>NOISE</strong>, when the model’s own non-bat class wins,</li>
-<li><strong>no ID</strong> — pulses were captured and classified, but the evidence never
-cleared the bar.</li>
+<li><strong>no ID</strong> — pulses were captured and classified, but either the evidence
+never cleared the bar, or two species finished so close together that
+choosing between them would have been a coin toss.</li>
 </ul>
+<p>That second case is a refusal rather than a failure, and it is deliberate: a
+name that a couple of calls either way would have reversed is worse than no name
+at all. It does mean two species calling at once will sometimes go unreported.</p>
 <p>No ID is recorded like any other pass, rather than dropped. The list says
 “something triggered, we couldn’t tell what” instead of quietly losing evidence
 you heard yourself and watched cross the spectrogram.</p>
