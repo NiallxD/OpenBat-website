@@ -20,22 +20,22 @@
   <link rel="icon" href="/static/images/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
-  <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.37">
+  <meta name="theme-color" id="theme-color" content="#ffffff">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.46">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
-    const THEME_COLORS = { dark: '#05070d', light: '#081E37' };
+    const THEME_COLORS = { dark: '#05070d', light: '#ffffff' };
     const setThemeColor = (theme) => {
       const meta = document.getElementById('theme-color');
       if (meta) meta.setAttribute('content', THEME_COLORS[theme]);
     };
 
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme !== 'light') {
+    if (savedTheme === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
     }
-    setThemeColor(savedTheme === 'light' ? 'light' : 'dark');
+    setThemeColor(savedTheme === 'dark' ? 'dark' : 'light');
   </script>
   
 </head>
@@ -53,14 +53,7 @@
         
         
         
-        <div class="nav-item has-dropdown">
-          <a href="/contribute/">Contribute</a>
-          <div class="nav-dropdown">
-            
-            <a href="/guide-editor/">Field Guide Editor</a>
-            
-          </div>
-        </div>
+        <a href="/guide-editor/">Contribute</a>
         
         
         
@@ -232,7 +225,7 @@ programme happened to get funded.</p>
           <img class="footer-logo" src="/static/images/logo.png" alt="OpenBat">
         </a>
         <p class="footer-web-address">openbat.app</p>
-        <p class="footer-tagline">Open source bat detection.</p>
+        <p class="footer-tagline">Source-available bat detection.</p>
         <div class="footer-contact">
           <div class="contact-item">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -247,13 +240,13 @@ programme happened to get funded.</p>
       <div class="footer-col footer-nav">
         <p class="section-label">Explore</p>
         <a href="/our-project/">Our Project</a>
-        <a href="/contribute/">Contribute</a>
+        <a href="/guide-editor/">Contribute</a>
         <a href="/blog/">Blog</a>
         <a href="/help/">Help</a>
       </div>
 
       <div class="footer-col footer-nav">
-        <p class="section-label">Open Source</p>
+        <p class="section-label">Source</p>
         <a href="https://github.com/NiallxD/OpenBat-App" target="_blank" rel="noopener">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" class="footer-icon"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
           OpenBat App
@@ -327,6 +320,56 @@ programme happened to get funded.</p>
       }
       field.appendChild(frag);
     })();
+
+    // App-icon tilt: the icon lifts slightly and the point under the pointer
+    // presses away, so a corner presses as a corner.
+    //
+    // One rotation about the axis PERPENDICULAR to the pointer, not a stacked
+    // rotateX + rotateY. Stacking them sinks both edges that meet at the
+    // corner, which reads as an edge dipping; a single perpendicular axis
+    // sinks the corner alone and lifts the opposite one, leaving the other two
+    // level. Axis (-y, x) was derived from CSS's own handedness and confirmed
+    // by render: rotate3d(-1, 1, 0) sinks the bottom-right corner, and the
+    // cardinal cases reduce to rotateX(-) for the bottom and rotateY(+) for
+    // the right edge.
+    //
+    // Pointer-driven and hover-gated: on a touch screen there is no pointer to
+    // follow, and a tap would leave the icon stuck mid-tilt.
+    if (window.matchMedia('(hover: hover)').matches &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.app-landing-icon').forEach(icon => {
+        const MAX_TILT = 11;  // degrees at a corner
+        let frame = null;
+
+        const tilt = (event) => {
+          if (frame) cancelAnimationFrame(frame);
+          frame = requestAnimationFrame(() => {
+            const box = icon.getBoundingClientRect();
+            // -1 at the left/top edge, +1 at the right/bottom.
+            const x = ((event.clientX - box.left) / box.width) * 2 - 1;
+            const y = ((event.clientY - box.top) / box.height) * 2 - 1;
+            // Clamped, so a corner is the full tilt rather than √2 of it.
+            const reach = Math.min(1, Math.hypot(x, y));
+            icon.style.transform =
+              'perspective(600px) rotate3d(' + (-y).toFixed(3) + ',' + x.toFixed(3) + ',0,' +
+              (reach * MAX_TILT).toFixed(2) + 'deg) scale(1.06)';
+          });
+        };
+
+        const reset = () => {
+          if (frame) cancelAnimationFrame(frame);
+          frame = null;
+          icon.style.transform = '';
+        };
+
+        icon.addEventListener('pointermove', tilt);
+        icon.addEventListener('pointerleave', reset);
+        // A pointer that leaves via a scroll or a tab switch never fires
+        // pointerleave, which would strand the icon tilted.
+        icon.addEventListener('pointercancel', reset);
+        window.addEventListener('blur', reset);
+      });
+    }
 
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', () => {

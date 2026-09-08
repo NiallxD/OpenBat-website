@@ -20,22 +20,22 @@
   <link rel="icon" href="/static/images/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
-  <meta name="theme-color" id="theme-color" content="#05070d">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.37">
+  <meta name="theme-color" id="theme-color" content="#ffffff">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.46">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
-    const THEME_COLORS = { dark: '#05070d', light: '#081E37' };
+    const THEME_COLORS = { dark: '#05070d', light: '#ffffff' };
     const setThemeColor = (theme) => {
       const meta = document.getElementById('theme-color');
       if (meta) meta.setAttribute('content', THEME_COLORS[theme]);
     };
 
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme !== 'light') {
+    if (savedTheme === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
     }
-    setThemeColor(savedTheme === 'light' ? 'light' : 'dark');
+    setThemeColor(savedTheme === 'dark' ? 'dark' : 'light');
   </script>
   
 </head>
@@ -53,14 +53,7 @@
         
         
         
-        <div class="nav-item has-dropdown">
-          <a href="/contribute/">Contribute</a>
-          <div class="nav-dropdown">
-            
-            <a href="/guide-editor/">Field Guide Editor</a>
-            
-          </div>
-        </div>
+        <a href="/guide-editor/">Contribute</a>
         
         
         
@@ -119,7 +112,8 @@
   </div>
 </div>
 
-<div class="plat-section" id="plat-ios" role="tabpanel"><section class="page-card"><h2 id="get-started">Get started</h2>
+<div class="plat-section" id="plat-ios" role="tabpanel"><section class="page-card">
+<h2 id="get-started">Get started</h2>
 <ol>
 <li><strong>Plug in an ultrasonic USB microphone.</strong> The built-in iPhone mic only hears up to about 24 kHz, and most bat calls happen well above that, so you need something like the <a href="https://www.pippyg.com/griff.html">Griff Mini</a>. Any USB ultrasonic mic that runs at 384 kHz should work fine, plugged in via a USB-C or Lightning adapter depending on your device. <a href="/blog/choosing-a-bat-microphone/" class="wikilink">Choosing a Bat Microphone</a> covers which ones work, what they cost, and which cable you need.</li>
 <li><strong>Open OpenBat and allow microphone and location access.</strong> Location is used to tag your recordings, to suggest the right species model for your area, to work out which species are plausible where you are, to name each session after the place it happened, and to work out your local sunset and sunrise times. It never leaves your phone, and OpenBat doesn’t record a GPS track or use location in the background; see the <a href="/privacy-policy">Privacy Policy</a>.</li>
@@ -128,7 +122,8 @@
 </ol>
 <p>Setting the app up takes three screens and asks for nothing but the microphone and location permissions.</p>
 </section>
-<section class="page-card"><h2 id="finding-your-way-around">Finding your way around</h2>
+<section class="page-card">
+<h2 id="finding-your-way-around">Finding your way around</h2>
 <p>Two tours are waiting on the <strong>Info &amp; Tour</strong> screen, and neither is a video — both live inside the app.</p>
 <ul>
 <li><strong>The guided tour</strong> dims the screen and points at one control at a time, on your own detector, with your own audio running. It’s also offered by the sparkles button at the top of the Detector screen, which appears for a moment shortly after your first run and then stays there until you’ve been through the tour.</li>
@@ -136,7 +131,8 @@
 </ul>
 <p>Once you’re up and running, the rest of this page covers what everything does.</p>
 </section>
-<section class="page-card"><h2 id="when-to-go-out">When to go out</h2>
+<section class="page-card">
+<h2 id="when-to-go-out">When to go out</h2>
 <p>Bats are busiest in the few hours <strong>after sunset</strong> and again in the hours <strong>before sunrise</strong>, so timing matters more than almost anything else you can control. The top-left of the detector screen tells you where in that night you are:</p>
 <table>
 <thead>
@@ -168,12 +164,14 @@
 <p>Each window is the first and last <strong>15% of that night</strong>, rather than a fixed number of hours, so it moves with the season along with everything else: around an hour and three-quarters each side at the equinoxes, closer to an hour at midsummer when the whole night is only seven hours long.</p>
 <p><strong>Tap the pill</strong> for tonight’s sunset and sunrise times, how long each window lasts tonight, and a reminder of why those hours are the ones to be out in. It’s worked out on your phone from your latitude and the date, so it’s right whether or not you have signal — and it needs location access to know where the sun is.</p>
 </section>
-<section class="page-card"><h2 id="simplified-and-full-views">Simplified and full views</h2>
+<section class="page-card">
+<h2 id="simplified-and-full-views">Simplified and full views</h2>
 <p>OpenBat starts in <strong>simplified view</strong>, which shows a running list of every species identified, the input level and the spectrogram. That’s deliberately most of what a first night needs, and it keeps the screen readable while you’re outside in the dark.</p>
 <p>Turn on <strong>Advanced mode</strong> — it’s the first switch in <strong>Settings &gt; General</strong> — and the detector fills in the rest: peak frequency, bandwidth, duration and pulse rate for the last call, a zoomable close-up of the pulse itself, controls for the timeline, the colour palette and the frequency band, and the ability to drag the spectrogram back through the last minute of history. Simplified is where a new install starts — you aren’t asked to choose during setup, since it’s not a useful question before you’ve seen the screen it’s about. Switching between them costs nothing: anything you’ve adjusted is kept and comes back.</p>
 <p>The rest of this page describes the full view, so if a control it mentions isn’t on your screen, that’s why.</p>
 </section>
-<section class="page-card"><h2 id="listening-to-bats">Listening to bats</h2>
+<section class="page-card">
+<h2 id="listening-to-bats">Listening to bats</h2>
 <p>Bat calls are ultrasonic, so you can’t hear them directly. OpenBat gives you a few ways to bring them into human hearing range, all from a single mode button. Start a session with the round button beside the tab bar, then tap that button again to open the session controls — Listen is the middle one. Tapping it cycles through:</p>
 <ul>
 <li><strong>Off</strong>: no audio output, just detection and the spectrogram.</li>
@@ -186,7 +184,8 @@
 </blockquote>
 <p>Recordings can also be played back in full time expansion after the fact — tap the recording in its session — with nothing missed and nothing sped past, since the whole file already exists on disk by then. The speed is yours to pick there: a button under the spectrogram steps between four, eight and sixteen times slower, and you can change it while it’s playing.</p>
 </section>
-<section class="page-card"><h2 id="detecting-and-capturing-pulses">Detecting and capturing pulses</h2>
+<section class="page-card">
+<h2 id="detecting-and-capturing-pulses">Detecting and capturing pulses</h2>
 <p>OpenBat’s pulse detector watches the incoming audio and triggers automatically when it sees a call-shaped pulse, drawing it on screen and, if you’ve armed recording, saving it.</p>
 <p>Open <strong>Settings &gt; Detecting</strong> to tune it. Under <strong>What counts as a call</strong>:</p>
 <ul>
@@ -206,7 +205,8 @@
 <p>Opening a session shows a map of where its IDs happened, then two charts, then its recordings. <strong>Species detected</strong> is a bar per species, as long as the number of detections logged for it. <strong>Detections over time</strong> puts those same detections on the clock, which is a different question worth asking — a hundred IDs spread evenly over four hours and the same hundred in one busy twenty minutes look identical on the first chart and are very different nights. Tap the <strong>i</strong> beside either title for what it does and doesn’t tell you; the important caveat is that these count <em>detections</em>, not individual bats, since one bat circling a pond gets logged again each time it comes past.</p>
 <p>Older recordings that belong to no session — imports, and anything from before every outing became a session — sit in a “Not in a session” group at the bottom of the Sessions list.</p>
 </section>
-<section class="page-card"><h2 id="species-identification">Species identification</h2>
+<section class="page-card">
+<h2 id="species-identification">Species identification</h2>
 <p>Where OpenBat has an open-source model for your region, it can suggest a species for each pulse it detects, entirely on your device. No internet connection needed and nothing is sent anywhere for this to work.</p>
 <ul>
 <li><strong>NABat ML</strong> covers North America.</li>
@@ -214,14 +214,16 @@
 </ul>
 <p>Every suggestion comes with a confidence level, and two extra flags where honesty demands one. <strong>Sounds alike</strong> means the species belongs to a group that overlaps too much to separate by sound — a standing caution about that species rather than a comment on the call you just heard. <strong>Or SPECIES</strong> means that on this particular call a second species scored almost as highly as the winner, and names it, so you can judge for yourself. Either way you’re not given false confidence in a call that could genuinely be either one.</p>
 <h3 id="field-guide">Field guide</h3>
-<p>The built-in field guide covers species profiles: measurements, echolocation characteristics, distribution and conservation status. It’s searchable and browsable by region, and it’s community-contributed, so if you know your local bats, have a look at the <a href="/contribute/">Contribute</a> page to see how to help expand it.</p>
+<p>The built-in field guide covers species profiles: measurements, echolocation characteristics, distribution and conservation status. It’s searchable and browsable by region, and it’s community-contributed, so if you know your local bats, have a look at the <a href="/guide-editor/" class="wikilink">Field Guide Editor</a> to see how to help expand it.</p>
 </section>
-<section class="page-card"><h2 id="reviewing-recordings">Reviewing recordings</h2>
+<section class="page-card">
+<h2 id="reviewing-recordings">Reviewing recordings</h2>
 <p>Every recording can be opened for a proper look afterwards — open a session and tap the recording: a static spectrogram of the whole pass, full time expansion playback at a speed you choose, and the same measurements you get live (peak frequency, bandwidth, duration and so on) but with time to actually study them. A <strong>Pulses</strong> button on the same screen opens every individual pulse the classifier scored in that recording, so you can see the evidence behind the species it was given.</p>
 <p>Most of a recording is usually silence. <strong>Hide silence</strong> — the crossed-out speaker in the toolbar — cuts it out: the spectrogram packs down to just the stretches with something in them, so a five-minute recording can become twenty seconds of actual calls, and playing it plays exactly that. The gaps aren’t skipped over as you reach them, they’re simply not there, so the elapsed time you see is the time you’ll spend listening. A few milliseconds are kept either side of every pulse so nothing is clipped, and the join between one kept stretch and the next is crossfaded inside that margin — the recording’s own background carries straight through it, so there’s no dip in the sound as each join passes.</p>
 <p>Two settings in the tuning panel control what counts as silence. <strong>Keep above</strong> is how far above that recording’s own background a sound has to be — and it accounts for how much that background wanders over the recording, not just how quiet it gets at its quietest, so the same setting cuts the same way on a still night and a windy one. Lower it to keep faint, distant calls, raise it to cut harder. <strong>Pulse margin</strong> is how much either side of each pulse is kept: widen it for more context, narrow it to pack tighter. Underneath, the panel tells you what it actually did — how much of the recording was kept and how many separate stretches — and says so plainly if nothing cleared the threshold, rather than quietly showing you the whole file.</p>
 </section>
-<section class="page-card"><h2 id="contributing-recordings-to-community-science">Contributing recordings to community science</h2>
+<section class="page-card">
+<h2 id="contributing-recordings-to-community-science">Contributing recordings to community science</h2>
 <p>iNaturalist is a global community science platform that lets members of the public contribute biological observations to a shared database that researchers can use. We actually use this same database, <a href="https://www.gbif.org">gbif.org</a>, to power the range maps in the field guide.</p>
 <p>Head out and record some bats, then open a session and tap a recording. A leaf on a row in the list means it’s worth posting — gold for the strongest, green for solid, orange for usable but harder work for whoever looks at it. Rows with nothing on them are better kept for yourself.</p>
 <p>Open one and choose <strong>Add to iNaturalist</strong> from the share button. The screen shows you exactly what will be sent before anything happens, and there are two ways to finish. If you sign in to iNaturalist, one tap posts it to your own account. If you’d rather not have an account, or you’re sending the record somewhere else entirely, <strong>Save or Share</strong> hands you the same set of files to put in iNaturalist’s website yourself — its own iPhone app can’t take sound, so the website is the route that works.</p>
@@ -229,7 +231,8 @@
 <p>Nothing sent has been processed, which is the point: the sound is the evidence somebody else can re-analyse, and the pictures are what it looks like. A full-spectrum file won’t play in a browser, so anyone wanting to hear it needs a program that can slow it down — the spectrograms are there for everyone else.</p>
 <p>In time other people will help ID the species where they can, which feeds straight back into the wider dataset. There’s a cap of two observations per species, per night, per rough area — iNaturalist runs on volunteers who look at other people’s records, and more of the same bat from the same place doesn’t add anything.</p>
 </section>
-<section class="page-card"><h2 id="troubleshooting">Troubleshooting</h2>
+<section class="page-card">
+<h2 id="troubleshooting">Troubleshooting</h2>
 <p><strong>The status indicator is red, or it says “no ultrasonic microphone detected”</strong>
 Check the USB connection to your microphone and adapter. Unplug and replug if needed, OpenBat detects the microphone through a route change and should pick it up within a second or two. If you’re only using the built-in mic, this is expected, it can’t hear ultrasound and you’ll need a USB ultrasonic microphone.</p>
 <p><strong>The sample rate shown looks lower than expected</strong>
@@ -239,13 +242,16 @@ Open <strong>Settings &gt; Detecting</strong> and check <strong>Loudness</strong
 <p><strong>I can’t find my recordings</strong>
 Recordings are saved on-device and are visible in the Files app, under OpenBat’s own folder. Recordings are kept with the session they were made in; older recordings made outside a session appear in the “Not in a session” group at the bottom of the Sessions list.</p>
 </section>
-<section class="page-card page-card--note"><h2 id="still-stuck">Still stuck?</h2>
+<section class="page-card page-card--note">
+<h2 id="still-stuck">Still stuck?</h2>
 <p>Get in touch on the <a href="/contact/">Contact</a> page, we’re happy to help.</p>
 </section></div>
-<div class="plat-section plat-hidden" id="plat-android" role="tabpanel"><section class="page-card"><h2 id="openbat-on-android">OpenBat on Android</h2>
+<div class="plat-section plat-hidden" id="plat-android" role="tabpanel"><section class="page-card">
+<h2 id="openbat-on-android">OpenBat on Android</h2>
 <p><strong>There’s no Android version of OpenBat yet.</strong> Currently, the OpenBat app is only available on iPhone and iPad. This isn’t a permanent decision, I just can’t feasibly develop an app for two platforms at the same time, especially when one I am not familiar with. If you’d like to see OpenBat on Android, <a href="/contact/">Get in Touch</a> and let me know.</p>
 </section>
-<section class="page-card"><h2 id="what-to-use-in-the-meantime">What to use in the meantime</h2>
+<section class="page-card">
+<h2 id="what-to-use-in-the-meantime">What to use in the meantime</h2>
 <p>The good news is that the hard part of bat detecting is the microphone, not the app. If you’ve already got an ultrasonic USB mic, these will get you listening on Android today:</p>
 <ul>
 <li><strong><a href="https://play.google.com/store/apps/details?id=com.bkmicro.batrecorder">Bat Recorder</a></strong> — heterodyne and time-expansion listening, triggered recording and a live spectrogram, working with a range of USB ultrasonic microphones. The closest thing to OpenBat’s feature set on Android.
@@ -253,12 +259,14 @@ Recordings are saved on-device and are visible in the Files app, under OpenBat�
 </ul>
 <p>Neither app is ours and neither is open source, so we can’t vouch for what they do with your recordings or your location. Check their own privacy terms before you rely on them.</p>
 </section>
-<section class="page-card"><h2 id="tuning-a-heterodyne-detector">Tuning a heterodyne detector</h2>
+<section class="page-card">
+<h2 id="tuning-a-heterodyne-detector">Tuning a heterodyne detector</h2>
 <p>One of the easiest ways to hear bats is to use heterodyning. This is the process of ‘turning’ into a frequency such that simple signal processing can produce an audible sound. I’ll skip the details, all you need to know is that the frequency you set needs to be near the frequency the bats call at.</p>
 <p>Bat Gizmo app allows you to set two tuning frequencies at the same time, this is great for picking up more bats! As a rule of thumb, in North America, set one to 25 kHz and one to 47 kHz, this will help you pick up as many bats as possible without tweaking the settings all the time.</p>
 <p>For more, search up ‘How to use a heterodyne bat detector’.</p>
 </section>
-<section class="page-card"><h2 id="what-still-applies">What still applies</h2>
+<section class="page-card">
+<h2 id="what-still-applies">What still applies</h2>
 <p>Most of what’s on the iOS tab is about bats rather than about the app, and travels perfectly well to whatever you end up using:</p>
 <ul>
 <li><strong>When to go out</strong> — the hours after sunset and before sunrise are the ones that matter, whatever’s in your hand.</li>
@@ -266,7 +274,8 @@ Recordings are saved on-device and are visible in the Files app, under OpenBat�
 <li><strong>Contributing to community science</strong> — a spectrogram and a WAV file are all iNaturalist wants, and any detector that exports recordings can supply both. See the iOS tab for how that upload works.</li>
 </ul>
 </section>
-<section class="page-card"><h2 id="something-else">Something else?</h2>
+<section class="page-card">
+<h2 id="something-else">Something else?</h2>
 <p>If you’re on Android and stuck on any of this, which microphone to buy, which adapter, where to point it, <a href="/contact/">Get in Touch</a>. <a href="/blog/choosing-a-bat-microphone/" class="wikilink">Choosing a Bat Microphone</a> is written around OpenBat, but the hardware advice in it applies to any detector app. The OpenBat project is about more than just our app and we are happy to help.</p>
 </section></div></div>
   
@@ -281,7 +290,7 @@ Recordings are saved on-device and are visible in the Files app, under OpenBat�
           <img class="footer-logo" src="/static/images/logo.png" alt="OpenBat">
         </a>
         <p class="footer-web-address">openbat.app</p>
-        <p class="footer-tagline">Open source bat detection.</p>
+        <p class="footer-tagline">Source-available bat detection.</p>
         <div class="footer-contact">
           <div class="contact-item">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -296,13 +305,13 @@ Recordings are saved on-device and are visible in the Files app, under OpenBat�
       <div class="footer-col footer-nav">
         <p class="section-label">Explore</p>
         <a href="/our-project/">Our Project</a>
-        <a href="/contribute/">Contribute</a>
+        <a href="/guide-editor/">Contribute</a>
         <a href="/blog/">Blog</a>
         <a href="/help/">Help</a>
       </div>
 
       <div class="footer-col footer-nav">
-        <p class="section-label">Open Source</p>
+        <p class="section-label">Source</p>
         <a href="https://github.com/NiallxD/OpenBat-App" target="_blank" rel="noopener">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" class="footer-icon"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
           OpenBat App
@@ -376,6 +385,56 @@ Recordings are saved on-device and are visible in the Files app, under OpenBat�
       }
       field.appendChild(frag);
     })();
+
+    // App-icon tilt: the icon lifts slightly and the point under the pointer
+    // presses away, so a corner presses as a corner.
+    //
+    // One rotation about the axis PERPENDICULAR to the pointer, not a stacked
+    // rotateX + rotateY. Stacking them sinks both edges that meet at the
+    // corner, which reads as an edge dipping; a single perpendicular axis
+    // sinks the corner alone and lifts the opposite one, leaving the other two
+    // level. Axis (-y, x) was derived from CSS's own handedness and confirmed
+    // by render: rotate3d(-1, 1, 0) sinks the bottom-right corner, and the
+    // cardinal cases reduce to rotateX(-) for the bottom and rotateY(+) for
+    // the right edge.
+    //
+    // Pointer-driven and hover-gated: on a touch screen there is no pointer to
+    // follow, and a tap would leave the icon stuck mid-tilt.
+    if (window.matchMedia('(hover: hover)').matches &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.app-landing-icon').forEach(icon => {
+        const MAX_TILT = 11;  // degrees at a corner
+        let frame = null;
+
+        const tilt = (event) => {
+          if (frame) cancelAnimationFrame(frame);
+          frame = requestAnimationFrame(() => {
+            const box = icon.getBoundingClientRect();
+            // -1 at the left/top edge, +1 at the right/bottom.
+            const x = ((event.clientX - box.left) / box.width) * 2 - 1;
+            const y = ((event.clientY - box.top) / box.height) * 2 - 1;
+            // Clamped, so a corner is the full tilt rather than √2 of it.
+            const reach = Math.min(1, Math.hypot(x, y));
+            icon.style.transform =
+              'perspective(600px) rotate3d(' + (-y).toFixed(3) + ',' + x.toFixed(3) + ',0,' +
+              (reach * MAX_TILT).toFixed(2) + 'deg) scale(1.06)';
+          });
+        };
+
+        const reset = () => {
+          if (frame) cancelAnimationFrame(frame);
+          frame = null;
+          icon.style.transform = '';
+        };
+
+        icon.addEventListener('pointermove', tilt);
+        icon.addEventListener('pointerleave', reset);
+        // A pointer that leaves via a scroll or a tab switch never fires
+        // pointerleave, which would strand the icon tilted.
+        icon.addEventListener('pointercancel', reset);
+        window.addEventListener('blur', reset);
+      });
+    }
 
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', () => {

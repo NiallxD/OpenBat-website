@@ -17,11 +17,10 @@
 }
 
 :root {
-  /* Both themes put white text on a dark backdrop, so the UA canvas, the
-     scrollbars and the native form controls should all be dark too. Without
-     this the browser assumes light and paints white behind the page — which
-     shows in the overscroll area above and below the gradient. */
-  color-scheme: dark;
+  /* The light theme is a real light theme: dark text on white. Telling the UA
+     so gets matching scrollbars, form controls and overscroll canvas — the
+     dark theme sets `color-scheme: dark` for the same reason. */
+  color-scheme: light;
 
   --font-sans: 'Jersey 10', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-body: 'Geist Pixel', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -29,23 +28,32 @@
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
 
   --color-bg:        #ffffff;
-  /* Cards, code blocks, callouts. Semitransparent black rather than a flat
-     grey, so a surface darkens the page gradient behind it instead of laying an
-     opaque slab over it — and so it stays right in both themes without a second
-     value. Matches `--ge-surface` in the guide editor, which got here first. */
-  --color-surface:   rgba(0, 0, 0, 0.30);
-  --color-text:      #ffffff;
-  --color-secondary: #cccccc;
-  --color-muted:     #888888;
-  --color-link:      #FF860D;
-  --color-link-hover:#ffa040;
-  --color-accent:    #FF860D;
-  --color-border:    #333333;
+  /* Cards, code blocks, callouts. Semitransparent black in both themes, so a
+     surface shades whatever the page gradient is doing behind it rather than
+     laying an opaque slab over it — light needs far less of it than dark to
+     read as a raised surface. */
+  --color-surface:   rgba(0, 0, 0, 0.035);
+  --color-text:      #1a1a1a;
+  --color-secondary: #4a4a4a;
+  --color-muted:     #6f6f6f;
+  /* A darkened brand orange, for everything. #FF860D is 2.4:1 on white, which
+     fails even the 3:1 large-text threshold, and it is used for headings, card
+     titles, small labels and links as well as for fills. #c25a00 is 4.4:1 —
+     AA for body text at any size, and the same ratio for white text on it, so
+     the Download button and the active filter chip improve too. The dark theme
+     keeps #FF860D: on a near-black page it was never the weak direction. */
+  --color-link:      #c25a00;
+  --color-link-hover:#9c4700;
+  --color-accent:    #c25a00;
+  --color-border:    #e4e0da;
 
-  /* Day/night page backdrop — spills behind the nav and footer.
-     Placeholder stops; swap for final palette. */
-  --page-gradient: linear-gradient(0deg, #5E4468 0%, #33375B 45%, #081E37 100%);
-  --page-bg-solid: #081E37;
+  /* Day/night page backdrop — spills behind the nav and footer, and scrolls
+     with the document like the dark theme's night sky. The stops are weighted
+     high on purpose: an even ramp reads as plain white for most of a long page
+     with a warm strip right at the very bottom, so the dawn starts climbing
+     from around 60% and is unmistakably warm well before the footer. */
+  --page-gradient: linear-gradient(0deg, #ffecd2 0%, #fff4e4 30%, #fffaf2 60%, #ffffff 100%);
+  --page-bg-solid: #ffffff;
   /* ?v= for the same reason as style.css itself: this art is served with a
      4-hour edge cache, so replacing the file leaves visitors on the old one
      until it expires. Bump on every swap. */
@@ -56,7 +64,44 @@
   --max-wide:  1200px;
   --nav-height: 90px;
 
-  --dock-scrim: rgba(6, 10, 20, 0.62);
+  /* Chrome that used to be hardcoded white because both themes were dark.
+     Every one of these has a mirror in [data-theme="dark"] below; adding a
+     value here without one there is what breaks the dark theme. */
+  --header-bg:        rgba(255, 255, 255, 0.55);
+  --header-border:    rgba(0, 0, 0, 0.08);
+  --nav-fg:           rgba(0, 0, 0, 0.75);
+  --nav-fg-strong:    #1a1a1a;
+  --nav-hover-bg:     rgba(0, 0, 0, 0.06);
+  --dropdown-bg:      rgba(255, 255, 255, 0.92);
+  --dropdown-bg-hover:#ffffff;
+  --dropdown-border:  rgba(0, 0, 0, 0.10);
+  --drawer-border:    rgba(0, 0, 0, 0.10);
+
+  /* The footer art is a transparent treeline over the page gradient, not an
+     opaque dark panel, so footer text follows the theme like everything else. */
+  --footer-fg:        #1a1a1a;
+  --footer-fg-soft:   rgba(0, 0, 0, 0.70);
+  --footer-fg-muted:  rgba(0, 0, 0, 0.55);
+  --footer-border:    rgba(0, 0, 0, 0.12);
+
+  /* The home hero sits on the page gradient itself, unlike a post hero, which
+     has its own image and dark overlay and stays white in both themes. */
+  --hero-fg:          #1a1a1a;
+  --hero-fg-soft:     rgba(0, 0, 0, 0.72);
+
+  --dock-scrim: rgba(255, 252, 248, 0.68);
+
+  /* Guide editor. These were pinned to dark values because the old light
+     theme had white text on a white `--color-bg`, so an input using that pair
+     was invisible. That bug is what this theme fixes, so they follow the
+     theme now. */
+  --ge-surface:      rgba(0, 0, 0, 0.035);
+  --ge-input-bg:     #ffffff;
+  --ge-input-fg:     #1a1a1a;
+  --ge-border:       rgba(0, 0, 0, 0.12);
+  --ge-border-strong:rgba(0, 0, 0, 0.22);
+  --ge-quiet-hover:  rgba(0, 0, 0, 0.05);
+  --ge-map-land:     rgba(0, 0, 0, 0.13);
 
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -78,6 +123,37 @@
   --page-bg-solid: #05070d;
   --footer-bg-image: url('/static/images/footer-bg-dark.webp?v=2');
   --footer-overlay: rgba(0, 0, 0, 0.0);
+
+  /* Unchanged from what these were as literals — the dark theme looks exactly
+     as it did; it just reads its chrome colours from names now. */
+  --color-surface:    rgba(0, 0, 0, 0.30);
+  --header-bg:        rgba(0, 0, 0, 0.25);
+  --header-border:    rgba(255, 255, 255, 0.08);
+  --nav-fg:           rgba(255, 255, 255, 0.9);
+  --nav-fg-strong:    #ffffff;
+  --nav-hover-bg:     rgba(255, 255, 255, 0.15);
+  --dropdown-bg:      rgba(0, 0, 0, 0.55);
+  --dropdown-bg-hover:rgba(0, 0, 0, 0.75);
+  --dropdown-border:  rgba(255, 255, 255, 0.1);
+  --drawer-border:    rgba(255, 255, 255, 0.1);
+
+  --footer-fg:        #ffffff;
+  --footer-fg-soft:   rgba(255, 255, 255, 0.75);
+  --footer-fg-muted:  rgba(255, 255, 255, 0.6);
+  --footer-border:    rgba(255, 255, 255, 0.15);
+
+  --hero-fg:          #ffffff;
+  --hero-fg-soft:     rgba(255, 255, 255, 0.82);
+
+  --dock-scrim: rgba(6, 10, 20, 0.62);
+
+  --ge-surface:      rgba(0, 0, 0, 0.30);
+  --ge-input-bg:     rgba(0, 0, 0, 0.45);
+  --ge-input-fg:     #ffffff;
+  --ge-border:       rgba(255, 255, 255, 0.13);
+  --ge-border-strong:rgba(255, 255, 255, 0.22);
+  --ge-quiet-hover:  rgba(255, 255, 255, 0.06);
+  --ge-map-land:     rgba(255, 255, 255, 0.17);
 }
 
 /* ── Theme transition (sunrise/sunset crossfade) ─────────────── */
@@ -221,10 +297,10 @@ p {
   left: 0;
   width: 100%;
   z-index: 100;
-  background: rgba(0, 0, 0, 0.25);
+  background: var(--header-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 0px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 0px solid var(--header-border);
   /* Captured as its own layer during the theme crossfade. Without this the
      header is part of the root snapshot, and a `backdrop-filter` in that
      snapshot has no live page behind it to blur — the nav flattens to plain
@@ -272,7 +348,7 @@ p {
   font-family: var(--font-sans);
   font-size: 1.25rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--nav-fg);
   text-decoration: none;
   padding: 0.375rem 0.75rem;
   border-radius: var(--radius-sm);
@@ -280,8 +356,8 @@ p {
 }
 
 .nav-menu a:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: var(--nav-hover-bg);
+  color: var(--nav-fg-strong);
 }
 
 .nav-menu a.active {
@@ -323,16 +399,16 @@ p {
 }
 
 .nav-dropdown a {
-  background: rgba(0, 0, 0, 0.55);
+  background: var(--dropdown-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--dropdown-border);
   font-size: 1.125rem;
   white-space: nowrap;
 }
 
 .nav-dropdown a:hover {
-  background: rgba(0, 0, 0, 0.75);
+  background: var(--dropdown-bg-hover);
 }
 
 /* Nav download button — the one orange thing in the header, so it reads as the
@@ -377,7 +453,7 @@ p {
 .theme-toggle {
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--nav-fg);
   cursor: pointer;
   padding: 0.375rem;
   border-radius: var(--radius-sm);
@@ -387,8 +463,8 @@ p {
   transition: background var(--ease), color var(--ease);
 }
 .theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: var(--nav-hover-bg);
+  color: var(--nav-fg-strong);
 }
 [data-theme="dark"] .sun-icon { display: block; }
 [data-theme="dark"] .moon-icon { display: none; }
@@ -400,7 +476,7 @@ p {
   display: none;
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--nav-fg);
   cursor: pointer;
   padding: 0.375rem;
   border-radius: var(--radius-sm);
@@ -410,8 +486,8 @@ p {
 }
 
 .menu-toggle:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: var(--nav-hover-bg);
+  color: var(--nav-fg-strong);
 }
 
 .menu-toggle .close-icon { display: none; }
@@ -463,8 +539,8 @@ p {
     gap: 0.5rem;
     z-index: 90;
     transition: right 300ms cubic-bezier(0.4, 0, 0.2, 1);
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid var(--drawer-border);
+    border-top: 1px solid var(--drawer-border);
     margin-left: 0;
   }
 
@@ -521,10 +597,10 @@ main {
 
 /* ── Footer ───────────────────────────────────────────────── */
 .site-footer {
-  --color-text: #ffffff;
-  --color-secondary: rgba(255, 255, 255, 0.75);
-  --color-muted: rgba(255, 255, 255, 0.6);
-  --color-border: rgba(255, 255, 255, 0.15);
+  --color-text: var(--footer-fg);
+  --color-secondary: var(--footer-fg-soft);
+  --color-muted: var(--footer-fg-muted);
+  --color-border: var(--footer-border);
   border-top: 0px solid var(--color-border);
   padding: 20rem 0 22rem;
   margin-top: auto;
@@ -540,6 +616,15 @@ main {
   background-position: center bottom;
   background-repeat: no-repeat;
   transition: background 300ms ease;
+}
+
+/* On a phone, filling the width means dividing a 4112px-wide painting down to
+   ~390px, which takes the whole treeline to about 140px tall — the trees end
+   up specks, and the fixed bottom padding leaves a band of empty sky above
+   them. Size off the HEIGHT here instead and let the width crop: the art
+   stays at a believable scale and `center bottom` keeps the crop centred. */
+@media (max-width: 800px) {
+  .site-footer { background-size: auto 280px; }
 }
 
 .site-footer-inner {
@@ -664,7 +749,7 @@ main {
   text-align: center;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--footer-fg);
   margin-top: 3rem;
 }
 
@@ -969,14 +1054,14 @@ span.wikilink { color: var(--color-secondary); }
   font-size: clamp(2.75rem, 8vw, 5rem);
   font-weight: 800;
   line-height: 1.05;
-  color: #fff;
+  color: var(--hero-fg);
 }
 
 .hero-plain-text {
   margin: 1rem 0 0;
   font-size: clamp(1.05rem, 2.5vw, 1.35rem);
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--hero-fg-soft);
 }
 
 .hero-plain-cta {
@@ -1008,6 +1093,26 @@ span.wikilink { color: var(--color-secondary); }
   text-align: center;
 }
 
+/* The shared lockup (icon, name, tagline, badge, dock). `.standard-page`
+   already clears the fixed nav, but only just — the icon ended up tight under
+   it on both pages, so the breathing room lives here, on the one wrapper both
+   pages include. It also carries the centring, which /download used to get
+   from `.app-landing` and the home page had nothing to get from at all. */
+.app-lockup {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-top: 4rem;
+  text-align: center;
+}
+
+/* On the home page the ticker follows the lockup directly, and the dock's
+   caption underneath needs room before it. */
+.app-lockup + .home-featured { margin-top: 3rem; }
+
+@media (max-width: 700px) {
+  .app-lockup { padding-top: 2rem; }
+}
+
 .post-content .app-landing-icon,
 .app-landing-icon {
   width: 128px;
@@ -1015,6 +1120,15 @@ span.wikilink { color: var(--color-secondary); }
   display: block;
   margin: 0 auto 1.5rem;
   border-radius: 24px;
+  /* The tilt is driven from script (see base.njk), which writes `transform`.
+     The transition is what makes it feel like a physical object: fast enough
+     to track the pointer, slow enough to ease back flat on the way out. */
+  transition: transform 220ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-landing-icon { transition: none; }
 }
 
 .post-content .app-landing-title,
@@ -1034,6 +1148,10 @@ span.wikilink { color: var(--color-secondary); }
   color: var(--color-secondary);
   margin: 0.75rem auto 2rem;
   max-width: 30ch;
+  /* The lockup centres its contents, but a bare `p { text-align: justify }`
+     applies directly and so beats the centring this only inherits — which
+     stretched the first of the two lines out to the full 30ch. */
+  text-align: center;
 }
 
 .app-landing .appstore-badge { margin: 0 auto; }
@@ -1048,6 +1166,16 @@ span.wikilink { color: var(--color-secondary); }
   width: var(--dock-breakout);
   margin-left: calc(50% - var(--dock-breakout) / 2);
   margin-top: 2rem;
+}
+
+/* Below 800px the dock stops being a row on the page and becomes a sticky
+   100svh stage with the screens centred in it, so about a third of a screen
+   of empty stage sits above the first phone before it pins. Adding the 2rem
+   above turned that into a visible hole under the App Store badge. The stage
+   is pulled up instead of shortened: its height is what the pinned scroll
+   maths is built on, and the emptiness is only visible before it pins. */
+@media (max-width: 800px) {
+  .app-landing-dock { margin-top: -5vh; }
 }
 
 /* Three columns on desktop, one below 800px — the same breakpoint the page
@@ -1891,21 +2019,12 @@ figure.image-float-left figcaption {
 /* ==========================================================================
    Field guide editor (/guide-editor/)
 
-   Surfaces are scoped tokens rather than the site-wide ones. `--ge-surface`
-   now matches `--color-surface`, but the inputs and borders do not: the site's
-   `--color-bg` is #ffffff in the light theme while `--color-text` is #ffffff in
-   BOTH, so an input using that pair renders white text on white — invisible,
-   and only in the light theme. Everything here is therefore pinned to dark
-   values that work under either theme, matching the dark page gradient the site
-   already paints behind them.
+   Surfaces come from the `--ge-*` tokens on :root, which have a value per
+   theme. They were once pinned to dark values in both themes, because the old
+   light theme put #ffffff text on a #ffffff `--color-bg` and an input using
+   that pair was invisible. The light theme is a real light theme now, so the
+   editor follows it like everything else.
    ========================================================================== */
-
-#guide-editor {
-  --ge-surface: rgba(0, 0, 0, 0.30);
-  --ge-input-bg: rgba(0, 0, 0, 0.45);
-  --ge-border: rgba(255, 255, 255, 0.13);
-  --ge-border-strong: rgba(255, 255, 255, 0.22);
-}
 
 .ge-steps { margin: 1.5rem 0; padding-left: 0; }
 .ge-steps p { margin: 0.35rem 0; }
@@ -1953,7 +2072,7 @@ figure.image-float-left figcaption {
   color: var(--color-text);
   border-color: var(--ge-border-strong);
 }
-.ge-btn-quiet:hover { background: rgba(255,255,255,0.06); border-color: var(--color-accent); }
+.ge-btn-quiet:hover { background: var(--ge-quiet-hover); border-color: var(--color-accent); }
 .ge-btn-primary { font-weight: 600; }
 
 /* --- browse --- */
@@ -1997,7 +2116,7 @@ figure.image-float-left figcaption {
   cursor: pointer;
   transition: border-color var(--ease), background var(--ease);
 }
-.ge-result:hover { border-color: var(--color-accent); background: rgba(255,255,255,0.04); }
+.ge-result:hover { border-color: var(--color-accent); background: var(--ge-quiet-hover); }
 /* `min-width: 0` on the name column: grid tracks refuse to shrink below their
    content by default, so one long scientific name would widen the whole page
    rather than wrap. */
@@ -2080,7 +2199,7 @@ figure.image-float-left figcaption {
 #guide-editor textarea {
   width: 100%;
   background: var(--ge-input-bg);
-  color: #ffffff;
+  color: var(--ge-input-fg);
   border: 1px solid var(--ge-border-strong);
   border-radius: var(--radius-sm);
   padding: 0.5rem 0.65rem;
@@ -2186,7 +2305,7 @@ figure.image-float-left figcaption {
     content: "";
     position: absolute;
     inset: 0;
-    background-color: rgba(255, 255, 255, 0.17);
+    background-color: var(--ge-map-land);
     -webkit-mask: url(../images/world-map.svg) no-repeat 0 0 / 100% 100%;
     mask: url(../images/world-map.svg) no-repeat 0 0 / 100% 100%;
   }
@@ -2660,9 +2779,9 @@ figure.image-float-left figcaption {
    squeezing three. Nothing slides, so the track's transition is dropped and
    the overflow clipping — which exists only to hide the off-screen slides —
    is released, which lets the card's own 2px hover lift work again. */
-/* The header owns the space above the row, so the row itself drops the
-   top margin the sliding ticker carries. */
-.section-label--row { margin-top: 2.5rem !important; }
+/* The heading owns the space above the row, so the row itself drops the top
+   margin the sliding ticker carries. */
+.section-title--featured { margin-top: 2.5rem; }
 .hero-ticker--row { overflow: visible; margin-top: 0; }
 .hero-ticker--row .hero-ticker-track {
   display: grid;
@@ -2974,7 +3093,11 @@ figure.image-float-left figcaption {
   }
 }
 
-/* Left-aligned heading that introduces each block of the home page. */
+/* Left-aligned heading that introduces a block of a page — the home page's
+   Explore / Our Story / Recent Posts, and the Featured rows on both the home
+   page and /blog/. `.section-title` is the name to use in new markup; the
+   `.home-` one is kept because the home page's other three headings use it. */
+.section-title,
 .home-section-title {
   font-family: var(--font-sans);
   font-size: 1.3rem;
