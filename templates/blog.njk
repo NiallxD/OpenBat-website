@@ -14,7 +14,8 @@ layout: base.njk
   {% set hero = collections.heroPosts %}
   {% if hero.length %}
   {% set heroRow = true %}
-  <p class="section-label section-label--row">Featured</p>
+  {% set heroHeading = true %}
+  <h2 class="section-title section-title--featured">Featured</h2>
   {% include "partials/hero-ticker.njk" %}
   {% endif %}
 

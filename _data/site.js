@@ -3,7 +3,9 @@ export default {
   name: "OpenBat",
   domain: "openbat.app",
   url: "https://openbat.app",
-  tagline: "Open source bat detection.",
+  // Not "open source": the app is source-available — readable, not licensed
+  // for reuse. See the "The 'open' in OpenBat" post for the reasoning.
+  tagline: "Source-available bat detection.",
 
   // Contact email, split so it can be assembled client-side
   // (the footer and Contact page reveal it on click rather than
@@ -19,9 +21,7 @@ export default {
   // drawer, where there is no hover to open anything.
   nav: [
     { label: "Our Project", url: "/our-project/" },
-    { label: "Contribute", url: "/contribute/", children: [
-      { label: "Field Guide Editor", url: "/guide-editor/" }
-    ]},
+    { label: "Contribute", url: "/guide-editor/" },
     { label: "Blog", url: "/blog/" },
     { label: "Help", url: "/help/" }
   ],

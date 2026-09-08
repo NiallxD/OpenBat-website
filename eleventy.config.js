@@ -417,6 +417,13 @@ export default function (eleventyConfig) {
   // `.plat-section` it is emitted verbatim, headings and all, so nothing
   // inside it is cut into cards.
   const PLAIN = /class\s*=\s*["'][^"']*\bpage-plain\b/;
+  // An explicit card, written by the author or emitted by the `## SECTIONSTART ##`
+  // preprocessor below. Unlike the two above it is not passed through verbatim:
+  // its CONTENTS become a card part like any other, so an authored card is
+  // measured for width (half, note, media, quote) exactly as an h2-split one
+  // is. Without that, hand-marked sections would all come out full width and a
+  // page would change shape the moment it adopted the markers.
+  const EXPLICIT = /class\s*=\s*["'][^"']*\bpage-card\b/;
   const TAG = /<(\/?)([a-zA-Z][\w-]*)([^>]*?)(\/?)>/g;
 
   const isBlank = (html) =>
@@ -432,6 +439,7 @@ export default function (eleventyConfig) {
     let cursor = 0;        // start of the unconsumed remainder
     let wrapperAt = -1;    // where the current passthrough wrapper opened
     let wrapperCards = false; // …and whether its contents get carded
+    let wrapperExplicit = false; // …or whether it IS a card, and unwraps to one
     let m;
 
     const flush = () => {
@@ -451,9 +459,16 @@ export default function (eleventyConfig) {
           // emit the wrapper around the cards that come back.
           const open = html.slice(wrapperAt, html.indexOf(">", wrapperAt) + 1);
           const inner = html.slice(wrapperAt + open.length, m.index);
-          parts.push({ raw: open + (wrapperCards ? toCards(inner) : inner) + full });
+          if (wrapperExplicit) {
+            // Drop the author's wrapper and let the card be re-emitted with a
+            // measured width class below.
+            parts.push({ card: inner });
+          } else {
+            parts.push({ raw: open + (wrapperCards ? toCards(inner) : inner) + full });
+          }
           cursor = m.index + full.length;
           wrapperAt = -1;
+          wrapperExplicit = false;
         }
         continue;
       }
@@ -464,11 +479,16 @@ export default function (eleventyConfig) {
           section += html.slice(cursor, m.index);
           cursor = m.index;
           flush();
-        } else if (lower === "div" && (PASSTHROUGH.test(attrs) || PLAIN.test(attrs))) {
+        } else if (
+          (lower === "div" || lower === "section") &&
+          (PASSTHROUGH.test(attrs) || PLAIN.test(attrs) || EXPLICIT.test(attrs))
+        ) {
           section += html.slice(cursor, m.index);
           flush();
           wrapperAt = m.index;
           wrapperCards = PASSTHROUGH.test(attrs);
+          wrapperExplicit =
+            EXPLICIT.test(attrs) && !PASSTHROUGH.test(attrs) && !PLAIN.test(attrs);
         }
       }
       depth++;
@@ -539,6 +559,87 @@ export default function (eleventyConfig) {
   };
 
   eleventyConfig.addFilter("sectionCards", toCards);
+
+  // ── Page markers ────────────────────────────────────────────
+  // Structural HTML a page would otherwise have to hand-write, expressed as
+  // markers a non-developer can move around without breaking anything:
+  //
+  //   ## IOS ##            start the iOS tab (emits the platform toggle once)
+  //   ## ANDROID ##        start the Android tab
+  //   ## SECTIONSTART ##   open a card
+  //   ## SECTIONEND ##     close it
+  //
+  // Everything between them is ordinary markdown. Markers are written as h2s
+  // so a plain markdown editor still renders the file readably, and are matched
+  // on their own line only, so the words can appear in prose.
+  //
+  // Tabs and cards close themselves: a new tab or card closes whatever is open,
+  // and the end of the file closes the rest. That is the point of the format —
+  // an unclosed card cannot leave a stray </div> in the output.
+  const MARKER = /^[ \t]*##[ \t]*(IOS|ANDROID|SECTIONSTART|SECTIONEND)[ \t]*##[ \t]*$/;
+
+  const PLATFORM_TOGGLE = [
+    '<div class="plat-toggle-wrap" role="tablist" aria-label="Platform">',
+    '  <div class="plat-toggle">',
+    '    <button type="button" class="plat-toggle-btn active" data-platform="ios" role="tab" aria-selected="true" aria-controls="plat-ios">',
+    '      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.72c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.42-.14-2.76.83-3.48.83-.72 0-1.82-.81-2.99-.79-1.54.02-2.96.89-3.75 2.26-1.6 2.78-.41 6.9 1.15 9.16.76 1.11 1.67 2.35 2.86 2.3 1.15-.04 1.58-.74 2.97-.74 1.39 0 1.78.74 2.99.72 1.23-.02 2.01-1.12 2.76-2.24.87-1.28 1.23-2.53 1.25-2.6-.03-.01-2.39-.92-2.4-3.64zM14.1 5.6c.63-.77 1.06-1.83.94-2.9-.91.04-2.01.61-2.67 1.37-.59.68-1.1 1.76-.96 2.8 1.01.08 2.05-.51 2.69-1.27z"/></svg>',
+    '      iOS',
+    '    </button>',
+    '    <button type="button" class="plat-toggle-btn" data-platform="android" role="tab" aria-selected="false" aria-controls="plat-android">',
+    '      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 10 6.2 6.6M16 10l1.8-3.4"/><path d="M9.5 7.5h.01M14.5 7.5h.01"/></svg>',
+    '      Android',
+    '    </button>',
+    '  </div>',
+    '</div>',
+  ].join("\n");
+
+  const TAB_OPEN = {
+    IOS: '<div class="plat-section" id="plat-ios" role="tabpanel">',
+    ANDROID: '<div class="plat-section plat-hidden" id="plat-android" role="tabpanel">',
+  };
+
+  const expandMarkers = (content) => {
+    const lines = content.split(/\r?\n/);
+    if (!lines.some((line) => MARKER.test(line))) return null;
+
+    const out = [];
+    let card = false;
+    let tab = false;
+    let toggled = false;
+
+    // Blank lines around every emitted tag: markdown-it only treats a line as
+    // an HTML block when it starts one, and only resumes parsing markdown after
+    // a blank line. Without them the first paragraph of a card is swallowed
+    // into the raw HTML and renders as plain text.
+    const emit = (html) => out.push("", html, "");
+    const closeCard = () => { if (card) { emit("</section>"); card = false; } };
+    const closeTab = () => { closeCard(); if (tab) { emit("</div>"); tab = false; } };
+
+    for (const line of lines) {
+      const marker = line.match(MARKER);
+      if (!marker) { out.push(line); continue; }
+      const name = marker[1];
+
+      if (name === "SECTIONSTART") {
+        closeCard();
+        emit('<section class="page-card">');
+        card = true;
+      } else if (name === "SECTIONEND") {
+        closeCard();
+      } else {
+        closeTab();
+        if (!toggled) { emit(PLATFORM_TOGGLE); toggled = true; }
+        emit(TAB_OPEN[name]);
+        tab = true;
+      }
+    }
+    closeTab();
+    return out.join("\n");
+  };
+
+  eleventyConfig.addPreprocessor("pageMarkers", "md", (data, content) =>
+    expandMarkers(content) ?? undefined
+  );
 
   // ── Charts ──────────────────────────────────────────────────
   // {% chart {...} %} — every data figure in the blog.

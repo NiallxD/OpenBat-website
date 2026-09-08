@@ -2,7 +2,11 @@
 title: Contribute
 description: Learn how you can contribute
 permalink: /contribute/
-publish: true
+# Drafted 2026-09-08: the nav's Contribute now goes straight to the field
+# guide editor. Kept whole, and off the site, until it is decided what this
+# page should be. Re-publishing it means restoring the links listed in the
+# commit that drafted it.
+publish: false
 ---
 
 <div class="page-plain">

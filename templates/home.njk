@@ -22,11 +22,12 @@ layout: base.njk
 {% endif %}
 
 <div class="standard-page">
-  {% if not (heroTitle or heroImage) and title %}
-  <div class="listing-header listing-header--home">
-    <h1>{{ title }}</h1>
-    {% if description %}<p class="page-lead">{{ description }}</p>{% endif %}
-  </div>
+  {# The app lockup is the home page's header: it already carries the h1 and a
+     one-line pitch, so the old `listing-header--home` title block underneath
+     would have said "OpenBat" twice. Shared with /download/ so the two pages
+     cannot drift apart. #}
+  {% if not (heroTitle or heroImage) %}
+  {% include "partials/app-lockup.njk" %}
   {% endif %}
 
   {# The same featured ticker that heads /blog/, sitting under the page title.
@@ -34,13 +35,12 @@ layout: base.njk
      base.njk — keep the two in step. #}
   {% set hero = collections.heroPosts %}
   {% if hero.length %}
+  {% set heroHeading = true %}
+  <h2 class="section-title section-title--featured">Featured</h2>
   <div class="home-featured">
     {% include "partials/hero-ticker.njk" %}
   </div>
   {% endif %}
-
-  <h2 class="home-section-title">The App</h2>
-  {% include "partials/app-dock.njk" %}
 
   <h2 class="home-section-title">Explore</h2>
   {# Three signpost cards, sharing the blog listing's card styles so the home
@@ -57,7 +57,7 @@ layout: base.njk
       </div>
     </a>
 
-    <a href="{{ '/contribute/' | url }}" class="post-card">
+    <a href="{{ '/guide-editor/' | url }}" class="post-card">
       <div class="post-card-img">
         <img src="{{ '/static/images/guide-editor-list.webp' | url }}" alt="" loading="lazy">
       </div>
@@ -75,7 +75,7 @@ layout: base.njk
       <div class="post-card-body">
         <h2>Download Now!</h2>
         <div class="post-card-meta"><span class="tag">out now</span></div>
-        <p class="post-card-desc">OpenBat is on the App Store. Detect, record and identify bats from your iPhone — free, and open source.</p>
+        <p class="post-card-desc">OpenBat is on the App Store. Detect, record and identify bats from your iPhone — free, and source-available.</p>
       </div>
     </a>
   </div>

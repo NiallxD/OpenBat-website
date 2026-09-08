@@ -89,7 +89,7 @@ We haven't tested this one with OpenBat ourselves, but Apodemus document it work
 
 ### AudioMoth USB Microphone — around $80 USD
 
-The cheapest thing you can simply order. It's made by[Open Acoustic Devices](https://www.openacousticdevices.info/usb-microphone), sold through a few retailers such as [GroupGets](https://groupgets.com/products/audiomoth-usb-microphone), records up to 384 kHz, and plugs in as an ordinary USB microphone.
+The cheapest thing you can simply order. It's made by [Open Acoustic Devices](https://www.openacousticdevices.info/usb-microphone), sold through a few retailers such as [GroupGets](https://groupgets.com/products/audiomoth-usb-microphone), records up to 384 kHz, and plugs in as an ordinary USB microphone.
 
 Two things to know. It has a **micro-USB socket**, so you'll need a cable or adapter (see below). And its sample rate is set in its own free configuration app on a computer rather than by your phone, so set it to its highest rate before you take it out.
 
@@ -106,6 +106,39 @@ Above this point you're into equipment aimed at consultants doing paid survey wo
 ### Handheld self-builds
 
 Phil Atkin also designs the **PiPistrelle Mini** — handheld detectors that double as 384 kHz USB microphones, at similar self-build cost to the Griff. Same site, [pippyg.com](https://www.pippyg.com/). If the handheld shape appeals but the soldering doesn't, the assembled Apodemus above is the same idea bought rather than built.
+
+### PippyG — £65, a recorder that can be converted
+
+Another of Phil's designs, industrialised by Apodemus and sold assembled by
+their dealers — [Wildlife
+Services](https://www.wildlifeservices.uk/product-page/apodemus-pippyg) list it
+at £65. There's a self-build version at [pippyg.com](https://www.pippyg.com/)
+too.
+
+Out of the box it isn't a microphone at all. It's a **static recorder**: three
+AA batteries, a microSD card, and you leave it somewhere for four to seven
+nights while it writes triggered full-spectrum WAVs at 384 kHz. Its own manual
+lists the micro-USB port as being "for updates and power" — not for audio.
+
+What makes it interesting here is that the original PippyG can be **reflashed**
+with microphone firmware, at which point it becomes a 384 kHz USB microphone
+like the others. So one £65 board can be a passive survey box one week and a
+live detector on your phone the next — the only thing on this page that does
+both.
+
+> [!warning] The original only, and not the PippyG2
+> This applies to the original PippyG (hardware `PP00101 rev0`, micro-USB).
+> **The PippyG2 cannot be used as a USB microphone**, and it's a visibly
+> different board — USB-C rather than micro-USB, and labelled "Pippyg Passive
+> Bat Detector 2". Listings don't always make the version obvious, so if
+> converting it is why you're buying one, ask the seller which you'd be
+> getting.
+
+Reflashing is the same trick as the Griff — hold the firmware contacts shorted,
+plug it into a computer, and drop a `.uf2` file on the drive that appears — but
+it is a conversion rather than a mode, so it's a poor choice if a plug-in
+microphone is all you want. Buy it for the passive recording, and treat the
+microphone as a bonus.
 
 > [!tip] Know a good one we've missed?
 > This list is short because the market is, and because we'd rather name a

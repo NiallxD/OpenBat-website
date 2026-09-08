@@ -3,6 +3,9 @@
    collections.heroPosts before including this. The script that drives it
    lives once in base.njk and runs over every [data-ticker] on the page.
 
+   Set `heroHeading = true` when the including page prints its own "Featured"
+   heading above; the cards then drop the label rather than repeating the word.
+
    Set `heroRow = true` before including to get the three cards side by side
    instead, which is what /blog/ does. `collections.heroPosts` is capped at
    three, so a row shows all of them at once and there is nothing left to
@@ -21,10 +24,10 @@
       {% endif %}
       <div class="post-card-body">
         {% if post.data.featured === true %}
-        {# Row mode is introduced by its own "Featured" header, so the card
-           repeating the word is noise. A top-up post is a different thing from
-           the header's claim, though, and keeps its "Latest". #}
-        {% if not heroRow %}<p class="section-label">Featured</p>{% endif %}
+        {# Under a "Featured" heading the card repeating the word is noise. A
+           top-up post is a different claim from the heading's, though, so it
+           keeps its "Latest". #}
+        {% if not heroHeading %}<p class="section-label">Featured</p>{% endif %}
         {% else %}
         <p class="section-label">Latest</p>
         {% endif %}

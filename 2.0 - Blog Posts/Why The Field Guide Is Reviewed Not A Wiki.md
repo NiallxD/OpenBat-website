@@ -48,6 +48,6 @@ pile of text, though, and I'd rather have the first one.
 > in your area, or that a photo is mislabelled, or that a measurement looks
 > off, that's a useful submission. It's my job is to check nothing slipped through that shouldn't, not to be impressed.
 
-If you want to have a go, the [Contribute](/contribute/) page is the way in, and if you have any questions please reach out, I don't bite!
+If you want to have a go, the [[Guide Editor|Field Guide Editor]] is the way in, and if you have any questions please reach out, I don't bite!
 
 Niall & the OpenBat Team 🙂

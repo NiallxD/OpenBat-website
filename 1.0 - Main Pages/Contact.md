@@ -29,7 +29,7 @@ A screenshot of the detector screen is worth several paragraphs, if you can get 
 
 ## Adding to the field guide
 
-The field guide is community-contributed, and the fastest route in is the [[Guide Editor|Field Guide Editor]] rather than an email — it opens the guide in ordinary form fields and handles the submission for you. The [Contribute](/contribute/) page walks through what a good entry looks like.
+The field guide is community-contributed, and the fastest route in is the [[Guide Editor|Field Guide Editor]] rather than an email — it opens the guide in ordinary form fields and handles the submission for you, and links the contributor guide covering what a good entry looks like.
 
 If you'd rather talk it through first, or you have knowledge of a region the guide barely covers, write to us and we'll help you get started.
 

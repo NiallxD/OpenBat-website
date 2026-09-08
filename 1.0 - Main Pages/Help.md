@@ -5,20 +5,9 @@ permalink: /help/
 publish: true
 ---
 
-<div class="plat-toggle-wrap" role="tablist" aria-label="Platform">
-  <div class="plat-toggle">
-    <button type="button" class="plat-toggle-btn active" data-platform="ios" role="tab" aria-selected="true" aria-controls="plat-ios">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.72c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.42-.14-2.76.83-3.48.83-.72 0-1.82-.81-2.99-.79-1.54.02-2.96.89-3.75 2.26-1.6 2.78-.41 6.9 1.15 9.16.76 1.11 1.67 2.35 2.86 2.3 1.15-.04 1.58-.74 2.97-.74 1.39 0 1.78.74 2.99.72 1.23-.02 2.01-1.12 2.76-2.24.87-1.28 1.23-2.53 1.25-2.6-.03-.01-2.39-.92-2.4-3.64zM14.1 5.6c.63-.77 1.06-1.83.94-2.9-.91.04-2.01.61-2.67 1.37-.59.68-1.1 1.76-.96 2.8 1.01.08 2.05-.51 2.69-1.27z"/></svg>
-      iOS
-    </button>
-    <button type="button" class="plat-toggle-btn" data-platform="android" role="tab" aria-selected="false" aria-controls="plat-android">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 10 6.2 6.6M16 10l1.8-3.4"/><path d="M9.5 7.5h.01M14.5 7.5h.01"/></svg>
-      Android
-    </button>
-  </div>
-</div>
+## IOS ##
 
-<div class="plat-section" id="plat-ios" role="tabpanel">
+## SECTIONSTART ##
 
 ## Get started
 
@@ -29,6 +18,10 @@ publish: true
 
 Setting the app up takes three screens and asks for nothing but the microphone and location permissions.
 
+## SECTIONEND ##
+
+## SECTIONSTART ##
+
 ## Finding your way around
 
 Two tours are waiting on the **Info & Tour** screen, and neither is a video — both live inside the app.
@@ -37,6 +30,10 @@ Two tours are waiting on the **Info & Tour** screen, and neither is a video — 
 - **About OpenBat** is the reading tour: what echolocation is, what each listening mode does to the sound, and why calibrating the microphone matters. It's the same material the app used to walk you through before you'd even plugged anything in, which turned out to be the wrong moment for it.
 
 Once you're up and running, the rest of this page covers what everything does.
+
+## SECTIONEND ##
+
+## SECTIONSTART ##
 
 ## When to go out
 
@@ -55,6 +52,10 @@ Each window is the first and last **15% of that night**, rather than a fixed num
 
 **Tap the pill** for tonight's sunset and sunrise times, how long each window lasts tonight, and a reminder of why those hours are the ones to be out in. It's worked out on your phone from your latitude and the date, so it's right whether or not you have signal — and it needs location access to know where the sun is.
 
+## SECTIONEND ##
+
+## SECTIONSTART ##
+
 ## Simplified and full views
 
 OpenBat starts in **simplified view**, which shows a running list of every species identified, the input level and the spectrogram. That's deliberately most of what a first night needs, and it keeps the screen readable while you're outside in the dark.
@@ -62,6 +63,10 @@ OpenBat starts in **simplified view**, which shows a running list of every speci
 Turn on **Advanced mode** — it's the first switch in **Settings > General** — and the detector fills in the rest: peak frequency, bandwidth, duration and pulse rate for the last call, a zoomable close-up of the pulse itself, controls for the timeline, the colour palette and the frequency band, and the ability to drag the spectrogram back through the last minute of history. Simplified is where a new install starts — you aren't asked to choose during setup, since it's not a useful question before you've seen the screen it's about. Switching between them costs nothing: anything you've adjusted is kept and comes back.
 
 The rest of this page describes the full view, so if a control it mentions isn't on your screen, that's why.
+
+## SECTIONEND ##
+
+## SECTIONSTART ##
 
 ## Listening to bats
 
@@ -76,6 +81,10 @@ A small pill above the spectrogram shows what Slow replay is doing at any moment
 > **Note:** When the sound of a bat is repeated by your phone, the microphone may pick that call up again and reproduce it. Wear earphones for best performance, or turn the volume down a bit.
 
 Recordings can also be played back in full time expansion after the fact — tap the recording in its session — with nothing missed and nothing sped past, since the whole file already exists on disk by then. The speed is yours to pick there: a button under the spectrogram steps between four, eight and sixteen times slower, and you can change it while it's playing.
+
+## SECTIONEND ##
+
+## SECTIONSTART ##
 
 ## Detecting and capturing pulses
 
@@ -103,6 +112,10 @@ Opening a session shows a map of where its IDs happened, then two charts, then i
 
 Older recordings that belong to no session — imports, and anything from before every outing became a session — sit in a "Not in a session" group at the bottom of the Sessions list.
 
+## SECTIONEND ##
+
+## SECTIONSTART ##
+
 ## Species identification
 
 Where OpenBat has an open-source model for your region, it can suggest a species for each pulse it detects, entirely on your device. No internet connection needed and nothing is sent anywhere for this to work.
@@ -114,7 +127,11 @@ Every suggestion comes with a confidence level, and two extra flags where honest
 
 ### Field guide
 
-The built-in field guide covers species profiles: measurements, echolocation characteristics, distribution and conservation status. It's searchable and browsable by region, and it's community-contributed, so if you know your local bats, have a look at the [Contribute](/contribute/) page to see how to help expand it.
+The built-in field guide covers species profiles: measurements, echolocation characteristics, distribution and conservation status. It's searchable and browsable by region, and it's community-contributed, so if you know your local bats, have a look at the [[Guide Editor|Field Guide Editor]] to see how to help expand it.
+
+## SECTIONEND ##
+
+## SECTIONSTART ##
 
 ## Reviewing recordings
 
@@ -123,6 +140,10 @@ Every recording can be opened for a proper look afterwards — open a session an
 Most of a recording is usually silence. **Hide silence** — the crossed-out speaker in the toolbar — cuts it out: the spectrogram packs down to just the stretches with something in them, so a five-minute recording can become twenty seconds of actual calls, and playing it plays exactly that. The gaps aren't skipped over as you reach them, they're simply not there, so the elapsed time you see is the time you'll spend listening. A few milliseconds are kept either side of every pulse so nothing is clipped, and the join between one kept stretch and the next is crossfaded inside that margin — the recording's own background carries straight through it, so there's no dip in the sound as each join passes.
 
 Two settings in the tuning panel control what counts as silence. **Keep above** is how far above that recording's own background a sound has to be — and it accounts for how much that background wanders over the recording, not just how quiet it gets at its quietest, so the same setting cuts the same way on a still night and a windy one. Lower it to keep faint, distant calls, raise it to cut harder. **Pulse margin** is how much either side of each pulse is kept: widen it for more context, narrow it to pack tighter. Underneath, the panel tells you what it actually did — how much of the recording was kept and how many separate stretches — and says so plainly if nothing cleared the threshold, rather than quietly showing you the whole file.
+
+## SECTIONEND ##
+
+## SECTIONSTART ##
 
 ## Contributing recordings to community science
 
@@ -138,6 +159,10 @@ Nothing sent has been processed, which is the point: the sound is the evidence s
 
 In time other people will help ID the species where they can, which feeds straight back into the wider dataset. There's a cap of two observations per species, per night, per rough area — iNaturalist runs on volunteers who look at other people's records, and more of the same bat from the same place doesn't add anything.
 
+## SECTIONEND ##
+
+## SECTIONSTART ##
+
 ## Troubleshooting
 
 **The status indicator is red, or it says "no ultrasonic microphone detected"**
@@ -152,17 +177,28 @@ Open **Settings > Detecting** and check **Loudness** isn't set too high, and tha
 **I can't find my recordings**
 Recordings are saved on-device and are visible in the Files app, under OpenBat's own folder. Recordings are kept with the session they were made in; older recordings made outside a session appear in the "Not in a session" group at the bottom of the Sessions list.
 
+## SECTIONEND ##
+
+## SECTIONSTART ##
+
 ## Still stuck?
 
 Get in touch on the [Contact](/contact/) page, we're happy to help.
 
-</div>
 
-<div class="plat-section plat-hidden" id="plat-android" role="tabpanel">
+## SECTIONEND ##
+
+## ANDROID ##
+
+## SECTIONSTART ##
 
 ## OpenBat on Android
 
 **There's no Android version of OpenBat yet.** Currently, the OpenBat app is only available on iPhone and iPad. This isn't a permanent decision, I just can't feasibly develop an app for two platforms at the same time, especially when one I am not familiar with. If you'd like to see OpenBat on Android, [Get in Touch](/contact/) and let me know.
+
+## SECTIONEND ##
+
+## SECTIONSTART ##
 
 ## What to use in the meantime
 
@@ -173,6 +209,10 @@ The good news is that the hard part of bat detecting is the microphone, not the 
 
 Neither app is ours and neither is open source, so we can't vouch for what they do with your recordings or your location. Check their own privacy terms before you rely on them.
 
+## SECTIONEND ##
+
+## SECTIONSTART ##
+
 ## Tuning a heterodyne detector
 
 One of the easiest ways to hear bats is to use heterodyning. This is the process of 'turning' into a frequency such that simple signal processing can produce an audible sound. I'll skip the details, all you need to know is that the frequency you set needs to be near the frequency the bats call at. 
@@ -180,6 +220,10 @@ One of the easiest ways to hear bats is to use heterodyning. This is the process
 Bat Gizmo app allows you to set two tuning frequencies at the same time, this is great for picking up more bats! As a rule of thumb, in North America, set one to 25 kHz and one to 47 kHz, this will help you pick up as many bats as possible without tweaking the settings all the time.
 
 For more, search up 'How to use a heterodyne bat detector'.
+
+## SECTIONEND ##
+
+## SECTIONSTART ##
 
 ## What still applies
 
@@ -189,8 +233,13 @@ Most of what's on the iOS tab is about bats rather than about the app, and trave
 - **What the listening modes do** — heterodyne and time expansion work the same way in any detector, and the trade-off in time expansion (the mic stops listening while a snippet plays back) is a property of the technique, not of OpenBat.
 - **Contributing to community science** — a spectrogram and a WAV file are all iNaturalist wants, and any detector that exports recordings can supply both. See the iOS tab for how that upload works.
 
+## SECTIONEND ##
+
+## SECTIONSTART ##
+
 ## Something else?
 
 If you're on Android and stuck on any of this, which microphone to buy, which adapter, where to point it, [Get in Touch](/contact/). [[Choosing a Bat Microphone]] is written around OpenBat, but the hardware advice in it applies to any detector app. The OpenBat project is about more than just our app and we are happy to help.
 
-</div>
+
+## SECTIONEND ##

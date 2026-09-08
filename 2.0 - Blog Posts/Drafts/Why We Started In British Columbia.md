@@ -111,7 +111,7 @@ Not a big bang. Province by province, region by region, roughly in this order:
 Which means the honest answer to "when will you cover my area?" is: **when
 somebody there decides to make it happen, and we'll help.** That's not a dodge.
 It's how a guide built on real expertise has to grow, and it's why the
-[Contribute](/contribute/) page exists.
+[[Guide Editor|Field Guide Editor]] exists.
 
 > [!note] The comparison we keep coming back to
 > Merlin Bird ID didn't launch covering every bird on Earth. It started with a

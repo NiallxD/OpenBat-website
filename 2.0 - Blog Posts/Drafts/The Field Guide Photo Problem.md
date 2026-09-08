@@ -100,6 +100,6 @@ disproportionately useful. Not to us — to the guide, which anyone can reuse.
 > every entry next to it. Same reasoning as [[Why The Field Guide Is Reviewed Not A Wiki|not auto-filling the text]].
 
 If you can help — with photos, with checking labels, or with entries — the
-[Contribute](/contribute/) page is the door.
+[[Guide Editor|Field Guide Editor]] is the door.
 
 Niall & the OpenBat Team 🙂
