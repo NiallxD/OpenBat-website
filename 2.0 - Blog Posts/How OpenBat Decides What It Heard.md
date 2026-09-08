@@ -163,7 +163,7 @@ would be inventing evidence out of your own expectations.
 
 ## A pass, not a call
 
-Bats don't call once. The unit OpenBat identifies is a **pass (sometimes called a sequence)**,  the burst of calls as an animal crosses in front of the microphone, closed by two seconds of silence.
+Bats don't call once. The unit OpenBat identifies is a **pass (sometimes called a sequence)**,  the burst of calls as an animal crosses in front of the microphone, closed by eight tenths of a second of silence.
 
 {% chart {
   key: "PULSE",
@@ -193,14 +193,20 @@ Bats don't call once. The unit OpenBat identifies is a **pass (sometimes called 
 A pass gets a name only if the **mean raw confidence across its pulses clears
 the model's no-ID line** — 0.57 for NABat ML, 0.4 for BatDetect2, whose scores
 sit on a different scale. Then, among the weighted scores, the winner needs at
-least two pulses and a mean of 0.15 to be reported.
+least two pulses, a mean of 0.15, and a clear enough lead over whatever came
+second to be reported.
 
 There are three possible outcomes, and the third is the one worth arguing for:
 
 - a **species**,
 - **NOISE**, when the model's own non-bat class wins,
-- **no ID** — pulses were captured and classified, but the evidence never
-  cleared the bar.
+- **no ID** — pulses were captured and classified, but either the evidence
+  never cleared the bar, or two species finished so close together that
+  choosing between them would have been a coin toss.
+
+That second case is a refusal rather than a failure, and it is deliberate: a
+name that a couple of calls either way would have reversed is worse than no name
+at all. It does mean two species calling at once will sometimes go unreported.
 
 No ID is recorded like any other pass, rather than dropped. The list says
 "something triggered, we couldn't tell what" instead of quietly losing evidence
