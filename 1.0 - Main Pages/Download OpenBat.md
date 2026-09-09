@@ -5,6 +5,7 @@ permalink: /download/
 publish: true
 cards: false
 hideTitle: true
+templateEngineOverride: njk
 ---
 <div class="app-landing">
 
