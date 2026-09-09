@@ -8,6 +8,8 @@ tags:
   - auto-id
   - classifier
   - range-maps
+heroImage: /static/images/range-map.webp
+coverImage: /static/images/range-map.webp
 featured: false
 publish: true
 ---

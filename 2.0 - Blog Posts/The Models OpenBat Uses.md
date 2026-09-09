@@ -8,6 +8,8 @@ tags:
   - auto-id
   - classifier
   - machine-learning
+heroImage: /static/images/orange-sunset.webp
+coverImage: /static/images/orange-sunset.webp
 featured: false
 publish: true
 ---
