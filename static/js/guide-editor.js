@@ -181,6 +181,11 @@
 
   /* --------------------------------------------------------------- helpers */
 
+  // The family filter's stand-in for "this species has no family set". A
+  // sentinel rather than '' because '' is already the All families option, and
+  // it starts with a character no family name can contain.
+  var FAMILY_NONE = '\u0000none';
+
   function el(tag, attrs, kids) {
     var n = document.createElement(tag);
     if (attrs) Object.keys(attrs).forEach(function (k) {
@@ -343,6 +348,9 @@
     retry:   root.querySelector('[data-retry]'),
     meta:    root.querySelector('[data-meta]'),
     search:  root.querySelector('[data-search]'),
+    regionFilter: root.querySelector('[data-region-filter]'),
+    familyFilter: root.querySelector('[data-family-filter]'),
+    familyNaming: root.querySelector('[data-family-naming]'),
     results: root.querySelector('[data-results]'),
     addNew:  root.querySelector('[data-add-new]'),
     form:    root.querySelector('[data-form]'),
@@ -391,6 +399,9 @@
     ui.load.hidden = true;
     ui.browse.hidden = false;
     renderMeta();
+    buildCommonNames();
+    renderRegionFilter();
+    renderFamilyFilter();
     renderResults();
     offerDraft();
     ui.search.focus();
@@ -590,6 +601,147 @@
     ]));
   }
 
+  /// The region picker is filled from the guide's own regions list, so a
+  /// region added to the JSON shows up here with nothing else to change. The
+  /// count beside each name is the honest reason to pick it: a region with no
+  /// species yet says so before you filter to an empty list.
+  function renderRegionFilter() {
+    var current = ui.regionFilter.value;
+    clear(ui.regionFilter);
+    ui.regionFilter.appendChild(el('option', { value: '', text: 'All regions' }));
+    guide.regions.forEach(function (region) {
+      var count = guide.species.filter(function (s) {
+        return (s.regions || []).indexOf(region.id) !== -1;
+      }).length;
+      ui.regionFilter.appendChild(el('option', {
+        value: region.id,
+        text: region.name + ' (' + count + ')'
+      }));
+    });
+    // A reload of the same guide keeps whatever was chosen; a different guide
+    // that has dropped the region falls back to All regions on its own.
+    ui.regionFilter.value = current;
+    if (!ui.regionFilter.value) ui.regionFilter.value = '';
+  }
+
+  /* ------------------------------------------------- family naming toggle */
+
+  /// Vespertilionidae is the name in the data; "Vesper Bat" is the name most
+  /// people looking for one would use. The guide already holds both — `family`
+  /// is the scientific name and `group` is the everyday one the app prints
+  /// above the common name — and in the current guide they are one-to-one. So
+  /// this reads the pairing out of the loaded species rather than carrying a
+  /// lookup table that would need editing every time the guide grows a family.
+  ///
+  /// Where a family's species disagree about the group (a typo, mid-rename)
+  /// the most-used wins, ties broken alphabetically so the label doesn't
+  /// change between loads of the same file.
+  var familyNaming = 'scientific';   // or 'common'; deliberately not persisted
+  var commonNames = {};
+
+  function buildCommonNames() {
+    var tally = {};
+    guide.species.forEach(function (sp) {
+      var fam = (sp.family || '').trim();
+      var group = (sp.group || '').trim();
+      if (!fam || !group) return;
+      tally[fam] = tally[fam] || {};
+      tally[fam][group] = (tally[fam][group] || 0) + 1;
+    });
+    commonNames = {};
+    Object.keys(tally).forEach(function (fam) {
+      commonNames[fam] = Object.keys(tally[fam]).sort(function (a, b) {
+        return (tally[fam][b] - tally[fam][a]) || a.localeCompare(b);
+      })[0];
+    });
+  }
+
+  /// The scientific name is the fallback, not an error state: a family whose
+  /// species have no group yet simply keeps the only name the guide has for
+  /// it, rather than dropping out of a list the visitor is filtering with.
+  function familyDisplay(family) {
+    if (family === FAMILY_NONE) return 'No family';
+    if (familyNaming === 'common' && commonNames[family]) return commonNames[family];
+    return family;
+  }
+
+  function setFamilyNaming(mode) {
+    familyNaming = mode;
+    Array.prototype.forEach.call(
+      ui.familyNaming.querySelectorAll('[data-naming]'),
+      function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-naming') === mode)); }
+    );
+    renderFamilyFilter();
+    renderResults();
+  }
+
+  /// Families aren't a list in the JSON — they're whatever the species carry —
+  /// so the options are derived, and a family added with a new species appears
+  /// here on the next load with nothing else to change. The counts are counts
+  /// *within the current region*, because a family that reads "(4)" and then
+  /// filters to nothing is worse than no number at all. The options themselves
+  /// are never removed: a select whose contents shuffle under the pointer as
+  /// the region changes is how you pick the wrong one.
+  function renderFamilyFilter() {
+    var region = ui.regionFilter.value;
+    var current = ui.familyFilter.value;
+    var names = [];
+    var anyBlank = false;
+    guide.species.forEach(function (sp) {
+      var fam = (sp.family || '').trim();
+      if (!fam) { anyBlank = true; return; }
+      if (names.indexOf(fam) === -1) names.push(fam);
+    });
+    // Sorted by what is actually on screen, so the list stays alphabetical in
+    // whichever naming the toggle is showing.
+    names.sort(function (a, b) { return familyDisplay(a).localeCompare(familyDisplay(b)); });
+
+    function countIn(test) {
+      return guide.species.filter(function (sp) {
+        return inRegion(sp, region) && test(sp);
+      }).length;
+    }
+
+    clear(ui.familyFilter);
+    ui.familyFilter.appendChild(el('option', { value: '', text: 'All families' }));
+    names.forEach(function (fam) {
+      ui.familyFilter.appendChild(el('option', {
+        value: fam,
+        text: familyDisplay(fam) + ' (' + countIn(function (sp) { return (sp.family || '').trim() === fam; }) + ')'
+      }));
+    });
+    // Only offered when the guide actually has one — normally it does not, and
+    // an empty bucket in the list would just look like a bug.
+    if (anyBlank) {
+      ui.familyFilter.appendChild(el('option', {
+        value: FAMILY_NONE,
+        text: familyDisplay(FAMILY_NONE) + ' (' + countIn(function (sp) { return !(sp.family || '').trim(); }) + ')'
+      }));
+    }
+    ui.familyFilter.value = current;
+    if (!ui.familyFilter.value) ui.familyFilter.value = '';
+  }
+
+  function inFamily(species, family) {
+    if (!family) return true;
+    var fam = (species.family || '').trim();
+    return family === FAMILY_NONE ? !fam : fam === family;
+  }
+
+  function familyLabel(family) {
+    return family === FAMILY_NONE ? 'species with no family' : familyDisplay(family);
+  }
+
+  function inRegion(species, regionId) {
+    if (!regionId) return true;
+    return (species.regions || []).indexOf(regionId) !== -1;
+  }
+
+  function regionName(regionId) {
+    var match = guide.regions.filter(function (r) { return r.id === regionId; })[0];
+    return match ? match.name : regionId;
+  }
+
   function matches(species, q) {
     if (!q) return true;
     var hay = (species.commonName + ' ' + species.scientificName + ' ' +
@@ -601,14 +753,31 @@
     });
   }
 
+  /// Name every filter that is on, not just the search. “No species matches”
+  /// beside a region or family nobody noticed they had set is how someone
+  /// concludes the guide is broken.
+  function emptyReason(q, region, family) {
+    if (!guide.species.length) return 'The guide has no species yet.';
+    var where = [];
+    if (family) where.push(familyLabel(family));
+    if (region) where.push('in ' + regionName(region));
+    var scope = where.length ? where.join(' ') : 'species';
+    if (q) return 'No ' + scope + ' matches “' + q + '”.';
+    if (where.length) return 'No ' + scope + ' is in the guide yet.';
+    return 'The guide has no species yet.';
+  }
+
   function renderResults() {
     var q = ui.search.value.trim();
-    var list = guide.species.filter(function (s) { return matches(s, q); });
+    var region = ui.regionFilter.value;
+    var family = ui.familyFilter.value;
+    var list = guide.species.filter(function (s) {
+      return inRegion(s, region) && inFamily(s, family) && matches(s, q);
+    });
     clear(ui.results);
 
     if (!list.length) {
-      ui.results.appendChild(el('p', { class: 'ge-empty',
-        text: q ? 'No species matches “' + q + '”.' : 'The guide has no species yet.' }));
+      ui.results.appendChild(el('p', { class: 'ge-empty', text: emptyReason(q, region, family) }));
       return;
     }
 
@@ -629,6 +798,15 @@
   }
 
   ui.search.addEventListener('input', renderResults);
+  ui.regionFilter.addEventListener('change', function () {
+    renderFamilyFilter();
+    renderResults();
+  });
+  ui.familyFilter.addEventListener('change', renderResults);
+  ui.familyNaming.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-naming]');
+    if (btn) setFamilyNaming(btn.getAttribute('data-naming'));
+  });
   ui.addNew.addEventListener('click', function () { openEditor(-1); });
 
   /* ------------------------------------------------------------- edit step */

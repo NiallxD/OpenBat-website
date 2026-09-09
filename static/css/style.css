@@ -2171,7 +2171,64 @@ figure.image-float-left figcaption {
 .ge-result-name .ge-dot { margin-left: 0.45rem; vertical-align: 0.05em; }
 
 .ge-search-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
-.ge-search-row input[type="search"] { flex: 1 1 16rem; }
+/* The search box used to take every pixel the row had. It never needed them —
+   a species name is short — and the width it was eating is where the region
+   filter now sits. Both grow only as far as the row's own space allows, and
+   "Add a new species" keeps the right-hand end it has always had. */
+.ge-search-row input[type="search"] { flex: 1 1 12rem; max-width: 20rem; }
+.ge-search-row select { flex: 0 1 11rem; min-width: 0; }
+.ge-search-row [data-add-new] { margin-left: auto; }
+
+/* Two states of one setting, so a segmented pair rather than a checkbox: both
+   options are named, and neither reading has to be inferred from a label that
+   describes the other one. */
+.ge-naming {
+  display: flex;
+  border: 1px solid var(--ge-border-strong);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+.ge-naming button {
+  background: var(--ge-input-bg);
+  color: var(--color-muted);
+  border: 0;
+  padding: 0.5rem 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background var(--ease), color var(--ease);
+}
+.ge-naming button + button { border-left: 1px solid var(--ge-border-strong); }
+.ge-naming button:hover { background: var(--ge-quiet-hover); color: var(--color-text); }
+.ge-naming button[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+.ge-naming button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: -2px; }
+
+/* Below the wrap point the row is a stack, so `margin-left: auto` would only
+   shove the button off to one side of its own line. */
+@media (max-width: 600px) {
+  .ge-search-row input[type="search"] { max-width: none; }
+  .ge-search-row select { flex-basis: 100%; }
+  .ge-search-row [data-add-new] { margin-left: 0; }
+  .ge-naming { flex: 1 0 auto; }
+  .ge-naming button { flex: 1; }
+}
+
+#guide-editor select {
+  background: var(--ge-input-bg);
+  color: var(--ge-input-fg);
+  border: 1px solid var(--ge-border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.65rem;
+  font-family: var(--font-body);
+  /* 16px for the same iOS zoom reason as the text inputs above. */
+  font-size: 1rem;
+  cursor: pointer;
+}
+#guide-editor select:focus { outline: none; border-color: var(--color-accent); }
 
 .ge-results { display: grid; gap: 0.5rem; }
 .ge-result {
