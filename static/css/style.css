@@ -36,24 +36,48 @@
   --color-text:      #1a1a1a;
   --color-secondary: #4a4a4a;
   --color-muted:     #6f6f6f;
-  /* A darkened brand orange, for everything. #FF860D is 2.4:1 on white, which
-     fails even the 3:1 large-text threshold, and it is used for headings, card
-     titles, small labels and links as well as for fills. #c25a00 is 4.4:1 —
-     AA for body text at any size, and the same ratio for white text on it, so
-     the Download button and the active filter chip improve too. The dark theme
-     keeps #FF860D: on a near-black page it was never the weak direction. */
+  /* Two oranges, and which one to reach for depends on whether the orange is
+     the ink or the paper.
+
+     `--color-accent` is the darkened one, for orange *text on the page* —
+     headings, card titles, small labels, links, and accent borders. #FF860D is
+     2.4:1 on white, which fails even the 3:1 large-text threshold; #c25a00 is
+     4.4:1, AA for body text at any size. The dark theme keeps #FF860D, where
+     on a near-black page it was never the weak direction.
+
+     `--color-accent-solid` is the brand orange itself, for *filled* things —
+     buttons, badges, the active filter chip, the ticker dots. A fill is not
+     text, so the page-contrast argument does not apply to it, and darkening it
+     only cost the buttons their brand colour. It is the same value in both
+     themes, so it is declared once here and not overridden below.
+
+     The rule for anything filled with it: the label on top is dark (#111),
+     never white. White on #FF860D is 2.2:1 and unreadable; #111 on it is about
+     9:1. That is why the platform toggle, the active filter chip and the
+     hovered goal button carry dark labels rather than the white ones they had
+     while the fill was #c25a00. */
   --color-link:      #c25a00;
   --color-link-hover:#9c4700;
   --color-accent:    #c25a00;
+  --color-accent-solid: #FF860D;
   --color-border:    #e4e0da;
 
   /* Day/night page backdrop — spills behind the nav and footer, and scrolls
      with the document like the dark theme's night sky. The stops are weighted
      high on purpose: an even ramp reads as plain white for most of a long page
      with a warm strip right at the very bottom, so the dawn starts climbing
-     from around 60% and is unmistakably warm well before the footer. */
-  --page-gradient: linear-gradient(0deg, #ffecd2 0%, #fff4e4 30%, #fffaf2 60%, #ffffff 100%);
-  --page-bg-solid: #ffffff;
+     from around 60% and is unmistakably warm well before the footer.
+
+     The top stop is #fffcf6, not #ffffff — the page never actually reaches
+     white. Landing on pure white made the top of the page read as a different
+     surface from the rest of it rather than the pale end of one wash; holding
+     a trace of warmth there keeps it a single sky. It is only a couple of
+     points off white and is not meant to be seen as a colour.
+     `--page-bg-solid` matches it: that colour sits *behind* the gradient on
+     `body` and fills a few cards outright, so leaving it #ffffff would show a
+     white seam against a gradient that no longer gets there. */
+  --page-gradient: linear-gradient(0deg, #ffecd2 0%, #fff4e4 30%, #fffaf2 60%, #fffcf6 100%);
+  --page-bg-solid: #fffcf6;
   /* ?v= for the same reason as style.css itself: this art is served with a
      4-hour edge cache, so replacing the file leaves visitors on the old one
      until it expires. Bump on every swap. */
@@ -67,7 +91,14 @@
   /* Chrome that used to be hardcoded white because both themes were dark.
      Every one of these has a mirror in [data-theme="dark"] below; adding a
      value here without one there is what breaks the dark theme. */
-  --header-bg:        rgba(255, 255, 255, 0.55);
+  /* Warmer than the page, not lighter than it. A white wash was invisible
+     once the gradient's top stop stopped being white — a translucent white
+     over #fffcf6 only ever lightens toward a colour the page is already
+     nearly at. This is a dawn tint from the same family as the gradient's
+     bottom stop, which composites to roughly #fff3e3 over the top of the
+     page: enough to read as a bar, well short of a block of colour. Kept
+     translucent so the 12px backdrop blur still has something to do. */
+  --header-bg:        rgba(255, 240, 219, 0.72);
   --header-border:    rgba(0, 0, 0, 0.08);
   --nav-fg:           rgba(0, 0, 0, 0.75);
   --nav-fg-strong:    #1a1a1a;
@@ -109,6 +140,13 @@
 }
 
 [data-theme="dark"] {
+  /* The counterpart :root's comment always claimed existed but never had.
+     Without it the page stayed `color-scheme: light` in dark mode, so the
+     UA painted light scrollbars and form controls over a near-black page —
+     and, on macOS, told Safari this was a light page while it tinted its
+     toolbar from a dark one. */
+  color-scheme: dark;
+
   --color-bg:        #111111;
   --color-surface:   rgba(0, 0, 0, 0.30);
   --color-text:      #ffffff;
@@ -157,15 +195,27 @@
 }
 
 /* ── Theme transition (sunrise/sunset crossfade) ─────────────── */
+/* Every named group has to be listed, not just `root`. A `view-transition-name`
+   lifts that element out of the root snapshot into a group of its own, and a
+   group animates at the UA default (250ms) unless it is told otherwise — so
+   naming the header to keep its blur (see `.site-header`) also, silently, made
+   it change theme in 250ms over a page that takes 900ms. That mismatch is the
+   flicker: the bar lands in its new colour while the page behind it is barely a
+   quarter of the way across, then sits there looking wrong for another 650ms.
+   Anything given a `view-transition-name` later has to be added here too. */
 ::view-transition-old(root),
-::view-transition-new(root) {
+::view-transition-new(root),
+::view-transition-old(site-header),
+::view-transition-new(site-header) {
   animation-duration: 900ms;
   animation-timing-function: ease-in-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
-  ::view-transition-new(root) {
+  ::view-transition-new(root),
+  ::view-transition-old(site-header),
+  ::view-transition-new(site-header) {
     animation: none;
   }
 }
@@ -234,7 +284,20 @@ html {
   overflow-x: clip;
   background-color: var(--page-bg-solid);
   background-image: var(--page-gradient);
-  transition: background 300ms ease;
+  /* No transition on the root's background, of any kind. Isolating the Safari
+     toolbar flicker on the real page came down to exactly this declaration:
+     with it, the chrome goes dark → white → dark on every theme change while
+     the page itself looks correct in every frame; without it, the change is
+     clean. The root is what propagates a background to the page canvas, and on
+     macOS that canvas is what Safari samples to tint the toolbar, tab strip and
+     bookmarks bar — so while the root's background is mid-transition Safari
+     reads a bare canvas and paints white. Narrowing the shorthand to
+     `background-color` was not enough; it had to go entirely.
+
+     Nothing is lost: the 900ms view-transition crossfade fades the whole page,
+     this included, and is what was doing the visible work anyway. A browser
+     without `startViewTransition` gets an instant swap, which is the correct
+     trade for not breaking the chrome in the one that matters here. */
 }
 
 img {
@@ -421,7 +484,7 @@ p {
   gap: 0.4rem;
   padding: 0.4rem 0.9rem;
   border-radius: 999px;
-  background: var(--color-accent);
+  background: var(--color-accent-solid);
   color: #111;
   font-family: var(--font-sans);
   font-size: 0.9rem;
@@ -432,7 +495,7 @@ p {
 }
 
 .nav-download-btn:hover {
-  background: color-mix(in srgb, var(--color-accent) 85%, #fff);
+  background: color-mix(in srgb, var(--color-accent-solid) 85%, #fff);
   color: #111;
   transform: translateY(-1px);
 }
@@ -615,7 +678,12 @@ main {
   background-size: 100% auto;
   background-position: center bottom;
   background-repeat: no-repeat;
-  transition: background 300ms ease;
+  /* No `background` transition here either, and for the reason above: this one
+     layers an overlay gradient over `--footer-bg-image`, which is a different
+     `url()` per theme — two images with nothing to interpolate through. Same
+     unanimatable pair, same risk of a bare canvas mid-change, and it sits at
+     the bottom of the page where the browser chin samples. The view-transition
+     crossfade already fades the whole footer, art included. */
 }
 
 /* On a phone, filling the width means dividing a 4112px-wide painting down to
@@ -707,7 +775,7 @@ main {
   padding: 0.6rem 1.4rem;
   border: none;
   border-radius: 999px;
-  background: var(--color-accent);
+  background: var(--color-accent-solid);
   color: #111;
   font-family: var(--font-sans);
   font-size: 0.9rem;
@@ -716,7 +784,7 @@ main {
 }
 
 .footer-newsletter-btn:hover {
-  background: color-mix(in srgb, var(--color-accent) 85%, #fff);
+  background: color-mix(in srgb, var(--color-accent-solid) 85%, #fff);
   transform: translateY(-1px);
 }
 
@@ -1069,7 +1137,7 @@ span.wikilink { color: var(--color-secondary); }
   margin-top: 2rem;
   padding: 0.75rem 1.75rem;
   border-radius: 999px;
-  background: var(--color-accent);
+  background: var(--color-accent-solid);
   color: #111;
   font-family: var(--font-sans);
   font-size: 0.95rem;
@@ -1079,7 +1147,7 @@ span.wikilink { color: var(--color-secondary); }
 }
 
 .hero-plain-cta:hover {
-  background: color-mix(in srgb, var(--color-accent) 85%, #fff);
+  background: color-mix(in srgb, var(--color-accent-solid) 85%, #fff);
   transform: translateY(-1px);
 }
 
@@ -1248,7 +1316,7 @@ span.wikilink { color: var(--color-secondary); }
   gap: 0.6rem;
   padding: 0.5rem 1.1rem;
   border-radius: 10px;
-  background: var(--color-accent);
+  background: var(--color-accent-solid);
   color: #000;
   font-family: var(--font-sans);
   text-decoration: none;
@@ -1258,7 +1326,7 @@ span.wikilink { color: var(--color-secondary); }
 
 .post-content a.appstore-badge:hover,
 .appstore-badge:hover {
-  background: color-mix(in srgb, var(--color-accent) 85%, #fff);
+  background: color-mix(in srgb, var(--color-accent-solid) 85%, #fff);
   color: #000;
   transform: translateY(-1px);
 }
@@ -1996,8 +2064,8 @@ figure.image-float-left figcaption {
   white-space: nowrap;
 }
 .plat-toggle-btn.active {
-  background: var(--color-accent);
-  color: #fff;
+  background: var(--color-accent-solid);
+  color: #111;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 .plat-toggle-btn:not(.active):hover {
@@ -2056,7 +2124,7 @@ figure.image-float-left figcaption {
 /* --- buttons --- */
 .ge-btn {
   display: inline-block;
-  background: var(--color-accent);
+  background: var(--color-accent-solid);
   color: #1a1a1a;
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
@@ -2066,7 +2134,7 @@ figure.image-float-left figcaption {
   cursor: pointer;
   transition: background var(--ease), border-color var(--ease);
 }
-.ge-btn:hover { background: var(--color-link-hover); }
+.ge-btn:hover { background: color-mix(in srgb, var(--color-accent-solid) 85%, #fff); }
 .ge-btn-quiet {
   background: transparent;
   color: var(--color-text);
@@ -2093,7 +2161,7 @@ figure.image-float-left figcaption {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background: var(--color-accent);
+  background: var(--color-accent-solid);
   flex: 0 0 auto;
 }
 .ge-result-name .ge-dot { margin-left: 0.45rem; vertical-align: 0.05em; }
@@ -2393,7 +2461,7 @@ figure.image-float-left figcaption {
      easy to miss among twenty and a lone label doesn't read as a location. */
   .ge-regions--map .ge-region:has(input:checked) {
     z-index: 2;
-    background: var(--color-accent);
+    background: var(--color-accent-solid);
     border-color: rgba(0, 0, 0, 0.65);
     /* A halo rather than a scale transform: the dot and its label share one
        element, so scaling the pin would blow up the text with it and shift the
@@ -2649,9 +2717,9 @@ figure.image-float-left figcaption {
 .filter-btn:hover { color: var(--color-link); border-color: var(--color-link); }
 
 .filter-btn.active {
-  color: #ffffff;
-  background: var(--color-accent);
-  border-color: var(--color-accent);
+  color: #111;
+  background: var(--color-accent-solid);
+  border-color: var(--color-accent-solid);
 }
 
 .post-grid {
@@ -2808,7 +2876,7 @@ figure.image-float-left figcaption {
   cursor: pointer;
 }
 .hero-ticker-dot.is-active {
-  background: var(--color-accent);
+  background: var(--color-accent-solid);
 }
 
 /* The featured card again, on the home page under the title block. */
@@ -2848,9 +2916,9 @@ figure.image-float-left figcaption {
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 .goal-learn-more:hover {
-  background: var(--color-accent);
-  color: #fff;
-  border-color: var(--color-accent);
+  background: var(--color-accent-solid);
+  color: #111;
+  border-color: var(--color-accent-solid);
 }
 
 /* The three "How we're doing it" write-ups, one per goal. Below 800px they are

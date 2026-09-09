@@ -20,12 +20,22 @@
   <link rel="icon" href="/static/images/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="icon" href="/static/images/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
-  <meta name="theme-color" id="theme-color" content="#ffffff">
-  <link rel="stylesheet" href="/static/css/style.css?v=8.46">
+  <meta name="theme-color" id="theme-color" content="#fffcf6">
+  <link rel="stylesheet" href="/static/css/style.css?v=8.55">
   <script>
     // Matches the top of each theme's page gradient, so the browser chrome on
     // iOS and Android continues the page rather than capping it with a bar.
-    const THEME_COLORS = { dark: '#05070d', light: '#ffffff' };
+    // Light is #fffcf6, not white — the gradient stops just short of white, and
+    // a white chin against it is the seam this is meant to avoid.
+    //
+    // Set this ONCE per change, never stepped frame by frame. Safari runs its
+    // own short animation whenever theme-color changes, so writing the tag on
+    // every rAF cancels and restarts that animation ~60 times a second and the
+    // toolbar thrashes between light and dark instead of fading. Chrome applies
+    // the value instantly and so looks smooth under stepping, which is exactly
+    // how the bug hides during testing. One write, and Safari's native fade
+    // does the work; Chrome's Android chrome snaps, which is the cheaper cost.
+    const THEME_COLORS = { dark: '#05070d', light: '#fffcf6' };
     const setThemeColor = (theme) => {
       const meta = document.getElementById('theme-color');
       if (meta) meta.setAttribute('content', THEME_COLORS[theme]);
@@ -36,6 +46,7 @@
       document.documentElement.setAttribute('data-theme', 'dark');
     }
     setThemeColor(savedTheme === 'dark' ? 'dark' : 'light');
+
   </script>
   
 </head>
@@ -423,8 +434,11 @@ Paragraph text goes here, wrapping beside the floated gallery.
       const applyTheme = () => {
         document.documentElement.setAttribute('data-theme', target);
         localStorage.setItem('theme', target);
-        setThemeColor(target);
       };
+      // Outside applyTheme: that callback runs inside the view transition's
+      // snapshot step, where the clock has not started. Set here, Safari's own
+      // theme-color fade runs alongside the page crossfade rather than after it.
+      setThemeColor(target);
       if (document.startViewTransition) {
         document.startViewTransition(applyTheme);
       } else {
