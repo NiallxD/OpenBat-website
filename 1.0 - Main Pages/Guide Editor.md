@@ -52,6 +52,16 @@ Before adding a photo or writing a description, please read the [contributor gui
     <div class="ge-draft-restore" data-draft-restore hidden></div>
     <div class="ge-search-row">
       <input type="search" data-search placeholder="Search by name, family or ID" aria-label="Search species">
+      <select data-region-filter aria-label="Filter by region">
+        <option value="">All regions</option>
+      </select>
+      <select data-family-filter aria-label="Filter by family">
+        <option value="">All families</option>
+      </select>
+      <div class="ge-naming" data-family-naming role="group" aria-label="How families are named">
+        <button type="button" data-naming="scientific" aria-pressed="true">Scientific</button>
+        <button type="button" data-naming="common" aria-pressed="false">Common</button>
+      </div>
       <button type="button" class="ge-btn" data-add-new>Add a new species</button>
     </div>
     <div class="ge-results" data-results></div>
@@ -107,4 +117,4 @@ Before adding a photo or writing a description, please read the [contributor gui
      Pages serves this with a long cache lifetime, so bump the number in the
      same commit as any edit to guide-editor.js or returning visitors keep
      running the old copy. -->
-<script src="/static/js/guide-editor.js?v=10" defer></script>
+<script src="/static/js/guide-editor.js?v=13" defer></script>
