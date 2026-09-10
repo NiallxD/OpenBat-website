@@ -10,8 +10,25 @@ layout: base.njk
 {# Full-bleed hero: the image runs under the transparent nav, with the title,
    standfirst and meta sitting on it. Without an image the post falls back to
    the plain header below, so a post never has to have one. #}
-<div class="post-hero">
+<div class="post-hero{% if tileHero %} post-hero--tiled{% endif %}">
+  {% if tileHero %}
+  {# tileHero: true repeats the one image across a rotated plane instead of
+     stretching it. Alternate rows slide half a tile sideways so the seams
+     never line up into an obvious grid. Purely decorative, so the whole plane
+     is hidden from assistive tech and every tile has an empty alt. The plane
+     is deliberately larger than the hero: rotating a box leaves triangular
+     corners uncovered, and the overflow is clipped by .post-hero. #}
+  <div class="post-hero-tiles" aria-hidden="true"
+       style="--tile-w: {{ tileHeroWidth | default('460px') }}; --tile-angle: {{ tileHeroAngle | default(30) }}deg; --tile-gap: {{ tileHeroGap | default('12px') }}; --tile-blur: {{ tileHeroBlur | default('3px') }}">
+    {% for row in range(0, tileHeroRows | default(12)) %}
+    <div class="post-hero-tile-row">
+      {% for col in range(0, tileHeroCols | default(8)) %}<img src="{{ hero }}" alt="" decoding="async">{% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
   <img class="post-hero-bg" src="{{ hero }}" alt="">
+  {% endif %}
   <div class="post-hero-shade"></div>
   <div class="post-hero-inner">
     <p class="section-label"><a href="{{ '/blog/' | url }}" class="post-back">← Blog</a></p>

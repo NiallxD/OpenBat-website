@@ -825,7 +825,7 @@ export default function (eleventyConfig) {
     const tags =
       `<script src="/static/js/chart.umd.min.js?v=4.5.1" defer></script>` +
       `<script src="/static/js/chartjs-plugin-annotation.min.js?v=3.1.0" defer></script>` +
-      `<script src="/static/js/openbat-charts.js?v=10" defer></script>`;
+      `<script src="/static/js/openbat-charts.js?v=12" defer></script>`;
     return content.replace("</body>", tags + "</body>");
   });
 

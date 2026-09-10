@@ -43,20 +43,21 @@ over and over.
   type: "line",
   key: "WHY WAKING UP TOO OFTEN IS FATAL, EVEN THOUGH THE FUNGUS ITSELF IS NOT",
   yKey: "FAT RESERVE",
-  labels: ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"],
-  caption: "Illustrative — a drawing of the mechanism rather than measured data. The steps are arousals. Nothing about the fungus needs to be directly lethal for the outcome to be.",
-  alt: "A line chart of fat reserve across a winter: a healthy bat's reserve steps down slowly and still has fuel in spring, while an infected bat's steps down far more often and hits empty in late February.",
+  labels: ["Oct", "", "", "", "Nov", "", "", "", "Dec", "", "", "", "Jan", "", "", "", "Feb", "", "", "", "Mar", "", "", "", "Apr"],
+  caption: "Illustrative — a drawing of the mechanism rather than measured data, drawn by the week. Bats normally rouse every one to three weeks; the healthy line here takes the slow end of that range. Every step down is one arousal, and every step is the same size in both lines: an arousal costs an infected bat no more than it costs a healthy one. The only difference is how many there are.",
+  alt: "A line chart of fat reserve across a winter, drawn weekly. Both lines step down by the same amount at each arousal. The healthy bat steps about eight times and still has fuel in spring; the infected bat steps almost every week and hits empty in late February.",
   height: 380,
   series: [
-    { name: "A healthy winter — a bat rouses now and then", data: [100, 92, 85, 76, 66, 57, 44], stepped: true },
-    { name: "With the infection — it rouses far more often", data: [100, 80, 58, 36, 14, 0, 0], stepped: true, style: "secondary" }
+    { name: "A healthy winter — an arousal every few weeks", data: [100, 100, 100, 94.5, 94.5, 94.5, 89, 89, 89, 83.5, 83.5, 83.5, 78, 78, 78, 72.5, 72.5, 72.5, 67, 67, 67, 61.5, 61.5, 61.5, 56], stepped: true },
+    { name: "With the infection — an arousal most weeks", data: [100, 94.5, 89, 83.5, 78, 72.5, 67, 61.5, 56, 50.5, 45, 39.5, 34, 28.5, 23, 17.5, 12, 6.5, 1, 0, 0, 0, 0, 0, 0], stepped: true, style: "secondary" }
   ],
   bands: [
     { from: "Mar", to: "Apr", text: "spring — insects return", style: "muted" }
   ],
   callouts: [
-    { x: "Dec", y: 92, text: "each step down is one arousal: a few days' worth of fat, spent in hours", style: "muted", arrowTo: { x: "Dec", y: 60 } },
-    { x: "Feb", y: 30, text: "reserves gone, weeks before there is anything to eat", arrowTo: { x: "Mar", y: 2 } }
+    { x: "Feb", y: 90, text: "a healthy bat rouses now and then — it can afford a handful", style: "muted", arrowTo: { x: "Jan", y: 78 } },
+    { x: "Dec", y: 28, text: "same cost per arousal — just far more of them", style: "muted", arrowTo: { x: "Jan", y: 34 } },
+    { x: "Feb", y: 55, text: "reserves gone, weeks before there is anything to eat", arrowTo: { x: "Mar", y: 2 } }
   ]
 } %}
 
@@ -124,3 +125,10 @@ somewhere the disease hasn't arrived, the most valuable thing you can do is
 ---
 
 **Header Photograph:** U.S. Fish and Wildlife Service Headquarters, Public domain, via Wikimedia Commons
+
+<details>
+<summary>Sources</summary>
+
+- [https://www.ewash.org/how-often-do-bats-wake-up-from-hibernation/](https://www.ewash.org/how-often-do-bats-wake-up-from-hibernation/#What_is_White-Nose_Syndrome_and_how_does_it_affect_hibernation) — arousal frequency during hibernation: bats normally rouse every one to three weeks, and a single arousal can cost several days' worth of stored energy. The figure above is drawn from this; the increase under infection is illustrative, as the source does not quantify it.
+
+</details>

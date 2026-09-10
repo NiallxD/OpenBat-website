@@ -17,3 +17,16 @@ Write the post here in normal markdown. Headings, lists, images, callouts and
 `[[Wikilinks]]` all work exactly as they do on the rest of the site.
 
 This file has `publish: false`, so it never builds — it is here to be copied.
+
+Anything with a number behind it wants a source. Keep the block below at the
+foot of the post and delete it if the post genuinely cites nothing — the bare
+URL is the link text, with a short note after the dash saying what the source
+actually supports.
+
+<details>
+<summary>Sources</summary>
+
+- [https://example.org/page](https://example.org/page) — what this one supports.
+- [https://example.org/other](https://example.org/other) — what this one supports.
+
+</details>

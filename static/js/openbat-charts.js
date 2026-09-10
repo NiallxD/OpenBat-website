@@ -163,6 +163,26 @@
   // `axis` is "x" (default) or "y". On a horizontal bar chart the value axis
   // is x, so a threshold is `axis: "x"` there and `axis: "y"` on a vertical
   // one — the same way you would read it off the picture.
+  // "Mar-10" / "Mar+4" — a category label with an offset measured in
+  // categories, so an annotation can sit ten steps before March without that
+  // step needing a label of its own. It resolves to a fractional index, which
+  // the category scale takes directly.
+  //
+  // A string that is itself a label is returned untouched and never
+  // reinterpreted, so a category genuinely called "COVID-19" or "2020-21"
+  // still means itself. Only a label that is not found is parsed for an
+  // offset, and a miss falls through unchanged rather than throwing.
+  function resolvePos(spec, v) {
+    if (typeof v !== "string") return v;
+    var labels = spec.labels || [];
+    if (labels.indexOf(v) !== -1) return v;
+    var m = v.match(/^(.*\S)\s*([+-]\s*\d+(?:\.\d+)?)$/);
+    if (!m) return v;
+    var i = labels.indexOf(m[1].trim());
+    if (i === -1) return v;
+    return i + parseFloat(m[2].replace(/\s+/g, ""));
+  }
+
   function buildAnnotations(spec, p) {
     if (!annotationPlugin) return {};
     var out = {};
@@ -173,8 +193,8 @@
       var y = b.axis === "y";
       out["band" + n++] = {
         type: "box",
-        xMin: y ? undefined : b.from,
-        xMax: y ? undefined : b.to,
+        xMin: y ? undefined : resolvePos(spec, b.from),
+        xMax: y ? undefined : resolvePos(spec, b.to),
         yMin: y ? b.from : undefined,
         yMax: y ? b.to : undefined,
         backgroundColor: withAlpha(c, 0.12),
@@ -198,8 +218,8 @@
       var y = l.axis === "y";
       out["line" + n++] = {
         type: "line",
-        xMin: y ? undefined : l.at,
-        xMax: y ? undefined : l.at,
+        xMin: y ? undefined : resolvePos(spec, l.at),
+        xMax: y ? undefined : resolvePos(spec, l.at),
         yMin: y ? l.at : undefined,
         yMax: y ? l.at : undefined,
         borderColor: c,
@@ -221,31 +241,43 @@
 
     // A callout is a label; the arrow is a second annotation drawn to the
     // point it is talking about, because a label cannot draw its own leader.
+    //
+    // The leader has to start at the label's centre — the plugin will only
+    // anchor a line to a scale value, and the label's box is measured at paint
+    // time, so there is no edge coordinate to start from. Instead the label is
+    // given a higher `z` than its arrow and an opaque background, so the line
+    // is drawn first and the box covers the part that crosses the text. What
+    // reads as a leader starting at the edge of the callout is the middle of
+    // the line hidden underneath it.
     (spec.callouts || []).forEach(function (c) {
       var col = roleColor(p, c.style);
       var id = "callout" + n++;
       out[id] = {
         type: "label",
-        xValue: c.x,
+        xValue: resolvePos(spec, c.x),
         yValue: c.y,
         content: wrap(c.text, c.wrap || 26),
         color: col,
         font: { family: p.font, size: 11 },
-        backgroundColor: withAlpha(p.bg, 0.85),
-        padding: { x: 5, y: 3 },
+        // Opaque, not 0.85: at any transparency the leader shows through the
+        // text it is meant to be tucked behind.
+        backgroundColor: p.bg,
+        padding: { x: 6, y: 4 },
         textAlign: c.align || "left",
         position: "center",
+        z: 2,
       };
       if (c.arrowTo) {
         out[id + "arrow"] = {
           type: "line",
-          xMin: c.x,
-          xMax: c.arrowTo.x,
+          xMin: resolvePos(spec, c.x),
+          xMax: resolvePos(spec, c.arrowTo.x),
           yMin: c.y,
           yMax: c.arrowTo.y,
           borderColor: withAlpha(col, 0.7),
           borderWidth: 1,
           arrowHeads: { end: { display: true, length: 6, width: 4, fill: true } },
+          z: 1,
         };
       }
     });
@@ -499,7 +531,9 @@
         ? (spec.series || []).length && buildSeries(canvas, spec)
         : (spec.bars || []).length && buildBars(canvas, spec);
     if (!chart) return;
-    chart.$obMarks = spec.marks || [];
+    chart.$obMarks = (spec.marks || []).map(function (m) {
+      return { at: resolvePos(spec, m.at), text: m.text };
+    });
     chart.$obSpec = spec;
     charts.push(chart);
     paint(chart);

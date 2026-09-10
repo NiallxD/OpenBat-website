@@ -438,6 +438,49 @@ callouts: [
 ```
 {% endraw %}
 
+### Offset positions — `"Mar-10"`
+
+Anywhere an annotation takes a category (`marks.at`, `lines.at`, `bands.from`
+and `to`, `callouts.x` and `arrowTo.x`) it also takes that category plus or
+minus a number of steps. `"Mar-10"` is ten categories before March. This is
+what a finely divided axis needs: the chart below is drawn by the week but
+labelled by the month, so most positions have no label to name.
+
+A string that *is* a label always means itself, so a category genuinely called
+`"2020-21"` is never read as an offset. An unrecognised label is left alone
+rather than throwing.
+
+{% chart {
+  type: "line",
+  key: "DRAWN BY THE WEEK, LABELLED BY THE MONTH",
+  yKey: "FAT RESERVE",
+  labels: ["Oct", "", "", "", "Nov", "", "", "", "Dec", "", "", "", "Jan", "", "", "", "Feb", "", "", "", "Mar", "", "", "", "Apr"],
+  caption: "Every annotation here is placed with an offset — none of the weeks it points at carry a label.",
+  legend: false,
+  series: [
+    { name: "Reserve", data: [100, 95, 89, 84, 78, 73, 67, 62, 56, 51, 45, 40, 34, 29, 23, 18, 12, 7, 3, 0, 0, 0, 0, 0, 0], stepped: true }
+  ],
+  marks: [
+    { at: "Mar-10", text: "ten weeks before March" }
+  ],
+  bands: [
+    { from: "Feb-2", to: "Feb+1", text: "the last of it", style: "muted" }
+  ],
+  callouts: [
+    { x: "Dec-2", y: 40, text: "placed at Dec-2, pointing at Jan+1", style: "muted", arrowTo: { x: "Jan+1", y: 29 } }
+  ]
+} %}
+
+{% raw %}
+```
+labels: ["Oct", "", "", "", "Nov", "", "", "", "Dec", … ]
+
+marks:    [{ at: "Mar-10", text: "ten weeks before March" }]
+bands:    [{ from: "Feb-2", to: "Feb+1", text: "the last of it" }]
+callouts: [{ x: "Dec-2", y: 40, text: "…", arrowTo: { x: "Jan+1", y: 29 } }]
+```
+{% endraw %}
+
 ## Panels — several charts as one figure
 
 Wrap charts in `{% raw %}{% panels %}{% endraw %}` and they become columns of a
