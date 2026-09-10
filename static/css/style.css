@@ -1642,6 +1642,79 @@ span.wikilink { color: var(--color-secondary); }
   .post-content figure.chart-panels { padding: 1rem 1rem 0.75rem; }
 }
 
+/* {% table-pair %} — two tables that read as one figure, built on the same
+   frame as figure.chart-panels above: the outer figure carries the surface and
+   border, the tables inside carry none, so a long list split into two columns
+   looks like one bordered box divided rather than two loose tables. Below
+   700px it becomes one column and the halves stack. */
+.post-content figure.table-pair {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.5rem 1rem;
+  margin: 2rem 0;
+  clear: both;
+}
+
+.post-content figure.table-pair .table-pair-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 700px) {
+  .post-content figure.table-pair .table-pair-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+}
+
+/* Same display:block trap as the floated figures — a table set to block is no
+   longer a table box, so width:100% sizes an empty wrapper and the real table
+   shrinks to its text. Put it back to a table so it fills its column. */
+.post-content figure.table-pair table {
+  display: table;
+  width: 100%;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.post-content figure.table-pair th,
+.post-content figure.table-pair td {
+  padding: 0.4rem 0.5rem;
+}
+
+.post-content figure.table-pair th:last-child,
+.post-content figure.table-pair td:last-child {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* The header sits on the card's own surface colour, so it needs the rule
+   rather than the fill it gets against the page background. */
+.post-content figure.table-pair th {
+  background: none;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.post-content figure.table-pair tr:hover td { background: none; }
+
+.post-content figure.table-pair > figcaption {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-muted);
+  text-align: left;
+}
+
+@media (max-width: 699px) {
+  .post-content figure.table-pair { padding: 1rem 1rem 0.75rem; }
+}
+
 .chart-label { font-family: var(--font-body); font-size: 13px; }
 .chart-label--small { font-size: 11px; }
 .chart-key { font-family: var(--font-sans); font-size: 13px; letter-spacing: 0.06em; }
@@ -1794,6 +1867,37 @@ figure.image-float-left img {
   width: 100%;
   display: block;
   border-radius: var(--radius-md);
+}
+
+/* A floated figure can hold a table instead of a picture. The block-level
+   .post-content table rules assume full width, so drop their outer margin and
+   step the type down — a two-column table in a 45% column has no room for a
+   2rem gap above it or 0.95rem species names. */
+figure.image-float-right table,
+figure.image-float-left table {
+  display: table;
+  width: 100%;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+figure.image-float-right th,
+figure.image-float-left th,
+figure.image-float-right td,
+figure.image-float-left td {
+  padding: 0.4rem 0.5rem;
+}
+
+/* The value column takes only what it needs so the name column absorbs the
+   rest of the width — otherwise auto layout splits the slack between both and
+   the numbers drift into the middle of the figure. */
+figure.image-float-right th:last-child,
+figure.image-float-left th:last-child,
+figure.image-float-right td:last-child,
+figure.image-float-left td:last-child {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
 }
 
 figure.image-float-right figcaption,
@@ -3602,6 +3706,71 @@ figure.image-float-left figcaption {
 /* Two jobs in one gradient: a light wash over the whole image so the nav has
    something to sit on, and a heavy foot so white text reads over a pale
    photo — or, as here, over a near-white map. */
+/* tileHero — the hero image repeated across a rotated plane rather than
+   stretched to fill. The plane is oversized because rotating a box leaves its
+   corners outside the frame; .post-hero clips the rest. Tiles keep their
+   natural aspect (height: auto) so a portrait screenshot stays portrait —
+   which is the whole point of tiling one image rather than cropping it. */
+.post-hero-tiles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* Sized by its own tiles, not by a percentage of the hero. A percentage
+     width does nothing here: the rows are flex lines that only span
+     cols x tile-width, so an oversized container just leaves empty space to
+     the right. Feed it enough rows and columns instead and let it overflow —
+     .post-hero clips whatever hangs over. */
+  width: max-content;
+  height: auto;
+  transform: translate(-50%, -50%) rotate(var(--tile-angle, 30deg));
+  transform-origin: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--tile-gap, 12px);
+  pointer-events: none;
+  /* Slight blur pushes the tiling back behind the text. It also hides the
+     clipped edges, which fall outside the hero because the plane overflows. */
+  filter: blur(var(--tile-blur, 3px));
+}
+
+.post-hero-tile-row {
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--tile-gap, 12px);
+}
+
+/* The half-tile shove on every second row is what reads as masonry. Without
+   it the tiles line up column-on-column and it looks like wallpaper. */
+.post-hero-tile-row:nth-child(even) {
+  margin-left: calc((var(--tile-w, 460px) + var(--tile-gap, 12px)) / -2);
+}
+
+.post-hero-tiles img {
+  flex: 0 0 auto;
+  display: block;
+  width: var(--tile-w, 460px);
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+/* A tiled hero is busier than a photograph, so the text needs more help than
+   the standard shade gives it. */
+.post-hero--tiled { background: var(--color-bg); }
+
+.post-hero--tiled .post-hero-shade {
+  background: linear-gradient(to bottom,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.45) 35%,
+    rgba(0, 0, 0, 0.92) 100%);
+}
+
+/* Smaller tiles on a phone: a 220px tile against a 390px viewport is barely a
+   pattern, it is just a big picture with its edges showing. */
+@media (max-width: 700px) {
+  .post-hero-tiles { --tile-w: 240px; --tile-gap: 8px; --tile-blur: 2px; }
+}
+
 .post-hero-shade {
   position: absolute;
   inset: 0;
