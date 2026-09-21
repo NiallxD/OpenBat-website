@@ -27,3 +27,23 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
           cname: openbat.app
+
+      # `dataVersion` in /app/blog.json has to keep going up whenever the app
+      # feed's content changes, and a build has no memory of the last one — the
+      # count lives in app-feed-version.json, which the build rewrites when the
+      # feed differs from the stamp. Push that back, or the next build counts
+      # from the same number again and a second change reaches no device.
+      # Deliberately after the deploy: a failed push must not withhold a site
+      # that built correctly. The commit touches nothing the site is built
+      # from, so the build it triggers finds the stamp already right and writes
+      # nothing — the loop stops there.
+      - name: Stamp the app feed version
+        run: |
+          if [ -n "$(git status --porcelain app-feed-version.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add app-feed-version.json
+            git commit -m "Stamp app feed dataVersion $(node -p "require('./app-feed-version.json').dataVersion")"
+            git pull --rebase --autostash
+            git push
+          fi

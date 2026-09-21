@@ -10,6 +10,12 @@ tags:
 coverImage: /static/images/some-image.webp
 featured: false
 priority:            # optional, featured posts only — 1 runs first in the ticker
+inApp: false         # true also sends the post to the app, via /app/blog.json
+appPriority:         # optional, in-app posts only — 1 runs first in the app
+type: post           # the app's filter: post, field-note, guide, release…
+latitude:            # optional — both of these together pin the post on the
+longitude:           #   app's world map. Decimal degrees, e.g. 51.4545, -2.5879
+locationName:        # optional — what the pin is called; the title if unset
 publish: false
 ---
 

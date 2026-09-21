@@ -10,6 +10,10 @@ tags:
 heroImage: /static/images/little_brown_bat_wns.webp
 coverImage: /static/images/little_brown_bat_wns.webp
 featured: false
+inApp: true
+latitude: 42.6526
+longitude: -73.7562
+locationName: Albany, New York
 publish: true
 ---
 

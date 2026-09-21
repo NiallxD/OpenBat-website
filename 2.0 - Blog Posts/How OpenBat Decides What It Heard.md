@@ -11,6 +11,9 @@ tags:
 heroImage: /static/images/how-autoid-hero.webp
 coverImage: /static/images/how-autoid-hero.webp
 featured: false
+inApp: true
+appPriority: 1
+type: explainer
 publish: true
 ---
 

@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync, statSync } from "fs";
 import { join, extname } from "path";
 import markdownIt from "markdown-it";
+import { transformCallouts } from "./lib/callouts.js";
 
 const BLOG_DIR = "2.0 - Blog Posts";
 
@@ -221,24 +222,11 @@ export default function (eleventyConfig) {
     return content;
   });
 
-  // Transform Obsidian callouts into styled divs
+  // Transform Obsidian callouts into styled divs. The finding of them is
+  // shared with the app feed, which wants the same callouts in its own markup.
   eleventyConfig.addTransform("callouts", (content, outputPath) => {
     if (typeof outputPath !== "string" || !outputPath.endsWith(".html")) return content;
-    return content.replace(
-      /<blockquote>\s*<p>\[!([\w-]+)\]([^<\n]*)([\s\S]*?)<\/blockquote>/g,
-      (_, type, titleRaw, bodyRaw) => {
-        const t = type.toLowerCase();
-        const title = titleRaw.trim() || type;
-        let body = bodyRaw;
-        if (body.startsWith("\n")) {
-          body = body.replace(/^\n/, "").replace(/<\/p>\s*$/, "").trim();
-          body = body ? `<p>${body}</p>` : "";
-        } else {
-          body = body.replace(/^<\/p>\s*/, "").trim();
-        }
-        return `<div class="callout callout-${t}"><div class="callout-title">${title}</div><div class="callout-body">${body}</div></div>`;
-      }
-    );
+    return transformCallouts(content);
   });
 
   eleventyConfig.addTransform("inlineGalleries", (content, outputPath) => {

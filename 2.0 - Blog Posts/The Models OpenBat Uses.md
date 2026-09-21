@@ -11,6 +11,9 @@ tags:
 heroImage: /static/images/orange-sunset.webp
 coverImage: /static/images/orange-sunset.webp
 featured: false
+inApp: true
+appPriority: 2
+type: explainer
 publish: true
 ---
 
