@@ -1642,12 +1642,15 @@ span.wikilink { color: var(--color-secondary); }
   .post-content figure.chart-panels { padding: 1rem 1rem 0.75rem; }
 }
 
-/* {% table-pair %} — two tables that read as one figure, built on the same
-   frame as figure.chart-panels above: the outer figure carries the surface and
-   border, the tables inside carry none, so a long list split into two columns
-   looks like one bordered box divided rather than two loose tables. Below
-   700px it becomes one column and the halves stack. */
-.post-content figure.table-pair {
+/* {% table-pair %} — two tables that read as one figure, and {% table-single %}
+   — the same frame around one. Both are built on the same frame as
+   figure.chart-panels above: the outer figure carries the surface and border,
+   the tables inside carry none, so a long list split into two columns looks
+   like one bordered box divided rather than two loose tables. The pair drops
+   to one column below 700px and the halves stack; the single is one column at
+   every width. */
+.post-content figure.table-pair,
+.post-content figure.table-single {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -1672,7 +1675,8 @@ span.wikilink { color: var(--color-secondary); }
 /* Same display:block trap as the floated figures — a table set to block is no
    longer a table box, so width:100% sizes an empty wrapper and the real table
    shrinks to its text. Put it back to a table so it fills its column. */
-.post-content figure.table-pair table {
+.post-content figure.table-pair table,
+.post-content figure.table-single table {
   display: table;
   width: 100%;
   margin: 0;
@@ -1680,12 +1684,20 @@ span.wikilink { color: var(--color-secondary); }
 }
 
 .post-content figure.table-pair th,
-.post-content figure.table-pair td {
+.post-content figure.table-pair td,
+.post-content figure.table-single th,
+.post-content figure.table-single td {
   padding: 0.4rem 0.5rem;
 }
 
+/* The pair's last column is a figure — a percentage, a count — so it is pinned
+   narrow and set right. A single table is as often two columns of words, so it
+   keeps the ordinary left alignment; add .table-single--figures when the last
+   column really is a number. */
 .post-content figure.table-pair th:last-child,
-.post-content figure.table-pair td:last-child {
+.post-content figure.table-pair td:last-child,
+.post-content figure.table-single--figures th:last-child,
+.post-content figure.table-single--figures td:last-child {
   width: 1%;
   white-space: nowrap;
   text-align: right;
@@ -1693,14 +1705,17 @@ span.wikilink { color: var(--color-secondary); }
 
 /* The header sits on the card's own surface colour, so it needs the rule
    rather than the fill it gets against the page background. */
-.post-content figure.table-pair th {
+.post-content figure.table-pair th,
+.post-content figure.table-single th {
   background: none;
   border-bottom: 2px solid var(--color-border);
 }
 
-.post-content figure.table-pair tr:hover td { background: none; }
+.post-content figure.table-pair tr:hover td,
+.post-content figure.table-single tr:hover td { background: none; }
 
-.post-content figure.table-pair > figcaption {
+.post-content figure.table-pair > figcaption,
+.post-content figure.table-single > figcaption {
   margin-top: 1.25rem;
   padding-top: 1rem;
   border-top: 1px solid var(--color-border);
@@ -1712,7 +1727,8 @@ span.wikilink { color: var(--color-secondary); }
 }
 
 @media (max-width: 699px) {
-  .post-content figure.table-pair { padding: 1rem 1rem 0.75rem; }
+  .post-content figure.table-pair,
+  .post-content figure.table-single { padding: 1rem 1rem 0.75rem; }
 }
 
 .chart-label { font-family: var(--font-body); font-size: 13px; }

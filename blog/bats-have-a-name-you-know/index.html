@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>How OpenBat Draws a Range Map — OpenBat</title>
-  <meta name="description" content="Where the distribution maps come from, what has to be assumed to draw one, and why the rules are careful not to delete real range at the edges.">
+  <title>Bats Have a Name You Know! — OpenBat</title>
+  <meta name="description" content="We use &quot;bat&quot; as a catch-all the way we use &quot;bird,&quot; but there are actually 19 distinct bat families, each with their own name that usually tells you something real about them.">
   
   <!-- Privacy & Security -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://upload.wikimedia.org; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; frame-src https://docs.google.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="OpenBat">
-  <meta property="og:title" content="How OpenBat Draws a Range Map — OpenBat">
-  <meta property="og:description" content="Where the distribution maps come from, what has to be assumed to draw one, and why the rules are careful not to delete real range at the edges.">
-  <meta property="og:image" content="/static/images/range-cover.webp">
+  <meta property="og:title" content="Bats Have a Name You Know! — OpenBat">
+  <meta property="og:description" content="We use &quot;bat&quot; as a catch-all the way we use &quot;bird,&quot; but there are actually 19 distinct bat families, each with their own name that usually tells you something real about them.">
+  <meta property="og:image" content="/static/images/greater-horseshoe-bat-kiseung-kim-cc-by-nc.webp">
   <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Favicons -->
@@ -104,17 +104,17 @@
 
 <div class="post-hero">
   
-  <img class="post-hero-bg" src="/static/images/range-hero.webp" alt="">
+  <img class="post-hero-bg" src="/static/images/greater-horseshoe-bat-kiseung-kim-cc-by-nc.webp" alt="">
   
   <div class="post-hero-shade"></div>
   <div class="post-hero-inner">
     <p class="section-label"><a href="/blog/" class="post-back">← Blog</a></p>
-    <h1>How OpenBat Draws a Range Map</h1>
-    <p class="post-hero-text">Where the distribution maps come from, what has to be assumed to draw one, and why the rules are careful not to delete real range at the edges.</p>
+    <h1>Bats Have a Name You Know!</h1>
+    <p class="post-hero-text">We use &quot;bat&quot; as a catch-all the way we use &quot;bird,&quot; but there are actually 19 distinct bat families, each with their own name that usually tells you something real about them.</p>
     <div class="post-meta">
-      <time datetime="2026-08-27">27 August 2026</time>
+      <time datetime="2026-09-21">21 September 2026</time>
       <span class="post-author">Niall Bell</span>
-      <span class="tag">field-guide</span><span class="tag">range-maps</span><span class="tag">gbif</span>
+      <span class="tag">bats</span><span class="tag">reference</span>
     </div>
   </div>
 </div>
@@ -123,135 +123,112 @@
 <article class="standard-page post post--hero">
   
 
-  <div class="post-content"><p>Open a species in OpenBat and you get a map of where it lives. That map does
-two jobs, and the second one matters more than it looks: it also decides which
-species the app’s on-device identification is willing to consider where you are
-standing. A range map that is wrong in the wrong direction doesn’t just look
-odd — it switches a resident bat off.</p>
-<p>Here is what those maps are made of, and what has to be assumed to draw one.</p>
-<h2 id="the-raw-material">The raw material</h2>
-<p>Every range comes from <a href="https://www.gbif.org/">GBIF</a>, the global pool of
-biodiversity occurrence records — museum specimens, survey data, ringing
-records, verified citizen-science sightings. For each species the app can name,
-we ask GBIF for every record it holds and bin them into a grid of <strong>1° cells</strong>,
-about 111 km across.</p>
-<p>Coarse, deliberately. The question is “does this bat live around here”, not
-“was one caught in this field”. A finer grid mostly encodes where recorders
-happened to walk.</p>
-<p>Two details that took more work than expected:</p>
-<p><strong>Names are unreliable in both directions.</strong> Querying GBIF by scientific name
-fails silently when the app’s name and GBIF’s disagree. The western red bat
-returns zero records near San Francisco under <em>Lasiurus blossevillii</em>, because
-those records now sit under <em>Lasiurus frantzii</em>. The serotine returns zero near
-London under <em>Cnephaeus serotinus</em>, because GBIF matches that name only to a
-genus. Either mistake switches a common bat off in a place it is common, so
-every name is matched to its record set once, in advance, and checked by a
-person rather than looked up on the fly.</p>
-<p><strong>We ask for a summary of every record, not a sample of them.</strong> Records come
-back in no particular order, so taking the first few thousand of a species can
-hand you one large national dataset and leave real parts of a range looking
-empty. GBIF will instead count <em>every</em> record it holds into a grid — all 3.2
-million common pipistrelles — which is both a truer picture and a smaller
-answer.</p>
-<h2 id="the-assumption-everything-hinges-on">The assumption everything hinges on</h2>
-<p><strong>A record is evidence a person was there and filed something, not evidence a
-bat was there and no bat was anywhere else.</strong> Absence of records is not absence
-of bats.</p>
-<p>That sounds obvious. Building on it is where it gets awkward, because you still
-have to draw a line somewhere: a single record 4,000 km from a species’ range
-is almost always a misidentification, an escapee, or a specimen catalogued at
-the museum that holds it rather than where it was collected. Keep everything
-and every map grows a rash of dots. Filter too hard and you delete real range.</p>
-<p>The obvious way to draw the line is to judge each cell on how many records it
-holds: throw out the thin ones, then tidy up what survives. It reads well until
-you notice that recording effort is thinnest exactly where a range ends, so
-judging cells on record counts reads survey intensity as absence:</p>
+  <div class="post-content"><p>To most people, all bats are bats. And that’s not incorrect, but it is like calling all birds, birds. Can you imaging pointing to an eagle and someone shouting “LOOK, A BIRD!” it would be a bit odd, no?</p>
+<p>There are actually lots of unique names we can use to talk about bats. Spread across 19 distinct bat families, each group of bats have their own group name that tells us something real about them! Think calling a bird with a 6 foot wingspan and a white head, an eagle. Or a small black bird with an orange bill, a blackbird.</p>
+<h2 id="whats-in-a-bats-name">What’s in a bat’s name?</h2>
+<p>Below is a table of all 19 groups, but I wanted to highlight some which tell us a bit about the bats in that group.<strong>Vesper bats</strong> get their name from the Latin for evening, they hunt at dusk. <strong>Horseshoe bats</strong> have a noseleaf which is shaped exactly as you’d expect with a name like that! <strong>Flying foxes</strong> are large, with excellent eyesight and diet of delicious fruit. <strong>Free-tailed bats</strong> have a tail which protrudes out past the wing, which gives them an edge when it comes to speed. <strong>False vampire bats</strong> are really interesting, they are a bit like vampire bats, apart from they’re not! They don’t drink blood and instead they hunt other vertebrates.</p>
+<p>Understanding, and using the common names for these groups of bat is super important to normalising them in our world, and offering some characteristics which are otherwise missed. When you see a bat next, I challenge you to try understand which kind of bat it might be, and then call it that 🦇</p>
+<h2 id="the-19-bat-families">The 19 Bat Families</h2>
+<figure class="table-single">
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Common Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pteropodidae</td>
+<td>Flying foxes / Old World fruit bats</td>
+</tr>
+<tr>
+<td>Rhinolophidae</td>
+<td>Horseshoe bats</td>
+</tr>
+<tr>
+<td>Hipposideridae</td>
+<td>Old World leaf-nosed bats / roundleaf bats</td>
+</tr>
+<tr>
+<td>Rhinopomatidae</td>
+<td>Mouse-tailed bats</td>
+</tr>
+<tr>
+<td>Megadermatidae</td>
+<td>False vampire bats</td>
+</tr>
+<tr>
+<td>Craseonycteridae</td>
+<td>Bumblebee bat / Kitti’s hog-nosed bat</td>
+</tr>
+<tr>
+<td>Vespertilionidae</td>
+<td>Vesper bats / evening bats</td>
+</tr>
+<tr>
+<td>Molossidae</td>
+<td>Free-tailed bats / mastiff bats</td>
+</tr>
+<tr>
+<td>Phyllostomidae</td>
+<td>New World leaf-nosed bats</td>
+</tr>
+<tr>
+<td>Emballonuridae</td>
+<td>Sheath-tailed bats / sac-winged bats</td>
+</tr>
+<tr>
+<td>Nycteridae</td>
+<td>Slit-faced bats</td>
+</tr>
+<tr>
+<td>Mormoopidae</td>
+<td>Mustached bats / ghost-faced bats</td>
+</tr>
+<tr>
+<td>Noctilionidae</td>
+<td>Bulldog bats / fishing bats</td>
+</tr>
+<tr>
+<td>Miniopteridae</td>
+<td>Bent-winged bats / long-fingered bats</td>
+</tr>
+<tr>
+<td>Natalidae</td>
+<td>Funnel-eared bats</td>
+</tr>
+<tr>
+<td>Furipteridae</td>
+<td>Smoky bats / thumbless bats</td>
+</tr>
+<tr>
+<td>Thyropteridae</td>
+<td>Disk-winged bats</td>
+</tr>
+<tr>
+<td>Myzopodidae</td>
+<td>Sucker-footed bats</td>
+</tr>
+<tr>
+<td>Mystacinidae</td>
+<td>New Zealand short-tailed bats</td>
+</tr>
+</tbody>
+</table>
+<figcaption>The 19 bat families and the common names used to refer to them. Family names are the scientific grouping; the common names are what you can reasonably call any bat in that family usually based on a shared characteristic.</figcaption>
+</figure>
+<details>
+<summary>Sources</summary>
 <ul>
-<li>The <strong>spotted bat’s</strong> run north into British Columbia is four cells holding
-1, 1, 2 and 3 records, one empty row away from the main range. Judge those
-cells on their own and every one of them fails: the range stops dead on the
-49th parallel and the bat reads as absent from the whole province.</li>
-<li>The <strong>Hawaiian hoary bat</strong> is seven cells holding 18 records. Set the bar for
-an isolated cluster at 20 and an entire island population disappears, two
-records short.</li>
+<li><a href="https://en.wikipedia.org/wiki/Handbook_of_the_Mammals_of_the_World">Handbook of the Mammals of the World</a> — Vol. 9: Bats (2019), the current comprehensive reference organizing 21 families across two suborders.</li>
+<li><a href="https://www.britannica.com/animal/bat-mammal/Classification">Britannica — Bat Classification</a> — Based on Mammal Species of the World 3rd edition (Wilson &amp; Reeder, 2005).</li>
+<li><a href="https://batnames.org/about.html">BatNames.org</a> — Taxonomic database tracking annual changes to bat family classification; Chiroptera chapter by Nancy Simmons.</li>
+<li><a href="https://animaldiversity.org/accounts/Vespertilionidae/">Animal Diversity Web — Vespertilionidae</a> — Family accounts with common names for Vespertilionidae and related families.</li>
+<li><a href="https://en.wikipedia.org/wiki/Bat">Wikipedia — Bat</a> — Family classification table following the Handbook of the Mammals of the World Vol. 9.</li>
+<li>Hero image: © jimenn_kim, CC-BY-NC, <a href="https://creativecommons.org/licenses/by-nc/4.0/">some rights reserved</a></li>
 </ul>
-<h2 id="buffer-bridge-then-judge">Buffer, bridge, then judge</h2>
-<p>Same ingredients, different order.</p>
-<ol>
-<li><strong>Buffer</strong> — every cell holding a record grows by one cell in each
-direction (~111 km).</li>
-<li><strong>Bridge</strong> — gaps of up to about 440 km between neighbouring blobs are
-closed, so a strait or a stretch of unsurveyed ground doesn’t split one
-range into two.</li>
-<li><strong>Group</strong> — what remains is flood-filled into connected groups, and <em>then</em>
-each group is judged.</li>
-</ol>
-<p>The order is what matters. Judging after bridging lets a thin edge inherit the
-credibility of the range it attaches to, instead of being asked to justify
-itself cell by cell — which is exactly what a sparsely surveyed real edge
-cannot do.</p>
-<figure>
-  <a href="/static/images/range-stages.webp"><img src="/static/images/range-stages.webp" alt="Three maps of the spotted bat showing the algorithm running: the cells holding records, the same cells grown by one in every direction, and short gaps between them closed." loading="lazy"></a>
-  <figcaption>The first two steps, on the spotted bat. <strong>1:</strong> the 72 cells that hold records. <strong>2:</strong> buffering grows each by one cell, adding 210. <strong>3:</strong> bridging closes the short gaps between them, adding 70 more. Green rings what each step added: buffering thickens every blob's outline, bridging only fills between things — including the empty row that had been cutting the run north into British Columbia off from the main range.</figcaption>
-</figure>
-<p>A group survives if it has <strong>either</strong> at least 3 cells holding records <strong>or</strong>
-at least 20 records in total. Either is sufficient, and both have to fail
-before anything is dropped.</p>
-<p>Two tests rather than one, because they catch two different kinds of evidence.
-Cell count alone separates the real disjunct populations (Hawaii’s 7 cells,
-BC’s 4) from the known artefacts (a single cell in Bogotá, a single cell in
-Alaska) — but it also deleted every island endemic, because the Canary Islands
-cannot fill three 1° cells no matter how many barbastelles are on them. A
-record count alone can’t separate the artefacts from BC at all. Together:
-<em>spread out but thinly recorded</em>, or <em>concentrated but well recorded</em>. Only a
-group that is both tiny and thin gets dropped, which is the exact profile of a
-stray record.</p>
-<figure>
-  <a href="/static/images/range-hoary-bat.webp"><img src="/static/images/range-hoary-bat.webp" alt="Three maps of the hoary bat across the Americas: raw records, five single-cell outliers ringed in red, and the final range with Hawaii kept as its own group." loading="lazy"></a>
-  <figcaption>The hoary bat, where the middle step has something to do: five clusters ringed in red, each a single cell holding a handful of records. Hawaii is not among them: seven cells and 18 records clears the spread test comfortably, and an island population is exactly the kind of thing a blunter rule loses.</figcaption>
-</figure>
-<p>One more rule: a species’ <strong>largest group always survives</strong>, however thin.
-Dropping it would turn “we know very little about this bat” into “this bat is
-not here”, and those are not the same statement. The app has an honest way to
-say the first and should never be handed the second by accident.</p>
-<figure>
-  <a href="/static/images/range-common-pipistrelle.webp"><img src="/static/images/range-common-pipistrelle.webp" alt="Three maps of the common pipistrelle: raw records across Europe and Asia, seven outliers ringed in red in the Americas, India and east Africa, and the final range." loading="lazy"></a>
-  <figcaption>The common pipistrelle, 3.2 million records — and seven single cells scattered across the Americas, India and east Africa, each holding one to four of them. Those are the middle step's whole job: eight groups in, one group out.</figcaption>
-</figure>
-<h2 id="what-that-adds-up-to">What that adds up to</h2>
-<p>Across the 48 species the app can name, these rules add <strong>15,483 cells</strong> of
-range compared with judging cells one at a time. What they take away is small
-and deliberate: the largest group dropped anywhere holds 2 cells and 15
-records, and 87 of the 133 dropped are a single cell holding a single record.</p>
-<h2 id="how-it-reaches-the-app">How it reaches the app</h2>
-<p>The range data ships <strong>inside</strong> the app and is refreshed from the
-<a href="https://github.com/NiallxD/OpenBat-FieldGuide">field guide repository</a> at
-launch, so a corrected range reaches every install without an app update — and a
-phone that has never had a signal still has a full set. Everything happens on device;
-nothing about your location is sent anywhere.</p>
-<p>On a species page you can toggle between <strong>Records</strong> and <strong>Range</strong>. Records is
-the raw evidence — the cells that genuinely hold observations, shaded by how
-many. Range is the modelled version, the one described above. We show both
-because they answer different questions, and because the modelled map is an
-inference and shouldn’t pretend otherwise.</p>
-<p>The identification engine reads the same grid, and distinguishes three answers
-rather than two: present, absent, and <em>unknown</em>. A species with no data is not
-a species that isn’t there, and the app says so.</p>
-<h2 id="what-it-still-cant-tell-you">What it still can’t tell you</h2>
-<ul>
-<li><strong>There is no seasonality.</strong> GBIF’s density summaries carry no dates, so the
-app has no per-cell month information. It treats that as “no opinion” rather
-than hiding a resident bat whose records lacked dates.</li>
-<li><strong>Cells are 111 km.</strong> A cell being in range means the species lives in that
-region, not on that hillside.</li>
-<li><strong>It is still built from records.</strong> Better-surveyed places look better
-populated. Buffering and bridging soften that; nothing removes it.</li>
-</ul>
-<p>The range data and its licence terms are public, in the
-<a href="https://github.com/NiallxD/OpenBat-FieldGuide">field guide repository</a>, along
-with the guide itself. If you spot a range that looks wrong for a bat you know
-well, that is exactly the kind of report we want.</p>
-</div>
+</details></div>
   
 
   
@@ -260,48 +237,48 @@ well, that is exactly the kind of report we want.</p>
     <p class="section-label">Read more</p>
     <div class="post-grid">
       
-      <a href="/blog/how-openbat-weighs-scores-by-location/" class="post-card">
+      <a href="/blog/a-beginners-bat-vocabulary/" class="post-card">
         
         <div class="post-card-img">
-          <img src="/static/images/range-map.webp" alt="" loading="lazy">
+          <img src="/static/images/jargon_graphic.webp" alt="" loading="lazy">
         </div>
         
         <div class="post-card-body">
-          <h2>How OpenBat Weighs Scores By Location</h2>
+          <h2>A Beginner&#39;s Bat Vocabulary</h2>
           <div class="post-card-meta">
-            <time datetime="2026-09-05">5 September 2026</time>
+            <time datetime="2026-08-28">28 August 2026</time>
           </div>
-          <p class="post-card-desc">A classifier has no idea where it is. OpenBat gives it one, by weighting every species against the range map for the spot you are standing in — and by being careful about what that weighting is allowed to decide.</p>
+          <p class="post-card-desc">Heterodyne, GUANO, Fc, pass, buzz, transect — the words you will meet in the app and from bat people, explained without the jargon that usually comes attached.</p>
         </div>
       </a>
       
-      <a href="/blog/why-the-field-guide-is-reviewed-not-a-wiki/" class="post-card">
+      <a href="/blog/why-do-we-need-bats/" class="post-card">
         
         <div class="post-card-img">
-          <img src="/static/images/guide-editor-entry.webp" alt="" loading="lazy">
+          <img src="/static/images/spotted-bat-Jason Headley.webp" alt="" loading="lazy">
         </div>
         
         <div class="post-card-body">
-          <h2>Why the Field Guide Is Reviewed, Not a Wiki</h2>
+          <h2>Why Do We Need Bats</h2>
           <div class="post-card-meta">
             <time datetime="2026-09-02">2 September 2026</time>
           </div>
-          <p class="post-card-desc">Anyone can propose changes and additions to the guide. Buy nobody can publish them alone. This slower and more annoying, but absolutely necessary.</p>
+          <p class="post-card-desc">From providing billions of dollars&#39; worth of natural pest control to contributing to life-saving medical research, our ecosystems, economies and even aspects of human health benefit from healthy bat populations.</p>
         </div>
       </a>
       
-      <a href="/blog/a-blank-space-on-a-map-does-not-mean-absence/" class="post-card">
+      <a href="/blog/bats-carry-diseases-heres-what-that-actually-means/" class="post-card">
         
         <div class="post-card-img">
-          <img src="/static/images/map_generation_example.webp" alt="" loading="lazy">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Bat_cave_in_El_Maviri_Sinaloa_-_Mexico.jpg" alt="" loading="lazy">
         </div>
         
         <div class="post-card-body">
-          <h2>A Blank Space on a Map does not mean Absence</h2>
+          <h2>Bats carry diseases. Here&#39;s what that actually means.</h2>
           <div class="post-card-meta">
-            <time datetime="2026-08-29">29 August 2026</time>
+            <time datetime="2026-08-30">30 August 2026</time>
           </div>
-          <p class="post-card-desc">Observation maps show where people have looked at least as much as where bats live. Reading the difference changes what you can honestly use them for.</p>
+          <p class="post-card-desc">Most bat myths are easy to knock down. Not blind, not rodents, not interested in your hair, not vampires. All straightforwardly false, all fun to correct.</p>
         </div>
       </a>
       
