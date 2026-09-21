@@ -22,9 +22,9 @@ This is the short version or how these model outputs are actually turned into an
 
 OpenBat currently includes two models, and has been built to allow new models to be added over time:
 
-**NABat ML** covers North America. It was developed by researchers at the USGS North American Bat Monitoring Program and is the continental standard for acoustic bat monitoring. It has been trained to identify 30 North American/Canadian bat species, plus an explicit NOISE class for things that aren't bats. Licensed CC BY 4.0.
+- **NABat ML** covers North America. It was developed by researchers at the USGS North American Bat Monitoring Program and is the continental standard for acoustic bat monitoring. It has been trained to identify 30 North American/Canadian bat species, plus an explicit NOISE class for things that aren't bats. Licensed CC BY 4.0. OpenBat is not affiliated or endorsed by the NABat ML team. Any errors in the app are ours and not theirs.
 
-**BatDetect2** covers the United Kingdom. It comes from the University of Edinburgh, knows 17 UK species, and is licensed CC BY-NC 4.0 — non-commercial. It is still marked **beta** in the app.
+- **BatDetect2** covers the United Kingdom. It comes from the University of Edinburgh, knows 17 UK species, and is licensed CC BY-NC 4.0 — non-commercial. It is still marked **beta** in the app. OpenBat is not affiliated or endorsed by the BatDetect2 team. Any errors in the app are ours and not theirs.
 
 Only one model runs at a time and the app suggests the best option for your current location.
 

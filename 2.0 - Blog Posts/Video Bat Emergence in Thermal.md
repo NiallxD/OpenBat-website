@@ -12,7 +12,7 @@ coverImage: /static/images/bat-thermal-emergence.webp
 featured: false
 publish: true
 ---
-In this video, bats can be seen emerging from their roost in rapid succession. This is typical behaviour bats and ie beautifully revealed by using a thermal camera. These bats are likely Yuma myotis.
+In this video, bats can be seen emerging from their roost in rapid succession. This is typical behaviour bats and is beautifully revealed by using a thermal camera. These bats are likely Yuma myotis.
 
 <figure class="video-figure">
   <video controls playsinline preload="metadata" poster="/static/images/bat-thermal-emergence.webp">

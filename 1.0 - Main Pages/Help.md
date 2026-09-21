@@ -12,11 +12,9 @@ publish: true
 ## Get started
 
 1. **Plug in an ultrasonic USB microphone.** The built-in iPhone mic only hears up to about 24 kHz, and most bat calls happen well above that, so you need something like the [Griff Mini](https://www.pippyg.com/griff.html). Any USB ultrasonic mic that runs at 384 kHz should work fine, plugged in via a USB-C or Lightning adapter depending on your device. [[Choosing a Bat Microphone]] covers which ones work, what they cost, and which cable you need.
-2. **Open OpenBat and allow microphone and location access.** Location is used to tag your recordings, to suggest the right species model for your area, to work out which species are plausible where you are, to name each session after the place it happened, and to work out your local sunset and sunrise times. It never leaves your phone, and OpenBat doesn't record a GPS track or use location in the background; see the [Privacy Policy](/privacy-policy).
-3. **Calibrate your microphone** when the app offers to, which is the first time you plug that microphone in. It only takes a moment and it's what keeps the amplitude readings meaningful. You can skip it and do it later from Settings.
-4. **Point the mic at the sky and wait.** Once the status indicator up top turns green, you're receiving audio. When a bat calls nearby you'll see a pulse land on the spectrogram.
-
-Setting the app up takes three screens and asks for nothing but the microphone and location permissions.
+2. **Launch OpenBat and allow microphone and location access.** Location is used to tag your recordings, to suggest the right species model for your area, to work out which species are plausible where you are, to name each session after the place it happened, and to work out your local sunset and sunrise times. It never leaves your phone, and OpenBat doesn't record a GPS track or use location in the background; see the [Privacy Policy](/privacy-policy).
+3. **Calibrate your microphone** at home via settings. It only takes a moment and it's what keeps the sound readings meaningful. You can skip it and do it later from Settings if you're already outside, it's not a requirement.
+4. **Point the mic at the sky and wait.** Once the status indicator up top turns green, you're receiving audio. When a bat calls nearby you'll see a pulse land on the spectrogram. Don't forget to turn up your volume!
 
 ## SECTIONEND ##
 
@@ -24,10 +22,13 @@ Setting the app up takes three screens and asks for nothing but the microphone a
 
 ## Finding your way around
 
-Two tours are waiting on the **Info & Tour** screen, and neither is a video — both live inside the app.
+The app starts off in 'simple' mode which removes a lot of the more complex user interface elements. You can change to 'advanced' in settings.
+
+On your first launch, a popup will ask if you want to take the tour. There is a tour for simple and advanced mode.
 
 - **The guided tour** dims the screen and points at one control at a time, on your own detector, with your own audio running. It's also offered by the sparkles button at the top of the Detector screen, which appears for a moment shortly after your first run and then stays there until you've been through the tour.
-- **About OpenBat** is the reading tour: what echolocation is, what each listening mode does to the sound, and why calibrating the microphone matters. It's the same material the app used to walk you through before you'd even plugged anything in, which turned out to be the wrong moment for it.
+
+There is a second tour called**About OpenBat** and is accessed from the Info & Tour page. Learn what echolocation is, what each listening mode does to the sound, autoID caveats, and why calibrating the microphone matters.
 
 Once you're up and running, the rest of this page covers what everything does.
 
@@ -37,7 +38,7 @@ Once you're up and running, the rest of this page covers what everything does.
 
 ## When to go out
 
-Bats are busiest in the few hours **after sunset** and again in the hours **before sunrise**, so timing matters more than almost anything else you can control. The top-left of the detector screen tells you where in that night you are:
+Bats are busiest in the few hours **after sunset** and again in the hours **before sunrise**, so timing matters more than almost anything else you can control. The top-left of the detector is home to the Sun Clock. Tapping this shows a screen which tells you where in the day/night you are:
 
 | It shows | It means |
 |---|---|
@@ -45,10 +46,6 @@ Bats are busiest in the few hours **after sunset** and again in the hours **befo
 | 🌇 +1h 45m | Sunset was an hour and three-quarters ago, and you're still inside the evening window. This is prime time. |
 | 🌅 at 05:12 | The quiet middle of the night. Sunrise is at 05:12. |
 | 🌅 in 1h 45m | The dawn window has started — sunrise is an hour and three-quarters away. |
-
-The sun icon is filled in while you're inside an active window and hollow outside one, so a glance tells you which.
-
-Each window is the first and last **15% of that night**, rather than a fixed number of hours, so it moves with the season along with everything else: around an hour and three-quarters each side at the equinoxes, closer to an hour at midsummer when the whole night is only seven hours long.
 
 **Tap the pill** for tonight's sunset and sunrise times, how long each window lasts tonight, and a reminder of why those hours are the ones to be out in. It's worked out on your phone from your latitude and the date, so it's right whether or not you have signal — and it needs location access to know where the sun is.
 
@@ -74,7 +71,7 @@ Bat calls are ultrasonic, so you can't hear them directly. OpenBat gives you a f
 
 - **Off**: no audio output, just detection and the spectrogram.
 - **Heterodyne**: shifts a narrow band around a tunable frequency down into the audible range in real time, so you hear a "chirp" or "click" as each call passes through. Never stops listening, but it's a rough translation rather than a faithful one, more like a Geiger counter than a recording.
-- **Time expansion**: captures a short window of audio around a detected call (a tenth of a second by default) and plays it back sixteen times slower, so a call that was too short and too high to make sense of turns into something you can actually hear the shape of. A tenth of a second slowed sixteen times takes 1.6 seconds to play, and while a snippet is replaying the mic isn't listening for the next one — so there's a window where a call could be missed. That trade is the whole point of the mode, and it's how dedicated time-expansion detectors have always worked. Both numbers are adjustable in the tuning panel: a shorter window or a gentler slowdown buys the deaf time back. By default Heterodyne keeps running underneath so you never lose track of what's happening between snippets; you can set it to replay only, or heterodyne only, in the tuning panel.
+- **Time expansion**: captures a short window of audio around a detected call (a tenth of a second by default) and plays it back sixteen times (16x) slower, so a call that was too short and too high to make sense of turns into something you can actually hear the shape of. A tenth of a second slowed sixteen times takes 1.6 seconds to play, and while a snippet is replaying the mic isn't listening for the next one — so there's a window where a call could be missed. That trade is the whole point of the mode, and it's how dedicated time-expansion detectors have always worked. Both numbers are adjustable in the tuning panel: a shorter window or a gentler slowdown buys the deaf time back. By default Heterodyne keeps running underneath so you never lose track of what's happening between snippets; you can set it to replay only, or heterodyne only, in the tuning panel.
 
 A small pill above the spectrogram shows what Time expansion is doing at any moment: an ear when it's listening, a red dot while it's capturing a snippet, and a tortoise with a filling ring while it plays that snippet back. Tap the pill for a plain-language explanation.
 
@@ -106,7 +103,7 @@ Under **Telling calls apart** (advanced mode only, since these are best set with
 
 ### Recording
 
-Arm the recorder to save triggered calls as WAV files automatically as you listen. Every outing is saved as a **session** automatically — there's nothing to choose on the way in. Its detections are grouped together and mapped where each one was heard, and if you stop and start again shortly afterwards it carries on the same session rather than beginning a new one. Everything is saved on your phone, and you can export or share any recording directly from the app.
+Arm the recorder to save triggered calls as WAV files automatically as you listen (recording is armed by default when you start listening). Every outing is saved as a **session** automatically — there's nothing to choose on the way in. Its detections are grouped together and mapped where each one was heard, and if you stop and start again shortly afterwards it carries on the same session rather than beginning a new one. Everything is saved on your phone, and you can export or share any recording directly from the app.
 
 Opening a session shows a map of where its IDs happened, then two charts, then its recordings. **Species detected** is a bar per species, as long as the number of detections logged for it. **Detections over time** puts those same detections on the clock, which is a different question worth asking — a hundred IDs spread evenly over four hours and the same hundred in one busy twenty minutes look identical on the first chart and are very different nights. Tap the **i** beside either title for what it does and doesn't tell you; the important caveat is that these count *detections*, not individual bats, since one bat circling a pond gets logged again each time it comes past.
 
@@ -123,7 +120,14 @@ Where OpenBat has an open-source model for your region, it can suggest a species
 - **NABat ML** covers North America.
 - **BatDetect2** covers the United Kingdom, and is currently in **beta** while we test how well it holds up.
 
-Every suggestion comes with a confidence level, and two extra flags where honesty demands one. **Sounds alike** means the species belongs to a group that overlaps too much to separate by sound — a standing caution about that species rather than a comment on the call you just heard. **Or SPECIES** means that on this particular call a second species scored almost as highly as the winner, and names it, so you can judge for yourself. Either way you're not given false confidence in a call that could genuinely be either one.
+Every suggestion comes with a precision and confidence percentage, and two extra flags where honesty demands one. 
+
+- **Sounds alike** means the species belongs to a group that overlaps too much to separate by sound — a standing caution about that species rather than a comment on the call you just heard.
+- **Or SPECIES** means that on this particular call a second species scored almost as highly as the winner, and names it, so you can judge for yourself. Either way you're not given false confidence in a call that could genuinely be either one.
+
+**Precision** is showing as a single percentage in a pill on the top right of the species row. This value tells you what percentage of the time the model guess correctly when presented with calls from that species. This is tested by the researchers who trained the model and does not change.
+
+**Confidence** is not what is sounds like. This expresses by how much one species prediction beat the next best. This is showing as a two percentage pill at the bottom of the card. The left is the species that won, the right is the runner up. Read the *difference* between the values. The larger the difference the more "confident" the model was. Learn more [here](https://openbat.app/blog/on-model-confidence-percentages/).
 
 ### Field guide
 
@@ -146,6 +150,10 @@ Two settings in the tuning panel control what counts as silence. **Keep above** 
 ## SECTIONSTART ##
 
 ## Contributing recordings to community science
+
+**CURRENTLY DISABLED**
+
+We are working through some tweaks to this function and will have it enabled soon.
 
 iNaturalist is a global community science platform that lets members of the public contribute biological observations to a shared database that researchers can use. We actually use this same database, [gbif.org](https://www.gbif.org), to power the range maps in the field guide.
 
