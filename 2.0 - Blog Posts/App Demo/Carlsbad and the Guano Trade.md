@@ -13,7 +13,7 @@ longitude: -104.4442
 locationName: Carlsbad Caverns, New Mexico
 inApp: true
 appOnly: true
-publish: true
+publish: false
 ---
 
 The cave was known locally long before it was famous, and the reason anyone went

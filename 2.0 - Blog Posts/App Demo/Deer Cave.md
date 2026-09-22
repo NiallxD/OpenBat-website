@@ -13,7 +13,7 @@ longitude: 114.8167
 locationName: Gunung Mulu, Sarawak
 inApp: true
 appOnly: true
-publish: true
+publish: false
 ---
 
 Deer Cave runs through the limestone of Gunung Mulu in Malaysian Borneo, and the

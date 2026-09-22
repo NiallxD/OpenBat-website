@@ -13,7 +13,7 @@ longitude: 11.2333
 locationName: Seewiesen, Bavaria
 inApp: true
 appOnly: true
-publish: true
+publish: false
 ---
 
 Echolocation is easy to describe and hard to study. The describing is a

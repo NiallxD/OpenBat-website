@@ -13,7 +13,7 @@ longitude: -81.5606
 locationName: Sugarloaf Key, Florida
 inApp: true
 appOnly: true
-publish: true
+publish: false
 ---
 
 Richter Clyde Perky bought a fishing camp on Sugarloaf Key in the 1920s and

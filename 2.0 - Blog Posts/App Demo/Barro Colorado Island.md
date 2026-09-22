@@ -13,7 +13,7 @@ longitude: -79.8465
 locationName: Barro Colorado Island, Panama
 inApp: true
 appOnly: true
-publish: true
+publish: false
 ---
 
 Barro Colorado was a hill until the Panama Canal filled the valley around it. It

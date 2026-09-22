@@ -13,7 +13,7 @@ longitude: -98.3419
 locationName: Bracken Cave, Texas
 inApp: true
 appOnly: true
-publish: true
+publish: false
 ---
 
 Bracken Cave is a limestone sinkhole in the hill country north of San Antonio,

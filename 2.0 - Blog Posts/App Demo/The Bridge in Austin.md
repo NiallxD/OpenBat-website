@@ -13,7 +13,7 @@ longitude: -97.7452
 locationName: Congress Avenue Bridge, Austin
 inApp: true
 appOnly: true
-publish: true
+publish: false
 ---
 
 When the Congress Avenue bridge over Lady Bird Lake was reconstructed at the end

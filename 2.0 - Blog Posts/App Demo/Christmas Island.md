@@ -13,7 +13,7 @@ longitude: 105.6333
 locationName: Christmas Island, Indian Ocean
 inApp: true
 appOnly: true
-publish: true
+publish: false
 ---
 
 The Christmas Island pipistrelle was a small insectivorous bat found nowhere

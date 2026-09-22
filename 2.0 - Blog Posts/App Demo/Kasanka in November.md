@@ -13,7 +13,7 @@ longitude: 30.2500
 locationName: Kasanka National Park, Zambia
 inApp: true
 appOnly: true
-publish: true
+publish: false
 ---
 
 Kasanka is a small national park in northern Zambia, and for a few weeks around

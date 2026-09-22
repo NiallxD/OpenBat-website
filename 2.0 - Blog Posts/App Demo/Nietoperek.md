@@ -13,7 +13,7 @@ longitude: 15.5300
 locationName: Nietoperek, Poland
 inApp: true
 appOnly: true
-publish: true
+publish: false
 ---
 
 The tunnels at Nietoperek were built in the 1930s as part of a fortified line,
