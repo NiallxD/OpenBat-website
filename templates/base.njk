@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% if title and page.url != '/' %}{{ title }} — {% endif %}{{ site.name }}</title>
   {% if description %}<meta name="description" content="{{ description }}">{% endif %}
-  {% if noindex %}<meta name="robots" content="noindex, nofollow">{% endif %}
+  {# appOnly: the page is built so the app has somewhere to share to, but it is
+     unlisted — nothing on the site links to it and it stays out of the sitemap. #}
+  {% if noindex or appOnly %}<meta name="robots" content="noindex, nofollow">{% endif %}
   <!-- Privacy & Security -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://upload.wikimedia.org; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; frame-src https://docs.google.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">

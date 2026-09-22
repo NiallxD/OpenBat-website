@@ -13,7 +13,7 @@ coverImage: /static/images/how-autoid-hero.webp
 featured: false
 inApp: true
 appPriority: 1
-type: explainer
+type: research
 publish: true
 ---
 

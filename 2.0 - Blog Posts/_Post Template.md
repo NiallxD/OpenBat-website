@@ -11,6 +11,7 @@ coverImage: /static/images/some-image.webp
 featured: false
 priority:            # optional, featured posts only — 1 runs first in the ticker
 inApp: false         # true also sends the post to the app, via /app/blog.json
+appOnly: false       # true keeps it out of the website entirely — app only
 appPriority:         # optional, in-app posts only — 1 runs first in the app
 type: post           # the app's filter: post, field-note, guide, release…
 latitude:            # optional — both of these together pin the post on the

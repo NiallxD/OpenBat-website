@@ -8,7 +8,12 @@ export default class Sitemap {
 
   render({ collections, site }) {
     const pages = (collections.all || []).filter(
-      (p) => p.url && String(p.data.publish).trim().toLowerCase() === "true" && !p.data.noindex
+      (p) =>
+        p.url &&
+        String(p.data.publish).trim().toLowerCase() === "true" &&
+        !p.data.noindex &&
+        // App-only posts are built but unlisted — see templates/base.njk.
+        !p.data.appOnly
     );
 
     const urls = pages.map((p) => {

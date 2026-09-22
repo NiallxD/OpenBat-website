@@ -13,7 +13,7 @@ coverImage: /static/images/orange-sunset.webp
 featured: false
 inApp: true
 appPriority: 2
-type: explainer
+type: research
 publish: true
 ---
 

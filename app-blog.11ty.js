@@ -15,7 +15,10 @@ export default class AppBlogFeed {
     };
   }
 
-  render({ collections, site }) {
-    return JSON.stringify(buildFeed(collections.posts, site.url), null, 2) + "\n";
+  // `eleventy.env.runMode` is "build", "watch" or "serve". Only a real build
+  // moves the version counter — see stampVersion in lib/app-feed.js.
+  render({ collections, site, eleventy }) {
+    const stamp = eleventy?.env?.runMode === "build";
+    return JSON.stringify(buildFeed(collections.appPosts, site.url, { stamp }), null, 2) + "\n";
   }
 }

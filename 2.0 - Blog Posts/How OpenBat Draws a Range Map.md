@@ -12,6 +12,7 @@ heroImage: /static/images/range-hero.webp
 coverImage: /static/images/range-cover.webp
 featured: false
 inApp: true
+type: research
 publish: true
 ---
 

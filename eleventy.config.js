@@ -282,14 +282,27 @@ export default function (eleventyConfig) {
 
   const byNewest = (a, b) => (b.date || 0) - (a.date || 0);
 
-  eleventyConfig.addCollection("posts", (api) =>
+  // `appOnly: true` sends a post to the app and nowhere else. The page is still
+  // built — the feed's `url` has to lead somewhere for "open in Safari" and the
+  // share sheet — but it is unlisted: out of every collection the website
+  // renders from, out of the sitemap, and carrying a noindex (set for it in
+  // _data/eleventyComputed.js). Nothing on openbat.app links to it.
+  const onWeb = (item) => item.data.appOnly !== true;
+
+  // Every post, app-only ones included. Only the app feed reads this; the
+  // website's own collections all go through `posts`, below.
+  eleventyConfig.addCollection("appPosts", (api) =>
     api.getAll().filter(isPost).sort(byNewest)
+  );
+
+  eleventyConfig.addCollection("posts", (api) =>
+    api.getAll().filter((i) => isPost(i) && onWeb(i)).sort(byNewest)
   );
 
   // `featured: true` lifts a post out of the grid and into the ticker at the
   // top of /blog/ and /. Everything else falls through to `regularPosts`.
   eleventyConfig.addCollection("regularPosts", (api) =>
-    api.getAll().filter((i) => isPost(i) && i.data.featured !== true).sort(byNewest)
+    api.getAll().filter((i) => isPost(i) && onWeb(i) && i.data.featured !== true).sort(byNewest)
   );
 
   // `priority` orders the featured posts in the ticker: 1 runs first, then 2,
@@ -312,7 +325,7 @@ export default function (eleventyConfig) {
   // first (in `priority` order), topped up with the newest remaining posts so
   // the ticker still has three slides when only one post is marked featured.
   const tickerPosts = (api) => {
-    const posts = api.getAll().filter(isPost).sort(byNewest);
+    const posts = api.getAll().filter((i) => isPost(i) && onWeb(i)).sort(byNewest);
     const featured = posts.filter((i) => i.data.featured === true).sort(byPriority);
     const rest = posts.filter((i) => i.data.featured !== true);
     return [...featured, ...rest].slice(0, 3);
@@ -328,7 +341,7 @@ export default function (eleventyConfig) {
     const inTicker = new Set(tickerPosts(api).map((i) => i.url));
     return api
       .getAll()
-      .filter(isPost)
+      .filter((i) => isPost(i) && onWeb(i))
       .sort(byNewest)
       .filter((i) => !inTicker.has(i.url))
       .slice(0, 3);
