@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "dataVersion": 2,
-  "updatedAt": "2026-09-21T23:30:13Z",
+  "dataVersion": 1,
+  "updatedAt": "2026-09-22T00:03:54Z",
   "posts": [
     {
       "id": "how-openbat-decides-what-it-heard",
@@ -9,7 +9,7 @@
       "excerpt": "The chain that turns a burst of ultrasound into a species name — pulse detection, a short window of audio, an on-device model, and the gates that let it say \"no idea\".",
       "date": "2026-08-27",
       "author": "Niall Bell",
-      "type": "explainer",
+      "type": "research",
       "tags": [
         "auto-id",
         "classifier",
@@ -27,7 +27,7 @@
       "excerpt": "OpenBat ships two published classifiers rather than one of its own — NABat ML for North America, BatDetect2 for the UK. Only one runs at a time, and their confidence figures mean different things.",
       "date": "2026-09-05",
       "author": "Niall Bell",
-      "type": "explainer",
+      "type": "research",
       "tags": [
         "auto-id",
         "classifier",
@@ -40,12 +40,54 @@
       "html": "<p>OpenBat doesn’t have “an AI”. It does however include two, separate, published models built by other people. The model you use depends on where you are.</p>\n<p>This is the short version or how these model outputs are actually turned into an ID suggestion. For the details, checkout <a href=\"openbat://post/how-openbat-decides-what-it-heard\">How OpenBat Decides What It Heard</a>.</p>\n<h2 id=\"the-current-models\">The current models</h2>\n<p>OpenBat currently includes two models, and has been built to allow new models to be added over time:</p>\n<ul>\n<li>\n<p><strong>NABat ML</strong> covers North America. It was developed by researchers at the USGS North American Bat Monitoring Program and is the continental standard for acoustic bat monitoring. It has been trained to identify 30 North American/Canadian bat species, plus an explicit NOISE class for things that aren’t bats. Licensed CC BY 4.0. OpenBat is not affiliated or endorsed by the NABat ML team. Any errors in the app are ours and not theirs.</p>\n</li>\n<li>\n<p><strong>BatDetect2</strong> covers the United Kingdom. It comes from the University of Edinburgh, knows 17 UK species, and is licensed CC BY-NC 4.0 — non-commercial. It is still marked <strong>beta</strong> in the app. OpenBat is not affiliated or endorsed by the BatDetect2 team. Any errors in the app are ours and not theirs.</p>\n</li>\n</ul>\n<p>Only one model runs at a time and the app suggests the best option for your current location.</p>\n<h2 id=\"they-are-not-interchangeable\">They are not interchangeable</h2>\n<p>The models were trained on different recordings, expect different lengths of audio,\nand know entirely different species. Each model works in it’s own way, accepts different ‘shaped’ audio, and produces their own scores, independently of other model methodology.</p>\n<p>Something to keep in mind on the scores:</p>\n<p><strong>Confidence is not comparable between the two.</strong> BatDetect2 tends to produce\nfar higher confidence numbers, so 70% from BatDectect2 and 70% from NABat ML does not mean the same thing. Each model has its own cut-off for whether to offer an ID on a call: 57% for NABat ML, 40% for BatDetect2. The difference here reflected the ‘character’ of each model.</p>\n<p>The practical consequence: <strong>the model name is part of the result.</strong> If you are\nreporting an identification anywhere serious, say which model produced it.</p>\n<h2 id=\"why-not-one-model-for-everywhere\">Why not one model for everywhere?</h2>\n<p>Because it doesn’t exist, and building it would be a research programme rather than an app feature.</p>\n<p>A classifier, the proper term for a model which classifies inputs, can only recognise species it was trained on, and training needs a large library of recordings verified by people who know what they are listening to. Those libraries are created over time, one region at a time, and reflect the activity of machine learning experts and researcher.</p>\n<p>It’s worth noting here that, while OpenBat only currently supports North America and the UK, the app can still be used elsewhere. OpenBat is a bat detector and field guide app first, with autoID and community science as additional features. You can download the app, learn about bats, and listen to them in real time (if you have a compatible microphone).</p>\n<h2 id=\"what-beta-means-on-batdetect2\">What “beta” means on BatDetect2</h2>\n<p>Not that the model is bad, it is published research and performs well.</p>\n<p>The beta tag is ours, and we have it there because we have not yet tested how it behaves in the real world alongside our app. We are based in North America and until we distribute the app in the UK, we can’t get the data we need to assess how well the pieces (our app and the BatDetect2 Model) work together.</p>\n<p>So the beta label is about our confidence in the integration, not a judgement on the research. Once we have had time to test and collect data, we will assess how well it fits the app, and we can amend things from there.</p>\n<blockquote class=\"callout callout-note\"><strong>If you know of a model</strong><p>If there is a published, open classifier for a region we don’t cover, we would\ngenuinely love to hear about it. It turns a whole region from “detector” into\n“detector plus identification” in one go.</p></blockquote>\n<h2 id=\"location-is-key\">Location is key</h2>\n<p>These models are trained to classify species in a given region, and as we know, not all species are found in all parts of that region. This is a real weakness of using classifiers to identify species with geographic nuance. It’s the same for birds too!</p>\n<p>Neither model knows anything about where you are standing. That is a separate\nstep, described in <a href=\"https://openbat.app/blog/how-openbat-weighs-scores-by-location/\">How OpenBat Weighs Scores By Location</a>. In short, we use a range map generated from community science data to understand where a species has been seen before. We then use this to filter out those species from the model outputs in real time so that you only see suggestions of identification for species knowing to be present where you currently are. There is some nuance to this, so check the linked article for more details.</p>"
     },
     {
+      "id": "carlsbad-and-the-guano-trade",
+      "title": "Carlsbad and the Guano Trade",
+      "excerpt": "Before it was a national park, Carlsbad Caverns was a mine. What was being mined was several thousand years of accumulated bat droppings, sold as fertiliser.",
+      "date": "2026-09-14",
+      "author": "Niall Bell",
+      "type": "history",
+      "tags": [
+        "history",
+        "free-tailed"
+      ],
+      "location": {
+        "latitude": 32.1753,
+        "longitude": -104.4442,
+        "name": "Carlsbad Caverns, New Mexico"
+      },
+      "url": "https://openbat.app/blog/carlsbad-and-the-guano-trade/",
+      "searchText": "Carlsbad and the Guano Trade. Before it was a national park, Carlsbad Caverns was a mine. What was being mined was several thousand years of accumulated bat droppings, sold as fertiliser. The cave was known locally long before it was famous, and the reason anyone went down it was commercial. Deep deposits of bat guano had built up under the Brazilian free-tailed bat colony over thousands of years, and guano was a valuable fertiliser. The mining came first; the tourism, and then the national park, came afterwards. The evening flight is still the thing most visitors come for, and it is one of the few bat spectacles anywhere with a formal amphitheatre and a ranger talk attached. It is a useful reminder that bats were an industry before they were a conservation concern, and that the colonies we now count were being shovelled out within living memory of the people who started counting them.",
+      "readingMinutes": 1,
+      "html": "<p>The cave was known locally long before it was famous, and the reason anyone went\ndown it was commercial. Deep deposits of bat guano had built up under the\nBrazilian free-tailed bat colony over thousands of years, and guano was a\nvaluable fertiliser. The mining came first; the tourism, and then the national\npark, came afterwards.</p>\n<p>The evening flight is still the thing most visitors come for, and it is one of\nthe few bat spectacles anywhere with a formal amphitheatre and a ranger talk\nattached.</p>\n<p>It is a useful reminder that bats were an industry before they were a\nconservation concern, and that the colonies we now count were being shovelled\nout within living memory of the people who started counting them.</p>"
+    },
+    {
+      "id": "the-perky-bat-tower",
+      "title": "The Perky Bat Tower",
+      "excerpt": "In 1929 a Florida Keys developer built a thirty-foot tower to house the bats that would eat his mosquitoes. No bats ever moved in, and the tower stood empty for nearly ninety years.",
+      "date": "2026-08-30",
+      "author": "Niall Bell",
+      "type": "history",
+      "tags": [
+        "history",
+        "roosts"
+      ],
+      "location": {
+        "latitude": 24.6467,
+        "longitude": -81.5606,
+        "name": "Sugarloaf Key, Florida"
+      },
+      "url": "https://openbat.app/blog/the-perky-bat-tower/",
+      "searchText": "The Perky Bat Tower. In 1929 a Florida Keys developer built a thirty-foot tower to house the bats that would eat his mosquitoes. No bats ever moved in, and the tower stood empty for nearly ninety years. Richter Clyde Perky bought a fishing camp on Sugarloaf Key in the 1920s and found it unusable in mosquito season. The remedy he bought into was a mail-order design for a bat tower: a tall wooden structure with internal roosting slots, sold on the promise that a resident bat colony would eat the problem. The tower went up in 1929. The bats declined it. Accounts differ on the details and improve with retelling, but the outcome is not in dispute — the tower stood empty, a local landmark rather than a mosquito control device, until a hurricane finally took it down in 2017. The failure is instructive rather than funny. Build the box first and hope is still the most common approach to bat housing, and the hit rate has not improved as much as it should have.",
+      "readingMinutes": 1,
+      "html": "<p>Richter Clyde Perky bought a fishing camp on Sugarloaf Key in the 1920s and\nfound it unusable in mosquito season. The remedy he bought into was a\nmail-order design for a bat tower: a tall wooden structure with internal\nroosting slots, sold on the promise that a resident bat colony would eat the\nproblem.</p>\n<p>The tower went up in 1929. The bats declined it. Accounts differ on the details\nand improve with retelling, but the outcome is not in dispute — the tower stood\nempty, a local landmark rather than a mosquito control device, until a hurricane\nfinally took it down in 2017.</p>\n<p>The failure is instructive rather than funny. Build the box first and hope is\nstill the most common approach to bat housing, and the hit rate has not improved\nas much as it should have.</p>"
+    },
+    {
       "id": "how-openbat-draws-a-range-map",
       "title": "How OpenBat Draws a Range Map",
       "excerpt": "Where the distribution maps come from, what has to be assumed to draw one, and why the rules are careful not to delete real range at the edges.",
       "date": "2026-08-27",
       "author": "Niall Bell",
-      "type": "post",
+      "type": "research",
       "tags": [
         "field-guide",
         "range-maps",
@@ -63,7 +105,7 @@
       "excerpt": "The fungus that has killed millions of North American bats — what it is, why waking up too often is fatal, and why it turned bat monitoring from a nice idea into an urgent one.",
       "date": "2026-08-27",
       "author": "Niall Bell",
-      "type": "post",
+      "type": "conservation",
       "tags": [
         "bats",
         "conservation"
@@ -78,6 +120,174 @@
       "searchText": "White-Nose Syndrome. The fungus that has killed millions of North American bats — what it is, why waking up too often is fatal, and why it turned bat monitoring from a nice idea into an urgent one. In the winter of 2006, a caver photographed hibernating bats near Albany, New York, with white fuzz on their muzzles. Within a decade the fungus in that photograph had killed bats across most of eastern North America and reached the Pacific coast. The organism is Pseudogymnoascus destructans — cold-loving, and perfectly suited to a hibernating bat, which spends the winter at cave temperature with its immune system all but switched off. It grows on exposed skin: muzzle, ears and the thin membrane of the wings. The white bloom that gave the disease its name is the least of the problem. It kills by arithmetic The fungus is not a poison. What it does is interrupt a very tight energy budget. A hibernating bat has to cross the entire winter on fat it laid down in autumn, with no possibility of topping up. It doesn’t sleep straight through — it rouses periodically, and each arousal is enormously expensive, burning in a few hours what torpor would have used over days. A healthy bat can afford a handful of them. An infected bat rouses far more often. The infection irritates and damages the wing membrane, upsets its water balance, and the animal wakes to deal with it, over and over. A line chart of fat reserve across a winter, drawn weekly. Both lines step down by the same amount at each arousal. The healthy bat steps about eight times and still has fuel in spring; the infected bat steps almost every week and hits empty in late February. Illustrative — a drawing of the mechanism rather than measured data, drawn by the week. Bats normally rouse every one to three weeks; the healthy line here takes the slow end of that range. Every step down is one arousal, and every step is the same size in both lines: an arousal costs an infected bat no more than it costs a healthy one. The only difference is how many there are. The reserve runs out weeks before there is anything to eat. Bats leave the cave in midwinter looking for insects that don’t exist yet — which is why one of the signs of the disease is bats flying in daylight, in the snow, in February. What it has cost Some hibernation sites lost more than nine bats in ten. The little brown bat, the northern long-eared bat and the tricolored bat have been hit hardest; total deaths run into the millions. In Canada, three species were listed as endangered in 2014 as an emergency response — including the little brown bat, which had been one of the most common mammals on the continent. It matters beyond the bats themselves. An insectivorous bat eats a substantial fraction of its body weight in insects every night, including agricultural pests, and removing most of them from a landscape is not a neutral event. Where it came from, and how it travels P. destructans is native to Eurasia. European bats carry it and mostly survive — the sign of a long shared history. North American bats had no such history, which is what a novel pathogen in a naive population looks like. It almost certainly crossed the Atlantic with people. The fungus persists in cave sediment, and its spores travel perfectly well on boots, clothing and caving equipment. It is not a risk to human health, and that is precisely why the human role is easy to underestimate: you can move it a hundred miles without being affected by it in the slightest. Which makes the practical advice unglamorous but real. Observe cave and mine closures. Decontaminate gear between sites. And don’t disturb hibernating bats — an arousal you cause costs the animal exactly the same fat as one the fungus causes. Why monitoring stopped being optional Here is the part that connects to everything else on this blog. A collapse is only visible against a baseline. Where good records existed before the disease arrived, the decline could be measured, species could be listed, and protection could follow. Where they didn’t, a population can disappear and leave behind nothing that proves it was ever there. Most of the world is in the second category. The disease is still spreading, and every region it has not reached yet is a region where the useful work is happening now — recording what is present, in ordinary places, before anything happens to it. That is the opposite of dramatic and it is exactly what is needed. Acoustic monitoring is the practical way to do it at scale: it doesn’t require handling bats, doesn’t require entering a roost, and can be done by people who are not licensed bat workers. A recording from a garden or a woodland edge, with a date and a location on it, is a small brick in exactly the baseline that turned out to matter so much in New York. There is some hope in the story. Certain little brown bat populations are persisting where they were expected to vanish, and work on treatments continues. But recovery in a mammal that raises roughly one pup a year is measured in decades, and it can only be tracked by people who keep looking. If you’re somewhere the disease hasn’t arrived, the most valuable thing you can do is write down what’s there while it still is. Header Photograph: U.S. Fish and Wildlife Service Headquarters, Public domain, via Wikimedia Commons",
       "readingMinutes": 5,
       "html": "<p>In the winter of 2006, a caver photographed hibernating bats near Albany, New\nYork, with white fuzz on their muzzles. Within a decade the fungus in that\nphotograph had killed bats across most of eastern North America and reached the\nPacific coast.</p>\n<p>The organism is <em>Pseudogymnoascus destructans</em> — cold-loving, and perfectly\nsuited to a hibernating bat, which spends the winter at cave temperature with\nits immune system all but switched off. It grows on exposed skin: muzzle, ears\nand the thin membrane of the wings. The white bloom that gave the disease its\nname is the least of the problem.</p>\n<h2 id=\"it-kills-by-arithmetic\">It kills by arithmetic</h2>\n<p>The fungus is not a poison. What it does is interrupt a very tight energy\nbudget.</p>\n<p>A hibernating bat has to cross the entire winter on fat it laid down in autumn,\nwith no possibility of topping up. It doesn’t sleep straight through — it\nrouses periodically, and each arousal is enormously expensive, burning in a few\nhours what torpor would have used over days. A healthy bat can afford a handful\nof them.</p>\n<p>An infected bat rouses far more often. The infection irritates and damages the\nwing membrane, upsets its water balance, and the animal wakes to deal with it,\nover and over.</p>\n<figure class=\"chart\"><p>A line chart of fat reserve across a winter, drawn weekly. Both lines step down by the same amount at each arousal. The healthy bat steps about eight times and still has fuel in spring; the infected bat steps almost every week and hits empty in late February.</p><figcaption>Illustrative — a drawing of the mechanism rather than measured data, drawn by the week. Bats normally rouse every one to three weeks; the healthy line here takes the slow end of that range. Every step down is one arousal, and every step is the same size in both lines: an arousal costs an infected bat no more than it costs a healthy one. The only difference is how many there are.</figcaption></figure>\n<p>The reserve runs out weeks before there is anything to eat. Bats leave the cave\nin midwinter looking for insects that don’t exist yet — which is why one of the\nsigns of the disease is bats flying in daylight, in the snow, in February.</p>\n<h2 id=\"what-it-has-cost\">What it has cost</h2>\n<p>Some hibernation sites lost more than nine bats in ten. The little brown bat,\nthe northern long-eared bat and the tricolored bat have been hit hardest; total\ndeaths run into the millions. In Canada, three species were listed as\nendangered in 2014 as an emergency response — including the little brown bat,\nwhich had been one of the most common mammals on the continent.</p>\n<p>It matters beyond the bats themselves. An insectivorous bat eats a substantial\nfraction of its body weight in insects every night, including agricultural\npests, and removing most of them from a landscape is not a neutral event.</p>\n<h2 id=\"where-it-came-from-and-how-it-travels\">Where it came from, and how it travels</h2>\n<p><em>P. destructans</em> is native to Eurasia. European bats carry it and mostly\nsurvive — the sign of a long shared history. North American bats had no such\nhistory, which is what a novel pathogen in a naive population looks like.</p>\n<p>It almost certainly crossed the Atlantic with people. The fungus persists in\ncave sediment, and its spores travel perfectly well on boots, clothing and\ncaving equipment. It is not a risk to human health, and that is precisely why\nthe human role is easy to underestimate: you can move it a hundred miles\nwithout being affected by it in the slightest.</p>\n<p>Which makes the practical advice unglamorous but real. Observe cave and mine\nclosures. Decontaminate gear between sites. And don’t disturb hibernating bats\n— an arousal you cause costs the animal exactly the same fat as one the fungus\ncauses.</p>\n<h2 id=\"why-monitoring-stopped-being-optional\">Why monitoring stopped being optional</h2>\n<p>Here is the part that connects to everything else on this blog.</p>\n<p>A collapse is only visible against a baseline. Where good records existed\nbefore the disease arrived, the decline could be measured, species could be\nlisted, and protection could follow. Where they didn’t, a population can\ndisappear and leave behind nothing that proves it was ever there.</p>\n<p>Most of the world is in the second category. The disease is still spreading,\nand every region it has not reached yet is a region where\n<a href=\"https://openbat.app/blog/the-gaps-in-bat-data/\">the useful work is happening now</a> — recording what is\npresent, in ordinary places, before anything happens to it. That is the\nopposite of dramatic and it is exactly what is needed.</p>\n<p>Acoustic monitoring is the practical way to do it at scale: it doesn’t require\nhandling bats, doesn’t require entering a roost, and can be done by people who\nare not licensed bat workers. A recording from a garden or a woodland edge, with\na date and a location on it, is a small brick in exactly the baseline that\nturned out to matter so much in New York.</p>\n<p>There is some hope in the story. Certain little brown bat populations are\npersisting where they were expected to vanish, and work on treatments continues.\nBut recovery in a mammal that raises roughly one pup a year is measured in\ndecades, and it can only be tracked by people who keep looking. If you’re\nsomewhere the disease hasn’t arrived, the most valuable thing you can do is\n<a href=\"https://openbat.app/blog/adding-a-bat-to-the-field-guide/\">write down what’s there</a> while it still is.</p>\n<hr>\n<p><strong>Header Photograph:</strong> U.S. Fish and Wildlife Service Headquarters, Public domain, via Wikimedia Commons</p>\n<details>\n<summary>Sources</summary>\n<ul>\n<li><a href=\"https://www.ewash.org/how-often-do-bats-wake-up-from-hibernation/#What_is_White-Nose_Syndrome_and_how_does_it_affect_hibernation\">https://www.ewash.org/how-often-do-bats-wake-up-from-hibernation/</a> — arousal frequency during hibernation: bats normally rouse every one to three weeks, and a single arousal can cost several days’ worth of stored energy. The figure above is drawn from this; the increase under infection is illustrative, as the source does not quantify it.</li>\n</ul>\n</details>"
+    },
+    {
+      "id": "christmas-island",
+      "title": "Christmas Island",
+      "excerpt": "The Christmas Island pipistrelle went from common to gone inside two decades. The last one was recorded in 2009, while the argument about intervening was still going on.",
+      "date": "2026-08-09",
+      "author": "Niall Bell",
+      "type": "conservation",
+      "tags": [
+        "conservation",
+        "extinction"
+      ],
+      "location": {
+        "latitude": -10.4917,
+        "longitude": 105.6333,
+        "name": "Christmas Island, Indian Ocean"
+      },
+      "url": "https://openbat.app/blog/christmas-island/",
+      "searchText": "Christmas Island. The Christmas Island pipistrelle went from common to gone inside two decades. The last one was recorded in 2009, while the argument about intervening was still going on. The Christmas Island pipistrelle was a small insectivorous bat found nowhere else. Through the 1980s it was common across the island. By the mid-2000s it was restricted to a corner of it, and in August 2009 the last known individual was recorded and then not recorded again. The cause was never conclusively established — invasive species, introduced predators and habitat change were all in the frame, and probably more than one of them mattered. What is documented is the decline itself, because the species was monitored the whole way down. The uncomfortable part is the gap between knowing and acting. A proposal to take the remaining animals into captivity was discussed while the population was still findable, and the approval came too late to matter.",
+      "readingMinutes": 1,
+      "html": "<p>The Christmas Island pipistrelle was a small insectivorous bat found nowhere\nelse. Through the 1980s it was common across the island. By the mid-2000s it was\nrestricted to a corner of it, and in August 2009 the last known individual was\nrecorded and then not recorded again.</p>\n<p>The cause was never conclusively established — invasive species, introduced\npredators and habitat change were all in the frame, and probably more than one\nof them mattered. What is documented is the decline itself, because the species\nwas monitored the whole way down.</p>\n<p>The uncomfortable part is the gap between knowing and acting. A proposal to take\nthe remaining animals into captivity was discussed while the population was\nstill findable, and the approval came too late to matter.</p>\n<details>\n<summary>Sources</summary>\n<ul>\n<li><a href=\"https://www.iucnredlist.org/\">https://www.iucnredlist.org/</a> — status and the date of the last confirmed record.</li>\n</ul>\n</details>"
+    },
+    {
+      "id": "nietoperek",
+      "title": "Nietoperek",
+      "excerpt": "A system of pre-war fortifications in western Poland, useless as a defence and close to ideal as a hibernaculum. Tens of thousands of bats winter underground here.",
+      "date": "2026-07-25",
+      "author": "Niall Bell",
+      "type": "conservation",
+      "tags": [
+        "conservation",
+        "hibernation"
+      ],
+      "location": {
+        "latitude": 52.39,
+        "longitude": 15.53,
+        "name": "Nietoperek, Poland"
+      },
+      "url": "https://openbat.app/blog/nietoperek/",
+      "searchText": "Nietoperek. A system of pre-war fortifications in western Poland, useless as a defence and close to ideal as a hibernaculum. Tens of thousands of bats winter underground here. The tunnels at Nietoperek were built in the 1930s as part of a fortified line, and they were never much use for that. Underground, at stable temperature and humidity, with many entrances and kilometres of passage, they turned out to be close to ideal as a hibernaculum. Tens of thousands of bats of a dozen or so species winter there, and the site is counted each year — which is what makes it valuable beyond its size. A single large colony is a spectacle. A large colony counted the same way for decades is a data series, and a data series is the only thing that can tell you whether a population is going anywhere. The management problem is human. Hibernating bats cannot afford to be woken, and a disused fortification is exactly the sort of place people like to explore.",
+      "readingMinutes": 1,
+      "html": "<p>The tunnels at Nietoperek were built in the 1930s as part of a fortified line,\nand they were never much use for that. Underground, at stable temperature and\nhumidity, with many entrances and kilometres of passage, they turned out to be\nclose to ideal as a hibernaculum.</p>\n<p>Tens of thousands of bats of a dozen or so species winter there, and the site is\ncounted each year — which is what makes it valuable beyond its size. A single\nlarge colony is a spectacle. A large colony counted the same way for decades is\na data series, and a data series is the only thing that can tell you whether a\npopulation is going anywhere.</p>\n<p>The management problem is human. Hibernating bats cannot afford to be woken, and\na disused fortification is exactly the sort of place people like to explore.</p>"
+    },
+    {
+      "id": "seewiesen",
+      "title": "Seewiesen",
+      "excerpt": "A Max Planck institute in Bavaria, and a good share of what is known about how a bat listens to its own echoes was worked out in rooms like these.",
+      "date": "2026-07-08",
+      "author": "Niall Bell",
+      "type": "research",
+      "tags": [
+        "research",
+        "echolocation"
+      ],
+      "location": {
+        "latitude": 47.9667,
+        "longitude": 11.2333,
+        "name": "Seewiesen, Bavaria"
+      },
+      "url": "https://openbat.app/blog/seewiesen/",
+      "searchText": "Seewiesen. A Max Planck institute in Bavaria, and a good share of what is known about how a bat listens to its own echoes was worked out in rooms like these. Echolocation is easy to describe and hard to study. The describing is a sentence: the bat calls, the echo returns, the delay is the distance. The studying is decades of careful work on what the animal does with an echo that arrives while it is still calling, in the middle of a swarm of other bats doing the same thing. Much of that work happened in flight rooms at institutes like the one at Seewiesen — controlled space, high-speed cameras, microphone arrays, and a very small number of bats doing one task at a time. It is worth remembering when a detector prints a species name. The classifier learned from recordings; the recordings were shaped by what the bat was doing; and what the bat was doing was worked out here, one flight room at a time.",
+      "readingMinutes": 1,
+      "html": "<p>Echolocation is easy to describe and hard to study. The describing is a\nsentence: the bat calls, the echo returns, the delay is the distance. The\nstudying is decades of careful work on what the animal does with an echo that\narrives while it is still calling, in the middle of a swarm of other bats doing\nthe same thing.</p>\n<p>Much of that work happened in flight rooms at institutes like the one at\nSeewiesen — controlled space, high-speed cameras, microphone arrays, and a very\nsmall number of bats doing one task at a time.</p>\n<p>It is worth remembering when a detector prints a species name. The classifier\nlearned from recordings; the recordings were shaped by what the bat was doing;\nand what the bat was doing was worked out here, one flight room at a time.</p>"
+    },
+    {
+      "id": "barro-colorado-island",
+      "title": "Barro Colorado Island",
+      "excerpt": "A hilltop that became an island when the canal flooded the valley around it. A century of continuous research later, it is one of the best-studied patches of tropical forest anywhere.",
+      "date": "2026-06-21",
+      "author": "Niall Bell",
+      "type": "research",
+      "tags": [
+        "research",
+        "tropical"
+      ],
+      "location": {
+        "latitude": 9.1521,
+        "longitude": -79.8465,
+        "name": "Barro Colorado Island, Panama"
+      },
+      "url": "https://openbat.app/blog/barro-colorado-island/",
+      "searchText": "Barro Colorado Island. A hilltop that became an island when the canal flooded the valley around it. A century of continuous research later, it is one of the best-studied patches of tropical forest anywhere. Barro Colorado was a hill until the Panama Canal filled the valley around it. It became a reserve in the 1920s and has been a working field station since, which means a century of continuous observation on one patch of tropical forest. For bat work, the draw is the sheer number of species sharing the same few square kilometres, and the range of things they eat: insects taken in flight, fruit, nectar, and — in the case of the fringe-lipped bat — frogs, located by listening for the calling male rather than by echolocation. WHAT THE BATS ON ONE TROPICAL ISLAND EAT — ILLUSTRATIVE SHARES Insects, taken in flight 40 Fruit 30 Nectar and pollen 15 Fish, frogs and other vertebrates 10 Blood 5 Illustrative rather than measured: the point is the spread, not the numbers. A temperate detector tuned for a dozen insectivores has very little to say about a place like this, which is the honest limit on any classifier trained where the recordings were easy to get.",
+      "readingMinutes": 1,
+      "html": "<p>Barro Colorado was a hill until the Panama Canal filled the valley around it. It\nbecame a reserve in the 1920s and has been a working field station since, which\nmeans a century of continuous observation on one patch of tropical forest.</p>\n<p>For bat work, the draw is the sheer number of species sharing the same few\nsquare kilometres, and the range of things they eat: insects taken in flight,\nfruit, nectar, and — in the case of the fringe-lipped bat — frogs, located by\nlistening for the calling male rather than by echolocation.</p>\n<figure class=\"chart\"><table class=\"chart-table\"><caption>WHAT THE BATS ON ONE TROPICAL ISLAND EAT — ILLUSTRATIVE SHARES</caption><tbody><tr><th scope=\"row\">Insects, taken in flight</th><td>40</td></tr><tr><th scope=\"row\">Fruit</th><td>30</td></tr><tr><th scope=\"row\">Nectar and pollen</th><td>15</td></tr><tr><th scope=\"row\">Fish, frogs and other vertebrates</th><td>10</td></tr><tr><th scope=\"row\">Blood</th><td>5</td></tr></tbody></table><figcaption>Illustrative rather than measured: the point is the spread, not the numbers.</figcaption></figure>\n<p>A temperate detector tuned for a dozen insectivores has very little to say about\na place like this, which is the honest limit on any classifier trained where the\nrecordings were easy to get.</p>"
+    },
+    {
+      "id": "kasanka-in-november",
+      "title": "Kasanka in November",
+      "excerpt": "For a few weeks at the end of the year, straw-coloured fruit bats pack into a small patch of swamp forest in Zambia. It is probably the largest mammal gathering anywhere.",
+      "date": "2026-06-03",
+      "author": "Niall Bell",
+      "type": "stories",
+      "tags": [
+        "stories",
+        "fruit-bats"
+      ],
+      "location": {
+        "latitude": -12.5833,
+        "longitude": 30.25,
+        "name": "Kasanka National Park, Zambia"
+      },
+      "url": "https://openbat.app/blog/kasanka-in-november/",
+      "searchText": "Kasanka in November. For a few weeks at the end of the year, straw-coloured fruit bats pack into a small patch of swamp forest in Zambia. It is probably the largest mammal gathering anywhere. Kasanka is a small national park in northern Zambia, and for a few weeks around November it holds what is usually described as the largest gathering of mammals anywhere on earth: straw-coloured fruit bats, arriving from across central Africa to feed on fruiting trees, and roosting in a patch of swamp forest of only a few hectares. The density is the thing. Branches break under the weight of roosting bats during the day, and the evening departure fills the sky in every direction at once rather than streaming out along a line. Where the bats come from, and how they find the same few hectares each year, is still not well answered. Tracking studies have followed individuals over long distances, but the cue that assembles them is not settled.",
+      "readingMinutes": 1,
+      "html": "<p>Kasanka is a small national park in northern Zambia, and for a few weeks around\nNovember it holds what is usually described as the largest gathering of mammals\nanywhere on earth: straw-coloured fruit bats, arriving from across central\nAfrica to feed on fruiting trees, and roosting in a patch of swamp forest of\nonly a few hectares.</p>\n<p>The density is the thing. Branches break under the weight of roosting bats\nduring the day, and the evening departure fills the sky in every direction at\nonce rather than streaming out along a line.</p>\n<p>Where the bats come from, and how they find the same few hectares each year, is\nstill not well answered. Tracking studies have followed individuals over long\ndistances, but the cue that assembles them is not settled.</p>"
+    },
+    {
+      "id": "the-bridge-in-austin",
+      "title": "The Bridge in Austin",
+      "excerpt": "The Congress Avenue bridge was rebuilt in 1980 with expansion joints that happened to be exactly the right width for a Mexican free-tailed bat. Nobody planned it.",
+      "date": "2026-05-14",
+      "author": "Niall Bell",
+      "type": "stories",
+      "tags": [
+        "stories",
+        "urban"
+      ],
+      "location": {
+        "latitude": 30.262,
+        "longitude": -97.7452,
+        "name": "Congress Avenue Bridge, Austin"
+      },
+      "url": "https://openbat.app/blog/the-bridge-in-austin/",
+      "searchText": "The Bridge in Austin. The Congress Avenue bridge was rebuilt in 1980 with expansion joints that happened to be exactly the right width for a Mexican free-tailed bat. Nobody planned it. When the Congress Avenue bridge over Lady Bird Lake was reconstructed at the end of the 1970s, the new deck had expansion joints running the length of it. The gaps were narrow, dry, warm, and well above the ground — which is, from a Mexican free-tailed bat’s point of view, a specification rather than an accident. A colony moved in within a few years, and the initial public reaction was what public reactions to a large new bat colony usually are. The reversal is the interesting part: the bats stayed, the health scare didn’t materialise, and the bridge turned into the thing people come to Austin in summer to see. The transferable bit Nothing about the bridge was designed for bats. It is worth knowing what accidentally good roost hardware looks like, because it is cheap to repeat on purpose.",
+      "readingMinutes": 1,
+      "html": "<p>When the Congress Avenue bridge over Lady Bird Lake was reconstructed at the end\nof the 1970s, the new deck had expansion joints running the length of it. The\ngaps were narrow, dry, warm, and well above the ground — which is, from a\nMexican free-tailed bat’s point of view, a specification rather than an\naccident.</p>\n<p>A colony moved in within a few years, and the initial public reaction was what\npublic reactions to a large new bat colony usually are. The reversal is the\ninteresting part: the bats stayed, the health scare didn’t materialise, and the\nbridge turned into the thing people come to Austin in summer to see.</p>\n<blockquote class=\"callout callout-tip\"><strong>The transferable bit</strong><p>Nothing about the bridge was designed for bats. It is worth knowing what\naccidentally good roost hardware looks like, because it is cheap to repeat on\npurpose.</p></blockquote>"
+    },
+    {
+      "id": "deer-cave",
+      "title": "Deer Cave",
+      "excerpt": "One of the largest cave passages in the world, in Sarawak. Its wrinkle-lipped bats leave in ribbons rather than a column, and the shape is thought to be about hawks.",
+      "date": "2026-04-02",
+      "author": "Niall Bell",
+      "type": "locations",
+      "tags": [
+        "locations",
+        "south-east-asia"
+      ],
+      "location": {
+        "latitude": 4.05,
+        "longitude": 114.8167,
+        "name": "Gunung Mulu, Sarawak"
+      },
+      "url": "https://openbat.app/blog/deer-cave/",
+      "searchText": "Deer Cave. One of the largest cave passages in the world, in Sarawak. Its wrinkle-lipped bats leave in ribbons rather than a column, and the shape is thought to be about hawks. Deer Cave runs through the limestone of Gunung Mulu in Malaysian Borneo, and the passage is big enough that the scale only registers when something flies across it. The evening exodus is the draw. Where Bracken Cave empties in a single turning column, the wrinkle-lipped bats here leave in long separated ribbons that pulse out over the forest — a shape usually put down to the bat hawks waiting outside, since a stream that keeps breaking and reforming is a harder thing to pick from than a steady one. The exodus doesn’t happen every night. Rain cancels it, and a party that has walked the boardwalk in the afternoon will sometimes sit at the observatory until dark for nothing.",
+      "readingMinutes": 1,
+      "html": "<p>Deer Cave runs through the limestone of Gunung Mulu in Malaysian Borneo, and the\npassage is big enough that the scale only registers when something flies across\nit.</p>\n<p>The evening exodus is the draw. Where <a href=\"openbat://post/bracken-cave\">Bracken Cave</a> empties in a single\nturning column, the wrinkle-lipped bats here leave in long separated ribbons\nthat pulse out over the forest — a shape usually put down to the bat hawks\nwaiting outside, since a stream that keeps breaking and reforming is a harder\nthing to pick from than a steady one.</p>\n<p>The exodus doesn’t happen every night. Rain cancels it, and a party that has\nwalked the boardwalk in the afternoon will sometimes sit at the observatory\nuntil dark for nothing.</p>"
+    },
+    {
+      "id": "bracken-cave",
+      "title": "Bracken Cave",
+      "excerpt": "A sinkhole outside San Antonio holds what is generally reckoned to be the largest bat colony on earth. From March to October it empties into the sky every evening.",
+      "date": "2026-03-12",
+      "author": "Niall Bell",
+      "type": "locations",
+      "tags": [
+        "locations",
+        "free-tailed"
+      ],
+      "location": {
+        "latitude": 29.1875,
+        "longitude": -98.3419,
+        "name": "Bracken Cave, Texas"
+      },
+      "url": "https://openbat.app/blog/bracken-cave/",
+      "searchText": "Bracken Cave. A sinkhole outside San Antonio holds what is generally reckoned to be the largest bat colony on earth. From March to October it empties into the sky every evening. Bracken Cave is a limestone sinkhole in the hill country north of San Antonio, and from March to October it holds a maternity colony of Mexican free-tailed bats large enough that the emergence is visible on weather radar. The bats arrive from Mexico in spring, give birth in early summer, and leave again in autumn. What makes the site famous is the exodus: it starts before sunset and can run for hours, a column turning anticlockwise out of the mouth of the cave before it straightens out and heads for the feeding grounds. Visiting The cave is owned and managed as a reserve. Emergence viewing is by arrangement rather than by turning up, and the closed season exists because a maternity colony disturbed in June is a colony of dead pups. For a recording, the interesting part is not the column. It is the half hour before it, when the first few hundred bats are audible and nothing is visible at all.",
+      "readingMinutes": 1,
+      "html": "<p>Bracken Cave is a limestone sinkhole in the hill country north of San Antonio,\nand from March to October it holds a maternity colony of Mexican free-tailed\nbats large enough that the emergence is visible on weather radar.</p>\n<p>The bats arrive from Mexico in spring, give birth in early summer, and leave\nagain in autumn. What makes the site famous is the exodus: it starts before\nsunset and can run for hours, a column turning anticlockwise out of the mouth of\nthe cave before it straightens out and heads for the feeding grounds.</p>\n<blockquote class=\"callout callout-note\"><strong>Visiting</strong><p>The cave is owned and managed as a reserve. Emergence viewing is by\narrangement rather than by turning up, and the closed season exists because a\nmaternity colony disturbed in June is a colony of dead pups.</p></blockquote>\n<p>For a recording, the interesting part is not the column. It is the half hour\nbefore it, when the first few hundred bats are audible and nothing is visible\nat all.</p>"
     }
   ]
 }
