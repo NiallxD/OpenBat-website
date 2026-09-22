@@ -95,6 +95,14 @@ Two things to know. It has a **micro-USB socket**, so you'll need a cable or ada
 
 We haven't tested this one with OpenBat ourselves, we have two but they are currently deployed surveying bats! It's widely used with other bat apps on iPhone, and on paper it's exactly what OpenBat asks for. If you try it, [tell us](/contact/) and we'll say so here.
 
+### Alauda bat dongle — £120, UK only
+
+Sold assembled by [Alauda](https://alaudaaudio.co.uk/products/bat-dongle) in London, £120 including VAT, and they only ship within the UK. About the size of a thumb, it's a **384 kHz USB microphone**, class compliant, fixed at that rate so there's nothing to configure before you go out. The stream is band-limited at 128 kHz, which covers every UK and European bat but is worth knowing if you want the full 192 kHz ceiling.
+
+It has a **USB-C socket**, so with a USB-C iPhone it's a plain USB-C to USB-C cable. Lightning phones need the OTG adapter below.
+
+Tested with OpenBat by its maker, who recommends it on their product page, rather than by us. That page has raw 384 kHz WAVs from a London bat walk if you want to hear what it captures first.
+
 ### Dodotronic Ultramic 384K EVO — around €350
 
 A well-established commercial option, [sold direct by Dodotronic](https://www.dodotronic.com/product/ultramic-384k-evo/) and through wildlife equipment retailers. Driverless, 384 kHz, properly built, and popular with people doing survey work. Untested by us.
