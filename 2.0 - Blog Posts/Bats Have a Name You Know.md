@@ -63,5 +63,6 @@ Understanding, and using the common names for these groups of bat is super impor
 - [Animal Diversity Web — Vespertilionidae](https://animaldiversity.org/accounts/Vespertilionidae/) — Family accounts with common names for Vespertilionidae and related families.
 - [Wikipedia — Bat](https://en.wikipedia.org/wiki/Bat) — Family classification table following the Handbook of the Mammals of the World Vol. 9.
 - Hero image: © jimenn_kim, CC-BY-NC, [some rights reserved](https://creativecommons.org/licenses/by-nc/4.0/)
+- Phonetic pronunciation produced by [Claud AI](https://claude.ai/)
 
 </details>
