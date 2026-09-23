@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Project — OpenBat</title>
-  <meta name="description" content="Who we are, what we&#39;re trying to do, and how OpenBat works toward it.">
+  <title>OpenBat 0.9.6: Three Times the Calls, and a Way to iNaturalist — OpenBat</title>
+  <meta name="description" content="OpenBat 0.9.6 hears about three times as many calls, stops guessing between two bats, and can post a recording straight to iNaturalist.">
   
   
   <!-- Privacy & Security -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://upload.wikimedia.org; connect-src 'self' https://raw.githubusercontent.com https://api.openbat.app; frame-src https://docs.google.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta property="og:site_name" content="OpenBat">
-  <meta property="og:title" content="Our Project — OpenBat">
-  <meta property="og:description" content="Who we are, what we&#39;re trying to do, and how OpenBat works toward it.">
-  
+  <meta property="og:title" content="OpenBat 0.9.6: Three Times the Calls, and a Way to iNaturalist — OpenBat">
+  <meta property="og:description" content="OpenBat 0.9.6 hears about three times as many calls, stops guessing between two bats, and can post a recording straight to iNaturalist.">
+  <meta property="og:image" content="/static/images/detection-cover.webp">
   <link rel="preload" href="/static/fonts/jersey10.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/geist-pixel.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Favicons -->
@@ -61,7 +61,7 @@
       <nav class="nav-menu">
         
         
-        <a href="/our-project/" class="active">Our Project</a>
+        <a href="/our-project/">Our Project</a>
         
         
         
@@ -99,87 +99,200 @@
     
 
 
-<div class="standard-page">
+
+
+
+
+<div class="post-hero">
+  
+  <img class="post-hero-bg" src="/static/images/detection-cover.webp" alt="">
+  
+  <div class="post-hero-shade"></div>
+  <div class="post-hero-inner">
+    <p class="section-label"><a href="/blog/" class="post-back">← Blog</a></p>
+    <h1>OpenBat 0.9.6: Three Times the Calls, and a Way to iNaturalist</h1>
+    <p class="post-hero-text">OpenBat 0.9.6 hears about three times as many calls, stops guessing between two bats, and can post a recording straight to iNaturalist.</p>
+    <div class="post-meta">
+      <time datetime="2026-09-08">8 September 2026</time>
+      <span class="post-author">Niall Bell</span>
+      <span class="tag">openbat</span><span class="tag">app</span><span class="tag">dev-log</span><span class="tag">release</span>
+    </div>
+  </div>
+</div>
+
+
+<article class="standard-page post post--hero">
+  
+
+  <div class="post-content"><p>0.9.6 has two headline changes. The detector now hears about three times as
+many calls as it used to, and a recording can go straight to iNaturalist
+without leaving the app. The first one matters more, and it started with three
+devices that disagreed.</p>
+<h2 id="three-devices-one-recording-three-answers">Three devices, one recording, three answers</h2>
+<p>I played the same demo recording on three devices, and they didn’t agree on
+which bat it was. At first that looked like a classifier problem. It wasn’t.
+None of the disagreement came from the model.</p>
+<p>To prove it I needed a fair comparison, and the demo is the only input two
+phones can be given identically. So there’s now a <strong>demo log</strong> (tucked away
+in the configuration menu, off by default). It writes a CSV for every demo run:
+every pulse the detector kept, every pulse it dropped and why, and every pass,
+with the device, the OS, the model and every threshold in the header. Two files
+whose headers differ in one line and whose rows differ everywhere don’t leave
+much to argue about.</p>
+<p>The logs showed a detector that was dropping calls.</p>
+<h2 id="the-detector-was-throwing-calls-away">The detector was throwing calls away</h2>
+<p>Drawing a call’s picture and running the model on it happened on the same
+queue as catching the <em>next</em> call. The detector couldn’t reopen until the model
+had finished, and any call that arrived in that window was silently discarded.
+It was counted in the rate readout and then vanished from everything
+downstream.</p>
+<p>The losses weren’t spread evenly, either. They fell hardest on <strong>whichever bat
+called fastest</strong>, so the species calling most were the ones heard least. On the
+demo clip, the 2020 iPad scored zero big brown bats in seven loops, because
+every one of their calls landed inside that gap.</p>
+<p>Two further things made it worse:</p>
+<ul>
+<li>After each call the app waited for trailing audio, and it waited as long as
+the <em>slowest</em> model needed, whichever model was actually running. That wait
+went from 184 ms to 40 ms.</li>
+<li>It drew a detailed picture of every call, even though almost nobody would
+ever look at most of them. Now it only draws one when the pulse view is going
+to show it, at half the column density, which looks the same to the eye.</li>
+</ul>
+<p>With classification moved to its own queue, the oldest device went from 1.35
+to 3.97 pulses a second. The share of calls discarded dropped from <strong>68% to
+9%</strong>. The 2020 iPad now files slightly more than the 2022 iPhone.</p>
+<h2 id="one-pass-one-bat">One pass, one bat</h2>
+<p>A pass used to run until things had been quiet for a couple of seconds. On a
+busy night that meant several bats averaged into one entry, named after
+whichever had been sampled best. That name could change between builds even
+though the audio never did.</p>
+<p>Now a pass closes after about a second of quiet, so each bat gets its own
+entry. When the top two species are within 0.10 of each other, <strong>OpenBat
+doesn’t name the pass at all</strong>. Two bats calling at once is an unanswered
+question, not a weak answer. The calls and their measurements are still kept;
+only the verdict is held back. After the change, the worst margin across a run
+went from 0.004 to 0.161, and the devices now report the same species in the
+same places.</p>
+<p>(If the gates behind that decision are new to you,
+<a href="/blog/how-openbat-decides-what-it-heard/" class="wikilink">How OpenBat Decides What It Heard</a> walks through the whole chain.)</p>
+<h2 id="the-long-low-bats-were-invisible">The long, low bats were invisible</h2>
+<p>Hoary and silver-haired bats were almost never drawn in the pulse view, for
+two separate reasons:</p>
+<ol>
+<li>The view hid anything that scored low on a “quality” measure. That measure
+averaged the whole search window, <em>including the call itself</em>, so a longer
+call dragged its own score down. The slow, low species make the longest
+calls, so they sat under the bar.</li>
+<li>The view was a fixed window with only 7 ms to the right of the call’s start,
+so the long calls it did show were cut in half.</li>
+</ol>
+<p>Quality is now measured against the background, and the view widens to fit
+the call.</p>
+<h2 id="posting-to-inaturalist">Posting to iNaturalist</h2>
+<p>A recording can now become an iNaturalist observation from inside the app.
+Sign in and OpenBat posts it for you, or it hands you the files to upload
+yourself. A leaf on a recording’s row marks the ones worth posting, and it
+turns gold for the best recording of a night. Posting runs in the background
+with a pill over the tab bar, so you don’t have to watch a spinner while a
+15 MB file uploads.</p>
+<p>Most of the work went into making the observation something an identifier can
+trust:</p>
+<ul>
+<li><strong>One clip for sound and pictures.</strong> An identifier told me the audio on an
+observation didn’t match its spectrogram. The sound had been cut from the
+recording while the pictures were drawn from the whole file, so they didn’t
+share a starting point. Everything now comes from one clip.</li>
+<li><strong>The full-spectrum sound, and only that.</strong> There was a slowed-down listening
+copy as well. I dropped it. No browser will play 384 kHz audio, so a visitor
+who presses play gets nothing, and that is a real cost. But a processed file
+sitting on a permanent public record, as the thing most people actually hear,
+seemed worse.</li>
+<li><strong>Real axes on every picture.</strong> Frequency on a log scale, time labelled, and
+a caption saying whether silence was cut out. Log is always used here,
+whatever the player is set to, because on a linear axis a 45 kHz pipistrelle
+and a 25 kHz noctule are drawn at different sizes for the same shape of call.</li>
+<li><strong>The right microphone.</strong> It was posting whichever detector is selected
+<em>now</em>. It now reads the one written into the recording when it was made.</li>
+<li><strong>“AutoID” on the caption.</strong> A species name burned into a spectrogram reads
+as a determination once the image travels on its own. Two words make it a
+suggestion again.</li>
+<li><strong>Echoes count against a recording.</strong> A call recorded somewhere reverberant
+loses up to 10 points and says why. Those thresholds are reasoned rather than
+measured, and that’s written down as an open question.</li>
+</ul>
+<p>Also, sharing no longer asks for access to your photo library. Nothing OpenBat
+exports needs that permission.</p>
+<h2 id="switches-i-can-throw-from-here">Switches I can throw from here</h2>
+<p>If something goes wrong with identification, range maps, location weighting or
+posting, I can now switch it off remotely and tell you why, instead of leaving it
+broken until Apple approves the next build. Every feature is compiled <em>on</em>, and
+the remote file can only turn one <em>off</em>. The version Apple reviewed is the most
+the app can ever do.</p>
+<p>Each feature also has a sensible off state. With identification off,
+recordings are still made and marked as unidentified. They aren’t filed as
+“no ID”, which would have put them one tap away from “Delete NoID
+Recordings”. The notice stays in Settings for as long as it applies.</p>
+<p>That’s 0.9.6. Most of it came from asking why two devices disagreed, and not
+accepting “the model” as the answer.</p>
+</div>
   
 
   
   
-  <div class="listing-header">
-    <h1>Our Project</h1>
-    <p class="page-lead">Who we are, what we&#39;re trying to do, and how OpenBat works toward it.</p>
+  <div class="post-related">
+    <p class="section-label">Read more</p>
+    <div class="post-grid">
+      
+      <a href="/blog/openbat-0-9-8-a-blog-on-the-globe/" class="post-card">
+        
+        <div class="post-card-img">
+          <img src="/static/images/screen-globe.webp" alt="" loading="lazy">
+        </div>
+        
+        <div class="post-card-body">
+          <h2>OpenBat 0.9.8: A Blog on the Globe</h2>
+          <div class="post-card-meta">
+            <time datetime="2026-09-22">22 September 2026</time>
+          </div>
+          <p class="post-card-desc">Two items off the roadmap, a way to see exactly what the priors did to an ID, and a 58 ms horseshoe call that was being cut to 17.</p>
+        </div>
+      </a>
+      
+      <a href="/blog/openbat-0-9-7-listening-without-the-howl/" class="post-card">
+        
+        <div class="post-card-img">
+          <img src="/static/images/id_numbers.webp" alt="" loading="lazy">
+        </div>
+        
+        <div class="post-card-body">
+          <h2>OpenBat 0.9.7: Listening, Without the Howl</h2>
+          <div class="post-card-meta">
+            <time datetime="2026-09-10">10 September 2026</time>
+          </div>
+          <p class="post-card-desc">A night in the field where nothing was loud enough, and a finger snap that set the phone howling. 0.9.7 is mostly about what you hear.</p>
+        </div>
+      </a>
+      
+      <a href="/blog/openbat-roadmap/" class="post-card">
+        
+        <div class="post-card-img">
+          <img src="/static/images/India_2022_Habitat_033.webp" alt="" loading="lazy">
+        </div>
+        
+        <div class="post-card-body">
+          <h2>OpenBat Roadmap</h2>
+          <div class="post-card-meta">
+            <time datetime="2026-09-02">2 September 2026</time>
+          </div>
+          <p class="post-card-desc">This is a roadmap of features I&#39;d like to implement into OpenBat should time and will allow.</p>
+        </div>
+      </a>
+      
+    </div>
   </div>
   
-
-  
-  <div class="post-content page-cards"><section class="page-card"><h2 id="who-we-are">Who we are</h2>
-<p>OpenBat is built by a few friends in Squamish, British Columbia, not a company or an institution. That shapes how the project runs: the scope stays honest about what a handful of volunteers can actually sustain, and rather than building new infrastructure from scratch, OpenBat plugs into programmes that already exist and already have the community’s trust — the BC Community Bat Programs, NABat, and iNaturalist among them.</p>
-</section>
-<section class="page-card"><h2 id="what-were-trying-to-do">What we’re trying to do</h2>
-<p>Three things, roughly in the order a new visitor meets them. Bat acoustic data starts from close to empty in a lot of regions, so even a simple “there are bats here, tonight” record is a meaningful step forward on its own — it doesn’t depend on getting the species right, mirroring iNaturalist’s own research-grade standard.</p>
-</section>
-<div class="page-plain goal-cards-section">
-<div class="goal-cards-scroll">
-<div class="goal-cards-sticky">
-<div class="post-grid home-links goal-cards">
-<div class="post-card">
-<div class="post-card-img"><img src="/static/images/screen-detector.webp" alt="" loading="lazy"></div>
-<div class="post-card-body">
-<h2 id="1-make-bats-accessible">1. Make bats accessible</h2>
-<div class="post-card-meta"><span class="tag">appreciation</span></div>
-<p>Hearing a bat and learning what it might be, in the moment, with nothing more than a phone and a cheap microphone.</p>
-<p><button class="goal-learn-more" type="button" data-goal="1">How we’re doing it →</button></p>
-</div>
-</div>
-<div class="post-card">
-<div class="post-card-img"><img src="/static/images/screen-call-analysis.webp" alt="" loading="lazy"></div>
-<div class="post-card-body">
-<h2 id="2-community-science">2. Community science</h2>
-<div class="post-card-meta"><span class="tag">iNaturalist</span></div>
-<p>Turning a night of listening into a properly formatted observation that feeds iNaturalist and, through it, researchers and conservation bodies.</p>
-<p><button class="goal-learn-more" type="button" data-goal="2">How we’re doing it →</button></p>
-</div>
-</div>
-<div class="post-card">
-<div class="post-card-img"><img src="/static/images/guide-editor-list.webp" alt="" loading="lazy"></div>
-<div class="post-card-body">
-<h2 id="3-a-field-guide">3. A field guide</h2>
-<div class="post-card-meta"><span class="tag">expert-curated</span></div>
-<p>Bat experts and enthusiasts contribute local knowledge directly through the <a href="/guide-editor/" class="wikilink">Field Guide Editor</a>, reviewed rather than published on sight.</p>
-<p><button class="goal-learn-more" type="button" data-goal="3">How we’re doing it →</button></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="page-plain goal-modal-source goal-panel" aria-live="polite">
-<div class="goal-modal-item" data-goal="1">
-<h2 id="how-were-doing-it-affordability">How we’re doing it: Affordability</h2>
-<p>A cheap handheld detector lets you hear a bat, but it can’t tell you anything about it. OpenBat pairs live, on-device AutoID with the field guide, narrowed to what’s actually flying near you, so the sound turns into a name, not just a noise in the dark. None of this needs expensive gear either — any standard USB ultrasonic mic works, including Phil Atkin’s open-source <a href="https://www.pippyg.com/griff.html">Griff Mini</a>, buildable for around $20 CAD.</p>
-</div>
-<div class="goal-modal-item" data-goal="2">
-<h2 id="how-were-doing-it-community-science">How we’re doing it: Community Science</h2>
-<p>Most tools stop at recording — turning that recording into something a scientist can use is a separate, fiddly step that almost nobody finishes. OpenBat removes that friction: record on your phone, and get a properly labelled recording, spectrogram, and metadata, ready to submit to iNaturalist. Nobody has to “join” community science on purpose, the app just makes it the natural next step after listening.</p>
-</div>
-<div class="goal-modal-item" data-goal="3">
-<h2 id="how-were-doing-it-expert-curation">How we’re doing it: Expert Curation</h2>
-<p>The guide is expert-curated, not wiki-style open editing — contributions go through the <a href="/guide-editor/" class="wikilink">Field Guide Editor</a> and are reviewed rather than published on sight. The species data itself is open too, CC BY 4.0, so the same trust standard that convinces professionals also means anyone can audit, reuse, or build on it.</p>
-</div>
-</div>
-<div class="page-plain">
-<div class="goal-modal" id="goal-modal">
-<div class="goal-modal-backdrop" data-modal-close></div>
-<div class="goal-modal-dialog" role="dialog" aria-modal="true">
-<button class="goal-modal-close" type="button" data-modal-close aria-label="Close">&times;</button>
-<div class="goal-modal-body"></div>
-</div>
-</div>
-</div>
-<section class="page-card"><h2 id="not-the-first-of-its-kind">Not the first of its kind</h2>
-<p>The closest model isn’t another bat organisation, it’s Merlin Bird ID feeding eBird: a free app, run by Cornell Lab of Ornithology, that turns curiosity into records for a much bigger science platform, without being a conservation body itself. That’s the shape OpenBat is going for — scoped to BC first, iOS first, built by a few people rather than an institution — but aiming at the same structural gap: not a new tier in bat conservation, but the thing that makes the tiers that already exist reachable by an ordinary person.</p>
-</section></div>
-  
-</div>
+</article>
 
   </main>
 
