@@ -28,27 +28,28 @@ Understanding, and using the common names for these groups of bat is super impor
 
 <figure class="table-single">
 
-| Family           | Common Name                                |
-| ---------------- | ------------------------------------------ |
-| Pteropodidae     | Flying foxes / Old World fruit bats        |
-| Rhinolophidae    | Horseshoe bats                             |
-| Hipposideridae   | Old World leaf-nosed bats / roundleaf bats |
-| Rhinopomatidae   | Mouse-tailed bats                          |
-| Megadermatidae   | False vampire bats                         |
-| Craseonycteridae | Bumblebee bat / Kitti's hog-nosed bat      |
-| Vespertilionidae | Vesper bats / evening bats                 |
-| Molossidae       | Free-tailed bats / mastiff bats            |
-| Phyllostomidae   | New World leaf-nosed bats                  |
-| Emballonuridae   | Sheath-tailed bats / sac-winged bats       |
-| Nycteridae       | Slit-faced bats                            |
-| Mormoopidae      | Mustached bats / ghost-faced bats          |
-| Noctilionidae    | Bulldog bats / fishing bats                |
-| Miniopteridae    | Bent-winged bats / long-fingered bats      |
-| Natalidae        | Funnel-eared bats                          |
-| Furipteridae     | Smoky bats / thumbless bats                |
-| Thyropteridae    | Disk-winged bats                           |
-| Myzopodidae      | Sucker-footed bats                         |
-| Mystacinidae     | New Zealand short-tailed bats              |
+| Family | Pronunciation | Common Name |
+|---|---|---|
+| Pteropodidae | teh-roh-POD-ih-dee | Flying foxes / Old World fruit bats |
+| Rhinolophidae | ry-noh-LOH-fih-dee | Horseshoe bats |
+| Hipposideridae | hip-oh-sih-DEHR-ih-dee | Old World leaf-nosed bats / roundleaf bats |
+| Rhinopomatidae | ry-noh-poh-MAT-ih-dee | Mouse-tailed bats |
+| Megadermatidae | meg-ah-der-MAT-ih-dee | False vampire bats |
+| Craseonycteridae | kray-see-oh-nik-TEHR-ih-dee | Bumblebee bat / Kitti's hog-nosed bat |
+| Vespertilionidae | ves-per-til-ee-OH-nih-dee | Vesper bats / evening bats |
+| Molossidae | moh-LOSS-ih-dee | Free-tailed bats / mastiff bats |
+| Phyllostomidae | fil-oh-STOH-mih-dee | New World leaf-nosed bats |
+| Emballonuridae | em-bal-oh-NOOR-ih-dee | Sheath-tailed bats / sac-winged bats |
+| Nycteridae | nik-TEHR-ih-dee | Slit-faced bats |
+| Mormoopidae | mor-moh-OP-ih-dee | Mustached bats / ghost-faced bats |
+| Noctilionidae | nok-til-ee-OH-nih-dee | Bulldog bats / fishing bats |
+| Miniopteridae | min-ee-op-TEHR-ih-dee | Bent-winged bats / long-fingered bats |
+| Natalidae | nuh-TAL-ih-dee | Funnel-eared bats |
+| Furipteridae | fyoor-ip-TEHR-ih-dee | Smoky bats / thumbless bats |
+| Thyropteridae | thy-rop-TEHR-ih-dee | Disk-winged bats |
+| Myzopodidae | my-zoh-POD-ih-dee | Sucker-footed bats |
+| Mystacinidae | mis-tuh-SIN-ih-dee | New Zealand short-tailed bats |
+
 
 <figcaption>The 19 bat families and the common names used to refer to them. Family names are the scientific grouping; the common names are what you can reasonably call any bat in that family usually based on a shared characteristic.</figcaption>
 </figure>
