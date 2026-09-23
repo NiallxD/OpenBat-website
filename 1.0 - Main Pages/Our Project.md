@@ -73,7 +73,7 @@ Bat experts and enthusiasts contribute local knowledge directly through the [[Gu
 
 <div class="goal-modal-item" data-goal="1">
 
-## How we're doing it
+## How we're doing it: Affordability
 
 A cheap handheld detector lets you hear a bat, but it can't tell you anything about it. OpenBat pairs live, on-device AutoID with the field guide, narrowed to what's actually flying near you, so the sound turns into a name, not just a noise in the dark. None of this needs expensive gear either — any standard USB ultrasonic mic works, including Phil Atkin's open-source [Griff Mini](https://www.pippyg.com/griff.html), buildable for around $20 CAD.
 
@@ -81,7 +81,7 @@ A cheap handheld detector lets you hear a bat, but it can't tell you anything ab
 
 <div class="goal-modal-item" data-goal="2">
 
-## How we're doing it
+## How we're doing it: Community Science
 
 Most tools stop at recording — turning that recording into something a scientist can use is a separate, fiddly step that almost nobody finishes. OpenBat removes that friction: record on your phone, and get a properly labelled recording, spectrogram, and metadata, ready to submit to iNaturalist. Nobody has to "join" community science on purpose, the app just makes it the natural next step after listening.
 
@@ -89,7 +89,7 @@ Most tools stop at recording — turning that recording into something a scienti
 
 <div class="goal-modal-item" data-goal="3">
 
-## How we're doing it
+## How we're doing it: Expert Curation
 
 The guide is expert-curated, not wiki-style open editing — contributions go through the [[Guide Editor|Field Guide Editor]] and are reviewed rather than published on sight. The species data itself is open too, CC BY 4.0, so the same trust standard that convinces professionals also means anyone can audit, reuse, or build on it.
 
